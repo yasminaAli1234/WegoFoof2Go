@@ -109,12 +109,12 @@ const LoginAdmin =()=>{
                                     />
                                     {show ? (
                                         <IoMdEye
-                                            className="absolute top-4 right-2 text-2xl text-right text-mainColor cursor-pointer"
+                                            className="absolute top-4 right-2 text-2xl text-right text-secoundColor cursor-pointer"
                                             onClick={() => setShow(!show)}
                                         />
                                     ) : (
                                         <IoMdEyeOff
-                                            className="absolute top-4 right-2 text-2xl text-right text-mainColor cursor-pointer"
+                                            className="absolute top-4 right-2 text-2xl text-right text-secoundColor cursor-pointer"
                                             onClick={() => setShow(!show)}
                                         />
                                     )}
