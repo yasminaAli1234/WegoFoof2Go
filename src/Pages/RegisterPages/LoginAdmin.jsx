@@ -1,7 +1,7 @@
 import React, { useState ,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
 import ImageLogo from "../../../public/Images/LogoImage.png";
-// import axios from 'axios';
+import axios from 'axios';
 // import { useAuth } from '../../Context/Auth';
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { toast } from 'react-toastify';
@@ -32,7 +32,6 @@ const LoginAdmin =()=>{
     const handleSubmit = async (event) => {
         console.log(email)
         console.log(password)
-        console.log(type)
         event.preventDefault();
 
         if (!email || !password) {
@@ -43,29 +42,29 @@ const LoginAdmin =()=>{
         setIsLoading(true);
 
         try {
-            const response = await axios.post('https://transitstation.online/api/login', {
+            const response = await axios.post('https://login.wegostores.com/api/v1/auth/login', {
                 email,
                 password,
             });
 
             if (response.status === 200) {
-                console.log(response.data)
-                const userData = {
-                    ...response.data,
-                    roles: [response.data.role] // Assuming role is the user's role
-                };
-                if(response.data.role === "admin"){
-                auth.login(userData); // Call auth.login with the user data
-                console.log('Login response:', response); // Debugging line
-                auth.toastSuccess('Login successfully!');
-                setData(userData);
-                setType(response.data.role)
-                navigate("/dashboard", { replace: true });
-            }else{
-                auth.toastError("Not Valid")
-            }
+                console.log(response)
+                //     const userData = {
+                //         ...response.data,
+                //         roles: [response.data.role] // Assuming role is the user's role
+                //     };
+                //     if(response.data.role === "admin"){
+                //     auth.login(userData); // Call auth.login with the user data
+                //     console.log('Login response:', response); // Debugging line
+                //     auth.toastSuccess('Login successfully!');
+                //     setData(userData);
+                //     setType(response.data.role)
+                //     navigate("/dashboard", { replace: true });
+                // }else{
+                //     auth.toastError("Not Valid")
+                // }
         } else {
-                auth.toastError('Failed to login');
+                // auth.toastError('Failed to login');
                 setError('Failed to login');
                 console.log("error", error);
             }
@@ -120,7 +119,7 @@ const LoginAdmin =()=>{
                                     )}
                                 </div>
 
-                                {error && <div className="w-full text-mainColor text-center text-2xl mb-4 font-bold">{error}</div>}
+                                {error && <div className="w-full text-white text-center text-2xl mb-4 font-bold">{error}</div>}
                                  
                                 <button
                                 type="submit"
