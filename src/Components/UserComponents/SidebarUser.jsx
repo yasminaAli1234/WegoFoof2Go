@@ -1,5 +1,5 @@
 import React from "react";
-import MenuSideUser from "./MenuSide.jsx";
+import MenuSideUser from "../../Components/UserComponents/MenuSideUser";
 const SidebarUser =({ isOpen }) => {
        return (
               <>
@@ -17,4 +17,4 @@ const SidebarUser =({ isOpen }) => {
        );
 };
 
-export default SidebarAdmin;
+export default SidebarUser;

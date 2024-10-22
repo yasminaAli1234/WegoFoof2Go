@@ -1,9 +1,7 @@
 import React, { useState ,useEffect} from "react";
-import {
-       HomeIcon
-} from "./Icons/All_Icons";
+import HomeIcon from "../Icons/HomeIcon";
 import { NavLink } from "react-router-dom";
-import { useAuth } from "../Context/Auth";
+import { useAuth } from "../../Context/Auth";
 import { Link, useNavigate } from 'react-router-dom'
 import { IoIosLogOut } from "react-icons/io";
 
@@ -20,12 +18,6 @@ const MenuSide = () => {
     //           auth.logout();
     //           // navigate("/", { replace: true });
     //    }
-
-       useEffect(() => {
-           console.log(auth.user.role)
-           console.log(Premission)
-              }
-       , [])
 
        useEffect(() => {
               const sidebarUserState = {

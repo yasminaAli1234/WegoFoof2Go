@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useAuth } from '../Context/Auth'
+import { useAuth } from '../../Context/Auth'
 
 const Navbar = () => {
        const auth = useAuth()

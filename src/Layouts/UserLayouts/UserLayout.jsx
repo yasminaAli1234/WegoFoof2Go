@@ -1,8 +1,8 @@
 
 import { useState } from 'react';
 import { RiCloseFill, RiMenu2Fill } from 'react-icons/ri';
-// import SidebarUser from '../Components/'
-// import NavbarUser from '../Components/Navbar'
+import SidebarUser from '../../Components/UserComponents/SidebarUser'
+import NavbarUser from '../../Components/UserComponents/NavbarUser'
 import { Outlet } from 'react-router-dom'
 
 const UserLayout = () => {
