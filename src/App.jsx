@@ -1,14 +1,13 @@
 import React from 'react';
 
-import LoginAdmin from './Pages/RegisterPages/LoginAdmin';
-
+import {PublicPage} from './Pages/AllPages'
 
 function App() {
 
   return (
     <>
       <div>
-        <LoginAdmin />
+        <PublicPage />
       </div>
     </>
   )
