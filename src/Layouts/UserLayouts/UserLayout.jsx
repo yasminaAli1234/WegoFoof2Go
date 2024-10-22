@@ -1,8 +1,8 @@
 
 import { useState } from 'react';
 import { RiCloseFill, RiMenu2Fill } from 'react-icons/ri';
-import SidebarAdmin from '../Components/SidebarAdmin'
-import Navbar from '../Components/Navbar'
+// import SidebarUser from '../Components/'
+// import NavbarUser from '../Components/Navbar'
 import { Outlet } from 'react-router-dom'
 
 const UserLayout = () => {
@@ -26,12 +26,12 @@ const UserLayout = () => {
       </div>
 
       {/* Sidebar that overlays the content on small screens */}
-      <SidebarAdmin isOpen={isSidebarOpen} />
+      <SidebarUser isOpen={isSidebarOpen} />
 
       {/* Main Content Section */}
       <div className={`contentSection md:w-full sm:w-full lg:w-4/5 min-h-screen transition-opacity ${isSidebarOpen ? 'opacity-50' : 'opacity-100'}`}>
                     {/* <HeaderStudent /> */}
-                    <Navbar />
+                    <NavbarUser />
                     <div className="pl-5">
                         <Outlet />
                     </div>
