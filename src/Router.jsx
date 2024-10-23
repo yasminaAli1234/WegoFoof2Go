@@ -2,7 +2,8 @@ import { Navigate, Outlet, createBrowserRouter } from "react-router-dom";
 import ProtectedRoute from "./ProtectedData/ProtectedRoute";
 import App from "./App";
 import { UserLayout,UserHomeLayout ,
-    PublicLayout
+    PublicLayout,
+    UserProfileLayout
 } from "./Layouts/AllLayouts";
 import LoginAdmin from './Pages/RegisterPages/LoginAdmin.jsx'
 /* User Dashboard */
@@ -36,6 +37,10 @@ export const router = createBrowserRouter([
               {
                 path: '',
                 element: <UserHomeLayout/>,
+              },
+              {
+                path: 'profile',
+                element: <UserProfileLayout/>,
               },  
             ],
           },

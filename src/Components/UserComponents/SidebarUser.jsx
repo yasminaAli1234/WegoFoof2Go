@@ -1,4 +1,5 @@
 import React from "react";
+import StoreLogo from '../../../public/Images/logo white.png'
 import MenuSideUser from "../../Components/UserComponents/MenuSideUser";
 const SidebarUser =({ isOpen }) => {
        return (
@@ -9,7 +10,7 @@ const SidebarUser =({ isOpen }) => {
                 } lg:translate-x-0`} // Sidebar always visible on large screens
                 >
                 <div className="w-full lg:mt-0 sm:mt-6 flex text-white items-center justify-center border-b-2 py-6 px-4 text-xl font-semibold">
-                    <h1>Transit Station Car Parking</h1>
+                  <img src={StoreLogo} alt="wegoStore"/>
                 </div>
                 <MenuSideUser />
                 </aside>      

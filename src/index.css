@@ -8,6 +8,42 @@
   font-family: 'Exo 2';
 }
 
+.contentSection {
+  position: absolute;
+  top: 0;
+  right: 2%;
+  border-radius: 0 15px 15px 0;
+  background: #fff;
+}
+.MenuSide a.active {
+  padding-left: 20px;
+  border-radius: 12px;
+  background: #fff;
+  color: #3F4CD0 !important;
+  transition: all 0.3s ease-in-out;
+}
+
+.listUser {
+  list-style: inside !important;
+}
+
+/* width Scroll*/
+.scrollSec::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track Scroll */
+.scrollSec::-webkit-scrollbar-track {
+  background: #f1f1f19d;
+  border-radius: 10px;
+}
+
+/* Handle Scroll*/
+.scrollSec::-webkit-scrollbar-thumb {
+  background: #999999;
+  border-radius: 10px;
+}
+
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -76,3 +112,4 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 } */
+
