@@ -54,9 +54,13 @@ const LoginAdmin =()=>{
                         roles: [response.data.user.role] // Assuming role is the user's role
                     };
                     console.log('Login response:', response); // Debugging line
+                    if(response.data.user.role==="admin"){
                     auth.toastSuccess('Login successfully!');
                     setData(userData);
                     setType(response.data.user.role)
+                    }else{
+                        auth.toastError('Invalid Input');
+                    }
                 }
             } catch (error) {
                 console.error(error);

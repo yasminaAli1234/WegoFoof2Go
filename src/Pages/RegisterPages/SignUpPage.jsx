@@ -275,7 +275,7 @@ const SignUpPage =()=>{
                     onChange={(e) => setPlan(e.target.value)}
                     required
                     >
-                    <option value="demo">Demo Video</option>
+                    <option value="demo">Demo Request</option>
                     <option value="silver">Silver Plan</option>
                     <option value="gold">Gold Plan</option>
                     </select>

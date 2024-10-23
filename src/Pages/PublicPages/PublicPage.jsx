@@ -7,25 +7,25 @@ const PublicPage =()=>{
     return(
 <div className="bg-mainColor text-secondColor">
       {/* Navigation Bar */}
-      <nav className="fixed w-full flex text-white z-10 ">
-        <div className="w-1/4 lg:mt-0 sm:mt-6 flex text-white items-center justify-center py-6 px-4 text-xl font-semibold">
+      <nav className="fixed w-full flex justify-between text-white z-10 ">
+        <div className="w-2/6 lg:w-1/4 lg:mt-0  flex text-white items-center justify-center py-6 px-4 text-xl font-semibold">
                   <img src={logo} alt="wegoStore" height={200} width={200}/>
          </div>
-        <ul className="flex w-2/4 justify-center space-x-8 py-4">
+        <ul className="hidden lg:flex w-2/4 justify-center space-x-8 py-4">
           <li><a href="#section1" className="hover:underline">Section 1</a></li>
           <li><a href="#section2" className="hover:underline">Section 2</a></li>
           <li><a href="#section3" className="hover:underline">Section 3</a></li>
           <li><a href="#section4" className="hover:underline">Section 4</a></li>
           <li><a href="#section5" className="hover:underline">Section 5</a></li>
         </ul>
-        <div className="flex py-4 gap-5">
+        <div className="flex py-4 gap-5 w-4/6 lg:w-1/4">
            <Link to="/login_user">
-              <button className="text-2xl font-medium py-4 px-6 border rounded-xl hover:bg-secoundColor hover:text-mainColor">
+              <button className="text-2xl font-medium py-2 px-2 lg:py-4 lg:px-6 border rounded-xl hover:bg-secoundColor hover:text-mainColor">
                 Login
               </button>
            </Link>
            <Link to="/signUp">
-              <button className="text-2xl font-medium py-4 px-6 border rounded-xl hover:bg-secoundColor hover:text-mainColor">
+              <button className="text-2xl font-medium py-2 px-2 lg:py-4 lg:px-6  border rounded-xl hover:bg-secoundColor hover:text-mainColor">
                 Sign Up
               </button>
            </Link>
