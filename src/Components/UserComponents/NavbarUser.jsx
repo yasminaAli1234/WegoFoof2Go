@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useAuth } from '../../Context/Auth'
 import SearchBar from '../SearchBar'
-
 import { CiGlobe } from "react-icons/ci";
 import { IoNotifications } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
+
 const Navbar = () => {
        const auth = useAuth()
        const dropdownRef = useRef(null)
