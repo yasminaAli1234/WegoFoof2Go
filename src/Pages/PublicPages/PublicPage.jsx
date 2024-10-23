@@ -9,7 +9,7 @@ const PublicPage =()=>{
       {/* Navigation Bar */}
       <nav className="fixed w-full flex justify-between text-white bg-mainColor z-10">
         <div className="w-2/6 lg:w-1/4 lg:mt-0  flex text-white items-center justify-center py-6 px-4 text-xl font-semibold">
-                  <img src={logo} alt="wegoStore" height={200} width={200}/>
+                  <img src={logo} alt="wegoStore" height={200} width={300}/>
          </div>
         <ul className="hidden lg:flex w-2/4 justify-center space-x-8 py-4">
           <li><a href="#section1" className="hover:underline">Section 1</a></li>
