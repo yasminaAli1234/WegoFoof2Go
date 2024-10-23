@@ -7,7 +7,7 @@ const PublicPage =()=>{
     return(
 <div className="bg-mainColor text-secondColor">
       {/* Navigation Bar */}
-      <nav className="fixed w-full flex justify-between text-white z-10 ">
+      <nav className="fixed w-full flex justify-between text-white bg-mainColor z-10">
         <div className="w-2/6 lg:w-1/4 lg:mt-0  flex text-white items-center justify-center py-6 px-4 text-xl font-semibold">
                   <img src={logo} alt="wegoStore" height={200} width={200}/>
          </div>
