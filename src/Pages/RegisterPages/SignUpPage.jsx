@@ -53,8 +53,14 @@ const SignUpPage =()=>{
                 'email': email,
                 'password': password,
                 'conf_password': confpassword,
-                'requestDemo':"0",
+                'requestDemo': "1",
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                // 'mode':'no-cors'
             });
+            
 
             if (response.status === 200) {
                 console.log(response)
