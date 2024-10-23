@@ -76,7 +76,7 @@ const LoginUser =()=>{
         <>
         <div className="loginPage flex flex-col-reverse lg:flex-row items-center justify-center lg:justify-around w-full lg:h-screen bg-mainColor text-secoundColor">
                 <div className="w-full flex justify-center">
-                        <form className="w-full sm:w-8/12 flex flex-col items-start justify-center gap-10 mt-10" onSubmit={handleSubmit}>
+                        <form className="w-full sm:w-10/12 flex flex-col items-start justify-center gap-10 mt-10" onSubmit={handleSubmit}>
                                 <div className='flex w-full flex flex-col text-secoundColor font-bold gap-8 text-4xl lg:text-5xl'>
                                    <h1>Log In To  WegoStores</h1>
                                    <h1 className='text-3xl lg:text-4xl'>Welcome Back</h1>
