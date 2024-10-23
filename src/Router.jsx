@@ -6,6 +6,7 @@ import { UserLayout,UserHomeLayout ,
     UserProfileLayout
 } from "./Layouts/AllLayouts";
 import LoginAdmin from './Pages/RegisterPages/LoginAdmin.jsx'
+import LoginUser from "./Pages/RegisterPages/LoginUser.jsx";
 /* User Dashboard */
 const AppLayoutUser = () => (
   <>
@@ -15,10 +16,17 @@ const AppLayoutUser = () => (
 
 export const router = createBrowserRouter([
 
+    //Login admin page
     {
         path: "/login_admin",
         element: <LoginAdmin />,
     },
+
+    //Login user page
+    {
+      path: "/login_user",
+      element: <LoginUser />,
+  },
 
     {
         path: "/",

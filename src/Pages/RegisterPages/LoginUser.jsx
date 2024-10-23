@@ -6,7 +6,7 @@ import { useAuth } from '../../Context/Auth';
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { toast } from 'react-toastify';
 
-const LoginAdmin =()=>{
+const LoginUser =()=>{
     const navigate = useNavigate();
     const auth = useAuth();
     console.log('auth.user', auth.user)
@@ -24,8 +24,8 @@ const LoginAdmin =()=>{
                auth.login(data); // Call auth.login with the updated data
                setIsLoading(false);
 
-               if (type === "admin") {
-                      navigate("/dashboard_admin", { replace: true });
+               if (type === "user") {
+                      navigate("/dashboard_user", { replace: true });
                }
         }
     }, [data]);
@@ -59,7 +59,6 @@ const LoginAdmin =()=>{
                     setType(response.data.user.role)
                 }
             } catch (error) {
-                console.error(error);
                 if (error.response && error.response.status === 400) {
                     auth.toastError('Please Enter Correct Email or Password');
                     console.log('Login failed:', error.response.data);
@@ -138,4 +137,4 @@ const LoginAdmin =()=>{
     )
     }
 
-    export default LoginAdmin;
+    export default LoginUser;
