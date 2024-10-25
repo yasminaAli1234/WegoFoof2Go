@@ -8,3 +8,11 @@ export { default as DomainIcon } from "./DomainIcon";
 export { default as ExtraIcon } from "./ExtraIcon";
 export { default as PaymentIcon } from "./PaymentIcon";
 export { default as TutorialIcon } from "./TutorialIcon";
+export { default as DemorequestsIcon } from "./DemorequestsIcon";
+export { default as DollerIcon } from "./DollerIcon";
+export { default as OrderIcon } from "./OrderIcon";
+export { default as PlanIcon } from "./PlanIcon";
+export { default as SettingIcon } from "./SettingIcon";
+export { default as UserIcon } from "./UserIcon";
+
+
