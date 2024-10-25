@@ -1,10 +1,110 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Loading from '../../../Components/Loading';
+import { useAuth } from '../../../Context/Auth'; // Assuming you're using useAuth for auth context
+import InputCustom from '../../../Components/InputCustom';
+import { Link } from 'react-router-dom';
+import { AiTwotoneEdit } from "react-icons/ai";
+import { Button } from '../../../Components/Button';
+import image from '../../../../public/Images/logo.png'
 
 const UserProfilePage =()=>{
+  const [isLoading, setIsLoading] = useState(false);
+
+  const {user} = useAuth();
+
+    if (isLoading) {
+        return (
+          <div className="w-1/4 h-full flex items-start mt-[10%] justify-center m-auto">
+            <Loading />
+          </div>
+        );
+    }  
+    
+    useEffect(() => {
+        console.log(user); 
+    }, []);
+      
     return(
-        <>
-        <h1>UserProfilePage</h1>
-        </>
+        <form className="w-full flex flex-col gap-y-10 p-4">
+        <div className="w-full flex flex-col lg:flex-row gap-10 items-center">
+            <div className='w-80 h-80 flex relative rounded-full border-2'>
+                <img
+                    src={image}
+                    alt="ProfileImage"
+                    className="w-full object-contain rounded-full"
+                    />
+                {/* <Link to={`/dashboard/supervisors/edit/${user.data.id}`} state={user.data.id} type="button"> */}
+                    <button className="bg-white text-mainColor shadow p-2 rounded-full absolute flex items-center bottom-7 right-4 hover:bg-gray-300">
+                        <AiTwotoneEdit size={40}/>
+                    </button>
+                {/* </Link> */}
+            </div>
+            <div className="flex flex-col gap-3">
+                <h1 className="text-3xl lg:text-5xl text-mainColor">{user.name}</h1>
+                <h1 className="text-3xl lg:text-5xl text-mainColor font-light">{user.email}</h1>
+            </div>
+        </div>
+     
+        <div className="w-full flex flex-wrap items-center justify-start gap-10">
+            <div className="w-full flex flex-col lg:flex-row gap-10">
+                <div className="lg:w-[35%] sm:w-full">
+                    <InputCustom
+                        type="text"
+                        placeholder="Name"
+                        borderColor="mainColor"
+                        value={user.name}
+                        readonly="true"
+                    />
+                </div>
+                <div className="lg:w-[35%] sm:w-full">
+                    <InputCustom
+                        type="email"
+                        placeholder="Email"
+                        borderColor="mainColor"
+                        value={user.email}
+                        readonly="true"
+                    />
+                </div>
+            </div>
+            <div className="w-full flex flex-col lg:flex-row gap-10">
+                <div className="lg:w-[35%] sm:w-full">
+                <InputCustom
+                        type="text"
+                        placeholder="Phone"
+                        borderColor="mainColor"
+                        value={user.phone}
+                        readonly="true"
+                    />
+                </div>
+                {/* <div className="lg:w-[35%] sm:w-full">
+                    <InputCustom
+                        type="text"
+                        placeholder="Position"
+                        borderColor="mainColor"
+                        value={auth.user.data.admin_position.name}
+                        readonly="true"
+                    />
+                </div> */}
+            </div>
+             {/* <div className="w-full flex items-center justify-center">
+             <Link to={`/dashboard/supervisors/edit/${auth.user.data.id}`} state={auth.user.data.id} type="button">
+                      <div className="flex items-center justify-center w-full lg:w-96 md:w-96 ">
+                          <Button
+                              Text="Edit Profile"
+                              BgColor="bg-mainColor"
+                              Color="text-white"
+                              Width="full"
+                              Size="text-2xl"
+                              px="px-14"
+                              rounded="rounded-2xl"
+                              stateLoding={isLoading}
+                          />
+                      </div>
+                </Link>
+            </div> */}
+        </div>
+    </form>
     )
 }
 
