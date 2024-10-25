@@ -3,7 +3,9 @@ import ProtectedRoute from "./ProtectedData/ProtectedRoute";
 import App from "./App";
 import { UserLayout,UserHomeLayout ,
     PublicLayout,
-    UserProfileLayout
+    UserProfileLayout,
+    StoreLayout,
+    UserSubscriptionsLayout
 } from "./Layouts/AllLayouts";
 import LoginAdmin from './Pages/RegisterPages/LoginAdmin.jsx'
 import LoginUser from "./Pages/RegisterPages/LoginUser.jsx";
@@ -56,6 +58,14 @@ export const router = createBrowserRouter([
                 path: 'profile',
                 element: <UserProfileLayout/>,
               },  
+              {
+                path: 'store',
+                element: <StoreLayout/>,
+              },
+              {
+                path: 'subscription',
+                element: <UserSubscriptionsLayout/>,
+              },
             ],
           },
         ],
