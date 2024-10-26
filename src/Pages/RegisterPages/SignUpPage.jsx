@@ -25,13 +25,13 @@ const SignUpPage =()=>{
 
     useEffect(() => {
         if (data) {
-            //    console.log('Calling auth.login with data:', data); // Debugging line
+               console.log('Calling auth.login with data:', data); // Debugging line
                auth.login(data); // Call auth.login with the updated data
                setIsLoading(false);
 
-            //    if (type === "user") {
-            //           navigate("/dashboard_user", { replace: true });
-            //    }
+               if (type === "user") {
+                      navigate("/dashboard_user", { replace: true });
+               }
         }
     }, [data]);
 
@@ -64,21 +64,21 @@ const SignUpPage =()=>{
 
             if (response.status === 200) {
                 console.log(response)
-                navigate("/dashboard_user", { replace: true });
-                    // const userData = {
-                    //     ...response.data.user,
-                    //     roles: [response.data.user.role] // Assuming role is the user's role
-                    // };
-                    // console.log('Login response:', response); // Debugging line
-                    // auth.toastSuccess('Login successfully!');
-                    // setData(userData);
-                    // setType(response.data.user.role)
+                // navigate("/dashboard_user", { replace: true });
+                    const userData = {
+                        ...response.data.user,
+                        roles: [response.data.user.role] // Assuming role is the user's role
+                    };
+                    console.log('Login response:', response); // Debugging line
+                    auth.toastSuccess('Login successfully!');
+                    setData(userData);
+                    setType(response.data.user.role)
                  }
-                 else{
-                    if(error.data.signUp.errors.email==="The email has already been taken."){
-                            auth.toastError('The email has already been taken.!');
-                           }
-                 }
+                //  else{
+                //     if(error.data.signUp.errors.email==="The email has already been taken."){
+                //             auth.toastError('The email has already been taken.!');
+                //            }
+                //  }
             } catch (error) {
                 console.log(error)
                     auth.toastError('Error posting data!');

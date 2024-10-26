@@ -1,8 +1,8 @@
 
 import { useState } from 'react';
 import { RiCloseFill, RiMenu2Fill } from 'react-icons/ri';
-import SidebarAdmin from '../Components/SidebarAdmin'
-import Navbar from '../Components/Navbar'
+import SidebarAdmin from '../../Components/AdminComponents/SidebarAdmin'
+import NavbarAmin from '../../Components/AdminComponents/NavbarAmin'
 import { Outlet } from 'react-router-dom'
 
 const AdminLayout = () => {
@@ -31,7 +31,7 @@ const AdminLayout = () => {
       {/* Main Content Section */}
       <div className={`contentSection md:w-full sm:w-full lg:w-4/5 min-h-screen transition-opacity ${isSidebarOpen ? 'opacity-50' : 'opacity-100'}`}>
                     {/* <HeaderStudent /> */}
-                    <Navbar />
+                    <NavbarAmin />
                     <div className="pl-5">
                         <Outlet />
                     </div>

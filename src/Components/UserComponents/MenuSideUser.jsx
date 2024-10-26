@@ -5,7 +5,7 @@ import { useAuth } from "../../Context/Auth";
 import { Link, useNavigate } from 'react-router-dom'
 import { IoIosLogOut } from "react-icons/io";
 
-const MenuSide = () => {
+const MenuSideUser = () => {
 
        const auth = useAuth();
        const navigate = useNavigate();
@@ -159,4 +159,4 @@ const MenuSide = () => {
        );
 };
 
-export default MenuSide;
+export default MenuSideUser;

@@ -5,7 +5,7 @@ import { CiGlobe } from "react-icons/ci";
 import { IoNotifications } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
 
-const NavbarUser = () => {
+const NavbarAmin = () => {
        const auth = useAuth()
        const dropdownRef = useRef(null)
 
@@ -76,4 +76,4 @@ const NavbarUser = () => {
        )
 }
 
-export default NavbarUser
+export default NavbarAmin

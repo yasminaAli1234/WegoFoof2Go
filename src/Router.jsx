@@ -5,7 +5,8 @@ import { UserLayout,UserHomeLayout ,
     PublicLayout,
     UserProfileLayout,
     StoreLayout,
-    UserSubscriptionsLayout
+    UserSubscriptionsLayout,
+    AdminLayout,AdminHomeLayout
 } from "./Layouts/AllLayouts";
 import LoginAdmin from './Pages/RegisterPages/LoginAdmin.jsx'
 import LoginUser from "./Pages/RegisterPages/LoginUser.jsx";
@@ -14,6 +15,12 @@ import SignUpPage from "./Pages/RegisterPages/SignUpPage.jsx";
 const AppLayoutUser = () => (
   <>
     <UserLayout/>
+  </>
+);
+
+const AppLayoutAdmin = () => (
+  <>
+    <AdminLayout/>
   </>
 );
 
@@ -41,7 +48,25 @@ export const router = createBrowserRouter([
         path: "/",
         element: <PublicLayout />,
     },
-  
+
+     /* User Routes*/
+     {
+      // element: <ProtectedRoute allowedRoles={['admin']} />,
+      path: '/dashboard_admin',
+      children: [
+        {
+          path: '',
+          element: <AppLayoutAdmin/>,
+          children: [
+            {
+              path: '',
+              element: <AdminHomeLayout/>,
+            },
+          ],
+        },
+      ],
+     },
+  /* User Routes*/
     {
         // element: <ProtectedRoute allowedRoles={['user']} />,
         path: '/dashboard_user',
