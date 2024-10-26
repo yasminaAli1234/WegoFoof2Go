@@ -22,7 +22,11 @@ const MenuSideAdmin = () => {
        const [isActivePlan, setIsActivePlan] =  useState(savedState.isActivePlan ?? false);
        const [isActiveExtra, setIsActiveExtra] =  useState(savedState.isActiveExtra ?? false);
        const [isActivePayment, setIsActivePayment] =  useState(savedState.isActivePayment ?? false);
+
        const [isActiveSetting, setIsActiveSetting] =  useState(savedState.isActiveSetting ?? false);
+              const [isActiveSettingList, setIsActiveSettingList] =  useState(savedState.isActiveSettingList ?? false);
+              const [isActivePaymentMethod, setIsActivePaymentMethod] =  useState(savedState.isActivePaymentMethod ?? false);
+
 
     //    const handleLogout = () => {
     //           auth.logout();
@@ -33,12 +37,12 @@ const MenuSideAdmin = () => {
               const sidebarAdminState = {
                      isActiveHome,isActiveDemoRequest,isActivePaymentPending,
                      isActiveOrder,isActiveUser,isActiveSubscription,isActivePlan,
-                     isActiveExtra,isActivePayment,isActiveSetting
+                     isActiveExtra,isActivePayment,isActiveSetting,isActiveSettingList
               };
               localStorage.setItem('sidebarAdminState', JSON.stringify(sidebarAdminState));
        }, [isActiveHome,isActiveDemoRequest,isActivePaymentPending,
            isActiveOrder,isActiveUser,isActiveSubscription,isActivePlan,
-           isActiveExtra,isActivePayment,isActiveSetting
+           isActiveExtra,isActivePayment,isActiveSetting,isActiveSettingList
        ]);
 
        const handleClickHome = () => {
@@ -161,6 +165,19 @@ const MenuSideAdmin = () => {
               setIsActivePayment(false)
               setIsActiveSetting(true)
        }
+       const handleClickPaymentMethod =() =>{
+              setIsActiveHome(false);
+              setIsActiveDemoRequest(false)
+              setIsActivePaymentPending(false)
+              setIsActiveOrder(false)
+              setIsActiveUser(false)
+              setIsActiveSubscription(false)
+              setIsActivePlan(false)
+              setIsActiveExtra(false)
+              setIsActivePayment(false)
+              setIsActiveSettingList(true)
+              setIsActivePaymentMethod(true)
+       }
        return (
               <>
                      <div className="w-full h-full mt-3 flex justify-center mb-10">
@@ -206,10 +223,25 @@ const MenuSideAdmin = () => {
                                           <PlanIcon isActive={isActivePlan} />
                                           <span className={`${isActivePlan ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>plan</span>
                                    </Link>
-                                   <Link to="setting" onClick={handleClickSetting} className={`${isActiveSetting ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
+                                   {/* <Link to="setting" onClick={handleClickSetting} className={`${isActiveSetting ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <SettingIcon isActive={isActiveSetting} />
                                           <span className={`${isActiveSetting ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Settings</span>
-                                   </Link>  
+                                   </Link>   */}
+
+                                   <>
+                                          <Link to="/payment/add" onClick={handleClickSetting} className={`${isActiveSetting ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
+                                                 <SettingIcon isActive={isActiveSetting} />
+                                                 <span className={`${isActiveSetting ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Settings</span>
+                                          </Link>
+                                          <div className={`${isActiveSettingList ? "h-37" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
+                                                 <ul className={`${isActiveSettingList ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-10 bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
+                                                        <Link to="/payment/add" onClick={handleClickPaymentMethod} className={`${isActivePaymentMethod ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
+                                                               {/* <CustomerIcon isActive={isActivePaymentMethod} /> */}
+                                                               <span className={`${isActivePaymentMethod ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Payment Method</span>
+                                                        </Link> 
+                                                 </ul>
+                                          </div>
+                                          </>
                             </div>
                      </div>
               </>

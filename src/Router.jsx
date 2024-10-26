@@ -55,6 +55,10 @@ export const router = createBrowserRouter([
               path: '',
               element: <AdminHomeLayout/>,
             },
+            {
+              path: 'payment_method',
+              element: <AdminHomeLayout/>,
+            },
           ],
         },
       ],
