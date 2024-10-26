@@ -240,10 +240,7 @@ const MenuSideAdmin = () => {
                                           <PaymentIcon isActive={isActivePayment} />
                                           <span className={`${isActivePayment ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Payment</span>
                                    </Link>
-                                   <Link to="plan" onClick={handleClickPlan} className={`${isActivePlan ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
-                                          <PlanIcon isActive={isActivePlan} />
-                                          <span className={`${isActivePlan ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>plan</span>
-                                   </Link>
+                                  
                                    {/* <Link to="setting" onClick={handleClickSetting} className={`${isActiveSetting ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <SettingIcon isActive={isActiveSetting} />
                                           <span className={`${isActiveSetting ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Settings</span>
