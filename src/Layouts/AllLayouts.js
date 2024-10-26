@@ -4,6 +4,12 @@ export { default as PublicLayout } from "./PublicLayouts/PublicLayout";
 /* Admin Layout */
 export { default as AdminLayout } from "./AdminLayouts/AdminLayout";
 export { default as AdminHomeLayout } from "./AdminLayouts/AdminHomeLayout";
+
+//Plans Layouts
+export { default as PlanLayout } from "./AdminLayouts/PlanLayout";
+export { default as AddPlanLayout } from "./AdminLayouts/AddPlanLayout";
+export { default as EditPlanLayout } from "./AdminLayouts/EditPlanLayout";
+
 //Setting 
 //PaymentMethod Layout
 export { default as PaymentMethodLayout } from "./AdminLayouts/PaymentMethodLayout";

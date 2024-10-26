@@ -4,6 +4,11 @@ export { default as PublicPage } from "./PublicPages/PublicPage";
 /* Admin Pages*/
 // Admin Home Page
 export { default as AdminHomePage } from "./AdminPages/AdminHome/AdminHomePage";
+//Plans Pages
+export { default as PlanPage } from "./AdminPages/Plans/PlanPage";
+export { default as AddPlanPage } from "./AdminPages/Plans/AddPlanPage";
+export { default as EditPlanPage } from "./AdminPages/Plans/EditPlanPage";
+
 //Setting 
 //PaymentMethod Pages
 export { default as PaymentMethodPage } from "./AdminPages/PaymentMethod/PaymentMethodPage";
