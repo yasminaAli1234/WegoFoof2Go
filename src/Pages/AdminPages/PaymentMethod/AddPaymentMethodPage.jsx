@@ -47,30 +47,24 @@ const AddPaymentMethodPage = () => {
         event.preventDefault();
 
         if (!thumbnails) {
-            auth.toastError('Please upload the Thumbnail.');
+            auth.toastError('Please upload the Thumbnail Image.');
             return;
         }
         if (!title) {
-            auth.toastError('Please enter the Title.');
+            auth.toastError('Please Enter the Title.');
             return;
         }
         if (!description) {
-            auth.toastError('Please enter the Description.');
+            auth.toastError('Please Enter the Description.');
             return;
         }
 
-        setLoading(true);
+        setIsLoading(true);
         try {
             const formData = new FormData();
             formData.append('name', title);
             formData.append('description', description);
             formData.append('thumbnail', thumbnailFile); // Append the file
-
-            // console.log('Submitting data:', {
-            //     title,
-            //     description,
-            //     thumbnail_link: thumbnails,
-            // });
 
             const response = await axios.post(
                 'https://login.wegostores.com/admin/v1/payment/method/create',
@@ -102,7 +96,7 @@ const AddPaymentMethodPage = () => {
 
             auth.toastError(errorMessageString);
         } finally {
-            setLoading(false);
+            setIsLoading(false);
         }
     };
 
@@ -159,7 +153,7 @@ const AddPaymentMethodPage = () => {
                               Size="text-2xl"
                               px="px-28"
                               rounded="rounded-2xl"
-                              stateLoding={isLoading}
+                            //   stateLoding={isLoading}
                           />
                       </div>
                       <button onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>
