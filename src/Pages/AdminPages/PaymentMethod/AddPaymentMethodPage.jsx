@@ -3,7 +3,9 @@ import axios from 'axios';
 import InputCustom from '../../../Components/InputCustom';
 import { Button } from '../../../Components/Button';
 import { useAuth } from '../../../Context/Auth';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
+import Loading from '../../../Components/Loading';
+
 // import CheckBox from '../../../Components/CheckBox';
 
 const AddPaymentMethodPage = () => {
@@ -11,7 +13,7 @@ const AddPaymentMethodPage = () => {
     const [thumbnails, setThumbnails] = useState('');
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [loading, setLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const uploadRef = useRef();
     const [thumbnailFile, setThumbnailFile] = useState(null); // Store the file object
@@ -60,20 +62,18 @@ const AddPaymentMethodPage = () => {
         setLoading(true);
         try {
             const formData = new FormData();
-            formData.append('title', title);
+            formData.append('name', title);
             formData.append('description', description);
             formData.append('thumbnail', thumbnailFile); // Append the file
-            formData.append('status', paymentActive); // Append the status (1 or 0)
 
-            console.log('Submitting data:', {
-                title,
-                description,
-                thumbnail_link: thumbnails,
-                status: paymentActive,
-            });
+            // console.log('Submitting data:', {
+            //     title,
+            //     description,
+            //     thumbnail_link: thumbnails,
+            // });
 
             const response = await axios.post(
-                'https://bdev.elmanhag.shop/admin/Settings/paymentMethods/add',
+                'https://login.wegostores.com/admin/v1/payment/method/create',
                 formData,
                 {
                     headers: {
@@ -107,73 +107,65 @@ const AddPaymentMethodPage = () => {
     };
 
     return (
-        <>
-            <form onSubmit={handleSubmitAdd} className="w-full flex flex-col items-start justify-center gap-y-3">
-                <div className="grid md:gap-8 grid-cols-2 lg:w-[70%] sm:w-full">
-                    <div className="w-full">
+        <form onSubmit={handleSubmitAdd} className="w-full flex flex-col items-center justify-center gap-y-10">
+                  <div className="w-full flex flex-wrap items-center justify-start gap-10">
+                      <div className="lg:w-[30%] sm:w-full">
                         <InputCustom
-                            type="text"
-                            borderColor="mainColor"
-                            placeholder="Title"
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                            width="w-full"
-                        />
-                    </div>
-                    <div className="w-full">
+                                type="text"
+                                borderColor="mainColor"
+                                placeholder="Title"
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
+                                width="w-full"
+                            />
+                      </div>
+                      <div className="lg:w-[30%] sm:w-full">
                         <InputCustom
-                            type="text"
-                            borderColor="mainColor"
-                            placeholder="Description"
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                            width="w-full"
-                        />
-                    </div>
-
-                    <div className="w-full">
+                                type="text"
+                                borderColor="mainColor"
+                                placeholder="Description"
+                                value={description}
+                                onChange={(e) => setDescription(e.target.value)}
+                                width="w-full"
+                            />
+                      </div>
+                      <div className="lg:w-[30%] sm:w-full">
                         <InputCustom
-                            type="text"
-                            borderColor="mainColor"
-                            placeholder="Thumbnail"
-                            value={thumbnails}
-                            readOnly={true} 
-                            onClick={handleInputClick}
-                            upload="true"
-                        />
-                        <input
-                            type="file"
-                            className="hidden"
-                            onChange={handleFileChange}
-                            ref={uploadRef}
-                        />
-                    </div>
-
-                    {/* <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
-                        <span className="text-2xl text-thirdColor font-medium">Active:</span>
-                        <div>
-                            <CheckBox handleClick={handleClick} checked={paymentActive}/>
+                                type="text"
+                                borderColor="mainColor"
+                                placeholder="Thumbnail"
+                                value={thumbnails}
+                                readOnly={true} 
+                                onClick={handleInputClick}
+                                upload="true"
+                            />
+                            <input
+                                type="file"
+                                className="hidden"
+                                onChange={handleFileChange}
+                                ref={uploadRef}
+                            />
                         </div>
-                    </div> */}
-                </div>
-                <div className="flex gap-4 mt-6">
-                    <Button
-                        stateLoading={loading}
-                        Width="64"
-                        Text="Done"
-                        handleClick={handleSubmitAdd}
-                    />
-                    <Button
-                        stateLoading={false}
-                        Width="64"
-                        Text="Cancel"
-                        Color="text-mainColor"
-                        BgColor="bg-thirdBgColor"
-                        handleClick={handleGoBack}
-                    />
-                </div>
-            </form>
-        </>
+                  </div>
+      
+                  <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
+                      <div className="flex items-center justify-center w-72">
+                          <Button
+                              type="submit"
+                              Text="Done"
+                              BgColor="bg-mainColor"
+                              Color="text-white"
+                              Width="full"
+                              Size="text-2xl"
+                              px="px-28"
+                              rounded="rounded-2xl"
+                              stateLoding={isLoading}
+                          />
+                      </div>
+                      <button onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>
+                  </div>
+        </form>
+           
     );
 };
 

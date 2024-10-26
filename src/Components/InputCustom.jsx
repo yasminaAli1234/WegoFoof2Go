@@ -68,7 +68,7 @@ const InputCustom = ({ type,bgColor,placeholderColor, required = true, minDate =
                             <input type={type}
                                    placeholder={placeholder}
                                    className={`w-full border-2 placeholder-${placeholderColor} ${bgColor} ${textDirection ? "text-right" : "text-left"} rounded-xl border-${borderColor} 
-                       outline-none px-2 py-4 ${paddinLeft} ${paddinRight} text-2xl  ${placeholderSize ? 'text-lg' : 'text-2xl'} font-normal eleValueInput ${upload ? "text-mainColor cursor-pointer pr-10" : "text-thirdColor"}`}
+                       outline-none px-2 py-4 ${paddinLeft} ${paddinRight} text-2xl  ${placeholderSize ? 'text-lg' : 'text-2xl'} font-normal eleValueInput ${upload ? "text-mainColor cursor-pointer pr-10" : "text-black"}`}
                                    value={value}
                                    onChange={onChange}
                                    onClick={onClick}
