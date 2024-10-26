@@ -1,5 +1,5 @@
 import React, { useState ,useEffect} from "react";
-import {HomeIcon,
+import {DemorequestsIcon, DollerIcon, ExtraIcon, HomeIcon, OrderIcon, PaymentIcon, PlanIcon, SettingIcon, SubscriptionIcon, UserIcon,
     // ProfileIcon,StoreIcon,SubscriptionIcon,DomainIcon,ExtraIcon,PaymentIcon,TutorialIcon
 } from "../Icons/AllIcons";
 import { NavLink } from "react-router-dom";
@@ -14,14 +14,16 @@ const MenuSideAdmin = () => {
        const savedState = JSON.parse(localStorage.getItem('sidebarAdminState')) || {};
 
        const [isActiveHome, setIsActiveHome] =  useState(savedState.isActiveHome ?? true);
-    //    const [isActiveProfile, setIsActiveProfile] =  useState(savedState.isActiveProfile ?? false);
-    //    const [isActiveStore, setIsActiveStore] =  useState(savedState.isActiveStore ?? false);
-    //    const [isActiveSubscription, setIsActiveSubscription] =  useState(savedState.isActiveSubscription ?? false);
-    //    const [isActiveDomain, setIsActiveDomain] =  useState(savedState.isActiveDomain ?? false);
-    //    const [isActiveExtra, setIsActiveExtra] =  useState(savedState.isActiveExtra ?? false);
-    //    const [isActivePayment, setIsActivePayment] =  useState(savedState.isActivePayment ?? false);
-    //    const [isActiveTutorial, setIsActiveTutorial] =  useState(savedState.isActiveTutorial ?? false);
-   
+       const [isActiveDemoRequest, setIsActiveDemoRequest] =  useState(savedState.isActiveDemoRequest ?? false);
+       const [isActivePaymentPending, setIsActivePaymentPending] =  useState(savedState.isActivePaymentPending ?? false);
+       const [isActiveOrder, setIsActiveOrder] =  useState(savedState.isActiveOrder ?? false);
+       const [isActiveUser, setIsActiveUser] =  useState(savedState.isActiveUser ?? false);
+       const [isActiveSubscription, setIsActiveSubscription] =  useState(savedState.isActiveSubscription ?? false);
+       const [isActivePlan, setIsActivePlan] =  useState(savedState.isActivePlan ?? false);
+       const [isActiveExtra, setIsActiveExtra] =  useState(savedState.isActiveExtra ?? false);
+       const [isActivePayment, setIsActivePayment] =  useState(savedState.isActivePayment ?? false);
+       const [isActiveSetting, setIsActiveSetting] =  useState(savedState.isActiveSetting ?? false);
+
     //    const handleLogout = () => {
     //           auth.logout();
     //           // navigate("/", { replace: true });
@@ -29,97 +31,136 @@ const MenuSideAdmin = () => {
 
        useEffect(() => {
               const sidebarAdminState = {
-                     isActiveHome,
-                    //  isActiveProfile,isActiveStore,isActiveSubscription,
-                    //  isActiveDomain,isActiveExtra,isActivePayment,isActiveTutorial
+                     isActiveHome,isActiveDemoRequest,isActivePaymentPending,
+                     isActiveOrder,isActiveUser,isActiveSubscription,isActivePlan,
+                     isActiveExtra,isActivePayment,isActiveSetting
               };
               localStorage.setItem('sidebarAdminState', JSON.stringify(sidebarAdminState));
-       }, [isActiveHome,
-        // isActiveProfile,isActiveStore,isActiveSubscription,
-        //    isActiveDomain,isActiveExtra,isActivePayment,isActiveTutorial
+       }, [isActiveHome,isActiveDemoRequest,isActivePaymentPending,
+           isActiveOrder,isActiveUser,isActiveSubscription,isActivePlan,
+           isActiveExtra,isActivePayment,isActiveSetting
        ]);
 
        const handleClickHome = () => {
               setIsActiveHome(true);
-            //   setIsActiveProfile(false)
-            //   setIsActiveStore(false)
-            //   setIsActiveSubscription(false)
-            //   setIsActiveDomain(false)
-            //   setIsActiveExtra(false)
-            //   setIsActivePayment(false)
-            //   setIsActiveTutorial(false)
-
+              setIsActiveDemoRequest(false)
+              setIsActivePaymentPending(false)
+              setIsActiveOrder(false)
+              setIsActiveUser(false)
+              setIsActiveSubscription(false)
+              setIsActivePlan(false)
+              setIsActiveExtra(false)
+              setIsActivePayment(false)
+              setIsActiveSetting(false)
        };
-    //    const handleClickProfile = () => {
-    //           setIsActiveHome(false);
-    //           setIsActiveProfile(true)
-    //           setIsActiveStore(false)
-    //           setIsActiveSubscription(false)
-    //           setIsActiveDomain(false)
-    //           setIsActiveExtra(false)
-    //           setIsActivePayment(false)
-    //           setIsActiveTutorial(false)
-    //    };
-    //    const handleClickStore =() =>{
-    //           setIsActiveHome(false);
-    //           setIsActiveProfile(false)
-    //           setIsActiveStore(true)
-    //           setIsActiveSubscription(false)
-    //           setIsActiveDomain(false)
-    //           setIsActiveExtra(false)
-    //           setIsActivePayment(false)
-    //           setIsActiveTutorial(false)
-    //    }
-    //    const handleClickSubscription =() =>{
-    //           setIsActiveHome(false);
-    //           setIsActiveProfile(false)
-    //           setIsActiveStore(false)
-    //           setIsActiveSubscription(true)
-    //           setIsActiveDomain(false)
-    //           setIsActiveExtra(false)
-    //           setIsActivePayment(false)
-    //           setIsActiveTutorial(false)
-    //    }
-    //    const handleClickDomain =() =>{
-    //           setIsActiveHome(false);
-    //           setIsActiveProfile(false)
-    //           setIsActiveStore(false)
-    //           setIsActiveSubscription(false)
-    //           setIsActiveDomain(true)
-    //           setIsActiveExtra(false)
-    //           setIsActivePayment(false)
-    //           setIsActiveTutorial(false)
-    //    }
-    //    const handleClickExtra =() =>{
-    //           setIsActiveHome(false);
-    //           setIsActiveProfile(false)
-    //           setIsActiveStore(false)
-    //           setIsActiveSubscription(false)
-    //           setIsActiveDomain(false)
-    //           setIsActiveExtra(true)
-    //           setIsActivePayment(false)
-    //           setIsActiveTutorial(false)
-    //    }
-    //    const handleClickPayment =() =>{
-    //           setIsActiveHome(false);
-    //           setIsActiveProfile(false)
-    //           setIsActiveStore(false)
-    //           setIsActiveSubscription(false)
-    //           setIsActiveDomain(false)
-    //           setIsActiveExtra(false)
-    //           setIsActivePayment(true)
-    //           setIsActiveTutorial(false)
-    //    }
-    //    const handleClickTutorial =() =>{
-    //           setIsActiveHome(false);
-    //           setIsActiveProfile(false)
-    //           setIsActiveStore(false)
-    //           setIsActiveSubscription(false)
-    //           setIsActiveDomain(false)
-    //           setIsActiveExtra(false)
-    //           setIsActivePayment(false)
-    //           setIsActiveTutorial(true)
-    //    }
+       const handleClickDemoRequest = () => {
+              setIsActiveHome(false);
+              setIsActiveDemoRequest(true)
+              setIsActivePaymentPending(false)
+              setIsActiveOrder(false)
+              setIsActiveUser(false)
+              setIsActiveSubscription(false)
+              setIsActivePlan(false)
+              setIsActiveExtra(false)
+              setIsActivePayment(false)
+              setIsActiveSetting(false)
+       };
+       const handleClickPaymentPending =() =>{
+              setIsActiveHome(false);
+              setIsActiveDemoRequest(false)
+              setIsActivePaymentPending(true)
+              setIsActiveOrder(false)
+              setIsActiveUser(false)
+              setIsActiveSubscription(false)
+              setIsActivePlan(false)
+              setIsActiveExtra(false)
+              setIsActivePayment(false)
+              setIsActiveSetting(false)
+       }
+       const handleClickOrder=() =>{
+              setIsActiveHome(false);
+              setIsActiveDemoRequest(false)
+              setIsActivePaymentPending(false)
+              setIsActiveOrder(true)
+              setIsActiveUser(false)
+              setIsActiveSubscription(false)
+              setIsActivePlan(false)
+              setIsActiveExtra(false)
+              setIsActivePayment(false)
+              setIsActiveSetting(false)
+       }
+       const handleClickUser =() =>{
+              setIsActiveHome(false);
+              setIsActiveDemoRequest(false)
+              setIsActivePaymentPending(false)
+              setIsActiveOrder(false)
+              setIsActiveUser(true)
+              setIsActiveSubscription(false)
+              setIsActivePlan(false)
+              setIsActiveExtra(false)
+              setIsActivePayment(false)
+              setIsActiveSetting(false)
+       }
+       const handleClickSubscription =() =>{
+              setIsActiveHome(false);
+              setIsActiveDemoRequest(false)
+              setIsActivePaymentPending(false)
+              setIsActiveOrder(false)
+              setIsActiveUser(false)
+              setIsActiveSubscription(true)
+              setIsActivePlan(false)
+              setIsActiveExtra(false)
+              setIsActivePayment(false)
+              setIsActiveSetting(false)
+       }
+       const handleClickPlan =() =>{
+              setIsActiveHome(false);
+              setIsActiveDemoRequest(false)
+              setIsActivePaymentPending(false)
+              setIsActiveOrder(false)
+              setIsActiveUser(false)
+              setIsActiveSubscription(false)
+              setIsActivePlan(true)
+              setIsActiveExtra(false)
+              setIsActivePayment(false)
+              setIsActiveSetting(false)
+       }
+       const handleClickExtra =() =>{
+              setIsActiveHome(false);
+              setIsActiveDemoRequest(false)
+              setIsActivePaymentPending(false)
+              setIsActiveOrder(false)
+              setIsActiveUser(false)
+              setIsActiveSubscription(false)
+              setIsActivePlan(false)
+              setIsActiveExtra(true)
+              setIsActivePayment(false)
+              setIsActiveSetting(false)
+       }
+       const handleClickPayment =() =>{
+              setIsActiveHome(false);
+              setIsActiveDemoRequest(false)
+              setIsActivePaymentPending(false)
+              setIsActiveOrder(false)
+              setIsActiveUser(false)
+              setIsActiveSubscription(false)
+              setIsActivePlan(false)
+              setIsActiveExtra(false)
+              setIsActivePayment(true)
+              setIsActiveSetting(false)
+       }
+       const handleClickSetting =() =>{
+              setIsActiveHome(false);
+              setIsActiveDemoRequest(false)
+              setIsActivePaymentPending(false)
+              setIsActiveOrder(false)
+              setIsActiveUser(false)
+              setIsActiveSubscription(false)
+              setIsActivePlan(false)
+              setIsActiveExtra(false)
+              setIsActivePayment(false)
+              setIsActiveSetting(true)
+       }
        return (
               <>
                      <div className="w-full h-full mt-3 flex justify-center mb-10">
@@ -128,35 +169,47 @@ const MenuSideAdmin = () => {
                                           <HomeIcon isActive={isActiveHome} />
                                           <span className={`${isActiveHome ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Home</span>
                                    </Link>
-                                   {/* <Link to="profile" onClick={handleClickProfile} className={`${isActiveProfile ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
-                                          <ProfileIcon isActive={isActiveProfile} />
-                                          <span className={`${isActiveProfile ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Profile</span>
+                                   <Link to="demo_request" onClick={handleClickDemoRequest} className={`${isActiveDemoRequest ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
+                                          <DemorequestsIcon isActive={isActiveDemoRequest} />
+                                          <span className={`${isActiveDemoRequest ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Demo Requests</span>
                                    </Link>
-                                   <Link to="store" onClick={handleClickStore} className={`${isActiveStore ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
-                                          <StoreIcon isActive={isActiveStore} />
-                                          <span className={`${isActiveStore ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Store</span>
+                                   <Link to="store" onClick={handleClickPaymentPending} className={`${isActivePaymentPending ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
+                                          <DollerIcon isActive={isActivePaymentPending} />
+                                          <span className={`${isActivePaymentPending ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Payment Pending</span>
                                    </Link>
+                                   <Link to="order" onClick={handleClickOrder} className={`${isActiveOrder ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
+                                          <OrderIcon isActive={isActiveOrder} />
+                                          <span className={`${isActiveOrder ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Order</span>
+                                   </Link> 
+                                   <Link to="user" onClick={handleClickUser} className={`${isActiveUser ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
+                                          <UserIcon isActive={isActiveUser} />
+                                          <span className={`${isActiveUser ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>User</span>
+                                   </Link> 
                                    <Link to="subscription" onClick={handleClickSubscription} className={`${isActiveSubscription ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <SubscriptionIcon isActive={isActiveSubscription} />
                                           <span className={`${isActiveSubscription ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Subscriptions</span>
-                                   </Link>                      
-                                   <Link to="domain" onClick={handleClickDomain} className={`${isActiveDomain ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
-                                          <DomainIcon isActive={isActiveDomain} />
-                                          <span className={`${isActiveDomain ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Domain</span>
                                    </Link>
-                                   <Link to="extra" onClick={handleClickExtra} className={`${isActiveExtra ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
+                                   <Link to="plan" onClick={handleClickPlan} className={`${isActivePlan ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
+                                          <PlanIcon isActive={isActivePlan} />
+                                          <span className={`${isActivePlan ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>plan</span>
+                                   </Link> 
+
+                                   <Link to="extra_product" onClick={handleClickExtra} className={`${isActiveExtra ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <ExtraIcon isActive={isActiveExtra} />
-                                          <span className={`${isActiveExtra ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Extras</span>
+                                          <span className={`${isActiveExtra ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Extras Product</span>
                                    </Link>
-                                   <Link to="payment_history" onClick={handleClickPayment} className={`${isActivePayment ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
+                                   <Link to="payment" onClick={handleClickPayment} className={`${isActivePayment ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <PaymentIcon isActive={isActivePayment} />
-                                          <span className={`${isActivePayment ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Payment History</span>
+                                          <span className={`${isActivePayment ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Payment</span>
                                    </Link>
-                                   <Link to="tutorial" onClick={handleClickTutorial} className={`${isActiveTutorial ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
-                                          <TutorialIcon isActive={isActiveTutorial} />
-                                          <span className={`${isActiveTutorial ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Tutorial</span>
+                                   <Link to="plan" onClick={handleClickPlan} className={`${isActivePlan ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
+                                          <PlanIcon isActive={isActivePlan} />
+                                          <span className={`${isActivePlan ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>plan</span>
                                    </Link>
-                                              */}
+                                   <Link to="setting" onClick={handleClickSetting} className={`${isActiveSetting ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
+                                          <SettingIcon isActive={isActiveSetting} />
+                                          <span className={`${isActiveSetting ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Settings</span>
+                                   </Link>  
                             </div>
                      </div>
               </>
