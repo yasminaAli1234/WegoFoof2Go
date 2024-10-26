@@ -6,7 +6,10 @@ import { UserLayout,UserHomeLayout ,
     UserProfileLayout,
     StoreLayout,
     UserSubscriptionsLayout,
-    AdminLayout,AdminHomeLayout
+    AdminLayout,AdminHomeLayout,
+    PaymentMethodLayout,
+    AddPaymentMethodLayout,
+    EditPaymentMethodLayout
 } from "./Layouts/AllLayouts";
 import Login from "./Pages/RegisterPages/Login.jsx";
 import SignUpPage from "./Pages/RegisterPages/SignUpPage.jsx";
@@ -20,6 +23,12 @@ const AppLayoutUser = () => (
 const AppLayoutAdmin = () => (
   <>
     <AdminLayout/>
+  </>
+);
+
+const AppLayoutPaymentMethod = () => (
+  <>
+    <Outlet/>
   </>
 );
 
@@ -57,8 +66,22 @@ export const router = createBrowserRouter([
             },
             {
               path: 'payment_method',
-              element: <AdminHomeLayout/>,
-            },
+              element: <AppLayoutPaymentMethod/>,
+              children:[
+                {
+                  path:'',
+                  element: <PaymentMethodLayout/>,
+                },
+                {
+                  path:'add',
+                  element: <AddPaymentMethodLayout/>,
+                },
+                {
+                  path:'edit/:methodId',
+                  element: <EditPaymentMethodLayout/>,
+                },
+              ]
+            }, 
           ],
         },
       ],

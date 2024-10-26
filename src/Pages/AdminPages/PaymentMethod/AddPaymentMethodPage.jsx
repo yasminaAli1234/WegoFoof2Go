@@ -113,7 +113,7 @@ const AddPaymentMethodPage = () => {
                     <div className="w-full">
                         <InputCustom
                             type="text"
-                            borderColor="secoundColor"
+                            borderColor="mainColor"
                             placeholder="Title"
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
@@ -123,7 +123,7 @@ const AddPaymentMethodPage = () => {
                     <div className="w-full">
                         <InputCustom
                             type="text"
-                            borderColor="secoundColor"
+                            borderColor="mainColor"
                             placeholder="Description"
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
@@ -134,10 +134,12 @@ const AddPaymentMethodPage = () => {
                     <div className="w-full">
                         <InputCustom
                             type="text"
+                            borderColor="mainColor"
                             placeholder="Thumbnail"
                             value={thumbnails}
                             readOnly={true} 
-                            onClick={handleInputClick} 
+                            onClick={handleInputClick}
+                            upload="true"
                         />
                         <input
                             type="file"

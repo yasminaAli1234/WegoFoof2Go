@@ -9,7 +9,7 @@ const HeaderPageSection = ({ handleClick, name, size }) => {
                             <button type='button' className='' onClick={handleClick}>
                                    <IoIosArrowDown className="rotate-90 text-mainColor text-5xl" />
                             </button>
-                            <div className="w-full text-center">
+                            <div className="text-mainColor w-full text-center">
                                    <TitleHeader text={name} size={size}/>
                             </div>
                      </div>
