@@ -19,7 +19,7 @@ const PublicPage =()=>{
           <li><a href="#section5" className="hover:underline">Section 5</a></li>
         </ul>
         <div className="flex py-4 gap-5 w-4/6 lg:w-1/4">
-           <Link to="/login_user">
+           <Link to="/login">
               <button className="text-2xl font-medium py-2 px-2 lg:py-4 lg:px-6 border rounded-xl hover:bg-secoundColor hover:text-mainColor">
                 Login
               </button>

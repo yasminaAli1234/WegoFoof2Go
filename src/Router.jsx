@@ -8,8 +8,7 @@ import { UserLayout,UserHomeLayout ,
     UserSubscriptionsLayout,
     AdminLayout,AdminHomeLayout
 } from "./Layouts/AllLayouts";
-import LoginAdmin from './Pages/RegisterPages/LoginAdmin.jsx'
-import LoginUser from "./Pages/RegisterPages/LoginUser.jsx";
+import Login from "./Pages/RegisterPages/Login.jsx";
 import SignUpPage from "./Pages/RegisterPages/SignUpPage.jsx";
 /* User Dashboard */
 const AppLayoutUser = () => (
@@ -26,16 +25,10 @@ const AppLayoutAdmin = () => (
 
 export const router = createBrowserRouter([
 
-    //Login admin page
-    {
-        path: "/login_admin",
-        element: <LoginAdmin />,
-    },
-
     //Login user page
     {
-      path: "login_user",
-      element: <LoginUser />,
+      path: "login",
+      element: <Login />,
     },
 
     //SignUp user page

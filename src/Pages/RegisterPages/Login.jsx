@@ -27,6 +27,10 @@ const LoginUser =()=>{
                if (type === "user") {
                       navigate("/dashboard_user", { replace: true });
                }
+               else if (type === "admin") {
+
+                navigate("/dashboard_admin", { replace: true });
+         }
         }
     }, [data]);
 
