@@ -89,130 +89,130 @@ export const router = createBrowserRouter([
         element: <PublicLayout />,
     },
 
-     /* User Routes*/
-     {
-      // element: <ProtectedRoute allowedRoles={['admin']} />,
-      path: '/dashboard_admin',
-      children: [
-        {
-          path: '',
-          element: <AppLayoutAdmin/>,
-          children: [
-            {
-              path: '',
-              element: <AdminHomeLayout/>,
-            },
-            {
-              path: 'demo_request',
-              element: <DemoRequestLayout/>,
-            },
-            {
-              path: 'pending_payment',
-              element: <PendingPaymentLayout/>,
-            },
-            {
-              path: 'order',
-              element: <OrderLayout/>,
-            },
-            {
-              path: 'user',
-              element: <AppLayoutUsers/>,
-              children:[
-                {
-                  path:'',
-                  element: <UserLayout/>,
-                },
-                {
-                  path:'add',
-                  element: <AddUserLayout/>,
-                },
-                {
-                  path:'edit/:userId',
-                  element: <EditUserLayout/>,
-                },
-              ]
-            }, 
-            {
-              path: 'subscription',
-              element: <AppLayoutSubscription/>,
-              children:[
-                {
-                  path:'',
-                  element: <SubscriptionLayout/>,
-                },
-                {
-                  path:'add',
-                  element: <AddSubscriptionLayout/>,
-                },
-                {
-                  path:'edit/:subscriptionId',
-                  element: <EditSubscriptionLayout/>,
-                },
-              ]
-            }, 
-            {
-              path: 'plan',
-              element: <AppLayoutPlan/>,
-              children:[
-                {
-                  path:'',
-                  element: <PlanLayout/>,
-                },
-                {
-                  path:'add',
-                  element: <AddPlanLayout/>,
-                },
-                {
-                  path:'edit/:planId',
-                  element: <EditPlanLayout/>,
-                },
-              ]
-            },
-            {
-              path: 'extra_product',
-              element: <AppLayoutExtraProduct/>,
-              children:[
-                {
-                  path:'',
-                  element: <ExtraProductLayout/>,
-                },
-                {
-                  path:'add',
-                  element: <AddExtraProductLayout/>,
-                },
-                {
-                  path:'edit/:extraId',
-                  element: <EditExtraProductLayout/>,
-                },
-              ]
-            },
-            {
-              path: 'payment',
-              element: <PaymentLayout/>,
-            },  
-            {
-              path: 'payment_method',
-              element: <AppLayoutPaymentMethod/>,
-              children:[
-                {
-                  path:'',
-                  element: <PaymentMethodLayout/>,
-                },
-                {
-                  path:'add',
-                  element: <AddPaymentMethodLayout/>,
-                },
-                {
-                  path:'edit/:methodId',
-                  element: <EditPaymentMethodLayout/>,
-                },
-              ]
-            }, 
-          ],
-        },
-      ],
-     },
-  /* User Routes*/
+    /* Admin Routes*/
+    {
+    // element: <ProtectedRoute allowedRoles={['admin']} />,
+    path: '/dashboard_admin',
+    children: [
+      {
+        path: '',
+        element: <AppLayoutAdmin/>,
+        children: [
+          {
+            path: '',
+            element: <AdminHomeLayout/>,
+          },
+          {
+            path: 'demo_request',
+            element: <DemoRequestLayout/>,
+          },
+          {
+            path: 'pending_payment',
+            element: <PendingPaymentLayout/>,
+          },
+          {
+            path: 'order',
+            element: <OrderLayout/>,
+          },
+          {
+            path: 'user',
+            element: <AppLayoutUsers/>,
+            children:[
+              {
+                path:'',
+                element: <UserLayout/>,
+              },
+              {
+                path:'add',
+                element: <AddUserLayout/>,
+              },
+              {
+                path:'edit/:userId',
+                element: <EditUserLayout/>,
+              },
+            ]
+          }, 
+          {
+            path: 'subscription',
+            element: <AppLayoutSubscription/>,
+            children:[
+              {
+                path:'',
+                element: <SubscriptionLayout/>,
+              },
+              {
+                path:'add',
+                element: <AddSubscriptionLayout/>,
+              },
+              {
+                path:'edit/:subscriptionId',
+                element: <EditSubscriptionLayout/>,
+              },
+            ]
+          }, 
+          {
+            path: 'plan',
+            element: <AppLayoutPlan/>,
+            children:[
+              {
+                path:'',
+                element: <PlanLayout/>,
+              },
+              {
+                path:'add',
+                element: <AddPlanLayout/>,
+              },
+              {
+                path:'edit/:planId',
+                element: <EditPlanLayout/>,
+              },
+            ]
+          },
+          {
+            path: 'extra_product',
+            element: <AppLayoutExtraProduct/>,
+            children:[
+              {
+                path:'',
+                element: <ExtraProductLayout/>,
+              },
+              {
+                path:'add',
+                element: <AddExtraProductLayout/>,
+              },
+              {
+                path:'edit/:extraId',
+                element: <EditExtraProductLayout/>,
+              },
+            ]
+          },
+          {
+            path: 'payment',
+            element: <PaymentLayout/>,
+          },  
+          {
+            path: 'payment_method',
+            element: <AppLayoutPaymentMethod/>,
+            children:[
+              {
+                path:'',
+                element: <PaymentMethodLayout/>,
+              },
+              {
+                path:'add',
+                element: <AddPaymentMethodLayout/>,
+              },
+              {
+                path:'edit/:methodId',
+                element: <EditPaymentMethodLayout/>,
+              },
+            ]
+          }, 
+        ],
+      },
+    ],
+    },
+    /* User Routes*/
     {
         // element: <ProtectedRoute allowedRoles={['user']} />,
         path: '/dashboard_user',
