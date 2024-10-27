@@ -13,14 +13,25 @@ import { UserLayout,UserHomeLayout ,
     PlanLayout,
     AddPlanLayout,
     EditPlanLayout,
-    UserEditProfileLayout
+    UserEditProfileLayout,DemoRequestLayout,
+    PendingPaymentLayout,
+    OrderLayout,
+    AddUserLayout,
+    EditUserLayout,
+    AddSubscriptionLayout,
+    EditSubscriptionLayout,
+    ExtraProductLayout,
+    AddExtraProductLayout,
+    EditExtraProductLayout,
+    PaymentLayout
 } from "./Layouts/AllLayouts";
 import Login from "./Pages/RegisterPages/Login.jsx";
 import SignUpPage from "./Pages/RegisterPages/SignUpPage.jsx";
+import SubscriptionLayout from "./Layouts/AdminLayouts/SubscriptionLayout.jsx";
 /* User Dashboard */
 const AppLayoutUser = () => (
   <>
-    <UserLayout/>
+    <UserDashboardLayout/>
   </>
 );
 const AppLayoutUserProfile = () => (
@@ -33,7 +44,22 @@ const AppLayoutAdmin = () => (
     <AdminLayout/>
   </>
 );
+const AppLayoutUsers = () => (
+  <>
+    <Outlet/>
+  </>
+);
+const AppLayoutSubscription = () => (
+  <>
+    <Outlet/>
+  </>
+);
 const AppLayoutPlan = () => (
+  <>
+    <Outlet/>
+  </>
+);
+const AppLayoutExtraProduct = () => (
   <>
     <Outlet/>
   </>
@@ -77,6 +103,54 @@ export const router = createBrowserRouter([
               element: <AdminHomeLayout/>,
             },
             {
+              path: 'demo_request',
+              element: <DemoRequestLayout/>,
+            },
+            {
+              path: 'pending_payment',
+              element: <PendingPaymentLayout/>,
+            },
+            {
+              path: 'order',
+              element: <OrderLayout/>,
+            },
+            {
+              path: 'user',
+              element: <AppLayoutUsers/>,
+              children:[
+                {
+                  path:'',
+                  element: <UserLayout/>,
+                },
+                {
+                  path:'add',
+                  element: <AddUserLayout/>,
+                },
+                {
+                  path:'edit/:userId',
+                  element: <EditUserLayout/>,
+                },
+              ]
+            }, 
+            {
+              path: 'subscription',
+              element: <AppLayoutSubscription/>,
+              children:[
+                {
+                  path:'',
+                  element: <SubscriptionLayout/>,
+                },
+                {
+                  path:'add',
+                  element: <AddSubscriptionLayout/>,
+                },
+                {
+                  path:'edit/:subscriptionId',
+                  element: <EditSubscriptionLayout/>,
+                },
+              ]
+            }, 
+            {
               path: 'plan',
               element: <AppLayoutPlan/>,
               children:[
@@ -93,7 +167,29 @@ export const router = createBrowserRouter([
                   element: <EditPlanLayout/>,
                 },
               ]
-            }, 
+            },
+            {
+              path: 'extra_product',
+              element: <AppLayoutExtraProduct/>,
+              children:[
+                {
+                  path:'',
+                  element: <ExtraProductLayout/>,
+                },
+                {
+                  path:'add',
+                  element: <AddExtraProductLayout/>,
+                },
+                {
+                  path:'edit/:extraId',
+                  element: <EditExtraProductLayout/>,
+                },
+              ]
+            },
+            {
+              path: 'payment',
+              element: <PaymentLayout/>,
+            },  
             {
               path: 'payment_method',
               element: <AppLayoutPaymentMethod/>,

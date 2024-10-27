@@ -3,13 +3,32 @@ export { default as PublicLayout } from "./PublicLayouts/PublicLayout";
 
 /* Admin Layout */
 export { default as AdminLayout } from "./AdminLayouts/AdminLayout";
+// Admin Home Layout
 export { default as AdminHomeLayout } from "./AdminLayouts/AdminHomeLayout";
-
-//Plans Layouts
+//Demo Request Layout
+export { default as DemoRequestLayout } from "./AdminLayouts/DemoRequestLayout";
+//PendingPayment Layout
+export { default as PendingPaymentLayout } from "./AdminLayouts/PendingPaymentLayout";
+//Order Layout
+export { default as OrderLayout } from "./AdminLayouts/OrderLayout";
+//Users Layout
+export { default as UserLayout } from "./AdminLayouts/UserLayout";
+export { default as AddUserLayout } from "./AdminLayouts/AddUserLayout";
+export { default as EditUserLayout } from "./AdminLayouts/EditUserLayout";
+//Subscription Layout
+export { default as SubscriptionPage } from "./AdminLayouts/SubscriptionLayout";
+export { default as AddSubscriptionLayout } from "./AdminLayouts/AddSubscriptionLayout";
+export { default as EditSubscriptionLayout } from "./AdminLayouts/EditSubscriptionLayout";
+//Plans Layout
 export { default as PlanLayout } from "./AdminLayouts/PlanLayout";
 export { default as AddPlanLayout } from "./AdminLayouts/AddPlanLayout";
 export { default as EditPlanLayout } from "./AdminLayouts/EditPlanLayout";
-
+//ExtraProduct Layout
+export { default as ExtraProductLayout } from "./AdminLayouts/ExtraProductLayout";
+export { default as AddExtraProductLayout } from "./AdminLayouts/AddExtraProductLayout";
+export { default as EditExtraProductLayout } from "./AdminLayouts/EditExtraProductLayout";
+//Payment Layout
+export { default as PaymentLayout } from "./AdminLayouts/PaymentLayout";
 //Setting 
 //PaymentMethod Layout
 export { default as PaymentMethodLayout } from "./AdminLayouts/PaymentMethodLayout";
@@ -19,7 +38,7 @@ export { default as EditPaymentMethodLayout } from "./AdminLayouts/EditPaymentMe
 
 
 /* User Layout */
-export { default as UserLayout } from "./UserLayouts/UserLayout";
+export { default as UserDashboardLayout } from "./UserLayouts/UserDashboardLayout";
 export { default as UserHomeLayout } from "./UserLayouts/UserHomeLayout";
 //User Profile Layout
 export { default as UserProfileLayout } from "./UserLayouts/UserProfileLayout";

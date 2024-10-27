@@ -211,7 +211,7 @@ const MenuSideAdmin = () => {
                                           <DemorequestsIcon isActive={isActiveDemoRequest} />
                                           <span className={`${isActiveDemoRequest ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Demo Requests</span>
                                    </Link>
-                                   <Link to="store" onClick={handleClickPaymentPending} className={`${isActivePaymentPending ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
+                                   <Link to="pending_payment" onClick={handleClickPaymentPending} className={`${isActivePaymentPending ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <DollerIcon isActive={isActivePaymentPending} />
                                           <span className={`${isActivePaymentPending ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Payment Pending</span>
                                    </Link>

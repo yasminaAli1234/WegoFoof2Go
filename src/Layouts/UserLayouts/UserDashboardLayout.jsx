@@ -5,7 +5,7 @@ import SidebarUser from '../../Components/UserComponents/SidebarUser'
 import NavbarUser from '../../Components/UserComponents/NavbarUser'
 import { Outlet } from 'react-router-dom'
 
-const UserLayout = () => {
+const UserDashboardLayout = () => {
        const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
        const toggleSidebar = () => {
@@ -40,4 +40,4 @@ const UserLayout = () => {
   );
 };
 
-export default UserLayout;
+export default UserDashboardLayout;
