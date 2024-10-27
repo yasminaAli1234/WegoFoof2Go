@@ -11,6 +11,7 @@ const AddPlanPage = () => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [fee, setFee] = useState('');
+    const [limitPlan, setLimitPlan] = useState('');
     const [paymentActive, setPaymentActive] = useState(0); // Default status to 0
     const [isLoading, setIsLoading] = useState(false);
     const [secondaryPrice, setSecondaryPrice] = useState(''); // Price for Secondary
@@ -45,13 +46,14 @@ const AddPlanPage = () => {
             const formData = new FormData();
             formData.append('name', title);
             formData.append('description', description);
-            
+            formData.append('setup_fees', fee);
+            formData.append('limet_store', limitPlan);
             // Append selected prices if inputs are shown and filled
             if (showSecondaryPriceInput && secondaryPrice) {
-                formData.append('secondary_price', secondaryPrice);
+                formData.append('price_per_year', secondaryPrice);
             }
             if (showMonthlyPriceInput && monthlyPrice) {
-                formData.append('monthly_price', monthlyPrice);
+                formData.append('price_per_month', monthlyPrice);
             }
 
             const response = await axios.post(
@@ -104,11 +106,31 @@ const AddPlanPage = () => {
                 </div>
                 <div className="lg:w-[30%] sm:w-full">
                     <InputCustom
-                        type="text"
+                        type="number"
                         borderColor="mainColor"
                         placeholder="Setup Fees"
                         value={fee}
                         onChange={(e) => setFee(e.target.value)}
+                        width="w-full"
+                    />
+                </div>
+                <div className="lg:w-[30%] sm:w-full">
+                    <InputCustom
+                        type="number"
+                        borderColor="mainColor"
+                        placeholder="Limit Store"
+                        value={limitPlan}
+                        onChange={(e) => setLimitPlan(e.target.value)}
+                        width="w-full"
+                    />
+                </div>
+                <div className="lg:w-[30%] sm:w-full">
+                    <InputCustom
+                        type="number"
+                        borderColor="mainColor"
+                        placeholder="Duration"
+                        value={limitPlan}
+                        onChange={(e) => setLimitPlan(e.target.value)}
                         width="w-full"
                     />
                 </div>
@@ -138,7 +160,7 @@ const AddPlanPage = () => {
                             {showSecondaryPriceInput && (
                             <div className="lg:w-1/2 sm:w-full">
                                 <InputCustom
-                                    type="text"
+                                    type="number"
                                     borderColor="mainColor"
                                     placeholder="Enter Secondary Price"
                                     value={secondaryPrice}
@@ -162,7 +184,7 @@ const AddPlanPage = () => {
                             {showMonthlyPriceInput && (
                         <div className="lg:w-1/2 sm:w-full">
                             <InputCustom
-                                type="text"
+                                type="number"
                                 borderColor="mainColor"
                                 placeholder="Enter Monthly Price"
                                 value={monthlyPrice}

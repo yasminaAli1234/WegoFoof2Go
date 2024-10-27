@@ -317,7 +317,7 @@ const SignUpPage =()=>{
                     className="w-full mt-5 text-center text-3xl font-medium px-6 py-3 text-mainColor bg-secoundColor rounded-md"
                     disabled={isLoading}
                 >
-                    Send
+                    SignUp                
                 </button>
 
                 <div className='flex flex-col lg:flex-row gap-5 text-2xl font-medium'>
