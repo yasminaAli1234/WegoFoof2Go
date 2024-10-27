@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import {Wroning,DeleteIcon,EditIcon} from '../../../Components/Icons/AllIcons';
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
 import { MdCheck } from "react-icons/md";
+import CheckBox from '../../../Components/CheckBox';
 
 const PlanPage = () => {
 
@@ -27,7 +28,7 @@ const PlanPage = () => {
                });
                if (response.status === 200) {
                       console.log(response.data)
-                     //  setPlans(response.data.plans)
+                      setPlans(response.data.plan)
                }
         } catch (error) {
                console.error('Error fetching data:', error);
@@ -38,7 +39,7 @@ const PlanPage = () => {
 
     useEffect(() => {
         fetchData(); 
-    }, []);
+    }, [planChanged]);
 
     const handleOpenDialog = (planId) => {
        setOpenDialog(planId);
@@ -95,9 +96,9 @@ const PlanPage = () => {
         );
     }    
       
-//     if (!plans) {
-//         return <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No plans data available</div>;
-//     }
+    if (!plans) {
+        return <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No plans data available</div>;
+    }
 
        return (
               <>
@@ -107,24 +108,36 @@ const PlanPage = () => {
                             <ButtonAdd isWidth="true" BgColor ="mainColor" Color="white" iconColor="white"/>
                      </Link>
                      </div>
-                {/* <div className="w-full flex flex-wrap items-center justify-start gap-10">
+                <div className="w-full flex flex-wrap items-center justify-start gap-10">
                 {plans.map((plan, index) => (
                     <>
                         <div className="lg:w-[30%] sm:w-full border border-mainColor rounded-lg">
                             <div className='text-center mb-5 p-4 pb-0 text-mainColor text-2xl font-semibold leading-10'>
-                                <h1 className='p-2 border-b-2 border-mainColor'>{plan.offer_name}</h1>
+                                <h1 className='p-2 border-b-2 border-mainColor'>{plan.name}</h1>
                             </div>
                             <div className='p-4 text-mainColor flex flex-col gap-10'>
-                                <div className='flex justify-center flex-row items-center gap-3'>
+                                   <div>
+                                          <p><span className='text-maincolor text-xl font-semibold'>Description : </span>{plan.description}</p>
+                                   </div>
+                                   <div className="flex items-center gap-x-4 w-full">
+                                          <span className="text-2xl text-mainColor font-medium">Application:</span>
+                                          <div>
+                                                 <CheckBox checked={plan.app}/>
+                                          </div>
+                                   </div>
+                                   <div>
+                                          <p><span className='text-maincolor text-xl font-semibold'>SetUp Fees : </span>{plan.setup_fees}</p>
+                                   </div>
+                                {/* <div className='flex justify-center flex-row items-center gap-3'>
                                 <MdCheck />
                                 <p className='font-semibold text-2xl'>{plan.duration} Days</p>
-                                </div>
-                                <div className='flex pl-6 flex-col gap-3 font-semibold'>
+                                </div> */}
+                                {/* <div className='flex pl-6 flex-col gap-3 font-semibold'>
                                     <h1>{plan.price_discount}$</h1>
                                     <h1><span className='font-semibold line-through text-2xl'>{plan.price}$ </span>/ {plan.duration} Days</h1>
-                                </div>
+                                </div> */}
                             </div>
-                            <div className='p-4'>
+                            {/* <div className='p-4'>
                                 <div className='flex gap-x-3 border-t-2 border-mainColor p-4 pb-0'>
                                                         <Link to={`edit/${plan.id}`} state={plan.id} type="button">
                                                                 <EditIcon />
@@ -172,11 +185,11 @@ const PlanPage = () => {
                                                                 </Dialog>
                                                         )}
                                 </div>
-                            </div>
+                            </div> */}
                         </div>       
                     </>
                  ))}
-                </div> */}
+                </div>
               </div>
               </>
        )

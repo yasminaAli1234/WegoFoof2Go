@@ -61,6 +61,7 @@ const AddPlanPage = () => {
         setIsLoading(true);
         try {
             const formData = new FormData();
+            formData.append('title', title);
             formData.append('name', title);
             formData.append('description', description);
             formData.append('setup_fees', fee);
@@ -75,6 +76,10 @@ const AddPlanPage = () => {
                 formData.append('price_per_month', monthlyPrice);
             }
 
+            for (let pair of formData.entries()) {
+                console.log(pair[0] + ', ' + pair[1]);
+            } 
+
             const response = await axios.post(
                 'https://login.wegostores.com/admin/v1/plan/create',
                 formData,
@@ -85,10 +90,10 @@ const AddPlanPage = () => {
                     },
                 }
             );
-
+             console.log(response)
             if (response.status === 200) {
                 auth.toastSuccess('Plan added successfully!');
-                handleGoBack();
+                // handleGoBack();
             } else {
                 auth.toastError('Failed to add Plan.');
             }
