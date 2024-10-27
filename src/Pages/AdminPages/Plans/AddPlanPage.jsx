@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; 
+import React, { useState, useRef,useEffect } from 'react';
 import axios from 'axios';
 import InputCustom from '../../../Components/InputCustom';
 import { Button } from '../../../Components/Button';
@@ -12,21 +12,38 @@ const AddPlanPage = () => {
     const [description, setDescription] = useState('');
     const [fee, setFee] = useState('');
     const [limitPlan, setLimitPlan] = useState('');
-    const [paymentActive, setPaymentActive] = useState(0); // Default status to 0
+    const [thumbnails, setThumbnails] = useState('');
+    const [thumbnailFile, setThumbnailFile] = useState(null); // Store the file object
+    const [appActive, setAppActive] = useState(0); // Default status to 0
     const [isLoading, setIsLoading] = useState(false);
     const [secondaryPrice, setSecondaryPrice] = useState(''); // Price for Secondary
     const [monthlyPrice, setMonthlyPrice] = useState(''); // Price for Monthly
     const [showSecondaryPriceInput, setShowSecondaryPriceInput] = useState(false); // Toggle for Secondary Price Input
     const [showMonthlyPriceInput, setShowMonthlyPriceInput] = useState(false); // Toggle for Monthly Price Input
     const navigate = useNavigate();
+    const uploadRef = useRef();
 
     const handleGoBack = () => {
         navigate(-1, { replace: true });
     };
 
+    const handleInputClick = () => {
+        if (uploadRef.current) {
+            uploadRef.current.click(); // Trigger a click on the hidden file input
+        }
+    };
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setThumbnailFile(file); // Set file object for upload
+            setThumbnails(file.name); // Display file name in the text input
+        }
+    };
+
     const handleClick = (e) => {
         const isChecked = e.target.checked; // Checked status
-        setPaymentActive(isChecked ? 1 : 0); // Set paymentActive as 1 (true) or 0 (false)
+        setAppActive(isChecked ? 1 : 0); // Set paymentActive as 1 (true) or 0 (false)
     };
 
     const handleSubmitAdd = async (event) => {
@@ -48,6 +65,8 @@ const AddPlanPage = () => {
             formData.append('description', description);
             formData.append('setup_fees', fee);
             formData.append('limet_store', limitPlan);
+            formData.append('image', thumbnailFile); // Append the file
+            formData.append('app', appActive); // Append the file
             // Append selected prices if inputs are shown and filled
             if (showSecondaryPriceInput && secondaryPrice) {
                 formData.append('price_per_year', secondaryPrice);
@@ -57,7 +76,7 @@ const AddPlanPage = () => {
             }
 
             const response = await axios.post(
-                'https://login.wegostores.com/admin/v1/payment/method/create',
+                'https://login.wegostores.com/admin/v1/plan/create',
                 formData,
                 {
                     headers: {
@@ -68,12 +87,13 @@ const AddPlanPage = () => {
             );
 
             if (response.status === 200) {
-                auth.toastSuccess('Payment Method added successfully!');
+                auth.toastSuccess('Plan added successfully!');
                 handleGoBack();
             } else {
-                auth.toastError('Failed to add Payment Method.');
+                auth.toastError('Failed to add Plan.');
             }
         } catch (error) {
+            console.log(error)
             const errorMessage = error?.response?.data?.errors || 'Network error';
             auth.toastError(errorMessage);
         } finally {
@@ -126,19 +146,26 @@ const AddPlanPage = () => {
                 </div>
                 <div className="lg:w-[30%] sm:w-full">
                     <InputCustom
-                        type="number"
-                        borderColor="mainColor"
-                        placeholder="Duration"
-                        value={limitPlan}
-                        onChange={(e) => setLimitPlan(e.target.value)}
-                        width="w-full"
-                    />
+                            type="text"
+                            borderColor="mainColor"
+                            placeholder="Thumbnail"
+                            value={thumbnails}
+                            readOnly={true} 
+                            onClick={handleInputClick}
+                            upload="true"
+                        />
+                        <input
+                            type="file"
+                            className="hidden"
+                            onChange={handleFileChange}
+                            ref={uploadRef}
+                        />
                 </div>
 
                 <div className="flex items-center gap-x-4 w-full">
                         <span className="text-2xl text-mainColor font-medium">Application:</span>
                          <div>
-                             <CheckBox handleClick={handleClick} checked={paymentActive}/>
+                             <CheckBox handleClick={handleClick} checked={appActive}/>
                          </div>
                      </div>
 

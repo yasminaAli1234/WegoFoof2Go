@@ -20,7 +20,7 @@ const PlanPage = () => {
     const fetchData = async () => {
         setIsLoading(true);
         try {
-               const response = await axios.get('https://login.wegostores.com/admin/v1/payment/method/create', {
+               const response = await axios.get('https://login.wegostores.com/admin/v1/plan/show', {
                       headers: {
                              Authorization: `Bearer ${auth.user.token}`,
                       },
@@ -38,7 +38,7 @@ const PlanPage = () => {
 
     useEffect(() => {
         fetchData(); 
-    }, [planChanged]);
+    }, []);
 
     const handleOpenDialog = (planId) => {
        setOpenDialog(planId);
