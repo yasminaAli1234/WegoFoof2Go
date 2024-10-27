@@ -134,7 +134,9 @@ const PaymentMethodPage = () => {
                                         <td
                                                 className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                         >
-                                                {payment?.thumbnail || 'Null'}
+                                                <div className='w-full flex justify-center'>
+                                                <img src={payment?.thumbnailUrl || 'Null'} alt='payment method image' className='w-20 object-content'/>
+                                                </div>
                                         </td>  
                                         <td
                                                 className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"

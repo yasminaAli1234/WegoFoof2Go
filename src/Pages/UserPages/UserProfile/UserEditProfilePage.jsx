@@ -3,15 +3,28 @@ import axios from "axios";
 import Loading from '../../../Components/Loading';
 import { useAuth } from '../../../Context/Auth'; // Assuming you're using useAuth for auth context
 import InputCustom from '../../../Components/InputCustom';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { AiTwotoneEdit } from "react-icons/ai";
 import { Button } from '../../../Components/Button';
 import image from '../../../../public/Images/logo.png'
 
-const UserProfilePage =()=>{
+const UserEditProfilePage =()=>{
   const [isLoading, setIsLoading] = useState(false);
+  const auth = useAuth();
+  const location = useLocation();
+  const user = location.state || {};
 
-  const {user} = useAuth();
+  const [name, setName] = useState(user.userData.name);
+  const [phone, setPhone] = useState(user.userData.phone);
+  const [email, setEmail] = useState(user.userData.email);
+  const [image, setImage] = useState(user.userData.image);
+
+  useEffect(() => {
+    console.log("userData", user); 
+    // setName(userData.name)
+    // setPhone(userData.phone)
+    // setEmail(userData.email)
+  }, []);
 
     if (isLoading) {
         return (
@@ -20,10 +33,6 @@ const UserProfilePage =()=>{
           </div>
         );
     }  
-    
-    useEffect(() => {
-        console.log(user); 
-    }, []);
       
     return(
         <form className="w-full flex flex-col gap-y-10 p-4">
@@ -33,16 +42,10 @@ const UserProfilePage =()=>{
                     src={image}
                     alt="ProfileImage"
                     className="w-full object-contain rounded-full"
-                    />
-             <Link to={'edit'} type="button" state={{user}}>
-             <button className="bg-white text-mainColor shadow p-2 rounded-full absolute flex items-center bottom-7 right-4 hover:bg-gray-300">
-                        <AiTwotoneEdit size={40}/>
-                    </button>
-                </Link>
-            </div>
-            <div className="flex flex-col gap-3">
-                <h1 className="text-3xl lg:text-5xl text-mainColor">{user.name}</h1>
-                <h1 className="text-3xl lg:text-5xl text-mainColor font-light">{user.email}</h1>
+                />
+                <button className="bg-white text-mainColor shadow p-2 rounded-full absolute flex items-center bottom-7 right-4 hover:bg-gray-300">
+                    <AiTwotoneEdit size={40}/>
+                </button>
             </div>
         </div>
      
@@ -53,8 +56,8 @@ const UserProfilePage =()=>{
                         type="text"
                         placeholder="Name"
                         borderColor="mainColor"
-                        value={user.name}
-                        readonly="true"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                     />
                 </div>
                 <div className="lg:w-[35%] sm:w-full">
@@ -62,8 +65,8 @@ const UserProfilePage =()=>{
                         type="email"
                         placeholder="Email"
                         borderColor="mainColor"
-                        value={user.email}
-                        readonly="true"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
             </div>
@@ -73,25 +76,15 @@ const UserProfilePage =()=>{
                         type="text"
                         placeholder="Phone"
                         borderColor="mainColor"
-                        value={user.phone}
-                        readonly="true"
-                    />
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                />
                 </div>
-                {/* <div className="lg:w-[35%] sm:w-full">
-                    <InputCustom
-                        type="text"
-                        placeholder="Position"
-                        borderColor="mainColor"
-                        value={auth.user.data.admin_position.name}
-                        readonly="true"
-                    />
-                </div> */}
             </div>
              <div className="w-full flex items-center justify-center">
-             <Link to={'edit'} type="button" state={{userData:user}}>
-             <div className="flex items-center justify-center w-full lg:w-96 md:w-96 ">
+                      <div className="flex items-center justify-center w-full lg:w-96 md:w-96 ">
                           <Button
-                              Text="Edit Profile"
+                              Text="Update Profile"
                               BgColor="bg-mainColor"
                               Color="text-white"
                               Width="full"
@@ -101,11 +94,10 @@ const UserProfilePage =()=>{
                               stateLoding={isLoading}
                           />
                       </div>
-                </Link>
             </div>
         </div>
     </form>
     )
 }
 
-export default UserProfilePage;
+export default UserEditProfilePage;

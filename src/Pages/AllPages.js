@@ -26,6 +26,7 @@ export { default as EditPaymentMethodPage } from "./AdminPages/PaymentMethod/Edi
 export { default as UserHomePage } from "./UserPages/UserHome/UserHomePage";
 //User Profile
 export { default as UserProfilePage } from "./UserPages/UserProfile/UserProfilePage";
+export { default as UserEditProfilePage } from "./UserPages/UserProfile/UserEditProfilePage";
 //User Store
 export { default as StorePage } from "./UserPages/Store/StorePage";
 //User Subscriptions

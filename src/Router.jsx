@@ -12,7 +12,8 @@ import { UserLayout,UserHomeLayout ,
     EditPaymentMethodLayout,
     PlanLayout,
     AddPlanLayout,
-    EditPlanLayout
+    EditPlanLayout,
+    UserEditProfileLayout
 } from "./Layouts/AllLayouts";
 import Login from "./Pages/RegisterPages/Login.jsx";
 import SignUpPage from "./Pages/RegisterPages/SignUpPage.jsx";
@@ -20,6 +21,11 @@ import SignUpPage from "./Pages/RegisterPages/SignUpPage.jsx";
 const AppLayoutUser = () => (
   <>
     <UserLayout/>
+  </>
+);
+const AppLayoutUserProfile = () => (
+  <>
+    <Outlet/>
   </>
 );
 const AppLayoutAdmin = () => (
@@ -125,7 +131,17 @@ export const router = createBrowserRouter([
               },
               {
                 path: 'profile',
-                element: <UserProfileLayout/>,
+                element: <AppLayoutUserProfile/>,
+                children:[
+                  {
+                    path:'',
+                    element: <UserProfileLayout/>,
+                  },
+                  {
+                    path:'edit',
+                    element: <UserEditProfileLayout/>
+                  }
+                ]
               },  
               {
                 path: 'store',

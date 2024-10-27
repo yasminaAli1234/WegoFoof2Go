@@ -23,6 +23,7 @@ export { default as UserLayout } from "./UserLayouts/UserLayout";
 export { default as UserHomeLayout } from "./UserLayouts/UserHomeLayout";
 //User Profile Layout
 export { default as UserProfileLayout } from "./UserLayouts/UserProfileLayout";
+export { default as UserEditProfileLayout } from "./UserLayouts/UserEditProfileLayout";
 //User Store Layout
 export { default as StoreLayout } from "./UserLayouts/StoreLayout";
 //User Subscriptions Layout
