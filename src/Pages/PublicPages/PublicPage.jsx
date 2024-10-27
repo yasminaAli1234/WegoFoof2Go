@@ -2,7 +2,7 @@ import React from "react";
 import logo from '../../../public/Images/logo white.png'
 import { Button } from "../../Components/Button";
 import { Link } from 'react-router-dom'
-
+import homeImage from '../../../public/Images/homeImage.png'
 const PublicPage =()=>{
     return(
 <div className="bg-mainColor text-secondColor">
@@ -11,12 +11,12 @@ const PublicPage =()=>{
         <div className="w-2/6 lg:w-1/4 lg:mt-0  flex text-white items-center justify-center py-6 px-4 text-xl font-semibold">
                   <img src={logo} alt="wegoStore" height={200} width={300}/>
          </div>
-        <ul className="hidden lg:flex w-2/4 justify-center space-x-8 py-4">
-          <li><a href="#section1" className="hover:underline">Section 1</a></li>
-          <li><a href="#section2" className="hover:underline">Section 2</a></li>
-          <li><a href="#section3" className="hover:underline">Section 3</a></li>
-          <li><a href="#section4" className="hover:underline">Section 4</a></li>
-          <li><a href="#section5" className="hover:underline">Section 5</a></li>
+        <ul className="hidden mt-5 lg:flex w-2/4 justify-center space-x-8 py-4">
+          <li><a href="#section1" className="text-2xl hover:underline">Home</a></li>
+          <li><a href="#section2" className="text-2xl hover:underline">About Us</a></li>
+          <li><a href="#section3" className="text-2xl hover:underline">Our features</a></li>
+          <li><a href="#section4" className="text-2xl hover:underline">Plan</a></li>
+          <li><a href="#section5" className="text-2xl hover:underline">Contact Us</a></li>
         </ul>
         <div className="flex py-4 gap-5 w-4/6 lg:w-1/4">
            <Link to="/login">
@@ -34,7 +34,12 @@ const PublicPage =()=>{
 
       {/* Sections */}
       <section id="section1" className="h-screen flex items-center justify-center text-white text-3xl">
-        Section 1
+        {/* <div className="w-full">
+          <div className="w-full flex justify-center">
+            <img src={homeImage} alt="" className="w-1/2 h-1/2 rotate-0"/>
+          </div>
+
+        </div> */}
       </section>
       <section id="section2" className="h-screen flex items-center justify-center text-white text-3xl">
         Section 2
