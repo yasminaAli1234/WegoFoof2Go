@@ -95,9 +95,9 @@ const PlanPage = () => {
         );
     }    
       
-    if (!plans) {
-        return <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No plans data available</div>;
-    }
+//     if (!plans) {
+//         return <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No plans data available</div>;
+//     }
 
        return (
               <>
@@ -107,7 +107,7 @@ const PlanPage = () => {
                             <ButtonAdd isWidth="true" BgColor ="mainColor" Color="white" iconColor="white"/>
                      </Link>
                      </div>
-                <div className="w-full flex flex-wrap items-center justify-start gap-10">
+                {/* <div className="w-full flex flex-wrap items-center justify-start gap-10">
                 {plans.map((plan, index) => (
                     <>
                         <div className="lg:w-[30%] sm:w-full border border-mainColor rounded-lg">
@@ -176,7 +176,7 @@ const PlanPage = () => {
                         </div>       
                     </>
                  ))}
-                </div>
+                </div> */}
               </div>
               </>
        )
