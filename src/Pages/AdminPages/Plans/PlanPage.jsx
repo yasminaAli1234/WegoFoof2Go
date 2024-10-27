@@ -27,7 +27,7 @@ const PlanPage = () => {
                });
                if (response.status === 200) {
                       console.log(response.data)
-                      setPlans(response.data.plans)
+                     //  setPlans(response.data.plans)
                }
         } catch (error) {
                console.error('Error fetching data:', error);

@@ -125,7 +125,7 @@ const LoginUser =()=>{
                                 className="w-full mt-10 text-center text-3xl font-medium px-6 py-3 text-mainColor bg-secoundColor rounded-md"
                                 disabled={isLoading}
                             >
-                                Send
+                                Login
                             </button>
                             
                         </form>

@@ -10,7 +10,7 @@ const AddPlanPage = () => {
     const auth = useAuth();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [face, setFace] = useState('');
+    const [fee, setFee] = useState('');
     const [paymentActive, setPaymentActive] = useState(0); // Default status to 0
     const [isLoading, setIsLoading] = useState(false);
     const [secondaryPrice, setSecondaryPrice] = useState(''); // Price for Secondary
@@ -106,9 +106,9 @@ const AddPlanPage = () => {
                     <InputCustom
                         type="text"
                         borderColor="mainColor"
-                        placeholder="Setup Face"
-                        value={face}
-                        onChange={(e) => setFace(e.target.value)}
+                        placeholder="Setup Fees"
+                        value={fee}
+                        onChange={(e) => setFee(e.target.value)}
                         width="w-full"
                     />
                 </div>
