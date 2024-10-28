@@ -106,7 +106,7 @@ const AddPlanPage = () => {
              console.log(response)
             if (response.status === 200) {
                 auth.toastSuccess('Plan added successfully!');
-                // handleGoBack();
+                handleGoBack();
             } else {
                 auth.toastError('Failed to add Plan.');
             }
