@@ -111,39 +111,41 @@ const PlanPage = () => {
                 <div className="w-full flex flex-wrap items-center justify-start gap-10">
                 {plans.map((plan, index) => (
                     <>
-                        <div className="lg:w-[30%] sm:w-full border border-mainColor rounded-lg">
-                            <div className='text-center mb-5 p-4 pb-0 text-mainColor text-2xl font-semibold leading-10'>
-                                <h1 className='p-2 border-b-2 border-mainColor'>{plan.name}</h1>
+                        <div className="lg:w-[30%] sm:w-full border border-mainColor rounded-2xl">
+                            <div className='text-center mb-5 p-4 pb-0 text-mainColor text-4xl font-semibold leading-10'>
+                                <h1 className='p-2'>{plan.name}</h1>
                             </div>
-                            <div className='p-4 text-mainColor flex flex-col gap-10'>
-                                   <div>
-                                          <p><span className='text-maincolor text-xl font-semibold'>Description : </span>{plan.description}</p>
+                            <div className='p-4 text-mainColor flex flex-col gap-5'>
+                                   <div className='flex flex-col gap-2'>
+                                          <span className='text-maincolor text-3xl font-semibold'>Description : </span>
+                                          <p className='text-[#686868] text-2xl'>{plan.description}</p>
                                    </div>
                                    <div className="flex items-center gap-x-4 w-full">
-                                          <span className="text-2xl text-mainColor font-medium">Application:</span>
+                                          <span className="text-3xl text-mainColor font-medium">Application:</span>
                                           <div>
                                                  <CheckBox checked={plan.app}/>
                                           </div>
                                    </div>
-                                   <div>
-                                          <p><span className='text-maincolor text-xl font-semibold'>SetUp Fees : </span>{plan.setup_fees}</p>
+                                   <div className='flex items-center gap-5'>
+                                          <span className='text-maincolor text-3xl font-semibold'>SetUp Fees : </span>
+                                          <p className='text-[#686868] text-2xl'>{plan.setup_fees}</p>
                                    </div>
-                                {/* <div className='flex justify-center flex-row items-center gap-3'>
-                                <MdCheck />
-                                <p className='font-semibold text-2xl'>{plan.duration} Days</p>
-                                </div> */}
-                                {/* <div className='flex pl-6 flex-col gap-3 font-semibold'>
-                                    <h1>{plan.price_discount}$</h1>
-                                    <h1><span className='font-semibold line-through text-2xl'>{plan.price}$ </span>/ {plan.duration} Days</h1>
-                                </div> */}
+                                   <div className='flex items-center gap-5'>
+                                          <span className='text-maincolor text-3xl font-semibold'>Price per year  : </span>
+                                          <p className='text-[#686868] text-2xl'>{plan.price_per_year} EGP</p>
+                                   </div>
+                                   <div className='flex items-center gap-5'>
+                                          <span className='text-maincolor text-3xl font-semibold'>Price per Month  : </span>
+                                          <p className='text-[#686868] text-2xl'>{plan.price_per_month} EGP</p>
+                                   </div>
                             </div>
-                            {/* <div className='p-4'>
-                                <div className='flex gap-x-3 border-t-2 border-mainColor p-4 pb-0'>
+                            <div className='p-4'>
+                                <div className='flex gap-x-5 p-4 pb-0'>
                                                         <Link to={`edit/${plan.id}`} state={plan.id} type="button">
-                                                                <EditIcon />
+                                                                <span className='flex text-[#686868] items-center text-2xl underline gap-1'><EditIcon /> Edit</span>
                                                         </Link>
                                                         <button type="button" onClick={() => handleOpenDialog(plan.id)}>
-                                                                <DeleteIcon />
+                                                               <span className='flex text-[#686868] items-center text-2xl underline gap-1'><DeleteIcon /> Delete</span>
                                                         </button>
                                                         {openDialog === plan.id && (
                                                                 <Dialog open={true} onClose={handleCloseDialog} className="relative z-10">
@@ -185,7 +187,7 @@ const PlanPage = () => {
                                                                 </Dialog>
                                                         )}
                                 </div>
-                            </div> */}
+                            </div>
                         </div>       
                     </>
                  ))}

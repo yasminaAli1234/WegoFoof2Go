@@ -58,6 +58,19 @@ const AddPlanPage = () => {
             return;
         }
 
+        if (!fee) {
+            auth.toastError('Please Enter the Setup Fees.');
+            return;
+        }
+        if (!monthlyPrice) {
+            auth.toastError('Please Enter the Monthly Price.');
+            return;
+        }
+        if (!secondaryPrice) {
+            auth.toastError('Please Enter the Secondary Price.');
+            return;
+        }
+
         setIsLoading(true);
         try {
             const formData = new FormData();
