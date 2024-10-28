@@ -23,7 +23,8 @@ import { UserLayout,UserHomeLayout ,
     ExtraProductLayout,
     AddExtraProductLayout,
     EditExtraProductLayout,
-    PaymentLayout
+    UserDashboardLayout,
+    PaymentLayout,
 } from "./Layouts/AllLayouts";
 import Login from "./Pages/RegisterPages/Login.jsx";
 import SignUpPage from "./Pages/RegisterPages/SignUpPage.jsx";
