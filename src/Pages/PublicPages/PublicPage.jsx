@@ -8,8 +8,8 @@ const PublicPage =()=>{
 <div className="bg-mainColor text-secondColor">
       {/* Navigation Bar */}
       <nav className="fixed w-full flex justify-between text-white bg-mainColor z-10">
-        <div className="w-2/6 lg:w-1/4 lg:mt-0  flex text-white items-center justify-center py-6 px-4 text-xl font-semibold">
-                  <img src={logo} alt="wegoStore" height={200} width={300}/>
+        <div className="w-2/6 lg:w-1/4 lg:mt-0  flex text-white items-center justify-center py-4 px-4 text-xl font-semibold">
+                  <img src={logo} alt="wegoStore" height={100} width={300}/>
          </div>
         <ul className="hidden mt-5 lg:flex w-2/4 justify-center space-x-8 py-4">
           <li><a href="#section1" className="text-2xl hover:underline">Home</a></li>
@@ -34,12 +34,18 @@ const PublicPage =()=>{
 
       {/* Sections */}
       <section id="section1" className="h-screen flex items-center justify-center text-white text-3xl">
-        {/* <div className="w-full">
+        <div className="w-full flex flex-col gap-5 justify-center">
           <div className="w-full flex justify-center">
-            <img src={homeImage} alt="" className="w-1/2 h-1/2 rotate-0"/>
+            <img src={homeImage} alt="" className="w-full lg:w-1/6 lg:h-1/6"/>
           </div>
-
-        </div> */}
+          <h1 className="font-semibold text-2xl lg:text-5xl text-center">Design Your Perfect Website in One Click!</h1>
+          <div className="w-full flex justify-center">
+          <p className="font-normal text-2xl text-center w-5/6">Enjoy a fast and easy process to create a stunning website that reflects your
+             identity, with our flexible packages ensuring you a unique experience in no
+             time. Choose what suits you and start your digital journey with confidence!
+          </p> 
+          </div>
+        </div>
       </section>
       <section id="section2" className="h-screen flex items-center justify-center text-white text-3xl">
         Section 2
