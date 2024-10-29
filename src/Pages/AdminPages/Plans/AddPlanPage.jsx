@@ -171,6 +171,7 @@ const AddPlanPage = () => {
                             readOnly={true} 
                             onClick={handleInputClick}
                             upload="true"
+                            required={false}
                         />
                         <input
                             type="file"
