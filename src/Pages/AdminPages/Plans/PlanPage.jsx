@@ -68,7 +68,7 @@ const PlanPage = () => {
 
        const deletePlan = async (planId, authToken) => {
               try {
-                     const response = await axios.delete(`https://transitstation.online/api/admin/plan/delete/${planId}`, {
+                     const response = await axios.delete(`https://login.wegostores.com/admin/v1/plan/delete/${planId}`, {
                             headers: {
                                    Authorization: `Bearer ${authToken}`,
                             },
@@ -158,7 +158,7 @@ const PlanPage = () => {
                                                                                                 <div className="flex items-center">
                                                                                                         <div className="mt-2 text-center">
                                                                                                                 <DialogTitle as="h3" className="text-xl font-semibold leading-10 text-gray-900">
-                                                                                                                        You will delete plan {plan.offer_name|| "null"}
+                                                                                                                        You will delete plan {plan.name|| "null"}
                                                                                                                 </DialogTitle>
                                                                                                         </div>
                                                                                                 </div>

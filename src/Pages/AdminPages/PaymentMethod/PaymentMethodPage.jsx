@@ -67,8 +67,8 @@ const PaymentMethodPage = () => {
 
        const deletePayment = async (paymentId, authToken) => {
               try {
-                     const response = await axios.delete(`https://transitstation.online/api/admin/plan/delete/${paymentId}`, {
-                            headers: {
+                const response = await axios.delete(`https://login.wegostores.com/admin/v1/payment/method/delete/${paymentId}`, {
+                        headers: {
                                    Authorization: `Bearer ${authToken}`,
                             },
                      });
