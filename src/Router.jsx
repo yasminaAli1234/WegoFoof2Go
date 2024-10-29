@@ -92,7 +92,7 @@ export const router = createBrowserRouter([
 
     /* Admin Routes*/
     {
-    // element: <ProtectedRoute allowedRoles={['admin']} />,
+    element: <ProtectedRoute allowedRoles={['admin']} />,
     path: '/dashboard_admin',
     children: [
       {
@@ -215,7 +215,7 @@ export const router = createBrowserRouter([
     },
     /* User Routes*/
     {
-        // element: <ProtectedRoute allowedRoles={['user']} />,
+        element: <ProtectedRoute allowedRoles={['user']} />,
         path: '/dashboard_user',
         children: [
           {

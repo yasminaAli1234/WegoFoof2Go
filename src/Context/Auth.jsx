@@ -22,12 +22,14 @@ export const ContextProvider = ({ children }) => {
   }, [user]);
 
   const login = (userData) => {
-    const user = JSON.parse(localStorage.getItem('user')); // Retrieve and parse the user object from localStorage
+    // const user = JSON.parse(localStorage.getItem('user')); // Retrieve and parse the user object from localStorage
     setUser(userData);
   };
 
 const logout = async () => {
   setUser(null);
+  localStorage.removeItem('user');
+  localStorage.removeItem("sidebarAdminState")
 };
 
 
