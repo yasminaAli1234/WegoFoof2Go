@@ -1,9 +1,10 @@
 import React from "react";
+import { PaymentHistoryPage } from "../../Pages/AllPages";
 
 const PaymentHistoryLayout =()=>{
     return(
         <>
-        <h1>PaymentHistoryLayout</h1>
+        <PaymentHistoryPage/>
         </>
     )
 }

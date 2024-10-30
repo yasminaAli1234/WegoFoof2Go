@@ -1,9 +1,10 @@
 import React from "react";
+import { TutorialPage } from "../../Pages/AllPages";
 
 const TutorialLayout =()=>{
     return(
         <>
-        <h1>TutorialLayout</h1>
+        <TutorialPage/>
         </>
     )
 }

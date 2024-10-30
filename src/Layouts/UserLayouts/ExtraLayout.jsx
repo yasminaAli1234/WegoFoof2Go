@@ -1,9 +1,11 @@
 import React from "react";
+import { ExtraPage } from "../../Pages/AllPages";
 
 const ExtraLayout =()=>{
+
     return(
         <>
-        <h1>ExtraLayout</h1>
+        <ExtraPage/>
         </>
     )
 }

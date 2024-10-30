@@ -28,6 +28,7 @@ import { UserLayout,UserHomeLayout ,
     DomainLayout,
     PaymentHistoryLayout,
     TutorialLayout,
+    ExtraLayout,
 } from "./Layouts/AllLayouts";
 import Login from "./Pages/RegisterPages/Login.jsx";
 import SignUpPage from "./Pages/RegisterPages/SignUpPage.jsx";
@@ -257,7 +258,7 @@ export const router = createBrowserRouter([
               },
               {
                 path: 'extra',
-                element: <ExtraProductLayout/>,
+                element: <ExtraLayout/>,
               },
               {
                 path: 'payment_history',
