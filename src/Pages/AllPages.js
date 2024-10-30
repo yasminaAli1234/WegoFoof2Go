@@ -44,6 +44,8 @@ export { default as UserProfilePage } from "./UserPages/UserProfile/UserProfileP
 export { default as UserEditProfilePage } from "./UserPages/UserProfile/UserEditProfilePage";
 //User Store
 export { default as StorePage } from "./UserPages/Store/StorePage";
+export { default as AddStorePage } from "./UserPages/Store/AddStorePage";
+export { default as EditStorePage } from "./UserPages/Store/EditStorePage";
 //User Subscriptions
 export { default as UserSubscriptionsPage } from "./UserPages/UserSubscriptions/UserSubscriptionsPage";
 //User Domain

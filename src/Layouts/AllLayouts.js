@@ -45,5 +45,15 @@ export { default as UserProfileLayout } from "./UserLayouts/UserProfileLayout";
 export { default as UserEditProfileLayout } from "./UserLayouts/UserEditProfileLayout";
 //User Store Layout
 export { default as StoreLayout } from "./UserLayouts/StoreLayout";
+export { default as AddStoreLayout } from "./UserLayouts/AddStoreLayout";
+export { default as EditStoreLayout } from "./UserLayouts/EditStoreLayout";
 //User Subscriptions Layout
 export { default as UserSubscriptionsLayout } from "./UserLayouts/UserSubscriptionsLayout";
+//User Domain Layout
+export { default as DomainLayout } from "./UserLayouts/DomainLayout";
+//User Extra Layout
+export { default as ExtraLayout } from "./UserLayouts/ExtraLayout";
+//User PaymentHistory Layout
+export { default as PaymentHistoryLayout } from "./UserLayouts/PaymentHistoryLayout";
+//User PaymentHistory Layout
+export { default as TutorialLayout } from "./UserLayouts/TutorialLayout";

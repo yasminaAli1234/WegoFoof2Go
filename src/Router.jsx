@@ -25,6 +25,9 @@ import { UserLayout,UserHomeLayout ,
     EditExtraProductLayout,
     UserDashboardLayout,
     PaymentLayout,
+    DomainLayout,
+    PaymentHistoryLayout,
+    TutorialLayout,
 } from "./Layouts/AllLayouts";
 import Login from "./Pages/RegisterPages/Login.jsx";
 import SignUpPage from "./Pages/RegisterPages/SignUpPage.jsx";
@@ -247,6 +250,22 @@ export const router = createBrowserRouter([
               {
                 path: 'subscription',
                 element: <UserSubscriptionsLayout/>,
+              },
+              {
+                path: 'domain',
+                element: <DomainLayout/>,
+              },
+              {
+                path: 'extra',
+                element: <ExtraProductLayout/>,
+              },
+              {
+                path: 'payment_history',
+                element: <PaymentHistoryLayout/>,
+              },
+              {
+                path: 'tutorial',
+                element: <TutorialLayout/>,
               },
             ],
           },
