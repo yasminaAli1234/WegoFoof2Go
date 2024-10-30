@@ -12,22 +12,22 @@ const PaymentPage = () => {
 
     const auth = useAuth();
     const [isLoading, setIsLoading] = useState(false);
-    const [users, setUsers] = useState('');
-    const [userChanged, setUserChanged] = useState(false);
+    const [paymentHistory, setPaymentHistory] = useState('');
+    const [paymentHistoryChanged, setPaymentHistoryChanged] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
     const [openDialog, setOpenDialog] = useState(null);
 
     const fetchData = async () => {
         setIsLoading(true);
         try {
-               const response = await axios.get('https://login.wegostores.com/admin/v1/payment/method/show', {
+               const response = await axios.get('https://login.wegostores.com/admin/v1/payment/show/history', {
                       headers: {
                              Authorization: `Bearer ${auth.user.token}`,
                       },
                });
                if (response.status === 200) {
                       console.log(response.data)
-                    //   setPayments(response.data.payment)
+                    //   setPaymentHistoryChanged(response.data.payment)
                }
         } catch (error) {
                console.error('Error fetching data:', error);
@@ -67,21 +67,21 @@ const PaymentPage = () => {
 
        const deletePayment = async (paymentId, authToken) => {
               try {
-                     const response = await axios.delete(`https://transitstation.online/api/admin/plan/delete/${paymentId}`, {
+                     const response = await axios.delete(`https://transitstation.online/api/admin/payment/show/history/delete/${paymentId}`, {
                             headers: {
                                    Authorization: `Bearer ${authToken}`,
                             },
                      });
 
                      if (response.status === 200) {
-                            console.log('payment method deleted successfully');
+                            console.log('payment history deleted successfully');
                             return true;
                      } else {
-                            console.error('Failed to delete payment method:', response.status, response.statusText);
+                            console.error('Failed to delete payment history:', response.status, response.statusText);
                             return false;
                      }
               } catch (error) {
-                     console.error('Error deleting payment method:', error);
+                     console.error('Error deleting payment history:', error);
                      return false;
               }
        };
@@ -95,8 +95,8 @@ const PaymentPage = () => {
         );
     }    
       
-    // if (!users) {
-    //     return <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No Payment Method data available</div>;
+    // if (!paymentHistory) {
+    //     return <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No Payment history data available</div>;
     // }
 
        return (
