@@ -31,6 +31,7 @@ import { UserLayout,UserHomeLayout ,
     ExtraLayout,
     AddStoreLayout,
     EditStoreLayout,
+    CheckoutLayout,
 } from "./Layouts/AllLayouts";
 import Login from "./Pages/RegisterPages/Login.jsx";
 import SignUpPage from "./Pages/RegisterPages/SignUpPage.jsx";
@@ -289,6 +290,10 @@ export const router = createBrowserRouter([
               {
                 path: 'payment_history',
                 element: <PaymentHistoryLayout/>,
+              },
+              {
+                path: 'checkout',
+                element: <CheckoutLayout/>,
               },
               {
                 path: 'tutorial',

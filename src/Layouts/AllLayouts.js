@@ -53,6 +53,8 @@ export { default as UserSubscriptionsLayout } from "./UserLayouts/UserSubscripti
 export { default as DomainLayout } from "./UserLayouts/DomainLayout";
 //User Extra Layout
 export { default as ExtraLayout } from "./UserLayouts/ExtraLayout";
+//User PaymentMethod Layout
+export { default as CheckoutLayout } from "./UserLayouts/CheckoutLayout";
 //User PaymentHistory Layout
 export { default as PaymentHistoryLayout } from "./UserLayouts/PaymentHistoryLayout";
 //User PaymentHistory Layout

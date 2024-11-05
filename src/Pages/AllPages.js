@@ -52,6 +52,8 @@ export { default as UserSubscriptionsPage } from "./UserPages/UserSubscriptions/
 export { default as DomainPage } from "./UserPages/Domain/DomainPage";
 //User Extra
 export { default as ExtraPage } from "./UserPages/Extras/ExtraPage";
+//User Checkout
+export { default as CheckoutPage } from "./UserPages/Checkout/CheckoutPage";
 //User PaymentHistory
 export { default as PaymentHistoryPage } from "./UserPages/PaymentHistory/PaymentHistoryPage";
 //User Tutorial

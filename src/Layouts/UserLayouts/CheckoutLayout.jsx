@@ -1,9 +1,8 @@
 import React from "react";
-import { UserSubscriptionsPage } from "../../Pages/AllPages";
+import { CheckoutPage } from "../../Pages/AllPages";
 import HeaderPageSection from '../../Components/HeaderPageSection'
 import { useNavigate } from 'react-router-dom'
-
-const UserSubscriptionsLayout =()=>{
+const CheckoutLayout =()=>{
 
     const navigate = useNavigate();
     const handleGoBack = () => {
@@ -11,10 +10,10 @@ const UserSubscriptionsLayout =()=>{
     };
     return(
         <>
-        {/* <HeaderPageSection handleClick={handleGoBack} name="Subscriptions" /> */}
-        <UserSubscriptionsPage/>
+        <HeaderPageSection handleClick={handleGoBack} name="CheckOut" />
+        <CheckoutPage/>
         </>
     )
 }
 
-export default UserSubscriptionsLayout;
+export default CheckoutLayout;

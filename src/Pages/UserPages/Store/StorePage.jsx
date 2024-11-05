@@ -111,7 +111,7 @@ const StorePage = () => {
                 <div className="w-full flex flex-wrap items-center justify-start gap-10">
                 {stores.map((store, index) => (
                     <>
-                    <Link key={store.id} to={store.link_store} className="lg:w-[30%] sm:w-full bg-mainColor rounded-xl">
+                    <Link key={store.id} to={store.link_store} className="lg:w-[45%] xl:w-[30%] sm:w-full bg-mainColor rounded-xl">
                         {/* <div className="lg:w-[30%] sm:w-full bg-mainColor rounded-xl"> */}
                             <div className='mb-5 p-4 pb-0 text-white text-3xl font-semibold leading-10'>
                                 <h1 className='p-2'>{store.store_name}</h1>
