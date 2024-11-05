@@ -29,6 +29,8 @@ import { UserLayout,UserHomeLayout ,
     PaymentHistoryLayout,
     TutorialLayout,
     ExtraLayout,
+    AddStoreLayout,
+    EditStoreLayout,
 } from "./Layouts/AllLayouts";
 import Login from "./Pages/RegisterPages/Login.jsx";
 import SignUpPage from "./Pages/RegisterPages/SignUpPage.jsx";
@@ -44,6 +46,16 @@ const AppLayoutUserProfile = () => (
     <Outlet/>
   </>
 );
+const AppLayoutStore = () => (
+  <>
+    <Outlet/>
+  </>
+);
+
+
+
+
+
 const AppLayoutAdmin = () => (
   <>
     <AdminLayout/>
@@ -246,7 +258,21 @@ export const router = createBrowserRouter([
               },  
               {
                 path: 'store',
-                element: <StoreLayout/>,
+                element: <AppLayoutStore/>,
+                children :[
+                  {
+                    path: '',
+                    element: <StoreLayout/>,
+                  },
+                  {
+                    path: 'add',
+                    element: <AddStoreLayout/>,
+                  },
+                  {
+                    path: 'edit/storeId',
+                    element: <EditStoreLayout/>,
+                  },
+                ]
               },
               {
                 path: 'subscription',

@@ -11,7 +11,7 @@ const StoreLayout =()=>{
     };
     return(
         <>
-        <HeaderPageSection handleClick={handleGoBack} name="Store" />
+        {/* <HeaderPageSection handleClick={handleGoBack} name="Store" /> */}
         <StorePage/>
         </>
     )
