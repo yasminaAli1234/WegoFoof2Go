@@ -43,7 +43,7 @@ const NavbarUser = () => {
                                           {/* <img src={`data:image/jpeg;base64,${auth.user.data.image}`} className='w-20 h-20 rounded-full object-cover object-center' alt="Profile" /> */}
                                    {/* </div> */} 
                                    {/* Name Admin */}
-                                   <div className='w-4/12 sm:w-full'>
+                                   <div className='w-full xl:w-4/12 '>
                                           <span className='text-3xl mt-0 lg:m-5 text-mainColor font-[500] flex'>
                                                  Hello,<span>{auth.user.name}</span>
                                             </span>
