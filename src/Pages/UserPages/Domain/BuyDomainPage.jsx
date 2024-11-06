@@ -49,7 +49,7 @@ const BuyDomainPage =()=>{
                         <input
                         className='p-4 font-semibold text-xl w-full h-full rounded-2xl outline-none'
                             type="text"
-                            placeholder="Store Name"
+                            placeholder="Enter Domain Name"
                             // borderWidth="1"
                             // borderColor="white"
                             value={domainRequest}
