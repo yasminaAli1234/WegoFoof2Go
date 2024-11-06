@@ -15,7 +15,9 @@ const MenuSideUser = () => {
        const [isActiveProfile, setIsActiveProfile] =  useState(savedState.isActiveProfile ?? false);
        const [isActiveStore, setIsActiveStore] =  useState(savedState.isActiveStore ?? false);
        const [isActiveSubscription, setIsActiveSubscription] =  useState(savedState.isActiveSubscription ?? false);
-       const [isActiveDomain, setIsActiveDomain] =  useState(savedState.isActiveDomain ?? false);
+       const [isActiveDomainList, setIsActiveDomainList] =  useState(savedState.isActiveDomainList ?? false);
+              const [isActiveMyDomain, setIsActiveMyDomain] =  useState(savedState.isActiveMyDomain ?? false);
+              const [isActiveBuyDomain, setIsActiveBuyDomain] =  useState(savedState.isActiveBuyDomain ?? false);
        const [isActiveExtra, setIsActiveExtra] =  useState(savedState.isActiveExtra ?? false);
        const [isActivePayment, setIsActivePayment] =  useState(savedState.isActivePayment ?? false);
        const [isActiveTutorial, setIsActiveTutorial] =  useState(savedState.isActiveTutorial ?? false);
@@ -28,11 +30,11 @@ const MenuSideUser = () => {
        useEffect(() => {
               const sidebarUserState = {
                      isActiveHome,isActiveProfile,isActiveStore,isActiveSubscription,
-                     isActiveDomain,isActiveExtra,isActivePayment,isActiveTutorial
+                     isActiveDomainList,isActiveMyDomain,isActiveBuyDomain,isActiveExtra,isActivePayment,isActiveTutorial
               };
               localStorage.setItem('sidebarUserState', JSON.stringify(sidebarUserState));
        }, [isActiveHome,isActiveProfile,isActiveStore,isActiveSubscription,
-           isActiveDomain,isActiveExtra,isActivePayment,isActiveTutorial
+              isActiveDomainList,isActiveMyDomain,isActiveBuyDomain,isActiveExtra,isActivePayment,isActiveTutorial
        ]);
 
        const handleClickHome = () => {
@@ -40,7 +42,9 @@ const MenuSideUser = () => {
               setIsActiveProfile(false)
               setIsActiveStore(false)
               setIsActiveSubscription(false)
-              setIsActiveDomain(false)
+              setIsActiveDomainList(false)
+              setIsActiveMyDomain(false)
+              setIsActiveBuyDomain(false)
               setIsActiveExtra(false)
               setIsActivePayment(false)
               setIsActiveTutorial(false)
@@ -51,7 +55,9 @@ const MenuSideUser = () => {
               setIsActiveProfile(true)
               setIsActiveStore(false)
               setIsActiveSubscription(false)
-              setIsActiveDomain(false)
+              setIsActiveDomainList(false)
+              setIsActiveMyDomain(false)
+              setIsActiveBuyDomain(false)
               setIsActiveExtra(false)
               setIsActivePayment(false)
               setIsActiveTutorial(false)
@@ -61,7 +67,9 @@ const MenuSideUser = () => {
               setIsActiveProfile(false)
               setIsActiveStore(true)
               setIsActiveSubscription(false)
-              setIsActiveDomain(false)
+              setIsActiveDomainList(false)
+              setIsActiveMyDomain(false)
+              setIsActiveBuyDomain(false)              
               setIsActiveExtra(false)
               setIsActivePayment(false)
               setIsActiveTutorial(false)
@@ -71,17 +79,33 @@ const MenuSideUser = () => {
               setIsActiveProfile(false)
               setIsActiveStore(false)
               setIsActiveSubscription(true)
-              setIsActiveDomain(false)
+              setIsActiveDomainList(false)
+              setIsActiveMyDomain(false)
+              setIsActiveBuyDomain(false)              
               setIsActiveExtra(false)
               setIsActivePayment(false)
               setIsActiveTutorial(false)
        }
-       const handleClickDomain =() =>{
+       const handleClickMyDomain =() =>{
               setIsActiveHome(false);
               setIsActiveProfile(false)
               setIsActiveStore(false)
               setIsActiveSubscription(false)
-              setIsActiveDomain(true)
+              setIsActiveDomainList(true)
+              setIsActiveMyDomain(true)
+              setIsActiveBuyDomain(false)              
+              setIsActiveExtra(false)
+              setIsActivePayment(false)
+              setIsActiveTutorial(false)
+       }
+       const handleClickBuyDomain =() =>{
+              setIsActiveHome(false);
+              setIsActiveProfile(false)
+              setIsActiveStore(false)
+              setIsActiveSubscription(false)
+              setIsActiveDomainList(true)
+              setIsActiveMyDomain(false)
+              setIsActiveBuyDomain(true)              
               setIsActiveExtra(false)
               setIsActivePayment(false)
               setIsActiveTutorial(false)
@@ -91,7 +115,9 @@ const MenuSideUser = () => {
               setIsActiveProfile(false)
               setIsActiveStore(false)
               setIsActiveSubscription(false)
-              setIsActiveDomain(false)
+              setIsActiveDomainList(false)
+              setIsActiveMyDomain(false)
+              setIsActiveBuyDomain(false)               
               setIsActiveExtra(true)
               setIsActivePayment(false)
               setIsActiveTutorial(false)
@@ -101,7 +127,9 @@ const MenuSideUser = () => {
               setIsActiveProfile(false)
               setIsActiveStore(false)
               setIsActiveSubscription(false)
-              setIsActiveDomain(false)
+              setIsActiveDomainList(false)
+              setIsActiveMyDomain(false)
+              setIsActiveBuyDomain(false)              
               setIsActiveExtra(false)
               setIsActivePayment(true)
               setIsActiveTutorial(false)
@@ -111,7 +139,9 @@ const MenuSideUser = () => {
               setIsActiveProfile(false)
               setIsActiveStore(false)
               setIsActiveSubscription(false)
-              setIsActiveDomain(false)
+              setIsActiveDomainList(false)
+              setIsActiveMyDomain(false)
+              setIsActiveBuyDomain(false)              
               setIsActiveExtra(false)
               setIsActivePayment(false)
               setIsActiveTutorial(true)
@@ -136,10 +166,28 @@ const MenuSideUser = () => {
                                           <SubscriptionIcon isActive={isActiveSubscription} />
                                           <span className={`${isActiveSubscription ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Subscriptions</span>
                                    </Link>                      
-                                   <Link to="domain" onClick={handleClickDomain} className={`${isActiveDomain ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
+                                   {/* <Link to="domain" onClick={handleClickDomain} className={`${isActiveDomain ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <DomainIcon isActive={isActiveDomain} />
                                           <span className={`${isActiveDomain ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Domain</span>
+                                   </Link> */}
+                                    <>
+                                   <Link to="my_domain" onClick={handleClickMyDomain} className={`${isActiveMyDomain ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
+                                          <DomainIcon isActive={isActiveMyDomain} />
+                                          <span className={`${isActiveMyDomain ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Domains</span>
                                    </Link>
+                                   <div className={`${isActiveDomainList ? "h-25" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
+                                          <ul className={`${isActiveDomainList ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-10 bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
+                                                 <Link to="my_domain" onClick={handleClickMyDomain} className={`${isActiveMyDomain ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
+                                                        {/* <CustomerIcon isActive={isActivePaymentMethod} /> */}
+                                                        <span className={`${isActiveMyDomain ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>My Domain</span>
+                                                 </Link> 
+                                                 <Link to="buy_domain" onClick={handleClickBuyDomain} className={`${isActiveBuyDomain ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
+                                                        {/* <CustomerIcon isActive={isActivePaymentMethod} /> */}
+                                                        <span className={`${isActiveBuyDomain ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Buy Domain</span>
+                                                 </Link> 
+                                          </ul>
+                                   </div>
+                                   </>
                                    <Link to="extra" onClick={handleClickExtra} className={`${isActiveExtra ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <ExtraIcon isActive={isActiveExtra} />
                                           <span className={`${isActiveExtra ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Extras</span>
