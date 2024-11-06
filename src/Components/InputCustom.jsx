@@ -4,7 +4,7 @@ import { LuUpload } from "react-icons/lu";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { FaLink } from "react-icons/fa6";
 
-const InputCustom = ({ type,bgColor,placeholderColor, required = true, minDate = true, borderColor = "none", placeholder, placeholderSize = false, value, readonly = false, onChange, iconDirection = false, textDirection = false, onClick, paddinLeft = 'pl-2', paddinRight = 'pr-2', upload = false, source }) => {
+const InputCustom = ({ type,bgColor,placeholderColor, required = true, minDate = true,borderWidth="2", borderColor = "none", placeholder, placeholderSize = false, value, readonly = false, onChange, iconDirection = false, textDirection = false, onClick, paddinLeft = 'pl-2', paddinRight = 'pr-2', upload = false, source }) => {
        const [show, setShow] = useState(false)
        const [currentDay, setCurrentDay] = useState(new Date());
 
@@ -67,7 +67,7 @@ const InputCustom = ({ type,bgColor,placeholderColor, required = true, minDate =
 
                             <input type={type}
                                    placeholder={placeholder}
-                                   className={`w-full border-2 placeholder-${placeholderColor} ${bgColor} ${textDirection ? "text-right" : "text-left"} rounded-xl border-${borderColor} 
+                                   className={`w-full border-${borderWidth} placeholder-${placeholderColor} ${bgColor} ${textDirection ? "text-right" : "text-left"} rounded-xl border-${borderColor} 
                        outline-none px-2 py-4 ${paddinLeft} ${paddinRight} text-2xl  ${placeholderSize ? 'text-lg' : 'text-2xl'} font-normal eleValueInput ${upload ? "text-mainColor cursor-pointer pr-10" : "text-black"}`}
                                    value={value}
                                    onChange={onChange}
