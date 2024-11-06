@@ -36,6 +36,7 @@ import { UserLayout,UserHomeLayout ,
 import Login from "./Pages/RegisterPages/Login.jsx";
 import SignUpPage from "./Pages/RegisterPages/SignUpPage.jsx";
 import SubscriptionLayout from "./Layouts/AdminLayouts/SubscriptionLayout.jsx";
+import { CartPage } from "./Pages/AllPages.js";
 /* User Dashboard */
 const AppLayoutUser = () => (
   <>
@@ -299,6 +300,10 @@ export const router = createBrowserRouter([
                 path: 'tutorial',
                 element: <TutorialLayout/>,
               },
+              {
+                path: "cart",
+                element: <CartPage />, // Use Cart component for the cart route
+              }
             ],
           },
         ],

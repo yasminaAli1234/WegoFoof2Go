@@ -9,6 +9,9 @@ import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/re
 import { MdCheck } from "react-icons/md";
 import CheckBox from '../../../Components/CheckBox';
 
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../../Redux/CartSlice.js';
+
 const UserSubscriptionsPage = () => {
 
     const auth = useAuth();
@@ -17,6 +20,12 @@ const UserSubscriptionsPage = () => {
     const [planChanged, setPlanChanged] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
     const [openDialog, setOpenDialog] = useState(null);
+
+    const dispatch = useDispatch();
+
+    const handleAddToCart = (plan) => {
+        dispatch(addToCart(plan));
+    };
 
     const fetchData = async () => {
         setIsLoading(true);
@@ -60,7 +69,7 @@ const UserSubscriptionsPage = () => {
               <div className="w-full flex flex-wrap items-center justify-start gap-10">
                 {plans.map((plan, index) => (
                     <>
-                        <div className="lg:w-[80%] xl:w-[30%] sm:w-full border border-mainColor rounded-2xl">
+                        <div key={index} className="lg:w-[80%] xl:w-[30%] sm:w-full border border-mainColor rounded-2xl">
                             <div className='text-center mb-5 p-4 pb-0 text-mainColor text-2xl md:text-3xl xl:text-3xl font-semibold leading-10'>
                                 <h1 className='p-2'>{plan.name}</h1>
                             </div>
@@ -96,9 +105,16 @@ const UserSubscriptionsPage = () => {
                                  {/* <h1>{plan}</h1> */}
                                  {plan.my_plan ?
                                     <h1 className='p-4 text-mainColor'>This My Plan</h1>:
-                                    <Link to="/dashboard_user/checkout" className='w-full text-white'>
-                                          <h1 className='p-4 rounded-b-xl bg-mainColor w-full'>Upgrade</h1>
-                                    </Link>
+                                   //  <Link to="/dashboard_user/checkout" className='w-full text-white'>
+                                   //        <h1 className='p-4 rounded-b-xl bg-mainColor w-full'>Upgrade</h1>
+                                   //  </Link>
+                                   <button
+                                          onClick={() => handleAddToCart(plan)}
+                                          className="w-full text-white p-4 rounded-b-xl bg-mainColor"
+                                   >
+                                          Add to Cart
+                                   </button>
+
                                  }
                             </div>
                         </div>       

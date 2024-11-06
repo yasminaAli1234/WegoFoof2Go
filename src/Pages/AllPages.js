@@ -56,5 +56,7 @@ export { default as ExtraPage } from "./UserPages/Extras/ExtraPage";
 export { default as CheckoutPage } from "./UserPages/Checkout/CheckoutPage";
 //User PaymentHistory
 export { default as PaymentHistoryPage } from "./UserPages/PaymentHistory/PaymentHistoryPage";
+//User Cart
+export { default as CartPage } from "./UserPages/Cart/CartPage";
 //User Tutorial
 export { default as TutorialPage } from "./UserPages/Tutorial/TutorialPage";
