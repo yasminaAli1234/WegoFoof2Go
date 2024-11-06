@@ -50,7 +50,9 @@ export { default as EditStoreLayout } from "./UserLayouts/EditStoreLayout";
 //User Subscriptions Layout
 export { default as UserSubscriptionsLayout } from "./UserLayouts/UserSubscriptionsLayout";
 //User Domain Layout
-export { default as DomainLayout } from "./UserLayouts/DomainLayout";
+// export { default as DomainLayout } from "./UserLayouts/DomainLayout";
+export { default as MyDomainLayout } from "./UserLayouts/MyDomainLayout";
+export { default as BuyDomainLayout } from "./UserLayouts/BuyDomainLayout";
 //User Extra Layout
 export { default as ExtraLayout } from "./UserLayouts/ExtraLayout";
 //User PaymentMethod Layout

@@ -25,13 +25,14 @@ import { UserLayout,UserHomeLayout ,
     EditExtraProductLayout,
     UserDashboardLayout,
     PaymentLayout,
-    DomainLayout,
     PaymentHistoryLayout,
     TutorialLayout,
     ExtraLayout,
     AddStoreLayout,
     EditStoreLayout,
     CheckoutLayout,
+    MyDomainLayout,
+    BuyDomainLayout,
 } from "./Layouts/AllLayouts";
 import Login from "./Pages/RegisterPages/Login.jsx";
 import SignUpPage from "./Pages/RegisterPages/SignUpPage.jsx";
@@ -53,9 +54,6 @@ const AppLayoutStore = () => (
     <Outlet/>
   </>
 );
-
-
-
 
 
 const AppLayoutAdmin = () => (
@@ -281,9 +279,27 @@ export const router = createBrowserRouter([
                 element: <UserSubscriptionsLayout/>,
               },
               {
-                path: 'domain',
-                element: <DomainLayout/>,
+                path: 'my_domain',
+                element: <MyDomainLayout/>,
               },
+              {
+                path: 'buy_domain',
+                element: <BuyDomainLayout/>,
+              },
+              // {
+              //   path: 'my_domain',
+              //   element: <AppLayoutUserDomain/>,
+              //   children:[
+              //     {
+              //       path: '',
+              //       element: <MyDomainLayout/>,
+              //     },
+              //     {
+              //       path: 'buy_domain',
+              //       element: <BuyDomainLayout/>,
+              //     }
+              //   ]
+              // },
               {
                 path: 'extra',
                 element: <ExtraLayout/>,

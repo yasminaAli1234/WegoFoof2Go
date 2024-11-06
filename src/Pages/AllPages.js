@@ -49,7 +49,7 @@ export { default as EditStorePage } from "./UserPages/Store/EditStorePage";
 //User Subscriptions
 export { default as UserSubscriptionsPage } from "./UserPages/UserSubscriptions/UserSubscriptionsPage";
 //User Domain
-export { default as DomainPage } from "./UserPages/Domain/DomainPage";
+// export { default as DomainPage } from "./UserPages/Domain/DomainPage";
 export { default as MyDomainPage } from "./UserPages/Domain/MyDomainPage";
 export { default as BuyDomainPage } from "./UserPages/Domain/BuyDomainPage";
 //User Extra
