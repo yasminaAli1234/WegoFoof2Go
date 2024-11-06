@@ -34,7 +34,7 @@ const UserProfilePage =()=>{
                     alt="ProfileImage"
                     className="w-full object-contain rounded-full"
                     />
-             <Link to={'edit'} type="button" state={{user}}>
+             <Link to={'edit'} type="button" state={{userData:user}}>
              <button className="bg-white text-mainColor shadow p-2 rounded-full absolute flex items-center bottom-7 right-4 hover:bg-gray-300">
                         <AiTwotoneEdit size={40}/>
                     </button>
