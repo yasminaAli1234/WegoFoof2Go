@@ -1,55 +1,68 @@
-// pages/user/Cart/CartPage.js
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addToCart, removeFromCart, updateQuantity, clearCart } from '../../../Redux/CartSlice.js';
+import { clearCart } from '../../../Redux/CartSlice.js';
 
 const CartPage = () => {
   const cartItems = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
-  // Log cart items to console whenever they change
   useEffect(() => {
-    console.log(cartItems); // This will show the cart data when it's updated or on page load
+    console.log(cartItems); // Log cart items whenever they change
   }, [cartItems]);
-
-  const handleAddToCart = (item) => {
-    dispatch(addToCart(item));
-  };
-
-  const handleRemoveFromCart = (id) => {
-    dispatch(removeFromCart({ id }));
-  };
-
-  const handleQuantityChange = (id, quantity) => {
-    if (quantity > 0) {
-      dispatch(updateQuantity({ id, quantity }));
-    }
-  };
 
   const handleClearCart = () => {
     dispatch(clearCart());
   };
 
+  const calculateTotal = () => {
+    return cartItems.reduce((total, item) => total + (item.price || 0), 0).toFixed(2);
+  };
+
   return (
-    <div>
-      <h1>Shopping Cart</h1>
-      <ul>
+    <div className="container mx-auto p-6 max-w-3xl">
+      <h1 className="text-3xl font-bold text-gray-800 mb-6">Shopping Cart</h1>
+
+      <div className="bg-white shadow-lg rounded-lg p-6">
         {cartItems.length > 0 ? (
           cartItems.map((item) => (
-            <li key={item.id}>
-              <h2>{item.name}</h2>
-              {/* <p>Price: {item.price} EGP</p>
-              <p>Quantity: {item.quantity}</p>
-              <button onClick={() => handleQuantityChange(item.id, item.quantity + 1)}>+</button>
-              <button onClick={() => handleQuantityChange(item.id, item.quantity - 1)}>-</button>
-              <button onClick={() => handleRemoveFromCart(item.id)}>Remove</button> */}
-            </li>
+            <div
+              key={item.id}
+              className="flex justify-between items-center border-b border-gray-200 py-4 last:border-none"
+            >
+              <div>
+                <h3 className="text-lg font-semibold text-gray-800">{item.name}</h3>
+                <p className="text-sm text-gray-500">{item.type}</p>
+              </div>
+              <p className="text-lg font-semibold text-gray-800">${(item.price || 0).toFixed(2)}</p>
+            </div>
           ))
         ) : (
-          <p>No items in the cart.</p>
+          <p className="text-center text-gray-500 py-6">Your cart is empty.</p>
         )}
-      </ul>
-      <button onClick={handleClearCart}>Clear Cart</button>
+      </div>
+
+      {cartItems.length > 0 && (
+        <div className="mt-6 p-4 bg-gray-100 rounded-lg shadow-lg">
+          <div className="flex justify-between items-center">
+            <h3 className="text-xl font-bold text-gray-800">Total</h3>
+            <p className="text-2xl font-semibold text-green-600">${calculateTotal()}</p>
+          </div>
+        </div>
+      )}
+
+      <div className="mt-6 flex justify-between gap-4">
+        <button
+          onClick={handleClearCart}
+          className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-lg font-semibold text-lg"
+        >
+          Clear Cart
+        </button>
+        <button
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold text-lg"
+        >
+          Proceed to Checkout
+        </button>
+      </div>
     </div>
   );
 };

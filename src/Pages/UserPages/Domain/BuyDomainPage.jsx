@@ -37,9 +37,17 @@ const BuyDomainPage =()=>{
 
     const dispatch = useDispatch();
 
+    // const handleAddToCart = (domain) => {
+    //     dispatch(addToCart(domain));
+    // };
     const handleAddToCart = (domain) => {
-        dispatch(addToCart(domain));
+        const productToCart = {
+            name: domain.name,
+            price: domain.price };
+        dispatch(addToCart(productToCart));
     };
+    
+
 
     const fetchData = async () => {
         setIsLoading(true);

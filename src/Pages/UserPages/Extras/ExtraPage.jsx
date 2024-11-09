@@ -19,9 +19,21 @@ const ExtraPage = () => {
 
     const dispatch = useDispatch();
 
-    const handleAddToCart = (plan) => {
-        dispatch(addToCart(plan));
-    };
+//     const handleAddToCart = (plan) => {
+//         dispatch(addToCart(plan));
+//     };
+
+       const handleAddToCart = (product) => {
+              const productToCart = {
+              name: product.name,
+              price: product.status === "one_time" 
+                     ? product.price 
+                     : { yearly: product.yearly, monthly: product.monthly } // Include both yearly and monthly prices
+              };
+              dispatch(addToCart(productToCart));
+       };
+   
+
 
     const fetchData = async () => {
         setIsLoading(true);
@@ -65,14 +77,10 @@ const ExtraPage = () => {
                                 <h1 className='p-2'>{product.name}</h1>
                             </div>
                             <div className='p-4 text-mainColor flex flex-col gap-5'>
-                                   <div className='flex items-center gap-5'>
+                                   <div className='flex flex-wrap items-center gap-5'>
                                           <span className='text-maincolor text-xl md:text-3xl xl:text-3xl font-semibold'>Description : </span>
                                           <p className='text-[#686868] text-2xl'>{product.description}</p>
                                    </div>
-                                   {/* <div className='flex items-center gap-5'>
-                                          <span className='text-maincolor text-xl md:text-3xl xl:text-3xl font-semibold'>Number of stores : </span>
-                                          <p className='text-[#686868] text-2xl'>{plan.limet_store}</p>
-                                   </div> */}
                                    {product.status === "one_time" ?
                                    (
                                    <>
@@ -109,39 +117,6 @@ const ExtraPage = () => {
                                    </button>
                             </div>
                         </div>    
-
-
-
-                        {/* <div key={index} className="lg:w-[80%] xl:w-[30%] bg-mainColor text-white sm:w-full border border-mainColor rounded-2xl"> */}
-                            {/* <div className='mb-2 p-4 pb-0 text-xl md:text-2xl xl:text-2xl font-semibold'>
-                                <h1 className='p-2'><span>Product Name : </span>{product.name || '_'}</h1>
-                                <h1 className='p-2'><span>Description : </span>{product.description || '_'}</h1>
-                                {product.status === "one_time" ?(
-                                        <>
-                                         <h1 className='p-2'><span>Price in one Time : </span>{product.price || '-'}</h1>
-                                        </>
-                                ) :(
-                                        <>
-                                        <h1 className='p-2'><span>SetUp Fees : </span>{product.setup_fees || '-'}</h1>
-                                        <h1 className='p-2'><span>Price Per Month : </span>{product.monthly || '-'}</h1>
-                                        <h1 className='p-2'><span>Price Per Year : </span>{product.yearly || '-'}</h1>
-                                        </>
-                                )
-                                }
-                            </div> */}
-                            {/* <div className='text-center font-semibold p-4 text-2xl border-t-2 border-mainColor'> */}
-                                 {/* {product.my_plan ? */}
-                                    {/* <h1 className='p-4 text-mainColor'>This My Plan</h1>: */}
-                                   {/* <button
-                                        //   onClick={() => handleAddToCart(plan)}
-                                          className="w-full text-mainColor p-4 rounded-b-xl bg-white"
-                                   >
-                                          Add to Cart
-                                   </button> */}
-
-                                 {/* } */}
-                            {/* </div>
-                        </div>        */}
                     </>
                  ))}
                 </div>

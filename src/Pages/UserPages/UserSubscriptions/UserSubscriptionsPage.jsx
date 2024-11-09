@@ -71,7 +71,7 @@ const UserSubscriptionsPage = () => {
                                 <h1 className='p-2'>{plan.name}</h1>
                             </div>
                             <div className='p-4 text-mainColor flex flex-col gap-5'>
-                                   <div className='flex items-center gap-5'>
+                                   <div className='flex flex-wrap items-center gap-5'>
                                           <span className='text-maincolor text-xl md:text-3xl xl:text-3xl font-semibold'>Description : </span>
                                           <p className='text-[#686868] text-2xl'>{plan.description}</p>
                                    </div>
