@@ -4,10 +4,11 @@ import Loading from '../../../Components/Loading';
 import axios from 'axios';
 import {ButtonAdd} from '../../../Components/Button'
 import { Link } from 'react-router-dom';
-import {Wroning,DeleteIcon,EditIcon} from '../../../Components/Icons/AllIcons';
-import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
-import { MdCheck } from "react-icons/md";
 import CheckBox from '../../../Components/CheckBox';
+import { TfiWorld } from "react-icons/tfi";
+import { PiScreencastDuotone } from "react-icons/pi";
+import { CiCalendarDate } from "react-icons/ci";
+import { MdAttachMoney } from "react-icons/md";
 
 const MyDomainPage = () => {
 
@@ -41,52 +42,6 @@ const MyDomainPage = () => {
         fetchData(); 
     }, [domainChanged]);
 
-    // const handleOpenDialog = (domainId) => {
-    //    setOpenDialog(domainId);
-    //    };
-
-    //    const handleCloseDialog = () => {
-    //           setOpenDialog(null);
-    //    };
-
-    //    const handleDelete = async (domainId) => {
-    //           setIsDeleting(true);
-    //           const success = await deleteStore(domainId, auth.user.token);
-    //           setIsDeleting(false);
-    //           handleCloseDialog();
-
-    //           if (success) {
-    //                  setStoreChanged(!storeChanged)
-    //                  auth.toastSuccess('Store deleted successfully!');
-    //                  setStores((prevStore) =>
-    //                     prevStore.filter((domain) => domain.id !== domainId)
-    //                  );
-    //           } else {
-    //                  auth.toastError('Failed to delete store.');
-    //           }
-    //    };
-
-    //    const deleteStore = async (storeId, authToken) => {
-    //           try {
-    //                  const response = await axios.put(`https://login.wegostores.com/user/v1/store/delete/${domainId}`, {
-    //                         headers: {
-    //                                Authorization: `Bearer ${authToken}`,
-    //                         },
-    //                  });
-
-    //                  if (response.status === 200) {
-    //                         console.log('Store deleted successfully');
-    //                         return true;
-    //                  } else {
-    //                         console.error('Failed to delete store:', response.status, response.statusText);
-    //                         return false;
-    //                  }
-    //           } catch (error) {
-    //                  console.error('Error deleting store:', error);
-    //                  return false;
-    //           }
-    //    };
-
 
     if (isLoading) {
         return (
@@ -110,16 +65,28 @@ const MyDomainPage = () => {
                         <div className="w-full flex flex-wrap items-center justify-start gap-10">
                             {myDomains.map((domain, index) => (
                                 <>
-                                    <div key={index} className="lg:w-[30%] sm:w-full rounded-xl border-2 shadow-inner">
-                                        <div className='mb-5 p-4 pb-0 text-mainColor leading-10'>
-                                            <h1 className='text-black font-semibold text-3xl mb-2'>{domain.name}</h1>
-                                            <div className='text-xl p-2 flex flex-col gap-1'>
-                                                <h1><span>Price : </span>{domain.price}</h1>
-                                                <h1><span>Store : </span>{domain.store?.store_name}</h1>
-                                                <h1><span>Renew Date : </span>{domain.renewdate}</h1>
+                                    <div key={index} className="w-full lg:w-[30%] rounded-xl border-2 border-mainColor">
+                                        <div className='flex items-center gap-3  p-4 text-mainColor border-b-2 border-mainColor'>
+                                            <div className='w-16 p-4 rounded-full bg-[#E9EAF3]'>
+                                                <TfiWorld size={32}/>
                                             </div>
-                
-                                        </div>  
+                                            <h1 className='font-semibold text-2xl mb-2'>{domain.name}</h1>
+                                        </div>
+                                        <div className='flex flex-col ml-2'>
+                                            <div className='flex items-center gap-3 p-2 text-mainColor border-mainColor'>
+                                                <PiScreencastDuotone size={32}/>
+                                                <h1 className='text-xl font-semibold text-green-600'>Active</h1>
+                                            </div>
+                                            <div className='flex items-center gap-3 p-2 text-mainColor border-mainColor'>
+                                                <MdAttachMoney size={32}/>
+                                                <h1 className='text-xl font-semibold'>Price : <span>{domain.price}</span></h1>
+                                            </div>
+                                            <div className='flex items-center gap-3 p-2 text-mainColor border-mainColor'>
+                                                <CiCalendarDate size={32}/>
+                                                <h1 className='text-xl font-semibold'>Renew Date : <span>{domain.renewdate}</span></h1>
+                                            </div>
+
+                                        </div>
                                     </div>  
                                 </>
                             ))}
