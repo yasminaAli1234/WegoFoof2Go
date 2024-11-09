@@ -4,6 +4,8 @@ import SearchBar from '../SearchBar'
 import { CiGlobe } from "react-icons/ci";
 import { IoNotifications } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
+import { BsCartCheck } from "react-icons/bs";
+import { Link, useNavigate } from 'react-router-dom'
 
 const NavbarUser = () => {
        const auth = useAuth()
@@ -66,9 +68,15 @@ const NavbarUser = () => {
                                                         </div>
                                                  </div>
                                           </div>
-                                          <button type='button' className="">
+                                          {/* <button type='button' className="">
                                                  <IoNotifications className='text-mainColor text-2xl' />
-                                          </button>
+                                          </button> */}
+                                          <Link to="cart">
+                                          <div className='flex gap-2 shadow px-4 py-2'>
+                                                 <BsCartCheck size={32}/>
+                                                 <h1>Cart</h1>
+                                          </div>
+                                          </Link>
                                    </div>
                             </div>
                     </div>

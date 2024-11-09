@@ -37,8 +37,8 @@ const BuyDomainPage =()=>{
 
     const dispatch = useDispatch();
 
-    const handleAddToCart = (plan) => {
-        dispatch(addToCart(plan));
+    const handleAddToCart = (domain) => {
+        dispatch(addToCart(domain));
     };
 
     const fetchData = async () => {
@@ -203,7 +203,7 @@ const BuyDomainPage =()=>{
                                         </div>
                                         <div className='text-center font-semibold text-2xl border-t-2 border-mainColor'>
                                             <button
-                                                    onClick={() => handleAddToCart(product)}
+                                                    onClick={() => handleAddToCart(domain)}
                                                     className="w-full text-white p-4 rounded-b-xl bg-mainColor"
                                             >
                                                     Add to Cart
