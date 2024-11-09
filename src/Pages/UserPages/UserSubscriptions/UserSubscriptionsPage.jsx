@@ -17,9 +17,6 @@ const UserSubscriptionsPage = () => {
     const auth = useAuth();
     const [isLoading, setIsLoading] = useState(false);
     const [plans, setPlans] = useState('');
-    const [planChanged, setPlanChanged] = useState(false);
-    const [isDeleting, setIsDeleting] = useState(false);
-    const [openDialog, setOpenDialog] = useState(null);
 
     const dispatch = useDispatch();
 
@@ -48,7 +45,7 @@ const UserSubscriptionsPage = () => {
 
     useEffect(() => {
         fetchData(); 
-    }, [planChanged]);
+    }, []);
 
        
     if (isLoading) {
@@ -66,7 +63,7 @@ const UserSubscriptionsPage = () => {
        return (
               <>
               <div className='w-full flex flex-col gap-10'>
-              <div className="w-full flex flex-wrap items-center justify-start gap-10">
+                <div className="w-full flex flex-wrap items-center justify-start gap-10">
                 {plans.map((plan, index) => (
                     <>
                         <div key={index} className="lg:w-[80%] xl:w-[30%] sm:w-full border border-mainColor rounded-2xl">
