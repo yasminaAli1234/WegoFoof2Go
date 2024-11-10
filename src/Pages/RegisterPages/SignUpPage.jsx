@@ -189,7 +189,7 @@ const SignUpPage =()=>{
                                 </div>
                             
                         </form> */}
-                <form className="w-full sm:w-10/12 flex flex-col items-start justify-center gap-10 mt-10" onSubmit={handleSubmit}>
+                <form className="w-full sm:w-10/12 flex flex-col items-start justify-center gap-5 mt-10" onSubmit={handleSubmit}>
                 <div className='flex w-full flex-col text-secoundColor font-bold gap-8 text-4xl lg:text-5xl'>
                     <h1>Sign up to WegoStores</h1>
                     <h1 className='text-3xl lg:text-4xl'>Welcome</h1>
