@@ -61,3 +61,4 @@ export { default as CheckoutLayout } from "./UserLayouts/CheckoutLayout";
 export { default as PaymentHistoryLayout } from "./UserLayouts/PaymentHistoryLayout";
 //User PaymentHistory Layout
 export { default as TutorialLayout } from "./UserLayouts/TutorialLayout";
+export { default as VideoTutorialLayout } from "./UserLayouts/VideoTutorialLayout";

@@ -33,6 +33,7 @@ import { UserLayout,UserHomeLayout ,
     CheckoutLayout,
     MyDomainLayout,
     BuyDomainLayout,
+    VideoTutorialLayout,
 } from "./Layouts/AllLayouts";
 import Login from "./Pages/RegisterPages/Login.jsx";
 import SignUpPage from "./Pages/RegisterPages/SignUpPage.jsx";
@@ -86,6 +87,11 @@ const AppLayoutPaymentMethod = () => (
     <Outlet/>
   </>
 );
+const AppLayoutTutorial = () =>(
+  <>
+  <Outlet/>
+ </>
+)
 
 export const router = createBrowserRouter([
 
@@ -314,7 +320,17 @@ export const router = createBrowserRouter([
               },
               {
                 path: 'tutorial',
-                element: <TutorialLayout/>,
+                element: <AppLayoutTutorial/>,
+                children: [
+                  {
+                    path: '',
+                    element: <TutorialLayout/>,
+                  },
+                  {
+                    path: 'video/videoId',
+                    element: <VideoTutorialLayout/>,
+                  }
+                ]
               },
               {
                 path: "cart",

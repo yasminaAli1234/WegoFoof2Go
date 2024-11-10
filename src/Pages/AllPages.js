@@ -62,3 +62,4 @@ export { default as PaymentHistoryPage } from "./UserPages/PaymentHistory/Paymen
 export { default as CartPage } from "./UserPages/Cart/CartPage";
 //User Tutorial
 export { default as TutorialPage } from "./UserPages/Tutorial/TutorialPage";
+export {default as VideoTutorialPage} from "./UserPages/Tutorial/VideoTutorialPage"
