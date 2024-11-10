@@ -53,7 +53,7 @@ const SignUpPage =()=>{
                 'email': email,
                 'password': password,
                 'conf_password': confpassword,
-                'requestDemo': "1",
+                // 'requestDemo': "1",
             }, {
                 headers: {
                     'Content-Type': 'application/json',
@@ -278,8 +278,7 @@ const SignUpPage =()=>{
                 </div>
             </div>
 
-            <div className="flex flex-col md:flex-row gap-5 w-full">
-                {/* Dropdown Menu for Plan Selection */}
+            {/* <div className="flex flex-col md:flex-row gap-5 w-full">
                 <div className="relative w-full md:w-1/2">
                 <select
                     className="w-full text-secoundColor bg-mainColor border-b-2 border-secoundColor outline-none px-2 py-3 text-2xl font-normal"
@@ -293,7 +292,6 @@ const SignUpPage =()=>{
                     </select>
                 </div>
 
-                {/* Conditionally Render the Second Dropdown */}
                 {plan !== "demo" && (
                     <div className="relative w-full md:w-1/2">
                     <select
@@ -307,7 +305,7 @@ const SignUpPage =()=>{
                     </select>
                     </div>
                 )}
-            </div>
+            </div> */}
                 {/* Error Handling */}
                 {error && <div className="w-full text-white text-center text-2xl mb-4 font-bold">{error}</div>}
 
