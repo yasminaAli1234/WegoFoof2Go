@@ -327,7 +327,7 @@ const UserSubscriptionsPage = () => {
 
     return (
         <div className="w-full p-2 flex flex-col">
-            <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <div className="w-full grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-3">
                 {plans.map((plan, index) => {
                     const selectedPeriod = billingPeriod[plan.id] || 'monthly';
                     const priceOptions = {
@@ -359,7 +359,7 @@ const UserSubscriptionsPage = () => {
                             </div>
 
                             <div className="flex justify-between items-center mb-4">
-                                <label htmlFor={`billing-${index}`} className="font-semibold text-gray-800">Billing Period:</label>
+                                <label htmlFor={`billing-${index}`} className="text-xl md:text-2xl font-semibold text-gray-800">Billing Period:</label>
                                 <select
                                     id={`billing-${index}`}
                                     value={selectedPeriod}
