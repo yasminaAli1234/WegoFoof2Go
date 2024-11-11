@@ -275,7 +275,7 @@ export const router = createBrowserRouter([
                     element: <AddStoreLayout/>,
                   },
                   {
-                    path: 'edit/storeId',
+                    path: 'edit/:storeId',
                     element: <EditStoreLayout/>,
                   },
                 ]
@@ -327,7 +327,7 @@ export const router = createBrowserRouter([
                     element: <TutorialLayout/>,
                   },
                   {
-                    path: 'video/videoId',
+                    path: 'video/:videoId',
                     element: <VideoTutorialLayout/>,
                   }
                 ]

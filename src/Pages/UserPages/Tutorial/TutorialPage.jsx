@@ -24,6 +24,7 @@ const TutorialPage = () => {
                 },
             });
             if (response.status === 200) {
+                console.log(response.data)
                 setTutorialGroups(response.data.tutorial_groups);
             }
         } catch (error) {
@@ -38,9 +39,10 @@ const TutorialPage = () => {
     }, []);
 
     // Handle tutorial title click
-    const handleTutorialClick = (tutorialId) => {
-        navigate(`/tutorial/${tutorialId}`);
+    const handleTutorialClick = (tutorial) => {
+        navigate(`video/${tutorial.id}`, { state: { tutorial } });
     };
+    
 
     // Toggle tutorial group visibility
     const handleGroupToggle = (group) => {
@@ -62,7 +64,6 @@ const TutorialPage = () => {
     return (
         <div>
             <h1 className='text-center font-semibold mb-5 text-2xl text-mainColor'>Tutorial Groups</h1>
-
             {/* Display all tutorial groups */}
             {isLoading ? (
                 <Loading /> // Display loading component if fetching data
@@ -96,11 +97,11 @@ const TutorialPage = () => {
                                     <p className="text-center text-mainColor text-xl font-semibold">There are no tutorials</p>
                                 ) : (
                                     group.tutorials.map((tutorial, index) => (
-                                            <Link
-                                                to={tutorial.path}
+                                            <button
+                                                // to={tutorial.path}
                                                 key={index}
                                                 className="flex items-center gap-3 text-mainColor text-xl font-bold hover:underline"
-                                                onClick={() => handleTutorialClick(tutorial.id)}
+                                                onClick={() => handleTutorialClick(tutorial)}
                                             >
                                                 <div className="text-mainColor text-xl">
                                                 <PiVideoFill size={30}/>
@@ -108,8 +109,7 @@ const TutorialPage = () => {
                                                 <div className="text-mainColor text-xl mb-1">
                                                 {tutorial.title}
                                                 </div>
-                                            </Link>
-
+                                            </button>
                                     ))
                                 )}
                             </div>
