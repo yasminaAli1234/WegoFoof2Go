@@ -173,7 +173,7 @@ const BuyDomainPage =()=>{
                                             <h1 className='p-2'><span>Domain : </span>{domain.name || '-'}</h1>
                                             <h1 className='p-2'><span>Price : </span>{domain.price || '-'}</h1>
                                             <h1 className='p-2'><span>Store : </span>{domain.store?.store_name || '-'}</h1>
-                                            <h1 className='p-2'><span>Renew Date : </span>{domain.renewdate || '-'}</h1>
+                                            {/* <h1 className='p-2'><span>Renew Date : </span>{domain.renewdate || '-'}</h1> */}
                                             <h1 className='p-2 text-gray-500'><span className='text-mainColor'>Status : </span>{domain.status === 1? "Pending" :'Pending'}</h1>
                                         </div>
                                     </div>       
@@ -247,7 +247,7 @@ const BuyDomainPage =()=>{
                                             <h1 className='p-2'><span>Domain : </span>{domain.name || '-'}</h1>
                                             <h1 className='p-2'><span>Price : </span>{domain.price || '-'}</h1>
                                             <h1 className='p-2'><span>Store : </span>{domain.store?.store_name || '-'}</h1>
-                                            <h1 className='p-2'><span>Renew Date : </span>{domain.renewdate || '-'}</h1>
+                                            {/* <h1 className='p-2'><span>Renew Date : </span>{domain.renewdate || '-'}</h1> */}
                                             <h1 className='p-2 text-red-500'><span className='text-mainColor'>Status : </span>{domain.status === 0? "Rejected" :'Rejected'}</h1>
                                             <h1 className='p-2'>
                                                 <span>Rejected Reason : </span>
