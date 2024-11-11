@@ -8,6 +8,7 @@ import {Wroning,DeleteIcon,EditIcon} from '../../../Components/Icons/AllIcons';
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
 import { MdCheck } from "react-icons/md";
 import CheckBox from '../../../Components/CheckBox';
+import { MdOutlinePending } from "react-icons/md";
 
 const StorePage = () => {
 
@@ -68,24 +69,22 @@ const StorePage = () => {
 
        const deleteStore = async (storeId, authToken) => {
               try {
-                     const response = await axios.put(`https://login.wegostores.com/user/v1/store/delete/${storeId}`, {
+                     const response = await axios.put(
+                            `https://login.wegostores.com/user/v1/store/delete/${storeId}`,
+                            {}, // Empty object as request data
+                            {
                             headers: {
                                    Authorization: `Bearer ${authToken}`,
                             },
-                     });
+                            }
+                     );
 
-                     if (response.status === 200) {
-                            console.log('Store deleted successfully');
-                            return true;
-                     } else {
-                            console.error('Failed to delete store:', response.status, response.statusText);
-                            return false;
-                     }
+                     return response.status === 200;
               } catch (error) {
                      console.error('Error deleting store:', error);
                      return false;
               }
-       };
+       };    
 
 
     if (isLoading) {
@@ -118,12 +117,34 @@ const StorePage = () => {
                             </div>     
                             <div className='bg-white rounded-md m-5'>
                                 <div className='flex gap-x-5 p-4'>
-                                                        <Link to={`edit/${store.id}`} state={store.id} type="button">
+                                                        {/* <Link to={`edit/${store.id}`} state={store.id} type="button">
                                                                 <span className='flex text-mainColor items-center text-2xl underline gap-1'><EditIcon colored="#1A237E"/> Edit</span>
-                                                        </Link>
-                                                        <button type="button" onClick={() => handleOpenDialog(store.id)}>
-                                                               <span className='flex text-mainColor items-center text-2xl underline gap-1'><DeleteIcon colored="#1A237E"/> Delete</span>
-                                                        </button>
+                                                        </Link> */}
+                                                        {/* <button type="button" onClick={() => handleOpenDialog(store.id)}>
+                                                               <span className='flex text-mainColor items-center text-2xl hover:underline gap-1'><DeleteIcon colored="#1A237E"/> Delete</span>
+                                                        </button> */}
+                                                        {store.deleted === 1 ?(
+                                                                             <>
+                                                                            <span className={`flex items-center text-2xl gap-1 text-gray-700`}>
+                                                                                    <MdOutlinePending className='text-[#D01025]' size={30}/>
+                                                                                    <p>Pending Delete</p>
+                                                                             </span> 
+                                                                             </>
+                                                                      ):
+                                                                      (
+                                                                             <>
+                                                                              <button
+                                                                             type="button"
+                                                                             onClick={() => handleOpenDialog(store.id)}
+                                                                             >
+                                                                             <span className={`flex items-center text-2xl gap-1`}>
+                                                                                    <DeleteIcon/>
+                                                                                    <p>Delete</p>
+                                                                             </span>
+                                                                             </button>
+                                                                             </>
+                                                                      )
+                                                               }
                                                         {openDialog === store.id && (
                                                                 <Dialog open={true} onClose={handleCloseDialog} className="relative z-10">
                                                                         <DialogBackdrop className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
