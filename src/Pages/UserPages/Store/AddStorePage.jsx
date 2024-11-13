@@ -156,14 +156,17 @@ const AddStorePage = () => {
             auth.toastError('Failed to add Store.');
         }
     } catch (error) {
-        // console.log(response)
+        console.log(error.response.data.faild)
+        if(error.response.data.faild=== "You must buy plan"){
+            auth.toastError('You must buy plan first');
+        }
         const errorMessages = error?.response?.data.errors;
         let errorMessageString = 'Error occurred';
 
         if (errorMessages) {
             errorMessageString = Object.values(errorMessages).flat().join(' ');
         }
-        auth.toastError('Error', errorMessageString);
+        // auth.toastError('Error', errorMessageString);
     } finally {
         setIsLoading(false);
     }
@@ -252,7 +255,7 @@ const AddStorePage = () => {
                               Size="text-2xl"
                               px="px-28"
                               rounded="rounded-2xl"
-                              stateLoding={isLoading}
+                            //   stateLoding={isLoading}
                           />
                       </div>
                       <button onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>
