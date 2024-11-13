@@ -54,53 +54,6 @@ const PaymentHistoryPage = () => {
         fetchData(); 
     }, []);
 
-//     const handleOpenDialog = (storeId) => {
-//        setOpenDialog(storeId);
-//        };
-
-//        const handleCloseDialog = () => {
-//               setOpenDialog(null);
-//        };
-
-//        const handleDelete = async (storeId) => {
-//               setIsDeleting(true);
-//               const success = await deleteStore(storeId, auth.user.token);
-//               setIsDeleting(false);
-//               handleCloseDialog();
-
-//               if (success) {
-//                      setStoreChanged(!storeChanged)
-//                      auth.toastSuccess('Store deleted successfully!');
-//                      setStores((prevStore) =>
-//                         prevStore.filter((store) => store.id !== storeId)
-//                      );
-//               } else {
-//                      auth.toastError('Failed to delete store.');
-//               }
-//        };
-
-//        const deleteStore = async (storeId, authToken) => {
-//               try {
-//                      const response = await axios.put(`https://login.wegostores.com/user/v1/store/delete/${storeId}`, {
-//                             headers: {
-//                                    Authorization: `Bearer ${authToken}`,
-//                             },
-//                      });
-
-//                      if (response.status === 200) {
-//                             console.log('Store deleted successfully');
-//                             return true;
-//                      } else {
-//                             console.error('Failed to delete store:', response.status, response.statusText);
-//                             return false;
-//                      }
-//               } catch (error) {
-//                      console.error('Error deleting store:', error);
-//                      return false;
-//               }
-//        };
-
-
     if (isLoading) {
         return (
           <div className="w-1/4 h-full flex items-start mt-[10%] justify-center m-auto">
@@ -143,7 +96,8 @@ const PaymentHistoryPage = () => {
                                                         </td>
                                                         <td
                                                                 className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
-                                                        >                                                                <button
+                                                        >
+                                                                <button
                                                                 onClick={() => openModal(payment.orders)}
                                                                 className="text-mainColor underline"
                                                                 >
@@ -174,39 +128,37 @@ const PaymentHistoryPage = () => {
                                         <h3 className="text-2xl font-semibold text-gray-800 mb-2">Service {idx + 1}</h3>
                                         
                                         {/* Plan Section */}
+                                        {order.plans && (
                                         <div className="mb-4">
                                         <h4 className="text-xl font-semibold text-blue-600">Plan Details</h4>
                                         <div className="text-gray-700 pl-4 text-xl">
-                                        <p><span className="font-semibold">Name:</span> {order.plans?.name || 'N/A'}</p>
+                                        <p><span className="font-semibold">Name:</span> {order.plans?.name || '-'}</p>
                                         <p><span className="font-semibold">SetUp Fees: </span>{order.plans?.setup_fees || '0.00'} LE</p>
                                         <p><span className="font-semibold">Price Per Month: </span>{order.plans?.price_per_month || '0.00'} LE</p>
                                         <p><span className="font-semibold">Price Per Year: </span>{order.plans?.price_per_year || '0.00'} LE</p>
                                         <p><span className="font-semibold">Limit Store:</span> {order.plans?.limet_store || 'N/A'}</p>
                                         <p><span className="font-semibold">Included App:</span> {order.plans?.app === "1" ?"True" : "False" || 'N/A'}</p>
-                                        {/* Add more plan details here if available */}
                                         </div>
                                         </div>
+                                        )}
 
                                         {/* Domain Section */}
                                         {order.domain && (
                                         <div className="mb-4">
                                         <h4 className="text-lg font-semibold text-green-600">Domain Details</h4>
                                         <div className="text-gray-700 pl-4 text-xl">
-                                                <p><span className="font-semibold">Domain Name:</span> {order.domain.name || 'N/A'}</p>
-                                                <p><span className="font-semibold">Price:</span> {order.domain.price || 'N/A'}</p>
-                                                <p><span className="font-semibold">Store Name:</span> {order.domain.status || 'N/A'}</p>
-                                                {/* Add more domain details here if available */}
+                                                <p><span className="font-semibold">Domain Name:</span> {order.domain.name || '-'}</p>
+                                                <p><span className="font-semibold">Price:</span> {order.domain.price || '-'}</p>
+                                                <p><span className="font-semibold">Store Name:</span> {order.domain.status || '-'}</p>
                                         </div>
                                         </div>
                                         )}
-
-                                        {/* Extra Product Section */}
-                                        {order.extra && (
+                                        
+                                        {order.extra && order.extra !== null && (
                                         <div>
                                         <h4 className="text-lg font-semibold text-purple-600">Extra Product</h4>
                                         <div className="text-gray-700 pl-4 text-xl">
-                                                <p><span className="font-semibold">Product Name:</span> {order.extra || 'N/A'}</p>
-                                                {/* Add more extra product details if available */}
+                                                <p><span className="font-semibold">Product Name:</span> {order.extra?.name || '-'}</p>
                                         </div>
                                         </div>
                                         )}
