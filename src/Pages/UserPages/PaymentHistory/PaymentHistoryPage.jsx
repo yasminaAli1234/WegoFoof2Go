@@ -8,6 +8,7 @@ import {Wroning,DeleteIcon,EditIcon} from '../../../Components/Icons/AllIcons';
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
 import { MdCheck } from "react-icons/md";
 import CheckBox from '../../../Components/CheckBox';
+import PaymentModel from '../../../Components/PaymentModel';
 
 const PaymentHistoryPage = () => {
 
@@ -19,6 +20,18 @@ const PaymentHistoryPage = () => {
 //     const [storeChanged, setStoreChanged] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
     const [openDialog, setOpenDialog] = useState(null);
+
+    const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+    const [selectedPayment, setSelectedPayment] = useState(false);
+
+    const openPaymentModel = (payment) => {
+        setSelectedPayment(payment);
+        setIsPaymentModalOpen(true);
+      };
+      const closePaymentModel = () => {
+        setSelectedPayment([]);
+        setIsPaymentModalOpen(false);
+      };
 
 
     const openModal = (orders) => {
@@ -77,7 +90,7 @@ const PaymentHistoryPage = () => {
                                         <th className="min-w-[80px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">#</th>
                                         <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Payment Method</th>
                                         <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Service</th>
-                                        <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Invoice Image</th>
+                                        <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Invoice</th>
                                         <th className="min-w-[100px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Action</th>
                                         </tr>
                                 </thead>
@@ -101,13 +114,18 @@ const PaymentHistoryPage = () => {
                                                                 onClick={() => openModal(payment.orders)}
                                                                 className="text-mainColor underline"
                                                                 >
-                                                                View
+                                                                View Services
                                                                 </button>
                                                         </td>
                                                         <td
                                                                 className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                                         >
-                                                                {payment?.invoice_image || '_'}
+                                                                <button
+                                                                onClick={() => openPaymentModel(payment)}
+                                                                className="text-mainColor underline"
+                                                                >
+                                                                View Inovice
+                                                                </button>
                                                         </td>
                                                         <td
                                                                 className={`min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center ${payment.status === "approved" ? "text-green-500" : "text-red-500"} text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden`}>
@@ -117,6 +135,10 @@ const PaymentHistoryPage = () => {
                                         ))}
                                 </tbody>
                         </table>
+
+                        {isPaymentModalOpen && selectedPayment && (
+                                <PaymentModel payment={selectedPayment} closeModal={closePaymentModel} />
+                        )}
 
                         {isModalOpen && (
                                 <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center">
@@ -153,7 +175,7 @@ const PaymentHistoryPage = () => {
                                         </div>
                                         </div>
                                         )}
-                                        
+
                                         {order.extra && order.extra !== null && (
                                         <div>
                                         <h4 className="text-lg font-semibold text-purple-600">Extra Product</h4>
