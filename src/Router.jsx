@@ -34,6 +34,9 @@ import { UserLayout,UserHomeLayout ,
     MyDomainLayout,
     BuyDomainLayout,
     VideoTutorialLayout,
+    PromoCodeLayout,
+    AddPromoCodeLayout,
+    EditPromoCodeLayout,
 } from "./Layouts/AllLayouts";
 import Login from "./Pages/RegisterPages/Login.jsx";
 import SignUpPage from "./Pages/RegisterPages/SignUpPage.jsx";
@@ -83,6 +86,11 @@ const AppLayoutExtraProduct = () => (
   </>
 );
 const AppLayoutPaymentMethod = () => (
+  <>
+    <Outlet/>
+  </>
+);
+const AppLayoutPromoCode = () => (
   <>
     <Outlet/>
   </>
@@ -233,7 +241,21 @@ export const router = createBrowserRouter([
           },
           {
             path: 'promocode',
-            
+            element:<AppLayoutPromoCode/>,
+            children: [
+              {
+                path:'',
+                element:<PromoCodeLayout/>
+              },
+              {
+                path:'add',
+                element:<AddPromoCodeLayout/>
+              },
+              {
+                path:'edit/:codeId',
+                element:<EditPromoCodeLayout/>
+              },
+            ]
           } 
         ],
       },
