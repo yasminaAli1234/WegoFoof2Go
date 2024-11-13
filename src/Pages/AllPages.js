@@ -33,8 +33,10 @@ export { default as PaymentPage } from "./AdminPages/Payment/PaymentPage";
 export { default as PaymentMethodPage } from "./AdminPages/PaymentMethod/PaymentMethodPage";
 export { default as AddPaymentMethodPage } from "./AdminPages/PaymentMethod/AddPaymentMethodPage";
 export { default as EditPaymentMethodPage } from "./AdminPages/PaymentMethod/EditPaymentMethodPage";
-
-
+//PromoCode Page
+export { default as PromoCodePage } from "./AdminPages/PromoCode/PromoCodePage";
+export { default as AddPromoCodePage } from "./AdminPages/PromoCode/AddPromoCodePage";
+export { default as EditPromoCodePage } from "./AdminPages/PromoCode/EditPromoCodePage";
 
 /* User Pages*/
 // User Home Page

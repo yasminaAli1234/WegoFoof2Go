@@ -230,7 +230,11 @@ export const router = createBrowserRouter([
                 element: <EditPaymentMethodLayout/>,
               },
             ]
-          }, 
+          },
+          {
+            path: 'promocode',
+            
+          } 
         ],
       },
     ],

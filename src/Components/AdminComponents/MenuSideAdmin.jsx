@@ -1,5 +1,5 @@
 import React, { useState ,useEffect} from "react";
-import {DemorequestsIcon, DollerIcon, ExtraIcon, HomeIcon, OrderIcon, PaymentIcon, PlanIcon, SettingIcon, SubscriptionIcon, UserIcon,
+import {DemorequestsIcon, DollerIcon, ExtraIcon, HomeIcon, OrderIcon, PaymentIcon, PlanIcon, PromoCodeIcon, SettingIcon, SubscriptionIcon, UserIcon,
     // ProfileIcon,StoreIcon,SubscriptionIcon,DomainIcon,ExtraIcon,PaymentIcon,TutorialIcon
 } from "../Icons/AllIcons";
 import { NavLink } from "react-router-dom";
@@ -26,6 +26,7 @@ const MenuSideAdmin = () => {
        const [isActiveSetting, setIsActiveSetting] =  useState(savedState.isActiveSetting ?? false);
               const [isActiveSettingList, setIsActiveSettingList] =  useState(savedState.isActiveSettingList ?? false);
               const [isActivePaymentMethod, setIsActivePaymentMethod] =  useState(savedState.isActivePaymentMethod ?? false);
+              const [isActivePromoCode, setIsActivePromoCode] =  useState(savedState.isActivePromoCode ?? false);
 
 
        const handleLogout = () => {
@@ -37,12 +38,12 @@ const MenuSideAdmin = () => {
               const sidebarAdminState = {
                      isActiveHome,isActiveDemoRequest,isActivePaymentPending,
                      isActiveOrder,isActiveUser,isActiveSubscription,isActivePlan,
-                     isActiveExtra,isActivePayment,isActiveSetting,isActiveSettingList
+                     isActiveExtra,isActivePayment,isActiveSetting,isActiveSettingList,isActivePromoCode
               };
               localStorage.setItem('sidebarAdminState', JSON.stringify(sidebarAdminState));
        }, [isActiveHome,isActiveDemoRequest,isActivePaymentPending,
            isActiveOrder,isActiveUser,isActiveSubscription,isActivePlan,
-           isActiveExtra,isActivePayment,isActiveSetting,isActiveSettingList
+           isActiveExtra,isActivePayment,isActiveSetting,isActiveSettingList,isActivePromoCode
        ]);
 
        const handleClickHome = () => {
@@ -58,6 +59,7 @@ const MenuSideAdmin = () => {
               setIsActiveSetting(false)
               setIsActiveSettingList(false)
               setIsActivePaymentMethod(false)
+              setIsActivePromoCode(false)
        };
        const handleClickDemoRequest = () => {
               setIsActiveHome(false);
@@ -72,6 +74,7 @@ const MenuSideAdmin = () => {
               setIsActiveSetting(false)
               setIsActiveSettingList(false)
               setIsActivePaymentMethod(false)
+              setIsActivePromoCode(false)
        };
        const handleClickPaymentPending =() =>{
               setIsActiveHome(false);
@@ -86,6 +89,7 @@ const MenuSideAdmin = () => {
               setIsActiveSetting(false)
               setIsActiveSettingList(false)
               setIsActivePaymentMethod(false)
+              setIsActivePromoCode(false)
        }
        const handleClickOrder=() =>{
               setIsActiveHome(false);
@@ -100,6 +104,7 @@ const MenuSideAdmin = () => {
               setIsActiveSetting(false)
               setIsActiveSettingList(false)
               setIsActivePaymentMethod(false)
+              setIsActivePromoCode(false)
        }
        const handleClickUser =() =>{
               setIsActiveHome(false);
@@ -114,6 +119,7 @@ const MenuSideAdmin = () => {
               setIsActiveSetting(false)
               setIsActiveSettingList(false)
               setIsActivePaymentMethod(false)
+              setIsActivePromoCode(false)
        }
        const handleClickSubscription =() =>{
               setIsActiveHome(false);
@@ -128,6 +134,7 @@ const MenuSideAdmin = () => {
               setIsActiveSetting(false)
               setIsActiveSettingList(false)
               setIsActivePaymentMethod(false)
+              setIsActivePromoCode(false)
        }
        const handleClickPlan =() =>{
               setIsActiveHome(false);
@@ -142,6 +149,7 @@ const MenuSideAdmin = () => {
               setIsActiveSetting(false)
               setIsActiveSettingList(false)
               setIsActivePaymentMethod(false)
+              setIsActivePromoCode(false)
        }
        const handleClickExtra =() =>{
               setIsActiveHome(false);
@@ -156,6 +164,7 @@ const MenuSideAdmin = () => {
               setIsActiveSetting(false)
               setIsActiveSettingList(false)
               setIsActivePaymentMethod(false)
+              setIsActivePromoCode(false)
        }
        const handleClickPayment =() =>{
               setIsActiveHome(false);
@@ -170,6 +179,7 @@ const MenuSideAdmin = () => {
               setIsActiveSetting(false)
               setIsActiveSettingList(false)
               setIsActivePaymentMethod(false)
+              setIsActivePromoCode(false)
        }
        const handleClickSetting =() =>{
               setIsActiveHome(false);
@@ -184,6 +194,7 @@ const MenuSideAdmin = () => {
               setIsActiveSetting(true)
               setIsActiveSettingList(true)
               setIsActiveSetting(true)
+              setIsActivePromoCode(false)
        }
        const handleClickPaymentMethod =() =>{
               setIsActiveHome(false);
@@ -198,6 +209,22 @@ const MenuSideAdmin = () => {
               setIsActiveSettingList(true)
               setIsActiveSetting(false)
               setIsActivePaymentMethod(true)
+              setIsActivePromoCode(false)
+       }
+       const handleClickPromoCode =() =>{
+              setIsActiveHome(false);
+              setIsActiveDemoRequest(false)
+              setIsActivePaymentPending(false)
+              setIsActiveOrder(false)
+              setIsActiveUser(false)
+              setIsActiveSubscription(false)
+              setIsActivePlan(false)
+              setIsActiveExtra(false)
+              setIsActivePayment(false)
+              setIsActiveSettingList(true)
+              setIsActiveSetting(false)
+              setIsActivePaymentMethod(false)
+              setIsActivePromoCode(true)
        }
        return (
               <>
@@ -254,8 +281,12 @@ const MenuSideAdmin = () => {
                                    <div className={`${isActiveSettingList ? "h-25" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
                                           <ul className={`${isActiveSettingList ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-10 bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
                                                  <Link to="payment_method" onClick={handleClickPaymentMethod} className={`${isActivePaymentMethod ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
-                                                        {/* <CustomerIcon isActive={isActivePaymentMethod} /> */}
+                                                        <PromoCodeIcon isActive={isActivePaymentMethod} />
                                                         <span className={`${isActivePaymentMethod ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Payment Method</span>
+                                                 </Link> 
+                                                 <Link to="promocode" onClick={handleClickPromoCode} className={`${isActivePromoCode ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
+                                                        <PromoCodeIcon isActive={isActivePromoCode} />
+                                                        <span className={`${isActivePromoCode ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>PromoCode</span>
                                                  </Link> 
                                           </ul>
                                    </div>
