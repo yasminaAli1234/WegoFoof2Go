@@ -94,7 +94,6 @@ const UserSubscriptionsPage = () => {
         }
     };
     
-
     // Handle billing period change
     const handleBillingPeriodChange = (planId, newPeriod) => {
         setBillingPeriod((prev) => ({ ...prev, [planId]: newPeriod }));

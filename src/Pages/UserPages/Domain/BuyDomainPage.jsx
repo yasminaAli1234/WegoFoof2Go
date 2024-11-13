@@ -6,12 +6,13 @@ import { useAuth } from '../../../Context/Auth';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { addToCart } from '../../../Redux/CartSlice.js';
+import { addToCart ,removeFromCart} from '../../../Redux/CartSlice.js';
 import DropDownMenu from '../../../Components/DropDownMenu';
 
 const BuyDomainPage =()=>{
     const auth = useAuth();
     // const navigate = useNavigate();
+    const [selectedDomainId, setSelectedDomainId] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [domainRequest, setDomainRequest] = useState('');
     const [alldomainRequest, setAllDomainRequest] = useState('');
@@ -96,14 +97,49 @@ const BuyDomainPage =()=>{
     // const handleAddToCart = (domain) => {
     //     dispatch(addToCart(domain));
     // };
+    // const handleAddToCart = (domain) => {
+    //     const productToCart = {
+    //         name: domain.name,
+    //         price: domain.price };
+    //     dispatch(addToCart(productToCart));
+    // };
+
     const handleAddToCart = (domain) => {
-        const productToCart = {
-            name: domain.name,
-            price: domain.price };
-        dispatch(addToCart(productToCart));
+        if (selectedDomainId == domain.id) {
+            // Deselect plan and remove from cart
+            setSelectedDomainId(null);
+            dispatch(removeFromCart(domain));
+            localStorage.removeItem('selectedDomainId');
+        } else {
+            // Deselect previous plan and add new plan
+            if (selectedDomainId !== null) {
+                const previousDomain = domainApproved.find((p) => p.id == selectedDomainId);
+                dispatch(removeFromCart(previousDomain));
+                localStorage.removeItem('selectedDomainId');
+            }
+            setSelectedDomainId(domain.id);
+            localStorage.setItem('selectedDomainId', domain.id);  // Save selected plan to localStorage
+        }
     };
     
+    useEffect(() => {
+        const savedDomainId = localStorage.getItem('selectedDomainId');
+        if (savedDomainId && domainApproved.length > 0) {
+            setSelectedDomainId(savedDomainId);
+        }
+        console.log(savedDomainId)
+    }, [domainApproved]); // Run this effect when plans are set
 
+    useEffect(() => {
+        // If a plan is selected, add it to the cart
+        if (selectedDomainId) {
+            const selectedDomain = domainApproved.find((p) => p.id == selectedDomainId);
+            console.log(selectedDomain)
+            if (selectedDomain) {
+                dispatch(addToCart(selectedDomain));
+            }
+        }
+    }, [selectedDomainId, domainApproved, dispatch]); // Ensure to run only when selectedPlanId or plans change
 
     const fetchData = async () => {
         setIsLoading(true);
@@ -329,7 +365,7 @@ const BuyDomainPage =()=>{
                         <div className="w-full flex flex-wrap items-center justify-start gap-10">
                             {domainApproved.map((domain, index) => (
                                 <>
-                                    <div key={domain.id} className="lg:w-[80%] xl:w-[30%] text-mainColor sm:w-full border border-mainColor rounded-2xl">
+                                    <div key={domain.id} className={`lg:w-[80%] xl:w-[30%] text-mainColor sm:w-full border border-mainColor rounded-2xl ${selectedDomainId == domain.id ? 'border-green-500' : ''}`}>
                                         <div className='mb-2 p-4 pb-0 text-xl md:text-2xl xl:text-2xl font-semibold'>
                                             <h1 className='p-2'><span>Domain : </span>{domain.name || '-'}</h1>
                                             <h1 className='p-2'><span>Price : </span>{domain.price || '-'}</h1>
@@ -338,11 +374,18 @@ const BuyDomainPage =()=>{
                                             <h1 className='p-2 text-green-600'><span className='text-mainColor'>Status : </span>{domain.status === 1? "Approved" :'Approved'}</h1>
                                         </div>
                                         <div className='text-center font-semibold text-2xl border-t-2 border-mainColor'>
-                                            <button
+                                            {/* <button
                                                     onClick={() => handleAddToCart(domain)}
                                                     className="w-full text-white p-4 rounded-b-xl bg-mainColor"
                                             >
                                                     Add to Cart
+                                            </button> */}
+                                             <button
+                                                onClick={() => handleAddToCart(domain)}
+                                                className={`w-full p-4 font-semibold rounded-b-xl
+                                                ${selectedDomainId == domain.id ? 'bg-green-500 text-white' : 'bg-mainColor text-white'}`}
+                                            >
+                                                {selectedDomainId == domain.id ? 'Selected Domain' : 'Add to Cart'}
                                             </button>
                                         </div>
                                     </div>       
