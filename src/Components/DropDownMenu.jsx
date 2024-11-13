@@ -49,10 +49,8 @@ const DropDownMenu = forwardRef(({
                         >
                             {option.name}
                             {option.type_name}
-                            {option.offer_name}
-                            {option.car_name}
-                            {option.pick_up_address}
-                            <input type="hidden" value={option?.id || option.type_name || option.name || option.offer_name || option.car_name || option.pick_up_address} className='inputVal' />
+                            {option.store_name}
+                            <input type="hidden" value={option?.id || option.type_name || option.name|| option.store_name} className='inputVal' />
                         </div>
                     ))}
                     {filteredOptions.length === 0 && (

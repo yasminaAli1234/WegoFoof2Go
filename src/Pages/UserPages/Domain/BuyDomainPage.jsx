@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../../Redux/CartSlice.js';
+import DropDownMenu from '../../../Components/DropDownMenu';
 
 const BuyDomainPage =()=>{
     const auth = useAuth();
@@ -22,6 +23,61 @@ const BuyDomainPage =()=>{
      // State to control modal visibility and content
      const [showModal, setShowModal] = useState(false);
      const [selectedReason, setSelectedReason] = useState('');
+
+    const [storeData ,setStoreData] =useState([])
+    const [selectStore, setSelectStore] = useState('Select Store');
+    const [selectStoreId, setSelectStoreId] = useState('');
+    const [openSelectStore, setOpenSelectStore] = useState(false);
+
+    const dropdownStoreRef =useRef();
+
+     const fetchStoresData = async () => {
+        setIsLoading(true);
+        try {
+               const response = await axios.get('https://login.wegostores.com/user/v1/store', {
+                      headers: {
+                             Authorization: `Bearer ${auth.user.token}`,
+                      },
+               });
+               if (response.status === 200) {
+                      console.log(response.data)
+                      setStoreData(response.data.stores)
+               }
+        } catch (error) {
+               console.error('Error fetching data:', error);
+        } finally {
+               setIsLoading(false);
+        }
+    };
+
+    const handleOpenSelectStore = () => {
+        setOpenSelectStore(!openSelectStore)
+      };
+
+    const handleSelectStore = (e) => {
+        const inputElement = e.currentTarget.querySelector('.inputVal');
+        const selectedOptionName = e.currentTarget.textContent.trim();
+        const selectedOptionValue = inputElement ? inputElement.value : null;
+        setSelectStore(selectedOptionName);
+        setSelectStoreId(parseInt(selectedOptionValue));
+        setOpenSelectStore(false);
+        console.log('Selected store:', selectedOptionName);
+        console.log('Store ID:', selectedOptionValue);
+      };
+
+      useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+          document.removeEventListener('mousedown', handleClickOutside);
+        };
+      }, []);
+    
+      const handleClickOutside = (event) => {
+        if (dropdownStoreRef.current && !dropdownStoreRef.current.contains(event.target)
+        ) {
+            setOpenSelectStore(false); 
+        }
+      };
  
      // Function to open modal and set the rejection reason
      const handleViewReason = (reason) => {
@@ -72,8 +128,63 @@ const BuyDomainPage =()=>{
     };
 
     useEffect(() => {
-        fetchData(); 
+        fetchData();
+        fetchStoresData(); 
     }, []);
+
+    const handleSubmitAdd = async (event) => {
+        event.preventDefault();
+    
+        if (!domainRequest) {
+            auth.toastError('Please Enter Domain Name.');
+            return;
+        }
+        if (!selectStoreId) {
+            auth.toastError('Please Select Store.');
+            return;
+        }
+    
+        const formData = new FormData();
+        formData.append('name', domainRequest);
+        formData.append('store_id', selectStoreId);
+    
+        for (let pair of formData.entries()) {
+                console.log(pair[0] + ', ' + pair[1]);
+        }        
+    
+        setIsLoading(true);
+        try {
+            const response = await axios.post('https://login.wegostores.com/user/v1/domains/add_domain',formData, {
+                headers: {
+                    Authorization: `Bearer ${auth.user.token}`,
+                    'Content-Type': 'application/json', // Use JSON since we're sending a JSON object now
+                },
+            });
+            console.log(response)
+    
+            if (response.status === 200) {
+                auth.toastSuccess('Domain Send successfully!');
+                  // Clear the input fields on success
+                setDomainRequest('');
+                setSelectStore('Select Store'); // Or an empty string '' if that fits your requirements better
+                setSelectStoreId(''); // Or an empty string '' if that fits your requirements better
+                handleGoBack();
+            } else {
+                auth.toastError('Failed to Send Domain.');
+            }
+        } catch (error) {
+            console.log(error.response.data.faild)
+            const errorMessages = error?.response?.data.errors;
+            let errorMessageString = 'Error occurred';
+    
+            if (errorMessages) {
+                errorMessageString = Object.values(errorMessages).flat().join(' ');
+            }
+            // auth.toastError('Error', errorMessageString);
+        } finally {
+            setIsLoading(false);
+        }
+        };
 
     if (isLoading) {
         return (
@@ -89,34 +200,51 @@ const BuyDomainPage =()=>{
 
     return(
         <div>
-            <form className="w-full flex flex-col justify-center gap-y-10">
-            <div className="w-full flex flex-col gap-3 shadow-md p-6">
-                <h1 className='text-2xl text-mainColor font-semibold'>Request for your own domain</h1>
-                <div className="lg:w-[70%] w-full flex flex-col md:flex-row justify-start">
-                    <div className="sm:w-full md:w-4/6 border-2 border-mainColor md:border-r-0"> 
-                        <input
-                        className='p-4 font-semibold text-xl w-full h-full rounded-2xl outline-none'
-                            type="text"
-                            placeholder="Enter Domain Name"
-                            // borderWidth="1"
-                            // borderColor="white"
-                            value={domainRequest}
-                            onChange={(e) => setDomainRequest(e.target.value)}
-                        />
+
+            <form onSubmit={handleSubmitAdd} className="w-full flex flex-col gap-y-8 bg-gradient-to-b from-white to-gray-50 rounded-2xl shadow-lg">
+            <div className="w-full flex flex-col gap-6 p-6 bg-white rounded-lg shadow-sm border border-gray-200">
+                <h1 className="text-3xl text-mainColor font-bold tracking-tight mb-4">Request Your Own Domain</h1>
+
+                <div className="w-full flex flex-col md:flex-row justify-between items-center gap-6">
+                {/* Dropdown and Input Group */}
+                <div className="flex flex-col sm:flex-row w-full border border-mainColor rounded-lg shadow-sm">
+                    
+                    {/* Dropdown Menu */}
+                    <div className="w-full lg:w-[40%] p-3 flex items-center">
+                    <DropDownMenu
+                        ref={dropdownStoreRef}
+                        handleOpen={handleOpenSelectStore}
+                        handleOpenOption={handleSelectStore}
+                        stateoption={selectStore}
+                        openMenu={openSelectStore}
+                        options={storeData}
+                    />
                     </div>
-                    <div className="flex items-center justify-center w-full md:w-2/6 rounded-2xl">
-                        <Button
-                            type="submit"
-                            Text="Send"
-                            BgColor="bg-mainColor"
-                            Color="text-white"
-                            Width="full"
-                            Size="text-2xl"
-                            px="px-28"
-                            rounded="rounded-lg"
-                            // stateLoding={isLoading}
-                        />
-                    </div>
+
+                    {/* Input Field */}
+                    <input
+                    className="p-4 font-semibold text-lg w-full bg-gray-50 border-l border-gray-200 rounded-r-lg focus:bg-white focus:border-mainColor focus:ring-2 focus:ring-mainColor/30 outline-none transition-all duration-300 ease-in-out"
+                    type="text"
+                    placeholder="Enter Domain Name"
+                    value={domainRequest}
+                    onChange={(e) => setDomainRequest(e.target.value)}
+                    />
+                </div>
+
+                {/* Submit Button */}
+                <div className=" flex items-center justify-center">
+                    <Button
+                    type="submit"
+                    Text="Send"
+                    BgColor="bg-mainColor hover:bg-mainColor/90 transition duration-200 ease-in-out"
+                    Color="text-white"
+                    Width="w-full md:w-auto"
+                    Size="text-xl"
+                    px="px-16"
+                    py="py-3"
+                    rounded="rounded-full shadow-md"
+                    />
+                </div>
                 </div>
             </div>
             </form>
@@ -171,7 +299,7 @@ const BuyDomainPage =()=>{
                                     <div key={domain.id} className="lg:w-[80%] xl:w-[30%] text-mainColor sm:w-full border border-mainColor rounded-2xl">
                                         <div className='mb-2 p-4 pb-0 text-xl md:text-2xl xl:text-2xl font-semibold'>
                                             <h1 className='p-2'><span>Domain : </span>{domain.name || '-'}</h1>
-                                            <h1 className='p-2'><span>Price : </span>{domain.price || '-'}</h1>
+                                            {/* <h1 className='p-2'><span>Price : </span>{domain.price || '-'}</h1> */}
                                             <h1 className='p-2'><span>Store : </span>{domain.store?.store_name || '-'}</h1>
                                             {/* <h1 className='p-2'><span>Renew Date : </span>{domain.renewdate || '-'}</h1> */}
                                             <h1 className='p-2 text-gray-500'><span className='text-mainColor'>Status : </span>{domain.status === 1? "Pending" :'Pending'}</h1>
