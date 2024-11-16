@@ -24,14 +24,15 @@ const ExtraPage = () => {
 //     };
 
        const handleAddToCart = (product) => {
-              const productToCart = {
-              id:product.id,
-              name: product.name,
-              price: product.status === "one_time" 
-                     ? product.price 
-                     : { yearly: product.yearly, monthly: product.monthly } // Include both yearly and monthly prices
-              };
-              dispatch(addToCart(productToCart));
+              // const productToCart = {
+              // id:product.id,
+              // name: product.name,
+              // price: product.status === "one_time" 
+              //        ? product.price 
+              //        : { yearly: product.yearly, monthly: product.monthly } // Include both yearly and monthly prices
+              // };
+              // dispatch(addToCart(productToCart));
+              dispatch(addToCart(product));
        };
    
 

@@ -113,17 +113,17 @@ const PromoCodePage = () => {
                         <tr className="w-full border-b-2">
                             <th className="min-w-[80px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">#</th>
                             <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Code</th>
-                            <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Discount Type</th>
-                            <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Plan</th>
+                            <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Discount Amount</th>
+                            <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Type</th>
                             <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Vaild From</th>
                             <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Vaild To</th>
                             <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Usage Limit</th>
                             <th className="min-w-[100px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Action</th>
                         </tr>
                     </thead>
-                    {/* <tbody className="w-full">
-                            {payments.map((payment, index) => (
-                                <tr className="w-full border-b-2" key={payment.id}>
+                    <tbody className="w-full">
+                            {promoCode.map((code, index) => (
+                                <tr className="w-full border-b-2" key={code.id}>
                                         <td
                                                 className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                         >
@@ -132,22 +132,30 @@ const PromoCodePage = () => {
                                         <td
                                                 className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                         >
-                                                {payment?.name || 'Null'}
+                                                {code?.code || '_'}
+                                        </td>
+                                        <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                                                {code?.calculation_method === "percentage"
+                                                        ? `${code?.amount}%`
+                                                        : code?.amount}
                                         </td>
                                         <td
                                                 className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                         >
-                                                <div className='w-full flex justify-center'>
-                                                <img src={payment?.thumbnailUrl || 'Null'} alt='payment method image' className='w-20 object-content'/>
-                                                </div>
-                                        </td>  
+                                                {code?.promo_type || 'Null'}
+                                        </td>
                                         <td
                                                 className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                         >
-                                                {payment?.description || 'Null'}
+                                                {code?.start_date || 'Null'}
+                                        </td>
+                                        <td
+                                                className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
+                                        >
+                                                {code?.end_date || 'Null'}
                                         </td>
 
-                                        <td
+                                        {/* <td
                                                 className="min-w-[100px] sm:min-w-[80px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                         >
                                                 <div className="flex items-center justify-center gap-x-3">
@@ -197,10 +205,10 @@ const PromoCodePage = () => {
                                                         </Dialog>
                                                 )}
                                                 </div>
-                                        </td>
+                                        </td> */}
                                 </tr>
                             ))}
-                    </tbody> */}
+                    </tbody>
                 </table>
             </div>
               </div>
