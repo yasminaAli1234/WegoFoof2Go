@@ -250,7 +250,7 @@ const [paymentStatuses, setPaymentStatuses] = useState({});
                                         </Dialog>
                                         )}
                                         {showPopup && (
-                                                <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50 flex justify-center items-center">
+                                                <div className="fixed top-0 inset-0 left-0 w-full h-full bg-gray-500 bg-opacity-5 z-50 flex justify-center items-center">
                                                 <div className="bg-white p-6 rounded-lg shadow-lg w-96">
                                                 <h2 className="text-2xl text-mainColor font-semibold mb-6">Choose Action</h2>
                                                 <div className="flex flex-col gap-4">

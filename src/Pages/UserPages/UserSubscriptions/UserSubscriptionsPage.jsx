@@ -197,13 +197,29 @@ const UserSubscriptionsPage = () => {
                             </div>
 
                             <div className="text-center">
-                                <button
-                                    onClick={() => handleAddToCart(plan)}
-                                    className={`w-full py-3 font-semibold rounded-lg transition-transform transform 
-                                    ${selectedPlanId == plan.id ? 'bg-green-500 text-white' : 'bg-mainColor text-white hover:scale-105'}`}
-                                >
-                                    {selectedPlanId == plan.id ? 'Selected Plan' : 'Add to Cart'}
-                                </button>
+                                {
+                                    plan.my_plan=== true?(
+                                        <>
+                                        <button
+                                            className={`w-full py-3 font-semibold rounded-lg transition-transform transform 
+                                            bg-mainColor text-white hover:scale-105`}
+                                        >
+                                            My Plan
+                                        </button>                                        </>
+
+                                    ):
+                                    (
+                                        <>
+                                        <button
+                                            onClick={() => handleAddToCart(plan)}
+                                            className={`w-full py-3 font-semibold rounded-lg transition-transform transform 
+                                            ${selectedPlanId == plan.id ? 'bg-green-500 text-white' : 'bg-mainColor text-white hover:scale-105'}`}
+                                        >
+                                            {selectedPlanId == plan.id ? 'Selected Plan' : 'Add to Cart'}
+                                        </button>
+                                        </>
+                                    )
+                                }
                             </div>
                         </div>
                     );

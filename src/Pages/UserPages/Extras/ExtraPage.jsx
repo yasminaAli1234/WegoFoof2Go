@@ -25,6 +25,7 @@ const ExtraPage = () => {
 
        const handleAddToCart = (product) => {
               const productToCart = {
+              id:product.id,
               name: product.name,
               price: product.status === "one_time" 
                      ? product.price 
