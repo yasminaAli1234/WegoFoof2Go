@@ -95,12 +95,22 @@ const StorePage = () => {
         );
     }    
       
-    if (!stores) {
-        return <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No stores data available</div>;
-    }
+//     if (!stores) {
+//         return <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No stores data available</div>;
+//     }
 
        return (
               <>
+              {stores.length ===0 ? (
+                     <>
+                     <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No stores data available</div>
+                            <div className='w-2/6 lg:w-1/6'>
+                            <Link to={'add'}>
+                                   <ButtonAdd isWidth="true" BgColor ="mainColor" Color="white" iconColor="white"/>
+                            </Link>
+                     </div>
+                     </>
+              ):(
               <div className='w-full flex flex-col gap-10'>
                      <div className='w-2/6 lg:w-1/6'>
                      <Link to={'add'}>
@@ -192,6 +202,7 @@ const StorePage = () => {
                  ))}
                 </div>
               </div>
+              )}
               </>
        )
 }
