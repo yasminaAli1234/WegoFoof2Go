@@ -181,42 +181,42 @@
 //               {method.name}
 //             </label>
 
-//             {selectedMethod === method.name &&
-//               (method.name === "Vodafone" ? (
-//                 <div className="lg:w-full sm:w-full flex flex-col gap-5 mt-4 p-4">
-//                   <InputCustom
-//                     type="text"
-//                     borderColor="mainColor"
-//                     placeholder="Upload Receipt"
-//                     value={thumbnails}
-//                     readOnly={true}
-//                     onClick={handleInputClick}
-//                     required={false}
-//                     upload={true}
-//                   />
-//                   <input
-//                     type="file"
-//                     className="hidden"
-//                     onChange={handleFileChange}
-//                     ref={uploadRef}
-//                   />
-//                   <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
-//                     <div className="flex items-center justify-center w-72">
-//                       <Button
-//                         type="submit"
-//                         Text="Done"
-//                         BgColor="bg-mainColor"
-//                         Color="text-white"
-//                         Width="full"
-//                         Size="text-2xl"
-//                         px="px-28"
-//                         rounded="rounded-2xl"
-//                         stateLoding={isLoading}
-//                       />
-//                     </div>
-//                     <button className="text-2xl text-mainColor">Cancel</button>
-//                   </div>
-//                 </div>
+            // {selectedMethod === method.name &&
+            //   (method.name === "Vodafone" ? (
+                // <div className="lg:w-full sm:w-full flex flex-col gap-5 mt-4 p-4">
+                //   <InputCustom
+                //     type="text"
+                //     borderColor="mainColor"
+                //     placeholder="Upload Receipt"
+                //     value={thumbnails}
+                //     readOnly={true}
+                //     onClick={handleInputClick}
+                //     required={false}
+                //     upload={true}
+                //   />
+                //   <input
+                //     type="file"
+                //     className="hidden"
+                //     onChange={handleFileChange}
+                //     ref={uploadRef}
+                //   />
+            //       <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
+            //         <div className="flex items-center justify-center w-72">
+            //           <Button
+            //             type="submit"
+            //             Text="Done"
+            //             BgColor="bg-mainColor"
+            //             Color="text-white"
+            //             Width="full"
+            //             Size="text-2xl"
+            //             px="px-28"
+            //             rounded="rounded-2xl"
+            //             stateLoding={isLoading}
+            //           />
+            //         </div>
+            //         <button className="text-2xl text-mainColor">Cancel</button>
+            //       </div>
+            //     </div>
 //               ) : method.name === "Paypal" ? (
 //                 <div className="lg:w-full sm:w-full flex flex-col gap-5 mt-4 p-4">
 //                   <InputCustom
@@ -374,17 +374,115 @@ const CheckoutPage = () => {
     }
   };
 
-
   // const handleSubmit = async () => {
-  //   // Process Plan Items
-  //   const planItems = cartItems
+
+  //   if(selectedMethod.name=== "vodafonCash"){
+  //     // Process Plan Items
+  //     const planItems = cartItems
   //     .filter((item) => item.type === "plan")
   //     .map((item) => ({
-  //       plan_id: item.id,
-  //       period: item.billingPeriod || "monthly", // Default to "monthly" if not provided
-  //       // selectedDetails: item.details || null,  // Optional details
-  //       // price: item.price_per_month || item.price_per_year || 0,
+  //       id: item.id,
+  //       package: item.duration ==="monthly"? 1 : "quartly":3 :"semiannul":6 :"yraly":"yearly", // Default to "monthly" if not provided
   //     }));
+  //   // Process Extra Items
+  //   const extraItems = cartItems
+  //     .filter((item) => item.type === "extra")
+  //     .map((item) => ({
+  //       id: item.id,
+  //       package: item.duration ==="monthly"? 1 : "quartly":3 :"semiannul":6 :"yraly":"yearly", // Default to "monthly" if not provided
+  //     }));
+  
+  //   // Process Domain Items
+  //   const domainItems = cartItems
+  //     .filter((item) => item.type === "domain")
+  //     .map((item) => ({
+  //       id: item.id,
+  //       package: item.duration ==="monthly"? 1 : "quartly":3 :"semiannul":6 :"yraly":"yearly", // Default to "monthly" if not provided
+  //     }));
+  
+  //   // Prepare Request Data
+  //   const requestData = {
+  //     payment_method_id: selectedMethod.id, // Assuming `selectedMethod` contains the payment method ID
+  //     cart: {
+  //       plan: planItems, // Send plan_id directly
+  //       extra: extraItems.length > 0 ? extraItems : null,
+  //       domain: domainItems.length > 0 ? domainItems : null,
+  //     },
+  //     invoice_image:thumbnailFile,
+  //     total: discountedPrice || totalPrice, // Calculate total (discounted or full price)
+  //   };
+  
+  //   console.log("Request Data:", requestData); // Log for debugging
+
+  //    // Extract Plan Item
+  //    const planItem = cartItems.find((item) => item.type === "plan");
+  //    const planId = planItem ? planItem.id : null;
+   
+  //    // Process Extra Items
+  //    const extraItems = cartItems
+  //      .filter((item) => item.type === "extra")
+  //      .map((item) => ({
+  //        extra_id: item.id,
+  //        period: item.duration || "monthly", // Default to "monthly" if not provided
+  //      }));
+   
+  //    // Process Domain Items
+  //    const domainItems = cartItems
+  //      .filter((item) => item.type === "domain")
+  //      .map((item) => ({
+  //        domain_id: item.id,
+  //        period: item.duration || "monthly", // Default to "monthly" if not provided
+  //      }));
+   
+  //    // Prepare Request Data
+  //    const requestData = {
+  //      payment_method_id: selectedMethod.id, // Assuming `selectedMethod` contains the payment method ID
+  //      cart: {
+  //        plan_id: planId, // Send plan_id directly
+  //        extra: extraItems.length > 0 ? extraItems : null,
+  //        domain: domainItems.length > 0 ? domainItems : null,
+  //      },
+  //      total: discountedPrice || totalPrice, // Calculate total (discounted or full price)
+  //    };
+   
+  //    console.log("Request Data:", requestData); // Log for debugging
+   
+  //    try {
+  //      // Set loading state
+  //      setIsLoading(true);
+   
+  //      // API call to submit order
+  //      const response = await axios.post(
+  //        "https://login.wegostores.com/user/v1/cart",
+  //        requestData,
+  //        {
+  //          headers: {
+  //            Authorization: `Bearer ${auth.user.token}`, // Bearer token for authentication
+  //          },
+  //        }
+  //      );
+   
+  //      // Handle response
+  //      if (response.status === 200) {
+  //        console.log(response.data);
+  //      } else {
+  //        alert("Failed to submit the order. Please try again.");
+  //      }
+  //    } catch (error) {
+  //      // Error handling
+  //      console.error("Error during order submission:", error);
+  //      alert("An error occurred while submitting the order.");
+  //    } finally {
+  //      // Reset loading state
+  //      setIsLoading(false);
+  //    }
+  
+  //   }
+  //   else if(selectedMethod.name=== "paymob"){
+
+  //      // Extract Plan Item
+  //   const planItem = cartItems.find((item) => item.type === "plan");
+  //   const planId = planItem ? planItem.id : null;
   
   //   // Process Extra Items
   //   const extraItems = cartItems
@@ -392,9 +490,6 @@ const CheckoutPage = () => {
   //     .map((item) => ({
   //       extra_id: item.id,
   //       period: item.duration || "monthly", // Default to "monthly" if not provided
-  //       // price: item.price || 0,
-  //       // name: item.name || "Unnamed Extra",     // Default to avoid missing names
-  //       // description: item.description || "",   // Optional description
   //     }));
   
   //   // Process Domain Items
@@ -403,20 +498,16 @@ const CheckoutPage = () => {
   //     .map((item) => ({
   //       domain_id: item.id,
   //       period: item.duration || "monthly", // Default to "monthly" if not provided
-  //       // domainName: item.domainName || "Unknown Domain", // Default domain name
-  //       // period: item.period || "1 year",                // Default to "1 year"
-  //       // price: item.price || 0,
   //     }));
   
   //   // Prepare Request Data
   //   const requestData = {
   //     payment_method_id: selectedMethod.id, // Assuming `selectedMethod` contains the payment method ID
   //     cart: {
-  //     plan: planItems,
-  //     extra: extraItems,
-  //     domain: domainItems || null,
+  //       plan_id: planId, // Send plan_id directly
+  //       extra: extraItems.length > 0 ? extraItems : null,
+  //       domain: domainItems.length > 0 ? domainItems : null,
   //     },
-  //     // phone,
   //     total: discountedPrice || totalPrice, // Calculate total (discounted or full price)
   //   };
   
@@ -428,7 +519,7 @@ const CheckoutPage = () => {
   
   //     // API call to submit order
   //     const response = await axios.post(
-  //       "https://login.wegostores.com/user/v1/payment/credit", // API endpoint
+  //       "https://login.wegostores.com/user/v1/payment/credit",
   //       requestData,
   //       {
   //         headers: {
@@ -439,92 +530,167 @@ const CheckoutPage = () => {
   
   //     // Handle response
   //     if (response.status === 200) {
-  //       console.log(response.data)
-  //       // alert("Order submitted successfully!");
+  //       console.log(response.data);
+  
+  //       // Redirect to the URL from the response
+  //       if (response.data.url) {
+  //         window.location.href = response.data.url;
+  //       } else {
+  //         alert("No redirect URL found in the response.");
+  //       }
   //     } else {
   //       alert("Failed to submit the order. Please try again.");
   //     }
   //   } catch (error) {
   //     // Error handling
   //     console.error("Error during order submission:", error);
-  //     // alert("An error occurred while submitting the order.");
+  //     alert("An error occurred while submitting the order.");
   //   } finally {
   //     // Reset loading state
   //     setIsLoading(false);
   //   }
+
+  //   }
   // };
 
   const handleSubmit = async () => {
-    // Extract Plan Item
-    const planItem = cartItems.find((item) => item.type === "plan");
-    const planId = planItem ? planItem.id : null;
+    if (selectedMethod.name === "VodafoneCash") {
+      // Define a duration mapping object
+      const durationMap = {
+        monthly: 1,
+        quarterly: 3,
+        "semi-annual": 6, // Updated to match your example
+        yearly: "yearly",
+      };
   
-    // Process Extra Items
-    const extraItems = cartItems
-      .filter((item) => item.type === "extra")
-      .map((item) => ({
-        extra_id: item.id,
-        period: item.duration || "monthly", // Default to "monthly" if not provided
-      }));
+      // Process Plan Items
+      const planItems = cartItems
+        .filter((item) => item.type === "plan")
+        .map((item) => ({
+          id: item.id,
+          package: durationMap[item.duration] || 1, // Default to "monthly" (1) if not provided
+        }));
   
-    // Process Domain Items
-    const domainItems = cartItems
-      .filter((item) => item.type === "domain")
-      .map((item) => ({
-        domain_id: item.id,
-        period: item.duration || "monthly", // Default to "monthly" if not provided
-      }));
+      // Process Extra Items
+      const extraItems = cartItems
+        .filter((item) => item.type === "extra")
+        .map((item) => ({
+          id: item.id,
+          package: durationMap[item.duration] || 1,
+        }));
   
-    // Prepare Request Data
-    const requestData = {
-      payment_method_id: selectedMethod.id, // Assuming `selectedMethod` contains the payment method ID
-      cart: {
-        plan_id: planId, // Send plan_id directly
-        extra: extraItems.length > 0 ? extraItems : null,
-        domain: domainItems.length > 0 ? domainItems : null,
-      },
-      total: discountedPrice || totalPrice, // Calculate total (discounted or full price)
-    };
+      // Process Domain Items
+      const domainItems = cartItems
+        .filter((item) => item.type === "domain")
+        .map((item) => ({
+          id: item.id,
+          package: durationMap[item.duration] || 1,
+        }));
   
-    console.log("Request Data:", requestData); // Log for debugging
+      // Prepare Request Data
+      const requestData = {
+        payment_method_id: selectedMethod.id,
+        cart: {
+          plan: planItems,
+          extra: extraItems.length > 0 ? extraItems : null,
+          domain: domainItems.length > 0 ? domainItems : null,
+        },
+        invoice_image: thumbnailFile,
+        total: discountedPrice || totalPrice,
+      };
   
-    try {
-      // Set loading state
-      setIsLoading(true);
+      console.log("Request Data:", requestData);
   
-      // API call to submit order
-      const response = await axios.post(
-        "https://login.wegostores.com/user/v1/payment/credit",
-        requestData,
-        {
-          headers: {
-            Authorization: `Bearer ${auth.user.token}`, // Bearer token for authentication
-          },
-        }
-      );
+      try {
+        setIsLoading(true); // Set loading state
   
-      // Handle response
-      if (response.status === 200) {
-        console.log(response.data);
+        const response = await axios.post(
+          "https://login.wegostores.com/user/v1/cart",
+          requestData,
+          {
+            headers: {
+              Authorization: `Bearer ${auth.user.token}`,
+            },
+          }
+        );
   
-        // Redirect to the URL from the response
-        if (response.data.url) {
-          window.location.href = response.data.url;
+        if (response.status === 200) {
+          console.log(response.data);
+          auth.toastSuccess('Order Send successfully!');
         } else {
-          alert("No redirect URL found in the response.");
+          alert("Failed to submit the order. Please try again.");
         }
-      } else {
-        alert("Failed to submit the order. Please try again.");
+      } catch (error) {
+        console.error("Error during order submission:", error);
+        alert("An error occurred while submitting the order.");
+      } finally {
+        setIsLoading(false); // Reset loading state
       }
-    } catch (error) {
-      // Error handling
-      console.error("Error during order submission:", error);
-      alert("An error occurred while submitting the order.");
-    } finally {
-      // Reset loading state
-      setIsLoading(false);
+    } 
+    
+    else if (selectedMethod.name === "paymob") {
+      const planItem = cartItems.find((item) => item.type === "plan");
+      const planId = planItem ? planItem.id : null;
+  
+      const extraItems = cartItems
+        .filter((item) => item.type === "extra")
+        .map((item) => ({
+          extra_id: item.id,
+          period: item.duration || "monthly",
+        }));
+  
+      const domainItems = cartItems
+        .filter((item) => item.type === "domain")
+        .map((item) => ({
+          domain_id: item.id,
+          period: item.duration || "monthly",
+        }));
+  
+      const requestData = {
+        payment_method_id: selectedMethod.id,
+        cart: {
+          plan_id: planId,
+          extra: extraItems.length > 0 ? extraItems : null,
+          domain: domainItems.length > 0 ? domainItems : null,
+        },
+        total: discountedPrice || totalPrice,
+      };
+  
+      console.log("Request Data:", requestData);
+  
+      try {
+        setIsLoading(true);
+  
+        const response = await axios.post(
+          "https://login.wegostores.com/user/v1/payment/credit",
+          requestData,
+          {
+            headers: {
+              Authorization: `Bearer ${auth.user.token}`,
+            },
+          }
+        );
+  
+        if (response.status === 200) {
+          console.log(response.data);
+  
+          if (response.data.url) {
+            window.location.href = response.data.url;
+          } else {
+            alert("No redirect URL found in the response.");
+          }
+        } else {
+          alert("Failed to submit the order. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error during order submission:", error);
+        alert("An error occurred while submitting the order.");
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
+  
   
   if (isLoading) {
     return (
@@ -595,7 +761,7 @@ const CheckoutPage = () => {
         Select Payment Method:
       </label>
 
-        {paymentMethods.map((method) => (
+        {/* {paymentMethods.map((method) => (
                   <div key={method.id} className="shadow bg-white p-6 w-full">
                     <label className="text-2xl flex items-center gap-3 cursor-pointer text-mainColor">
                       <input
@@ -608,8 +774,64 @@ const CheckoutPage = () => {
                       <img src={method.thumbnailUrl} alt={method.name} className="w-16" />
                       {method.name}
                     </label>
+            {selectedMethod.name === "VodafoneCash" && (
+            <div className="lg:w-full sm:w-full flex flex-col gap-5 mt-4 p-4">
+              <InputCustom
+                type="text"
+                borderColor="mainColor"
+                placeholder="Upload Receipt"
+                value={thumbnails}
+                readOnly={true}
+                onClick={handleInputClick}
+                upload="true"
+              />
+              <input
+                type="file"
+                className="hidden"
+                onChange={handleFileChange}
+                ref={uploadRef}
+              />
+            </div>
+            )}
                   </div>
-                ))}
+                ))} */}
+
+        {paymentMethods.map((method) => (
+          <div key={method.id} className="shadow bg-white p-6 w-full">
+            <label className="text-2xl flex items-center gap-3 cursor-pointer text-mainColor">
+              <input
+                type="radio"
+                name="paymentMethod"
+                className="w-6 h-6 border-2 text-mainColor border-mainColor"
+                value={method.name}
+                onChange={() => setSelectedMethod(method)}
+              />
+              <img src={method.thumbnailUrl} alt={method.name} className="w-16" />
+              {method.name}
+            </label>
+            {selectedMethod && selectedMethod.name === "VodafoneCash" && method.name === "VodafoneCash" && (
+              <div className="lg:w-full sm:w-full flex flex-col gap-5 mt-4 p-4">
+                <InputCustom
+                  type="text"
+                  borderColor="mainColor"
+                  placeholder="Upload Receipt"
+                  value={thumbnails}
+                  readOnly={true}
+                  onClick={handleInputClick}
+                  upload="true"
+                />
+                <input
+                  type="file"
+                  className="hidden"
+                  onChange={handleFileChange}
+                  ref={uploadRef}
+                />
+              </div>
+            )}
+          </div>
+        ))}
+
+              
       </div>
 
       </div>
