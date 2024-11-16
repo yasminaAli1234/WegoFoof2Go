@@ -28,7 +28,7 @@ const AddPromoCodePage = () => {
     const [selectValueTypeName, setSelectValueTypeName] = useState(null);
     const [openSelectValueType, setOpenSelectValueType] = useState(false);
 
-    const [usageTypeData, setUsageTypeData] = useState([{ name: 'unlimited' }, { name: 'fixed' }]);
+    const [usageTypeData, setUsageTypeData] = useState([{ name: 'First Usage' }, { name: 'Renueve' }]);
     const [selectUsageType, setSelectUsageType] = useState('Select UsageType');
     const [selectUsageTypeName, setSelectUsageTypeName] = useState(null);
     const [openSelectUsageType, setOpenSelectUsageType] = useState(false);
@@ -130,7 +130,7 @@ const AddPromoCodePage = () => {
         const calculationMethod = selectValueType === 'percentage' ? 'percentage' : 'amount';
         formData.append('calculation_method', calculationMethod);
 
-        const userType = selectUsageType === 'fixed' ? 'first_usage' : 'renueve';
+        const userType = selectUsageType === 'First Usage' ? 'first_usage' : 'renueve';
         formData.append('user_type', userType);
 
         formData.append('monthly',valueMonthly);
