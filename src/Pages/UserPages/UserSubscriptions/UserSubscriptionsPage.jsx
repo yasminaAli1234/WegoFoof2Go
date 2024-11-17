@@ -205,7 +205,8 @@ const UserSubscriptionsPage = () => {
                                             bg-mainColor text-white hover:scale-105`}
                                         >
                                             My Plan
-                                        </button>                                        </>
+                                        </button>
+                                        </>
 
                                     ):
                                     (

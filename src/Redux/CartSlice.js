@@ -75,6 +75,8 @@ const cartSlice = createSlice({
     clearCart: () => {
       // Clear cart from Redux state and localStorage
       localStorage.removeItem('cart');
+      localStorage.removeItem('selectedPlanId');
+      localStorage.removeItem('selectedDomainId');
       return [];
     }
   }
