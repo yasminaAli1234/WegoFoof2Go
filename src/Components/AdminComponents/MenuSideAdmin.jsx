@@ -278,7 +278,8 @@ const MenuSideAdmin = () => {
                                           <SettingIcon isActive={isActiveSetting} />
                                           <span className={`${isActiveSetting ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Settings</span>
                                    </Link>
-                                   <div className={`${isActiveSettingList ? "h-25" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
+                                   {isActiveSettingList && (
+                                   <div className={`${isActiveSettingList ? "h-auto" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
                                           <ul className={`${isActiveSettingList ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-10 bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
                                                  <Link to="payment_method" onClick={handleClickPaymentMethod} className={`${isActivePaymentMethod ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                                         <PromoCodeIcon isActive={isActivePaymentMethod} />
@@ -290,6 +291,7 @@ const MenuSideAdmin = () => {
                                                  </Link> 
                                           </ul>
                                    </div>
+                                   )}
                                    </>
                                    <Link to="/" onClick={handleLogout} className="w-full flex items-center justify-start px-0 py-2 gap-x-5">
                                           <IoIosLogOut size={23} style={{ strokeWidth: 2 }} color="#ffff"/>

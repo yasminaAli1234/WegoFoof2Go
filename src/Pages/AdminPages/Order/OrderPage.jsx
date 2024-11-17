@@ -29,14 +29,14 @@ const OrderPage = () => {
     const fetchData = async () => {
         setIsLoading(true);
         try {
-               const response = await axios.get('https://transitstation.online/api/admin/request', {
+               const response = await axios.get('https://login.wegostores.com/admin/v1/order/show/pending', {
                       headers: {
                              Authorization: `Bearer ${auth.user.token}`,
                       },
                });
                if (response.status === 200) {
                       console.log(response.data)
-                      setRequests(response.data)
+                //       setRequests(response.data)
                }
         } catch (error) {
                console.error('Error fetching data:', error);
