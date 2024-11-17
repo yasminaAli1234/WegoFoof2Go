@@ -366,7 +366,7 @@ const BuyDomainPage =()=>{
                         <div className="w-full flex flex-wrap items-center justify-start gap-10">
                             {domainApproved.map((domain, index) => (
                                 <>
-                                    <div key={domain.id} className={`lg:w-[80%] xl:w-[30%] text-mainColor sm:w-full border border-mainColor rounded-2xl ${selectedDomainId == domain.id ? 'border-green-500' : ''}`}>
+                                    <div key={domain.id} className={`lg:w-[80%] xl:w-[30%] text-mainColor sm:w-full border rounded-2xl ${selectedDomainId == domain.id ? 'border-green-500' : 'border-mainColor'}`}>
                                         <div className='mb-2 p-4 pb-0 text-xl md:text-2xl xl:text-2xl font-semibold'>
                                             <h1 className='p-2'><span>Domain : </span>{domain.name || '-'}</h1>
                                             <h1 className='p-2'><span>Price : </span>{domain.price || '-'}</h1>
@@ -374,7 +374,7 @@ const BuyDomainPage =()=>{
                                             <h1 className='p-2'><span>Renew Date : </span>{domain.renewdate || '-'}</h1>
                                             <h1 className='p-2 text-green-600'><span className='text-mainColor'>Status : </span>{domain.status === 1? "Approved" :'Approved'}</h1>
                                         </div>
-                                        <div className='text-center font-semibold text-2xl border-t-2 border-mainColor'>
+                                        <div className={`text-center font-semibold text-2xl border-t-2 ${selectedDomainId == domain.id ? 'border-green-500' : 'border-mainColor'}`}>
                                             {/* <button
                                                     onClick={() => handleAddToCart(domain)}
                                                     className="w-full text-white p-4 rounded-b-xl bg-mainColor"
