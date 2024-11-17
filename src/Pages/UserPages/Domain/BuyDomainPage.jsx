@@ -117,6 +117,7 @@ const BuyDomainPage =()=>{
                 dispatch(removeFromCart(previousDomain));
                 localStorage.removeItem('selectedDomainId');
             }
+            dispatch(addToCart(domain));
             setSelectedDomainId(domain.id);
             localStorage.setItem('selectedDomainId', domain.id);  // Save selected plan to localStorage
         }
