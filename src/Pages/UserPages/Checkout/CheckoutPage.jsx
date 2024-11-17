@@ -361,14 +361,14 @@ const CheckoutPage = () => {
         setDiscount(discount); // Update the discount state
         const newTotal = totalPrice - discount; // Calculate the discounted total
         setDiscountedPrice(newTotal); // Update state with the new total
-        alert(`Promo code applied! You saved ${discount} EGP.`);
+        auth.toastSuccess(`Promo code applied! You saved ${discount} EGP.`);
         setPromoCode("");
       } else {
-        alert("Failed to apply promo code. Please try again.");
+        auth.toastError("Failed to apply promo code. Please try again.");
       }
     } catch (error) {
       console.error("Error applying promo code:", error);
-      alert("Invalid promo code or an error occurred.");
+      auth.toastError("Invalid promo code.");
     } finally {
       setIsLoading(false);
     }
