@@ -194,22 +194,38 @@ const MenuSideUser = () => {
                                           <span className={`${isActiveDomain ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Domain</span>
                                    </Link> */}
                                     <>
-                                   <Link to="my_domain" onClick={handleClickDomain} className={`${isActiveDomain ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
+                                   <Link
+                                          to="my_domain"
+                                          onClick={handleClickDomain}
+                                          className={`${isActiveDomain ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}
+                                   >
                                           <DomainIcon isActive={isActiveDomain} />
                                           <span className={`${isActiveDomain ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Domains</span>
                                    </Link>
-                                   <div className={`${isActiveDomainList ? "h-25" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
-                                          <ul className={`${isActiveDomainList ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-10 bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
-                                                 <Link to="my_domain" onClick={handleClickMyDomain} className={`${isActiveMyDomain ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
-                                                        {/* <CustomerIcon isActive={isActivePaymentMethod} /> */}
-                                                        <span className={`${isActiveMyDomain ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>My Domain</span>
-                                                 </Link> 
-                                                 <Link to="buy_domain" onClick={handleClickBuyDomain} className={`${isActiveBuyDomain ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
-                                                        {/* <CustomerIcon isActive={isActivePaymentMethod} /> */}
-                                                        <span className={`${isActiveBuyDomain ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Buy Domain</span>
-                                                 </Link> 
+                                   {isActiveDomainList && (
+                                          <div className="h-22 w-full transition-all duration-500">
+                                          <ul className="h-full listUser ml-10 bg-blacks transition-all duration-700 flex flex-col gap-y-2">
+                                                 <Link
+                                                 to="my_domain"
+                                                 onClick={handleClickMyDomain}
+                                                 className={`${isActiveMyDomain ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}
+                                                 >
+                                                 <span className={`${isActiveMyDomain ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>
+                                                        My Domain
+                                                 </span>
+                                                 </Link>
+                                                 <Link
+                                                 to="buy_domain"
+                                                 onClick={handleClickBuyDomain}
+                                                 className={`${isActiveBuyDomain ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}
+                                                 >
+                                                 <span className={`${isActiveBuyDomain ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>
+                                                        Buy Domain
+                                                 </span>
+                                                 </Link>
                                           </ul>
-                                   </div>
+                                          </div>
+                                   )}
                                    </>
                                    <Link to="extra" onClick={handleClickExtra} className={`${isActiveExtra ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <ExtraIcon isActive={isActiveExtra} />

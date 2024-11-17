@@ -10,8 +10,8 @@ import { MdCheck } from "react-icons/md";
 import CheckBox from '../../../Components/CheckBox';
 import { useDispatch } from 'react-redux';
 import { addToCart, removeFromCart } from '../../../Redux/CartSlice.js'; // Added removeFromCart
-import { PiStorefront } from "react-icons/pi";
 import { CiMoneyCheck1 } from "react-icons/ci";
+import { MdAttachMoney } from "react-icons/md";
 
 const ExtraPage = () => {
 
@@ -130,160 +130,130 @@ const ExtraPage = () => {
   
        return (
               <>
-              {extraProduct.length !== 0 ?(
+              {extraProduct.length !== 0 ? (
               <>
-              <div className="w-full p-2 flex flex-col">
-              <div className="w-full grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-3">
-                     {extraProduct.map((product, index) => {
-                     const selectedPeriod = billingPeriod[product.id] || 'monthly';
-                     const priceOptions = {
-                            monthly: product.monthly,
-                            quarterly: product.quarterly || product.monthly * 3,
-                            semiAnnually: product["semi-annual"] || product.monthly * 6,
-                            annually: product.yearly,
-                     };
-                     const currentPrice = priceOptions[selectedPeriod];
-
-                     // Calculate savings
-                     const savings = selectedPeriod === 'monthly' ? 0 :
-                            selectedPeriod === 'quarterly' ? (product.monthly * 3 - currentPrice) :
-                            selectedPeriod === 'semiAnnually' ? (product.monthly * 6 - currentPrice) :
-                            selectedPeriod === 'annually' ? (product.monthly * 12 - currentPrice) : 0;
-
-                     return (
-                            <div
-                                   key={index}
-                                   className={`relative p-6 bg-white shadow-md text-2xl rounded-lg border border-gray-200 hover:shadow-lg transition-all 
-                                   ${selectedProductId == product.id ? 'border-green-500' : ''}`}
-                            >
-                                   <h2 className="text-center text-mainColor font-semibold text-3xl mb-4">{product.name}</h2>
-
-                                   <div className="space-y-3 mb-6">
-                                   <p className="text-gray-700"> {product.description}</p>
-                                   <p className="text-gray-700 flex items-center gap-2"><CiMoneyCheck1 size={30} className='text-mainColor font-semibold' /><span className="font-semibold">SetUp Fees:</span> {product.setup_fees || '0'} EGP</p>
-                                   </div>
-
-                                   <div className="flex justify-between items-center mb-4">
-                                   <label htmlFor={`billing-${index}`} className="text-xl md:text-2xl font-semibold text-gray-800">Billing Period:</label>
-                                   <select
-                                          id={`billing-${index}`}
-                                          value={selectedPeriod}
-                                          onChange={(e) => handleBillingPeriodChange(product.id, e.target.value)}
-                                          className="bg-gray-100 border border-gray-400 text-gray-700 rounded-lg p-2"
+                     <div className="w-full p-2 flex flex-col">
+                     <div className="w-full grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-3">
+                            {extraProduct.map((product, index) => {
+                            if (product.status === "one_time") {
+                                   // Display only the product.price if status is "one_time"
+                                   return (
+                                          <div
+                                          key={index}
+                                          className={`relative p-6 bg-white shadow-md text-2xl rounded-lg border border-gray-200 hover:shadow-lg transition-all 
+                                          ${selectedProductId == product.id ? 'border-green-500' : ''}`}
                                    >
-                                          <option value="monthly">Monthly</option>
-                                          <option value="quarterly">3 Months</option>
-                                          <option value="semiAnnually">6 Months</option>
-                                          <option value="annually">Yearly</option>
-                                   </select>
-                                   </div>
-
-                                   <div className="text-center mb-4">
-                                   {selectedPeriod !== 'monthly' && (
-                                          <p className="text-lg text-gray-500">{priceOptions.monthly} EGP / month</p>
-                                   )}
-                                   <p className="text-3xl font-bold text-mainColor">{currentPrice} EGP</p>
-                                   <span className="text-gray-600">{selectedPeriod === 'monthly' ? 'per month' : `per ${selectedPeriod}`}</span>
-
-                                   {savings > 0 && (
-                                          <p className="text-green-500 font-semibold mt-2">Save {savings} EGP per {selectedPeriod}</p>
-                                   )}
-                                   </div>
-
-                                   <div className="text-center">
-                                   {
-                                          product.my_product=== true?(
-                                          <>
-                                          <button
-                                                 className={`w-full py-3 font-semibold rounded-lg transition-transform transform 
-                                                 bg-mainColor text-white hover:scale-105`}
-                                          >
-                                                 My Extra Product
-                                          </button>
-                                          </>
-
-                                          ):
-                                          (
-                                          <>
-                                          <button
-                                                 onClick={() => handleAddToCart(product)}
-                                                 className={`w-full py-3 font-semibold rounded-lg transition-transform transform 
-                                                 ${selectedProductId == product.id ? 'bg-green-500 text-white' : 'bg-mainColor text-white hover:scale-105'}`}
-                                          >
-                                                 {selectedProductId == product.id ? 'Selected Extra Product' : 'Add to Cart'}
-                                          </button>
-                                          </>
-                                          )
-                                   }
-                                   </div>
-                            </div>
-                     );
-                     })}
-              </div>
-              </div>
-              {/* <div className='w-full flex flex-col gap-10'>
-              <div className="w-full flex flex-wrap items-center justify-start gap-10">
-                {extraProduct.map((product, index) => (
-                    <>
-                      <div key={index} className="lg:w-[80%] xl:w-[30%] sm:w-full border border-mainColor rounded-2xl">
-                            <div className='text-center mb-5 p-4 pb-0 text-mainColor text-2xl md:text-3xl xl:text-3xl font-semibold leading-10'>
-                                <h1 className='p-2'>{product.name}</h1>
-                            </div>
-                            <div className='p-4 text-mainColor flex flex-col gap-5'>
-                                   <div className='flex flex-wrap items-center gap-5'>
-                                          <span className='text-maincolor text-xl md:text-3xl xl:text-3xl font-semibold'>Description : </span>
-                                          <p className='text-[#686868] text-2xl'>{product.description}</p>
-                                   </div>
-                                   {product.status === "one_time" ?
-                                   (
-                                   <>
-                                          <div className='flex items-center gap-5'>
-                                                 <span className='text-maincolor text-xl md:text-3xl xl:text-3xl font-semibold'>Price in one Time : </span>
-                                                 <p className='text-[#686868] text-2xl'>{product.price} EGP</p>
-                                          </div> 
-                                   </>
-                                   )
-                                   :(
-                                   <>
-                                          <div className='flex items-center gap-5'>
-                                                 <span className='text-maincolor text-xl md:text-3xl xl:text-3xl font-semibold'>SetUp Fees : </span>
-                                                 <p className='text-[#686868] text-2xl'>{product.setup_fees} EGP</p>
+                                          <h2 className="text-center text-mainColor font-semibold text-3xl mb-4">{product.name}</h2>
+                                          <div className="space-y-3 mb-6">
+                                          <p className="text-gray-700"> {product.description}</p>
+                                          <p className="text-gray-700 flex items-center gap-2"><CiMoneyCheck1 size={30} className='text-mainColor font-semibold' /><span className="font-semibold">SetUp Fees:</span> {product.setup_fees || '0'} EGP</p>
+                                          <p className="text-gray-700 flex items-center gap-2"><MdAttachMoney size={30} className='text-mainColor font-semibold' /><span className="font-semibold">Price:</span> {product.price || '0'} EGP</p>
                                           </div>
-                                          <div className='flex items-center gap-5'>
-                                                 <span className='text-maincolor text-xl md:text-3xl xl:text-3xl font-semibold'>Price per year  : </span>
-                                                 <p className='text-[#686868] text-2xl'>{product.yearly} EGP</p>
+                                          <div className="text-center">
+                                          {
+                                                 product.my_product === true ? (
+                                                 <button
+                                                        className={`w-full py-3 font-semibold rounded-lg transition-transform transform 
+                                                        bg-mainColor text-white hover:scale-105`}
+                                                 >
+                                                        My Extra Product
+                                                 </button>
+                                                 ) : (
+                                                 <button
+                                                        onClick={() => handleAddToCart(product)}
+                                                        className={`w-full py-3 font-semibold rounded-lg transition-transform transform 
+                                                        ${selectedProductId == product.id ? 'bg-green-500 text-white' : 'bg-mainColor text-white hover:scale-105'}`}
+                                                 >
+                                                        {selectedProductId == product.id ? 'Selected Extra Product' : 'Add to Cart'}
+                                                 </button>
+                                                 )
+                                          }
                                           </div>
-                                          <div className='flex items-center gap-5'>
-                                                 <span className='text-maincolor text-xl md:text-3xl xl:text-3xl font-semibold'>Price per Month  : </span>
-                                                 <p className='text-[#686868] text-2xl'>{product.monthly} EGP</p>
-                                          </div>
-                                   </>
-                                   )
+                                   </div>
+                                   );
                             }
-                            </div>
-                            <div className='text-center font-semibold text-2xl border-t-2 border-mainColor'>
-                                   <button
-                                          onClick={() => handleAddToCart(product)}
-                                          className="w-full text-white p-4 rounded-b-xl bg-mainColor"
-                                   >
-                                          Add to Cart
-                                   </button>
-                            </div>
-                        </div>    
-                    </>
-                 ))}
-                </div>
-              </div> */}
-              </>
+                            // Continue with the original logic for other products
+                            const selectedPeriod = billingPeriod[product.id] || 'monthly';
+                            const priceOptions = {
+                                   monthly: product.monthly,
+                                   quarterly: product.quarterly || product.monthly * 3,
+                                   semiAnnually: product["semi-annual"] || product.monthly * 6,
+                                   annually: product.yearly,
+                            };
+                            const currentPrice = priceOptions[selectedPeriod];
 
-              ):(
-              <>
+                            // Calculate savings
+                            const savings = selectedPeriod === 'monthly' ? 0 :
+                                   selectedPeriod === 'quarterly' ? (product.monthly * 3 - currentPrice) :
+                                   selectedPeriod === 'semiAnnually' ? (product.monthly * 6 - currentPrice) :
+                                   selectedPeriod === 'annually' ? (product.monthly * 12 - currentPrice) : 0;
+
+                            return (
+                                   <div
+                                          key={index}
+                                          className={`relative p-6 bg-white shadow-md text-2xl rounded-lg border border-gray-200 hover:shadow-lg transition-all 
+                                          ${selectedProductId == product.id ? 'border-green-500' : ''}`}
+                                   >
+                                          <h2 className="text-center text-mainColor font-semibold text-3xl mb-4">{product.name}</h2>
+                                          <div className="space-y-3 mb-6">
+                                          <p className="text-gray-700"> {product.description}</p>
+                                          <p className="text-gray-700 flex items-center gap-2"><CiMoneyCheck1 size={30} className='text-mainColor font-semibold' /><span className="font-semibold">SetUp Fees:</span> {product.setup_fees || '0'} EGP</p>
+                                          </div>
+                                          <div className="flex justify-between items-center mb-4">
+                                          <label htmlFor={`billing-${index}`} className="text-xl md:text-2xl font-semibold text-gray-800">Billing Period:</label>
+                                          <select
+                                                 id={`billing-${index}`}
+                                                 value={selectedPeriod}
+                                                 onChange={(e) => handleBillingPeriodChange(product.id, e.target.value)}
+                                                 className="bg-gray-100 border border-gray-400 text-gray-700 rounded-lg p-2"
+                                          >
+                                                 <option value="monthly">Monthly</option>
+                                                 <option value="quarterly">3 Months</option>
+                                                 <option value="semiAnnually">6 Months</option>
+                                                 <option value="annually">Yearly</option>
+                                          </select>
+                                          </div>
+                                          <div className="text-center mb-4">
+                                          {selectedPeriod !== 'monthly' && (
+                                                 <p className="text-lg text-gray-500">{priceOptions.monthly} EGP / month</p>
+                                          )}
+                                          <p className="text-3xl font-bold text-mainColor">{currentPrice} EGP</p>
+                                          <span className="text-gray-600">{selectedPeriod === 'monthly' ? 'per month' : `per ${selectedPeriod}`}</span>
+                                          {savings > 0 && (
+                                                 <p className="text-green-500 font-semibold mt-2">Save {savings} EGP per {selectedPeriod}</p>
+                                          )}
+                                          </div>
+                                          <div className="text-center">
+                                          {
+                                                 product.my_product === true ? (
+                                                 <button
+                                                        className={`w-full py-3 font-semibold rounded-lg transition-transform transform 
+                                                        bg-mainColor text-white hover:scale-105`}
+                                                 >
+                                                        My Extra Product
+                                                 </button>
+                                                 ) : (
+                                                 <button
+                                                        onClick={() => handleAddToCart(product)}
+                                                        className={`w-full py-3 font-semibold rounded-lg transition-transform transform 
+                                                        ${selectedProductId == product.id ? 'bg-green-500 text-white' : 'bg-mainColor text-white hover:scale-105'}`}
+                                                 >
+                                                        {selectedProductId == product.id ? 'Selected Extra Product' : 'Add to Cart'}
+                                                 </button>
+                                                 )
+                                          }
+                                          </div>
+                                   </div>
+                            );
+                            })}
+                     </div>
+                     </div>
+              </>
+              ) : (
               <div className='w-full flex flex-col gap-5 justify-center items-center'>
                      <h1 className='text-center text-2xl lg:text-3xl text-mainColor font-semibold'>No extra product data available</h1>
               </div>
-              </>
-              )
-              }
+              )}
               </>
        )
 }
