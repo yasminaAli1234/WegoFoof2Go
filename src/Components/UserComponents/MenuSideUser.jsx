@@ -23,10 +23,10 @@ const MenuSideUser = () => {
        const [isActivePayment, setIsActivePayment] =  useState(savedState.isActivePayment ?? false);
        const [isActiveTutorial, setIsActiveTutorial] =  useState(savedState.isActiveTutorial ?? false);
    
-    //    const handleLogout = () => {
-    //           auth.logout();
-    //           // navigate("/", { replace: true });
-    //    }
+       const handleLogout = () => {
+              auth.logout();
+              // navigate("/", { replace: true });
+       }
 
        useEffect(() => {
               const sidebarUserState = {
@@ -239,7 +239,10 @@ const MenuSideUser = () => {
                                           <TutorialIcon isActive={isActiveTutorial} />
                                           <span className={`${isActiveTutorial ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Tutorial</span>
                                    </Link>
-                                             
+                                   <Link to="/" onClick={handleLogout} className="w-full flex items-center justify-start px-0 py-2 gap-x-5">
+                                          <IoIosLogOut size={23} style={{ strokeWidth: 2 }} color="#ffff"/>
+                                          <span className="text-secoundColor text-xl font-medium">Log Out</span>
+                                   </Link>               
                             </div>
                      </div>
               </>
