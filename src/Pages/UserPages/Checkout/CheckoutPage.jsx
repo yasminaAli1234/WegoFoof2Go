@@ -629,6 +629,14 @@ const CheckoutPage = () => {
     else if (selectedMethod.name === "paymob") {
       const planItem = cartItems.find((item) => item.type === "plan");
       const planId = planItem ? planItem.id : null;
+
+      // Process Plan Items
+      const planItems = cartItems
+      .filter((item) => item.type === "plan")
+      .map((item) => ({
+        plan_id: item.id,
+        period: item.duration || "monthly",
+      }));
   
       const extraItems = cartItems
         .filter((item) => item.type === "extra")
@@ -647,7 +655,7 @@ const CheckoutPage = () => {
       const requestData = {
         payment_method_id: selectedMethod.id,
         cart: {
-          plan_id: planId,
+          plan: planItems.length > 0 ? extraItems : null,
           extra: extraItems.length > 0 ? extraItems : null,
           domain: domainItems.length > 0 ? domainItems : null,
         },

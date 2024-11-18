@@ -231,22 +231,22 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState: loadCartFromLocalStorage(), // Initialize from localStorage
   reducers: {
-    addToCart: (state, action) => {
-      const existingItem = state.find(
-        item => item.id === action.payload.id && item.type === action.payload.type
-      );
-    
-      if (!existingItem) {
-        state.push({ ...action.payload, quantity: 1 });
-      } 
-      // else {
-      //   existingItem.quantity += 1;
-      // }
-    
-      // Save to localStorage
-      localStorage.setItem('cart', JSON.stringify(state));
-    }
-    ,
+  addToCart: (state, action) => {
+  const existingItem = state.find(
+    item => item.id === action.payload.id && item.type === action.payload.type
+  );
+
+  if (!existingItem) {
+    state.push({ ...action.payload, quantity: 1 });
+  } 
+  // else {
+  //   existingItem.quantity += 1;
+  // }
+
+  // Save to localStorage
+  localStorage.setItem('cart', JSON.stringify(state));
+}
+,
     // Remove item from cart
     removeFromCart: (state, action) => {
       const updatedCart = state.filter(
@@ -283,18 +283,36 @@ const cartSlice = createSlice({
     },
 
     // Update cart item with new properties (e.g., price change or billing period)
-    updateCartItem: (state, action) => {
-      const { id, updatedItem } = action.payload;
-      const index = state.findIndex(item => item.id === id);
+    // updateCartItem: (state, action) => {
+      // const { id, updatedItem } = action.payload;
+      // const index = state.findIndex(item => item.id === id);
 
+    //   if (index !== -1) {
+    //     // Update the item with new properties
+    //     state[index] = { ...state[index], ...updatedItem };
+    //   }
+
+    //   // Save the updated cart to localStorage
+    //   localStorage.setItem('cart', JSON.stringify(state));
+    // }
+    updateCartItem: (state, action) => {
+      const { id, type, updatedItem } = action.payload; // Destructure id, type, and updatedItem from payload
+    
+      // Find the index of the item matching the id and type
+      const index = state.findIndex(item => item.id === id && item.type === type);
+    
       if (index !== -1) {
         // Update the item with new properties
         state[index] = { ...state[index], ...updatedItem };
+        
+        // Save the updated cart to localStorage
+        localStorage.setItem('cart', JSON.stringify(state));
+      } else {
+        console.warn(`Cart item with id "${id}" and type "${type}" not found.`);
       }
-
-      // Save the updated cart to localStorage
-      localStorage.setItem('cart', JSON.stringify(state));
     }
+      
+    
   }
 });
 

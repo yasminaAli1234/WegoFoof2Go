@@ -458,7 +458,7 @@ const UserSubscriptionsPage = () => {
                         //     </div>
                         // </div>
                         <div
-                            key={index}
+                            key={plan.id}
                             className={`relative p-6 bg-white shadow-md text-2xl rounded-lg border border-gray-200 hover:shadow-lg transition-all 
                                 ${selectedPlanId == plan.id ? 'border-green-500 bg-green-100' : ''}`}
                             >
@@ -474,9 +474,9 @@ const UserSubscriptionsPage = () => {
 
                             {/* Billing Period */}
                             <div className="flex justify-between items-center mb-4">
-                                <label htmlFor={`billing-${index}`} className="text-xl md:text-2xl font-semibold text-gray-800">Billing Period:</label>
+                                <label htmlFor={`billing-${plan.id}`} className="text-xl md:text-2xl font-semibold text-gray-800">Billing Period:</label>
                                 <select
-                                id={`billing-${index}`}
+                                id={`billing-${plan.id}`}
                                 value={selectedPeriod}
                                 onChange={(e) => handleBillingPeriodChange(plan.id, e.target.value)}
                                 className="bg-gray-100 border border-gray-400 text-gray-700 rounded-lg p-2"

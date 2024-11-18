@@ -3,7 +3,7 @@ import { useAuth } from '../../../Context/Auth';
 import Loading from '../../../Components/Loading';
 import axios from 'axios';
 import {ButtonAdd} from '../../../Components/Button'
-import { Link } from 'react-router-dom';
+import { Link ,useNavigate} from 'react-router-dom';
 import {Wroning,DeleteIcon,EditIcon} from '../../../Components/Icons/AllIcons';
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
 import { MdCheck } from "react-icons/md";
@@ -21,6 +21,7 @@ const ExtraPage = () => {
     const dispatch = useDispatch();
     const [billingPeriod, setBillingPeriod] = useState({});
     const [selectedProductId, setSelectedProductId] = useState(null);
+    const navigate = useNavigate(); // Replace useHistory with useNavigate
 
        // const handleAddToCart = (product) => {
        //        // const productToCart = {
@@ -139,7 +140,7 @@ const ExtraPage = () => {
                                    // Display only the product.price if status is "one_time"
                                    return (
                                    <div
-                                   key={index}
+                                   key={product.id}
                                    className={`relative flex flex-col justify-between p-6 bg-white shadow-md text-2xl rounded-lg border border-gray-200 hover:shadow-lg transition-all 
                                    ${selectedProductId == product.id ? 'border-green-500' : ''}`}
                                    >
@@ -151,7 +152,7 @@ const ExtraPage = () => {
                                           <p className="text-gray-700 flex items-center gap-2"><MdAttachMoney size={30} className='text-mainColor font-semibold' /><span className="font-semibold">Price:</span> {product.price || '0'} EGP</p>
                                           </div>
                                    </div>
-                                          <div className="text-center">
+                                          {/* <div className="text-center">
                                           {
                                                  product.my_product === true ? (
                                                  <button
@@ -170,7 +171,58 @@ const ExtraPage = () => {
                                                  </button>
                                                  )
                                           }
-                                          </div>
+                                          </div> */}
+                                              <div>
+                                {product.my_product === true ? (
+                                <button
+                                    className={`w-full py-3 font-semibold rounded-lg transition-transform transform 
+                                    bg-gray-300 text-gray-800 hover:scale-105`}
+                                >
+                                    My Extra Product
+                                </button>
+                                ) : (
+                                <>
+                                   <div className="w-full">
+                                   {/* Add to Cart Button */}
+                                   {selectedProductId != product.id && (
+                                   <button
+                                   onClick={() => handleAddToCart(product)}
+                                   className={`w-full py-3 font-semibold rounded-lg transition-all duration-300 transform 
+                                   ${selectedProductId === product.id ? 'bg-red-600 text-white hover:bg-red-700' : 'bg-mainColor text-white hover:bg-blue-700'} 
+                                   hover:scale-105 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mainColor`}
+                                   >
+                                   Add to Cart
+                                   </button>
+                                   )}
+
+                                   {/* Remove from Cart and Go to Cart Buttons */}
+                                   {selectedProductId == product.id && (
+                                   <div className="flex space-x-3 mt-3">
+                                   <button
+                                          onClick={() => handleAddToCart(product)}
+                                          className="w-full text-xl py-3 font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-md"
+                                   >
+                                          Remove from Cart
+                                   </button>
+                                   <button
+                                          onClick={() => navigate('../cart')}
+                                          className="w-full text-xl py-3 font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-md"
+                                   >
+                                          Go to Cart
+                                   </button>
+                                   </div>
+                                   )}
+                                   </div>
+                                </>
+                                )}
+
+                                {/* "Selected" Label */}
+                                {selectedProductId == product.id && (
+                                <div className="absolute top-0 left-0 p-2 bg-green-500 text-white text-sm font-semibold rounded-tr-lg">
+                                    Selected
+                                </div>
+                                )}
+                            </div>
                                    </div>
                                    );
                             }
@@ -192,7 +244,7 @@ const ExtraPage = () => {
 
                             return (
                                    <div
-                                          key={index}
+                                          key={product.id}
                                           className={`relative p-6 bg-white shadow-md text-2xl rounded-lg border border-gray-200 hover:shadow-lg transition-all 
                                           ${selectedProductId == product.id ? 'border-green-500' : ''}`}
                                    >
@@ -202,9 +254,9 @@ const ExtraPage = () => {
                                           {/* <p className="text-gray-700 flex items-center gap-2"><CiMoneyCheck1 size={30} className='text-mainColor font-semibold' /><span className="font-semibold">SetUp Fees:</span> {product.setup_fees || '0'} EGP</p> */}
                                           </div>
                                           <div className="flex justify-between items-center mb-4">
-                                          <label htmlFor={`billing-${index}`} className="text-xl md:text-2xl font-semibold text-gray-800">Billing Period:</label>
+                                          <label htmlFor={`billing-${product.id}`} className="text-xl md:text-2xl font-semibold text-gray-800">Billing Period:</label>
                                           <select
-                                                 id={`billing-${index}`}
+                                                 id={`billing-${product.id}`}
                                                  value={selectedPeriod}
                                                  onChange={(e) => handleBillingPeriodChange(product.id, e.target.value)}
                                                  className="bg-gray-100 border border-gray-400 text-gray-700 rounded-lg p-2"
@@ -225,7 +277,7 @@ const ExtraPage = () => {
                                                  <p className="text-green-500 font-semibold mt-2">Save {savings} EGP per {selectedPeriod}</p>
                                           )}
                                           </div>
-                                          <div className="text-center">
+                                          {/* <div className="text-center">
                                           {
                                                  product.my_product === true ? (
                                                  <button
@@ -244,7 +296,60 @@ const ExtraPage = () => {
                                                  </button>
                                                  )
                                           }
-                                          </div>
+                                          </div> */}
+
+                            <div>
+                                {product.my_product === true ? (
+                                <button
+                                    className={`w-full py-3 font-semibold rounded-lg transition-transform transform 
+                                    bg-gray-300 text-gray-800 hover:scale-105`}
+                                >
+                                    My Extra Product
+                                </button>
+                                ) : (
+                                <>
+                                   <div className="w-full">
+                                   {/* Add to Cart Button */}
+                                   {selectedProductId != product.id && (
+                                   <button
+                                   onClick={() => handleAddToCart(product)}
+                                   className={`w-full py-3 font-semibold rounded-lg transition-all duration-300 transform 
+                                   ${selectedProductId === product.id ? 'bg-red-600 text-white hover:bg-red-700' : 'bg-mainColor text-white hover:bg-blue-700'} 
+                                   hover:scale-105 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mainColor`}
+                                   >
+                                   Add to Cart
+                                   </button>
+                                   )}
+
+                                   {/* Remove from Cart and Go to Cart Buttons */}
+                                   {selectedProductId == product.id && (
+                                   <div className="flex space-x-3 mt-3">
+                                   <button
+                                          onClick={() => handleAddToCart(product)}
+                                          className="w-full text-xl py-3 font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-md"
+                                   >
+                                          Remove from Cart
+                                   </button>
+                                   <button
+                                          onClick={() => navigate('../cart')}
+                                          className="w-full text-xl py-3 font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-md"
+                                   >
+                                          Go to Cart
+                                   </button>
+                                   </div>
+                                   )}
+                                   </div>
+                                </>
+                                )}
+
+                                {/* "Selected" Label */}
+                                {selectedProductId == product.id && (
+                                <div className="absolute top-0 left-0 p-2 bg-green-500 text-white text-sm font-semibold rounded-tr-lg">
+                                    Selected
+                                </div>
+                                )}
+                            </div>
+                                   
                                    </div>
                             );
                             })}

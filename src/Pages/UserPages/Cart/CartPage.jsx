@@ -97,7 +97,7 @@ const CartPage = () => {
 
   // Calculate total price
   const calculateTotal = () => {
-    return cartItems.reduce((total, item) => total + (item.finalprice || 0), 0).toFixed(2);
+    return cartItems.reduce((total, item) => total + (item.finalprice ||item.price|| 0), 0).toFixed(2);
   };
 
   // Handle billing period change
@@ -118,7 +118,7 @@ const CartPage = () => {
     };
 
     // Dispatch action to update the cart item
-    dispatch(updateCartItem({ id: itemId, updatedItem }));
+    dispatch(updateCartItem({ id: itemId, type: item.type, updatedItem }));
   };
 
   const totalPrice = calculateTotal(); // Calculate total price once
@@ -129,8 +129,8 @@ const CartPage = () => {
 
       <div className="bg-white shadow-lg rounded-lg p-6">
         {cartItems.length > 0 ? (
-          cartItems.map((item) => (
-            <div key={item.id} className="flex flex-col border-b border-gray-200 py-4 last:border-none">
+          cartItems.map((item ,index) => (
+            <div key={index} className="flex flex-col border-b border-gray-200 py-4 last:border-none">
               <div className="flex justify-between items-center">
                 <h3 className="text-lg font-semibold text-gray-800">{item.name}</h3>
                 <p className="text-lg font-semibold text-gray-800">{(item.finalprice ||item.price || 0).toFixed(2)} EGP</p>
@@ -139,11 +139,11 @@ const CartPage = () => {
               {/* Conditionally render extra items */}
               {item.type === 'extra' && item.status !== 'one_time' && (
                 <div className="flex items-center mt-4">
-                <label htmlFor={`billing-${item.id}`} className="text-sm font-semibold text-gray-600 mr-2">
+                <label htmlFor={`billing-${index}`} className="text-sm font-semibold text-gray-600 mr-2">
                   Billing Period:
                 </label>
                 <select
-                  id={`billing-${item.id}`}
+                  id={`billing-${index}`}
                   value={item.billingPeriod || 'monthly'}
                   onChange={(e) => handleBillingPeriodChange(item.id, e.target.value, item)}
                   className="bg-gray-100 border border-gray-400 text-gray-700 rounded-lg p-2"
@@ -159,7 +159,7 @@ const CartPage = () => {
               {/* Show billing period dropdown if item type is "plan" */}
               {item.type === 'plan' && (
                 <div className="flex items-center mt-4">
-                  <label htmlFor={`billing-${item.id}`} className="text-sm font-semibold text-gray-600 mr-2">
+                  <label htmlFor={`billing-${index}`} className="text-sm font-semibold text-gray-600 mr-2">
                     Billing Period:
                   </label>
                   <select
