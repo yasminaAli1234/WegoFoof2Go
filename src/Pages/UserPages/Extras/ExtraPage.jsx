@@ -142,7 +142,7 @@ const ExtraPage = () => {
                                    <div
                                    key={product.id}
                                    className={`relative flex flex-col justify-between p-6 bg-white shadow-md text-2xl rounded-lg border border-gray-200 hover:shadow-lg transition-all 
-                                   ${selectedProductId == product.id ? 'border-green-500' : ''}`}
+                                   ${selectedProductId == product.id ? 'border-green-500 bg-green-100' : ''}`}
                                    >
                                    <div>
                                           <h2 className="text-center text-mainColor font-semibold text-3xl mb-4">{product.name}</h2>
@@ -246,7 +246,7 @@ const ExtraPage = () => {
                                    <div
                                           key={product.id}
                                           className={`relative p-6 bg-white shadow-md text-2xl rounded-lg border border-gray-200 hover:shadow-lg transition-all 
-                                          ${selectedProductId == product.id ? 'border-green-500' : ''}`}
+                                          ${selectedProductId == product.id ?  'border-green-500 bg-green-100' : ''}`}
                                    >
                                           <h2 className="text-center text-mainColor font-semibold text-3xl mb-4">{product.name}</h2>
                                           <div className="space-y-3">
