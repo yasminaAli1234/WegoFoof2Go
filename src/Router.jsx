@@ -37,6 +37,7 @@ import { UserLayout,UserHomeLayout ,
     PromoCodeLayout,
     AddPromoCodeLayout,
     EditPromoCodeLayout,
+    DomainRequestLayout,
 } from "./Layouts/AllLayouts";
 import Login from "./Pages/RegisterPages/Login.jsx";
 import SignUpPage from "./Pages/RegisterPages/SignUpPage.jsx";
@@ -136,6 +137,10 @@ export const router = createBrowserRouter([
           {
             path: 'demo_request',
             element: <DemoRequestLayout/>,
+          },
+          {
+            path: 'domain_request',
+            element: <DomainRequestLayout/>,
           },
           {
             path: 'pending_payment',

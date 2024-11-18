@@ -15,6 +15,7 @@ export { default as PlanIcon } from "./PlanIcon";
 export { default as SettingIcon } from "./SettingIcon";
 export { default as UserIcon } from "./UserIcon";
 export { default as PromoCodeIcon } from "./PromoCodeIcon";
+export { default as CartIcon } from "./CartIcon";
 
 export { default as Wroning } from "./Worning";
 export { default as EditIcon } from "./EditIcon";

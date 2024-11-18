@@ -6,6 +6,7 @@ import { IoNotifications } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
 import { BsCartCheck } from "react-icons/bs";
 import { Link, useNavigate } from 'react-router-dom'
+import {CartIcon} from '../../Components/Icons/AllIcons'
 
 const NavbarUser = () => {
        const auth = useAuth()
@@ -72,10 +73,11 @@ const NavbarUser = () => {
                                                  <IoNotifications className='text-mainColor text-2xl' />
                                           </button> */}
                                           <Link to="cart">
-                                          <div className='flex gap-2 shadow px-4 py-2'>
+                                          {/* <div className='flex gap-2 shadow px-4 py-2'>
                                                  <BsCartCheck size={32}/>
                                                  <h1>Cart</h1>
-                                          </div>
+                                          </div> */}
+                                                <CartIcon />
                                           </Link>
                                    </div>
                             </div>

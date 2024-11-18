@@ -138,17 +138,19 @@ const ExtraPage = () => {
                             if (product.status === "one_time") {
                                    // Display only the product.price if status is "one_time"
                                    return (
-                                          <div
-                                          key={index}
-                                          className={`relative p-6 bg-white shadow-md text-2xl rounded-lg border border-gray-200 hover:shadow-lg transition-all 
-                                          ${selectedProductId == product.id ? 'border-green-500' : ''}`}
+                                   <div
+                                   key={index}
+                                   className={`relative flex flex-col justify-between p-6 bg-white shadow-md text-2xl rounded-lg border border-gray-200 hover:shadow-lg transition-all 
+                                   ${selectedProductId == product.id ? 'border-green-500' : ''}`}
                                    >
+                                   <div>
                                           <h2 className="text-center text-mainColor font-semibold text-3xl mb-4">{product.name}</h2>
                                           <div className="space-y-3 mb-6">
                                           <p className="text-gray-700"> {product.description}</p>
                                           <p className="text-gray-700 flex items-center gap-2"><CiMoneyCheck1 size={30} className='text-mainColor font-semibold' /><span className="font-semibold">SetUp Fees:</span> {product.setup_fees || '0'} EGP</p>
                                           <p className="text-gray-700 flex items-center gap-2"><MdAttachMoney size={30} className='text-mainColor font-semibold' /><span className="font-semibold">Price:</span> {product.price || '0'} EGP</p>
                                           </div>
+                                   </div>
                                           <div className="text-center">
                                           {
                                                  product.my_product === true ? (

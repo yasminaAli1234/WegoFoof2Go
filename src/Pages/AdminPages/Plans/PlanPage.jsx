@@ -67,6 +67,7 @@ const PlanPage = () => {
        };
 
        const deletePlan = async (planId, authToken) => {
+              console.log(planId)
               try {
                      const response = await axios.delete(`https://login.wegostores.com/admin/v1/plan/delete/${planId}`, {
                             headers: {

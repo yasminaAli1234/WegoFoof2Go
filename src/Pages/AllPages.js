@@ -6,6 +6,8 @@ export { default as PublicPage } from "./PublicPages/PublicPage";
 export { default as AdminHomePage } from "./AdminPages/AdminHome/AdminHomePage";
 //Demo Request Page
 export { default as DemoRequestPage } from "./AdminPages/DemoRequest/DemoRequestPage";
+//Domain Request Page
+export { default as DomainRequestPage } from "./AdminPages/DomainRequest/DomainRequestPage";
 //PendingPayment Page
 export { default as PendingPaymentPage } from "./AdminPages/PendingPayment/PendingPaymentPage";
 //Order Page

@@ -7,6 +7,8 @@ export { default as AdminLayout } from "./AdminLayouts/AdminLayout";
 export { default as AdminHomeLayout } from "./AdminLayouts/AdminHomeLayout";
 //Demo Request Layout
 export { default as DemoRequestLayout } from "./AdminLayouts/DemoRequestLayout";
+//Domain Request Layout
+export { default as DomainRequestLayout } from "./AdminLayouts/DomainRequestLayout";
 //PendingPayment Layout
 export { default as PendingPaymentLayout } from "./AdminLayouts/PendingPaymentLayout";
 //Order Layout

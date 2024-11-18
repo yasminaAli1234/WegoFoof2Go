@@ -568,7 +568,7 @@ const CheckoutPage = () => {
         .filter((item) => item.type === "plan")
         .map((item) => ({
           id: item.id,
-          package: durationMap[item.duration] || 1, // Default to "monthly" (1) if not provided
+          package: durationMap[item.billingPeriod] || 1, // Default to "monthly" (1) if not provided
         }));
   
       // Process Extra Items
@@ -576,7 +576,7 @@ const CheckoutPage = () => {
         .filter((item) => item.type === "extra")
         .map((item) => ({
           id: item.id,
-          package: durationMap[item.duration] || 1,
+          package: durationMap[item.billingPeriod] || 1,
         }));
   
       // Process Domain Items
@@ -584,19 +584,17 @@ const CheckoutPage = () => {
         .filter((item) => item.type === "domain")
         .map((item) => ({
           id: item.id,
-          package: durationMap[item.duration] || 1,
+          package: durationMap[item.duration] || null,
         }));
   
       // Prepare Request Data
       const requestData = {
         payment_method_id: selectedMethod.id,
-        cart: {
-          plan: planItems,
-          extra: extraItems.length > 0 ? extraItems : null,
-          domain: domainItems.length > 0 ? domainItems : null,
-        },
+        plan: planItems,
+        extra: extraItems.length > 0 ? extraItems : null,
+        domain: domainItems.length > 0 ? domainItems : null,
         invoice_image: thumbnailFile,
-        total: discountedPrice || totalPrice,
+        amount: discountedPrice || totalPrice,
       };
   
       console.log("Request Data:", requestData);
