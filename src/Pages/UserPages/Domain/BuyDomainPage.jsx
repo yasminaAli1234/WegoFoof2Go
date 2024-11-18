@@ -11,7 +11,7 @@ import DropDownMenu from '../../../Components/DropDownMenu';
 
 const BuyDomainPage =()=>{
     const auth = useAuth();
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const [selectedDomainId, setSelectedDomainId] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [domainRequest, setDomainRequest] = useState('');
@@ -244,7 +244,7 @@ const BuyDomainPage =()=>{
 
                 <div className="w-full flex flex-col md:flex-row justify-between items-center gap-6">
                 {/* Dropdown and Input Group */}
-                <div className="flex flex-col sm:flex-row w-full border border-mainColor rounded-lg shadow-sm">
+                <div className="flex flex-col md:flex-row w-full border border-mainColor rounded-lg shadow-sm">
                     
                     {/* Dropdown Menu */}
                     <div className="w-full lg:w-[40%] p-3 flex items-center">
@@ -364,7 +364,7 @@ const BuyDomainPage =()=>{
                         <>
                         <div className='w-full flex flex-col gap-10'>
                         <div className="w-full flex flex-wrap items-center justify-start gap-10">
-                            {domainApproved.map((domain, index) => (
+                            {/* {domainApproved.map((domain, index) => (
                                 <>
                                     <div key={domain.id} className={`lg:w-[80%] xl:w-[30%] text-mainColor sm:w-full border rounded-2xl ${selectedDomainId == domain.id ? 'border-green-500' : 'border-mainColor'}`}>
                                         <div className='mb-2 p-4 pb-0 text-xl md:text-2xl xl:text-2xl font-semibold'>
@@ -375,12 +375,6 @@ const BuyDomainPage =()=>{
                                             <h1 className='p-2 text-green-600'><span className='text-mainColor'>Status : </span>{domain.status === 1? "Approved" :'Approved'}</h1>
                                         </div>
                                         <div className={`text-center font-semibold text-2xl border-t-2 ${selectedDomainId == domain.id ? 'border-green-500' : 'border-mainColor'}`}>
-                                            {/* <button
-                                                    onClick={() => handleAddToCart(domain)}
-                                                    className="w-full text-white p-4 rounded-b-xl bg-mainColor"
-                                            >
-                                                    Add to Cart
-                                            </button> */}
                                              <button
                                                 onClick={() => handleAddToCart(domain)}
                                                 className={`w-full p-4 font-semibold rounded-b-xl
@@ -391,6 +385,55 @@ const BuyDomainPage =()=>{
                                         </div>
                                     </div>       
                                 </>
+                            ))} */}
+                           {domainApproved.map((domain, index) => (
+                                <div
+                                    key={domain.id}
+                                    className={`lg:w-[80%] xl:w-[30%] sm:w-full border rounded-md transition-all relative ${selectedDomainId == domain.id ? 'border-green-500 bg-green-50 shadow-lg' : 'border-mainColor'}`}
+                                >
+                                    {/* "Selected" Label */}
+                                    {selectedDomainId == domain.id && (
+                                    <div className="absolute top-0 right-0 p-2 bg-green-500 text-white text-sm font-semibold rounded-md shadow-md">
+                                        Selected
+                                    </div>
+                                    )}
+
+                                    {/* Domain Details Section */}
+                                    <div className="p-6 text-lg md:text-xl xl:text-2xl font-semibold text-mainColor space-y-4">
+                                    <h1><span className="font-medium">Domain:</span> {domain.name || '-'}</h1>
+                                    <h1><span className="font-medium">Price:</span> {domain.price || '-'}</h1>
+                                    <h1><span className="font-medium">Store:</span> {domain.store?.store_name || '-'}</h1>
+                                    <h1><span className="font-medium">Renew Date:</span> {domain.renewdate || '-'}</h1>
+                                    <h1 className="text-green-600"><span className="font-medium text-mainColor">Status:</span> {domain.status === 1 ? 'Approved' : 'Pending'}</h1>
+                                    </div>
+
+                                    {/* Button Section */}
+                                    <div className={`text-center font-semibold border-t-2 ${selectedDomainId == domain.id ? 'border-green-500' : 'border-mainColor'}`}>
+                                    {selectedDomainId != domain.id ? (
+                                        <button
+                                        onClick={() => handleAddToCart(domain)}
+                                        className="w-full p-4 font-semibold text-xl bg-mainColor text-white hover:bg-mainColor"
+                                        >
+                                        Add to Cart
+                                        </button>
+                                    ) : (
+                                        <div className="flex">
+                                        <button
+                                            onClick={() => handleAddToCart(domain)} // Remove from cart logic
+                                            className="w-full py-3 text-xl font-semibold text-white bg-red-600 hover:bg-red-700 shadow-md"
+                                        >
+                                            Remove from Cart
+                                        </button>
+                                        <button
+                                        onClick={() => navigate('../cart')} // Go to cart page
+                                            className="w-full py-3 text-xl font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-md "
+                                        >
+                                            Go to Cart
+                                        </button>
+                                        </div>
+                                    )}
+                                    </div>
+                                </div>
                             ))}
                             </div>
                         </div>
