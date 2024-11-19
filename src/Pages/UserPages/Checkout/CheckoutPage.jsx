@@ -74,10 +74,10 @@ const CheckoutPage = () => {
   //   const formattedData = {
   //     code: promoCode,
   //     plan: cartItems
-  //       .filter((item) => item.id && item.billingPeriod)
+  //       .filter((item) => item.id && item.billingprice_cycle)
   //       .map((item) => ({
   //         plan_id: item.id,
-  //         duration: item.billingPeriod,
+  //         duration: item.billingprice_cycle,
   //         price: item.price_per_month || item.price_per_year || 0,
   //       })),
   //     extra: cartItems
@@ -192,39 +192,40 @@ const CheckoutPage = () => {
     } 
     
     else if (selectedMethod.name === "paymob") {
-      const planItem = cartItems.find((item) => item.type === "plan");
-      const planId = planItem ? planItem.id : null;
+      // const planItem = cartItems.find((item) => item.type === "plan");
+      // const planId = planItem ? planItem.id : null;
+      //  console.log(planId)
 
       // Process Plan Items
       const planItems = cartItems
       .filter((item) => item.type === "plan")
       .map((item) => ({
         plan_id: item.id,
-        period: item.duration || "monthly",
+        price_cycle: item.duration || "monthly",
       }));
   
       const extraItems = cartItems
         .filter((item) => item.type === "extra")
         .map((item) => ({
           extra_id: item.id,
-          period: item.duration || "monthly",
+          price_cycle: item.duration || "monthly",
         }));
   
       const domainItems = cartItems
         .filter((item) => item.type === "domain")
         .map((item) => ({
           domain_id: item.id,
-          period: item.duration || "monthly",
+          price_cycle: item.duration || "monthly",
         }));
   
       const requestData = {
         payment_method_id: selectedMethod.id,
         cart: {
-          plan: planItems.length > 0 ? extraItems : null,
+          plan: planItems.length > 0 ? planItems : null,
           extra: extraItems.length > 0 ? extraItems : null,
           domain: domainItems.length > 0 ? domainItems : null,
         },
-        total: discountedPrice || totalPrice,
+        total_amount: discountedPrice || totalPrice,
       };
   
       console.log("Request Data:", requestData);
@@ -328,7 +329,7 @@ const CheckoutPage = () => {
         </div>
 
       <div className="flex flex-col gap-5 sm-w-full xl:w-1/2">
-      <label className="font-semibold text-3xl text-mainColor">
+      <label className="font-semibold text-xl xl:text-3xl text-mainColor">
         Select Payment Method:
       </label>
 

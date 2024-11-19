@@ -459,7 +459,7 @@ const UserSubscriptionsPage = () => {
                         // </div>
                         <div
                             key={plan.id}
-                            className={`relative p-6 bg-white shadow-md text-2xl rounded-lg border border-gray-200 hover:shadow-lg transition-all 
+                            className={`relative p-6  shadow-md text-2xl rounded-lg border border-gray-200 hover:shadow-lg transition-all 
                                 ${selectedPlanId == plan.id ? 'border-green-500 bg-green-100' : ''}`}
                             >
                             {/* Header */}
