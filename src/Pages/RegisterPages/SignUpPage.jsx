@@ -7,38 +7,29 @@ import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { toast } from 'react-toastify';
 
 const SignUpPage =()=>{
-    const navigate = useNavigate();
     const auth = useAuth();
     console.log('auth.user', auth.user)
-    const [data, setData] = useState(null);
     const [show, setShow] = useState(false);
-    const [name, setName] = useState('');
-    const [phone, setPhone] = useState('');
-    const [email, setEmail] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const [password, setPassword] = useState('');
-    const [confPassword, setConfPassword] = useState('');
     const [plan, setPlan] = useState('demo');
     const [billingType, setBillingType] = useState('');
     const [type, setType] = useState('user');
-    const [isLoading, setIsLoading] = useState(false);
+    // const [isLoading, setIsLoading] = useState(false);
+    // const [error, setError] = useState('');
+    const navigate = useNavigate();
+    const [data, setData] = useState(null);
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [name, setName] = useState('');
+    const [phone, setPhone] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confPassword, setConfPassword] = useState('');
     const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(() => {
-        if (data) {
-               console.log('Calling auth.login with data:', data); // Debugging line
-               auth.login(data); // Call auth.login with the updated data
-               setIsLoading(false);
-
-               if (type === "user") {
-                      navigate("/dashboard_user", { replace: true });
-               }
-        }
-    }, [data]);
-
-    const togglePasswordVisibility = () => setShowPassword(!showPassword);
-    const toggleConfirmPasswordVisibility = () => setShowConfirmPassword(!showConfirmPassword);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [verificationCode, setVerificationCode] = useState('');
+    const [verificationError, setVerificationError] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -73,16 +64,11 @@ const SignUpPage =()=>{
                 headers: { 'Content-Type': 'application/json' },
             });
     
-            if (response.status === 200) {
-                const userData = {
-                    ...response.data.user,
-                    roles: [response.data.user.role],
-                };
-                auth.toastSuccess('Signup successful!');
-                setData(userData);
-                setType(response.data.user.role);
+            if (response.status === 200)  {
+                setIsModalOpen(true); // Open the modal to enter the verification code
+                setError('');
             }
-        } catch (error) {
+        }catch (error) {
             const errors = error.response?.data?.["signUp.errors"];
             if (errors) {
                 if (errors.email?.includes('The email has already been taken.')) {
@@ -99,108 +85,112 @@ const SignUpPage =()=>{
         } finally {
             setIsLoading(false);
         }
-    };    
+    };
+
+    const handleVerifyCode = async () => {
+        if (!verificationCode) {
+            auth.toastError("Enter The Code.");
+            return;
+        }
+        try {
+            const response = await axios.post('https://login.wegostores.com/user/v1/signUp/code', {
+                email,
+                code: verificationCode,
+            });
+
+            if (response.status === 200) {
+                console.log(response.data)
+                setIsModalOpen(false);
+                navigate("/dashboard_user");
+            }
+        } catch (error) {
+            console.log(error.response)
+            setVerificationError('Invalid code. Please try again.');
+        }
+    };
+
+    const handleResendCode = async () => {
+        try {
+            const response = await axios.post('https://login.wegostores.com/user/v1/signUp/resend_code', { email });
+            if (response.status === 200) {
+                console.log(response)
+                auth.toastSuccess('New Code Send To Your Email successfully!');
+                setIsModalOpen(true); // Open the modal to enter the verification code
+                setError('');
+            }
+        } catch (error) {
+            console.log(error)
+            setVerificationError('Invalid code. Please try again.');
+        }
+    };
+
+    useEffect(() => {
+        if (data) {
+               console.log('Calling auth.login with data:', data); // Debugging line
+               auth.login(data); // Call auth.login with the updated data
+               setIsLoading(false);
+
+               if (type === "user") {
+                      navigate("/dashboard_user", { replace: true });
+               }
+        }
+    }, [data]);
+
+    const togglePasswordVisibility = () => setShowPassword(!showPassword);
+    const toggleConfirmPasswordVisibility = () => setShowConfirmPassword(!showConfirmPassword);
 
     return(
         <>
         <div className="loginPage flex flex-col-reverse lg:flex-row items-center justify-center lg:justify-around w-full xl:h-screen lg:h-full bg-mainColor text-secoundColor">
-                <div className="w-full flex justify-center">
-                        {/* <form className="w-full sm:w-8/12 flex flex-col items-start justify-center gap-10 mt-10" onSubmit={handleSubmit}>
-                                <div className='flex w-full flex flex-col text-secoundColor font-bold gap-8 text-4xl lg:text-5xl'>
-                                   <h1>Sign up  to  Wegostores</h1>
-                                   <h1 className='text-3xl lg:text-4xl'>Welcome</h1>
-                                </div>
-                                <div className="relative w-full">
-                                    <input
-                                        type="text"
-                                        placeholder="Name"
-                                        className="w-full text-secoundColor bg-mainColor border-b-2 border-secoundColor outline-none px-2 py-3 text-2xl font-normal"
-                                        value={name}
-                                        onChange={(e) => setName(e.target.value)}
-                                        required
-                                    />
-                                </div>
-                                <div className="relative w-full">
-                                    <input
-                                        type="text"
-                                        placeholder="Phone"
-                                        className="w-full text-secoundColor bg-mainColor border-b-2 border-secoundColor outline-none px-2 py-3 text-2xl font-normal"
-                                        value={phone}
-                                        onChange={(e) => setPhone(e.target.value)}
-                                        required
-                                    />
-                                </div>
-                                <div className="relative w-full">
-                                    <input
-                                        type="email"
-                                        placeholder="Email"
-                                        className="w-full text-secoundColor bg-mainColor border-b-2 border-secoundColor outline-none px-2 py-3 text-2xl font-normal"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        required
-                                    />
-                                </div>
-                                <div className="relative w-full">
-                                    <input
-                                        type={show ? "text" : "password"}
-                                        placeholder="Password"
-                                        className="w-full text-secoundColor bg-mainColor border-b-2 border-secoundColor outline-none px-2 py-3 text-2xl font-normal"
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        required
-                                    />
-                                    {show ? (
-                                        <IoMdEye
-                                            className="absolute top-4 right-2 text-2xl text-right text-secoundColor cursor-pointer"
-                                            onClick={() => setShow(!show)}
-                                        />
-                                    ) : (
-                                        <IoMdEyeOff
-                                            className="absolute top-4 right-2 text-2xl text-right text-secoundColor cursor-pointer"
-                                            onClick={() => setShow(!show)}
-                                        />
-                                    )}
-                                </div>
-                                <div className="relative w-full">
-                                    <input
-                                        type={show ? "text" : "password"}
-                                        placeholder="Confirm Password"
-                                        className="w-full text-secoundColor bg-mainColor border-b-2 border-secoundColor outline-none px-2 py-3 text-2xl font-normal"
-                                        value={confpassword}
-                                        onChange={(e) => setConfPassword(e.target.value)}
-                                        required
-                                    />
-                                    {show ? (
-                                        <IoMdEye
-                                            className="absolute top-4 right-2 text-2xl text-right text-secoundColor cursor-pointer"
-                                            onClick={() => setShow(!show)}
-                                        />
-                                    ) : (
-                                        <IoMdEyeOff
-                                            className="absolute top-4 right-2 text-2xl text-right text-secoundColor cursor-pointer"
-                                            onClick={() => setShow(!show)}
-                                        />
-                                    )}
-                                </div>
 
-                                {error && <div className="w-full text-white text-center text-2xl mb-4 font-bold">{error}</div>}
-                                 
-                                <button
-                                type="submit"
-                                className="w-full mt-5 text-center text-3xl font-medium px-6 py-3 text-mainColor bg-secoundColor rounded-md"
-                                disabled={isLoading}
-                                >
-                                    Send
-                                </button>
+            {isModalOpen && (
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                <div className="bg-gradient-to-t from-mainColor to-mainColor rounded-lg shadow-2xl w-full max-w-md p-8 animate-fade-in transform scale-95 hover:scale-100 transition-all duration-300 relative">
+                {/* Close button (X) */}
+                <button
+                    onClick={() => setIsModalOpen(false)} // This closes the modal when clicked
+                    className="absolute top-4 right-4 text-white text-2xl hover:text-gray-300 focus:outline-none"
+                >
+                    &times;
+                </button>
 
-                                <div className='flex gap-5 text-2xl font-medium'>
-                                    <p>I have an account?</p>
-                                    <Link to="/login_user" className='underline'>
-                                      Log In
-                                    </Link>
-                                </div>
-                            
-                        </form> */}
+                <h2 className="text-2xl font-bold text-white mb-6 text-center">Enter Verification Code</h2>
+                <input
+                    type="text"
+                    placeholder="Enter your code"
+                    value={verificationCode}
+                    onChange={(e) => setVerificationCode(e.target.value)}
+                    className="w-full text-2xl text-gray-900 px-4 py-3 mb-4 rounded-lg border-2 border-transparent focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 placeholder-gray-500 transition-all"
+                />
+                {verificationError && (
+                    <p className="text-sm text-red-400 mb-4 text-center">{verificationError}</p>
+                )}
+                <div className="flex justify-between space-x-4">
+                    <button
+                    onClick={handleVerifyCode}
+                    className="bg-blue-500 text-white px-6 py-3 rounded-lg w-full hover:bg-blue-600 transition-all ease-in-out duration-200 shadow-md focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+                    >
+                    Verify
+                    </button>
+                    <button
+                    onClick={handleResendCode}
+                    className="bg-transparent border-2 border-gray-200 text-gray-200 px-6 py-3 rounded-lg w-full hover:bg-gray-200 hover:text-gray-900 transition-all ease-in-out duration-200"
+                    >
+                    Resend Code
+                    </button>
+                </div>
+                <div className="mt-4 flex justify-center">
+                    <button
+                    onClick={() => setIsModalOpen(false)} // This will also close the modal when clicked
+                    className="bg-gray-300 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-400 w-full transition-all ease-in-out duration-200"
+                    >
+                    Cancel
+                    </button>
+                </div>
+                </div>
+            </div>
+            )}
+            <div className="w-full flex justify-center">
                 <form className="w-full sm:w-10/12 flex flex-col items-start justify-center gap-5" onSubmit={handleSubmit}>
                 <div className='flex w-full flex-col text-secoundColor font-bold gap-8 text-4xl lg:text-5xl'>
                     <h1>Sign up to WegoStores</h1>
@@ -335,17 +325,17 @@ const SignUpPage =()=>{
                 </div>
 
                 </form>
-
-                </div>
-                <div className="w-full flex justify-center">
-                    <img
-                    src={ImageLogo}
-                    alt="LoginImage"
-                    />              
-                </div>
+            </div>
+            <div className="w-full flex justify-center">
+                <img
+                src={ImageLogo}
+                alt="LoginImage"
+                />              
+            </div>
         </div>
         </>
     )
     }
 
     export default SignUpPage;
+

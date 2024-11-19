@@ -23,10 +23,10 @@ const ProtectedRoute = ({ allowedRoles }) => {
 
        if (!hasPermission) {
               if (auth.user.role === "admin") {
-                     return <Navigate to={'/admin_dashboard'} />;
+                     return <Navigate to={'/dashboard_admin'} />;
                      // return window.location.href = "https://login.elmanhag.shop/dashboard_admin";
               }else if(auth.user.role === "user") {
-                     return <Navigate to={'/user_dashboard'} />;
+                     return <Navigate to={'/dashboard_user'} />;
                      // return window.location.href = "https://login.elmanhag.shop/dashboard_admin";
               }
             else {
