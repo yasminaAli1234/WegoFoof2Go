@@ -117,7 +117,7 @@ const OrderPage = () => {
                         Text="Pending"
                         Width="full"
                         px="px-1"
-                        Size='text-xl'
+                        Size='text-lg'
                         BgColor={activeTab === "pending" ? "bg-mainColor" : "bg-white"}
                         Color={activeTab === "pending" ? "text-white" : "text-mainColor"}
                         handleClick={() => setActiveTab("pending")}
@@ -126,15 +126,27 @@ const OrderPage = () => {
                         <div className='sm:w-1/4'> 
                         <Button
                          rounded='rounded-2xl'
-                        Text="History"
+                        Text="InProgress"
                         Width="full"
                         px="px-1"
-                        Size='text-xl'
-                        BgColor={activeTab === "history" ? "bg-mainColor" : "bg-white"}
-                        Color={activeTab === "history" ? "text-white" : "text-mainColor"}
-                        handleClick={() => setActiveTab("history")}
+                        Size='text-lg'
+                        BgColor={activeTab === "InProgress" ? "bg-mainColor" : "bg-white"}
+                        Color={activeTab === "InProgress" ? "text-white" : "text-mainColor"}
+                        handleClick={() => setActiveTab("InProgress")}
                         />
-                        </div>            
+                        </div>  
+                        <div className='sm:w-1/4'> 
+                        <Button
+                         rounded='rounded-2xl'
+                        Text="Finished"
+                        Width="full"
+                        px="px-1"
+                        Size='text-lg'
+                        BgColor={activeTab === "Finished" ? "bg-mainColor" : "bg-white"}
+                        Color={activeTab === "Finished" ? "text-white" : "text-mainColor"}
+                        handleClick={() => setActiveTab("Finished")}
+                        />
+                        </div>           
                     </div>
 
                         {activeTab === "pending" && (

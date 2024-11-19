@@ -315,11 +315,11 @@ const MenuSideAdmin = () => {
                                    <div className={`${isActiveSettingList ? "h-auto" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
                                           <ul className={`${isActiveSettingList ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-10 bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
                                                  <Link to="payment_method" onClick={handleClickPaymentMethod} className={`${isActivePaymentMethod ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
-                                                        <PromoCodeIcon isActive={isActivePaymentMethod} />
+                                                        {/* <PromoCodeIcon isActive={isActivePaymentMethod} /> */}
                                                         <span className={`${isActivePaymentMethod ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Payment Method</span>
                                                  </Link> 
                                                  <Link to="promocode" onClick={handleClickPromoCode} className={`${isActivePromoCode ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
-                                                        <PromoCodeIcon isActive={isActivePromoCode} />
+                                                        {/* <PromoCodeIcon isActive={isActivePromoCode} /> */}
                                                         <span className={`${isActivePromoCode ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>PromoCode</span>
                                                  </Link> 
                                           </ul>

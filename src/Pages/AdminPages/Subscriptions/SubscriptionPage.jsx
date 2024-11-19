@@ -20,14 +20,14 @@ const SubscriptionPage = () => {
     const fetchData = async () => {
         setIsLoading(true);
         try {
-               const response = await axios.get('https://login.wegostores.com/admin/v1/payment/method/show', {
+               const response = await axios.get('https://login.wegostores.com/admin/v1/subscripe', {
                       headers: {
                              Authorization: `Bearer ${auth.user.token}`,
                       },
                });
                if (response.status === 200) {
                       console.log(response.data)
-                    //   setPayments(response.data.payment)
+                      setUsers(response.data.users)
                }
         } catch (error) {
                console.error('Error fetching data:', error);
@@ -95,9 +95,9 @@ const SubscriptionPage = () => {
         );
     }    
       
-    // if (!users) {
-    //     return <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No Payment Method data available</div>;
-    // }
+    if (!users) {
+        return <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No Subscriptions data available</div>;
+    }
 
        return (
               <>
@@ -113,15 +113,16 @@ const SubscriptionPage = () => {
                         <tr className="w-full border-b-2">
                             <th className="min-w-[80px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">#</th>
                             <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Name</th>
+                            <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Phone</th>
                             <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Plan</th>
                             <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Start Date</th>
                             <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">End Date</th>
                             <th className="min-w-[100px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Action</th>
                         </tr>
                     </thead>
-                    {/* <tbody className="w-full">
-                            {payments.map((payment, index) => (
-                                <tr className="w-full border-b-2" key={payment.id}>
+                    <tbody className="w-full">
+                            {users.map((user, index) => (
+                                <tr className="w-full border-b-2" key={user.id}>
                                         <td
                                                 className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                         >
@@ -130,22 +131,30 @@ const SubscriptionPage = () => {
                                         <td
                                                 className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                         >
-                                                {payment?.name || 'Null'}
+                                                {user?.name || '_'}
                                         </td>
                                         <td
                                                 className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                         >
-                                                <div className='w-full flex justify-center'>
-                                                <img src={payment?.thumbnailUrl || 'Null'} alt='payment method image' className='w-20 object-content'/>
-                                                </div>
-                                        </td>  
+                                                {user?.phone || '_'}
+                                        </td>
                                         <td
                                                 className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                         >
-                                                {payment?.description || 'Null'}
+                                                {user?.plan?.name  || '_'}
+                                        </td>
+                                        <td
+                                                className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
+                                        >
+                                                {user?.start_date  || '_'}
+                                        </td>
+                                        <td
+                                                className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
+                                        >
+                                                {user?.expire_date || '_'}
                                         </td>
 
-                                        <td
+                                        {/* <td
                                                 className="min-w-[100px] sm:min-w-[80px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                         >
                                                 <div className="flex items-center justify-center gap-x-3">
@@ -195,10 +204,10 @@ const SubscriptionPage = () => {
                                                         </Dialog>
                                                 )}
                                                 </div>
-                                        </td>
+                                        </td> */}
                                 </tr>
                             ))}
-                    </tbody> */}
+                    </tbody>
                 </table>
             </div>
               </div>

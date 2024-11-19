@@ -117,27 +117,27 @@ const PlanPage = () => {
                                 <h1 className='p-2'>{plan.name}</h1>
                             </div>
                             <div className='p-4 text-mainColor flex flex-col gap-5'>
-                                   <div className='flex flex-col gap-2'>
-                                          <span className='text-maincolor text-3xl font-semibold'>Description : </span>
-                                          <p className='text-[#686868] text-2xl'>{plan.description}</p>
+                                   <div className='flex flex-wrap items-center gap-2'>
+                                          <span className='text-maincolor text-xl xl:text-3xl font-semibold'>Description : </span>
+                                          <p className='text-[#686868] text-lg xl:text-2xl'>{plan.description}</p>
                                    </div>
-                                   <div className="flex items-center gap-x-4 w-full">
-                                          <span className="text-3xl text-mainColor font-medium">Application:</span>
+                                   <div className="flex flex-wrap items-center gap-x-4 w-full">
+                                          <span className="text-xl xl:text-3xl text-mainColor font-medium">Application:</span>
                                           <div>
                                                  <CheckBox checked={plan.app}/>
                                           </div>
                                    </div>
-                                   <div className='flex items-center gap-5'>
-                                          <span className='text-maincolor text-3xl font-semibold'>SetUp Fees : </span>
-                                          <p className='text-[#686868] text-2xl'>{plan.setup_fees}</p>
+                                   <div className='flex flex-wrap items-center gap-5'>
+                                          <span className='text-maincolor text-xl xl:text-3xl font-semibold'>SetUp Fees : </span>
+                                          <p className='text-[#686868] text-lg xl:text-2xl'>{plan.setup_fees}</p>
                                    </div>
-                                   <div className='flex items-center gap-5'>
-                                          <span className='text-maincolor text-3xl font-semibold'>Price per year  : </span>
-                                          <p className='text-[#686868] text-2xl'>{plan.price_per_year} EGP</p>
+                                   <div className='flex flex-wrap items-center gap-5'>
+                                          <span className='text-maincolor text-xl xl:text-3xl font-semibold'>Price per year  : </span>
+                                          <p className='text-[#686868] text-lg xl:text-2xl'>{plan.price_per_year} EGP</p>
                                    </div>
-                                   <div className='flex items-center gap-5'>
-                                          <span className='text-maincolor text-3xl font-semibold'>Price per Month  : </span>
-                                          <p className='text-[#686868] text-2xl'>{plan.price_per_month} EGP</p>
+                                   <div className='flex flex-wrap items-center gap-5'>
+                                          <span className='text-maincolor text-xl xl:text-3xl font-semibold'>Price per Month  : </span>
+                                          <p className='text-[#686868] text-lg xl:text-2xl'>{plan.price_per_month} EGP</p>
                                    </div>
                             </div>
                             <div className='p-4'>
