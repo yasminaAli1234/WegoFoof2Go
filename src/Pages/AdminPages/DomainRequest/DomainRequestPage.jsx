@@ -10,15 +10,11 @@ const DomainRequestPage = () => {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const [domains, setDomains] = useState([]);
-    const [showModal, setShowModal] = useState(false);
-    const [selectedRequest, setSelectedRequest] = useState(null);
-    const [formValues, setFormValues] = useState({
-        demo_link: '',
-        email: '',
-        password: '',
-        start_date: '',
-        end_date: '',
-    });
+    const [activeTab, setActiveTab] = useState("pending");
+    const [showPopup, setShowPopup] = useState(false);
+    const [selectedDomain, setSelectedDomain] = useState(null);
+    const [selectedOption, setSelectedOption] = useState("");
+    const [rejectReason, setRejectReason] = useState("");
 
     const fetchData = async () => {
         setIsLoading(true);
@@ -29,7 +25,7 @@ const DomainRequestPage = () => {
                 },
             });
             if (response.status === 200) {
-                console.log('Domain Request Data:', response.data);
+                console.log(response.data)
                 setDomains(response.data.domains);
             }
         } catch (error) {
@@ -43,55 +39,80 @@ const DomainRequestPage = () => {
         fetchData();
     }, []);
 
-    const handlePendingClick = (request) => {
-        setSelectedRequest(request);
-        setFormValues({
-            demo_link: '',
-            email: '',
-            password: '',
-            start_date: '',
-            end_date: '',
-        });
-        setShowModal(true);
+    const handleOptionChange = (e) => {
+        setSelectedOption(e.target.value);
     };
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormValues((prev) => ({ ...prev, [name]: value }));
+    const handleRejectReasonChange = (e) => {
+        setRejectReason(e.target.value);
     };
 
-    const handleSubmit = async () => {
+    const openPopup = (domain) => {
+        setSelectedDomain(domain);
+        setShowPopup(true);
+    };
+
+    const closePopup = () => {
+        setShowPopup(false);
+        setSelectedDomain(null);
+        setSelectedOption("");
+        setRejectReason("");
+    };
+
+    const handleDone = async () => {
+        if (selectedOption === "Reject" && !rejectReason.trim()) {
+            auth.toastError("Please provide a reason for rejection.");
+            return;
+        }
+    
         try {
-            const formData = new FormData();
-            Object.entries(formValues).forEach(([key, value]) => {
-                formData.append(key, value);
-            });
-
-            const response = await axios.post(
-                `https://login.wegostores.com/admin/v1/demoRequest/approved/${selectedRequest.id}`,
-                formData,
-                {
-                    headers: {
-                        Authorization: `Bearer ${auth.user.token}`,
-                        'Content-Type': 'multipart/form-data',
-                    },
+            if (selectedOption === "Approve") {
+                console.log("Token:", auth.user.token); // Debug token
+    
+                const response = await axios.put(
+                    `https://login.wegostores.com/admin/v1/domains/approve/${selectedDomain.id}`,
+                    {}, // No body required
+                    {
+                        headers: {
+                            Authorization: `Bearer ${auth.user.token}`, // Ensure token is correct
+                            "Content-Type": "application/json",
+                        },
+                    }
+                );
+    
+                if (response.status === 200) {
+                    auth.toastSuccess("Domain Approved successfully.");
+                    fetchData();
                 }
-            );
-
-            if (response.status === 200) {
-                auth.toastSuccess('Request approved successfully');
-                fetchData();
-            }
-            else {
-                auth.toastError('Failed to add Plan.');
+            } else if (selectedOption === "Reject") {
+                const formData = { rejected_reason: rejectReason };
+    
+                const response = await axios.put(
+                    `https://login.wegostores.com/admin/v1/domains/rejected/${selectedDomain.id}`,
+                    formData,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${auth.user.token}`,
+                            "Content-Type": "application/json",
+                        },
+                    }
+                );
+    
+                if (response.status === 200) {
+                    auth.toastSuccess("Domain Rejected successfully.");
+                    fetchData();
+                }
             }
         } catch (error) {
-            console.error('Error submitting request:', error);
+            console.error("Error updating domain status:", error?.response?.data || error.message);
+            if (error.response?.status === 401) {
+                auth.toastError("Unauthorized: Please check your login session or token.");
+            }
         } finally {
-            setShowModal(false);
+            closePopup();
         }
     };
-
+    
     if (isLoading) {
         return (
             <div className="w-1/4 h-full flex items-start mt-[10%] justify-center m-auto">
@@ -110,128 +131,250 @@ const DomainRequestPage = () => {
 
     return (
         <div className="w-full">
-            {showModal && (
-                <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-60 z-50">
-                    <div className="bg-white rounded-lg shadow-xl p-8 w-[450px]">
-                        <h3 className="text-2xl font-semibold text-gray-800 mb-6 text-center">Approve Request</h3>
-                        <div className="space-y-4">
-                            <input
-                                type="text"
-                                name="demo_link"
-                                placeholder="Demo Link"
-                                className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-mainColor"
-                                value={formValues.demo_link}
-                                onChange={handleInputChange}
-                            />
-                            <input
-                                type="email"
-                                name="email"
-                                placeholder="Email"
-                                className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-mainColor"
-                                value={formValues.email}
-                                onChange={handleInputChange}
-                            />
-                            <input
-                                type="password"
-                                name="password"
-                                placeholder="Password"
-                                className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-mainColor"
-                                value={formValues.password}
-                                onChange={handleInputChange}
-                            />
-                            <div>
-                                <label htmlFor="start_date" className="block text-sm font-medium text-gray-700 mb-2">
-                                    Start Date
-                                </label>
+            <div className="flex w-full gap-5 mb-5">
+                <div className="sm:w-1/4">
+                    <Button
+                        Text="Pending"
+                        Width="full"
+                        px="px-1"
+                        Size="text-lg"
+                        BgColor={activeTab === "pending" ? "bg-mainColor" : "bg-white"}
+                        Color={activeTab === "pending" ? "text-white" : "text-mainColor"}
+                        handleClick={() => setActiveTab("pending")}
+                    />
+                </div>
+                <div className="sm:w-1/4">
+                    <Button
+                        Text="Approved"
+                        Width="full"
+                        px="px-1"
+                        Size="text-lg"
+                        BgColor={activeTab === "Approved" ? "bg-mainColor" : "bg-white"}
+                        Color={activeTab === "Approved" ? "text-white" : "text-mainColor"}
+                        handleClick={() => setActiveTab("Approved")}
+                    />
+                </div>
+                <div className="sm:w-1/4">
+                    <Button
+                        Text="Rejected"
+                        Width="full"
+                        px="px-1"
+                        Size="text-lg"
+                        BgColor={activeTab === "Rejected" ? "bg-mainColor" : "bg-white"}
+                        Color={activeTab === "Rejected" ? "text-white" : "text-mainColor"}
+                        handleClick={() => setActiveTab("Rejected")}
+                    />
+                </div>
+            </div>
+
+            {activeTab === "pending" && domains && (
+                      <div className="w-full flex items-center justify-between mt-4 overflow-x-auto">
+                      <table className="w-full sm:min-w-0">
+                          <thead className="w-full">
+                              <tr className="w-full border-b-2">
+                                  <th className="min-w-[80px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">#</th>
+                                  <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Domain</th>
+                                  <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Store</th>
+                                  <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Store Activity</th>
+                                  <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">User</th>
+                                  <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Phone</th>
+                                  <th className="min-w-[100px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Action</th>
+                              </tr>
+                          </thead>
+                          <tbody className="w-full">
+                              {domains.filter(domain => domain.status === null).map((domain, index) => (
+                                  <tr className="w-full border-b-2" key={domain.id}>
+                                      <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                                          {index + 1}
+                                      </td>
+                                      <td className="min-w-[100px] sm:min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                                          {domain?.name || '_'}
+                                      </td>
+                                      <td className="min-w-[100px] sm:min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                                          {domain.store?.store_name || '_'}
+                                      </td>
+                                      <td className="min-w-[100px] sm:min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                                          {domain.store?.activity?.name || '_'}
+                                      </td>
+                                      <td className="min-w-[100px] sm:min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                                          {domain.user?.name || '_'}
+                                      </td>
+                                      <td className="min-w-[100px] sm:min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                                          {domain.user?.phone || '_'}
+                                      </td>
+                                      <td className="min-w-[100px] sm:min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                                            <button
+                                                onClick={() =>{
+                                                    // setSelectedDomain(domain)
+                                                    openPopup(domain)}}
+                                                className="bg-mainColor text-white py-1 px-4 rounded shadow hover:bg-mainColor-dark transition"
+                                            >
+                                                Pending
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                        </tbody>
+                    </table>
+                </div>
+            )}
+
+            {activeTab === "Approved" && domains && (
+                <div className="w-full flex items-center justify-between mt-4 overflow-x-auto">
+                      <table className="w-full sm:min-w-0">
+                          <thead className="w-full">
+                              <tr className="w-full border-b-2">
+                                  <th className="min-w-[80px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">#</th>
+                                  <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Domain</th>
+                                  <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Store</th>
+                                  <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Store Activity</th>
+                                  <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">User</th>
+                                  <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Phone</th>
+                                  <th className="min-w-[100px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Status</th>
+                              </tr>
+                          </thead>
+                          <tbody className="w-full">
+                              {domains.filter(domain => domain.status === 1).map((domain, index) => (
+                                  <tr className="w-full border-b-2" key={domain.id}>
+                                      <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                                          {index + 1}
+                                      </td>
+                                      <td className="min-w-[100px] sm:min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                                          {domain?.name || '_'}
+                                      </td>
+                                      <td className="min-w-[100px] sm:min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                                          {domain.store?.store_name || '_'}
+                                      </td>
+                                      <td className="min-w-[100px] sm:min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                                          {domain.store?.activity?.name || '_'}
+                                      </td>
+                                      <td className="min-w-[100px] sm:min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                                          {domain.user?.name || '_'}
+                                      </td>
+                                      <td className="min-w-[100px] sm:min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                                          {domain.user?.phone || '_'}
+                                      </td>
+                                      <td className="min-w-[100px] sm:min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                                        {domain.status === 1 ? (
+                                            <span className="text-green-600 font-semibold">Approved</span>
+                                        ) : '_'}
+                                        </td>
+                                    </tr>
+                                ))}
+                        </tbody>
+                    </table>
+                </div>
+            )}
+
+            {activeTab === "Rejected" && domains && (
+                <div className="w-full flex items-center justify-between mt-4 overflow-x-auto">
+                 <table className="w-full sm:min-w-0">
+                     <thead className="w-full">
+                         <tr className="w-full border-b-2">
+                             <th className="min-w-[80px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">#</th>
+                             <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Domain</th>
+                             <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Store</th>
+                             <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Store Activity</th>
+                             <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">User</th>
+                             <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Phone</th>
+                             <th className="min-w-[100px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Status</th>
+                         </tr>
+                     </thead>
+                     <tbody className="w-full">
+                         {domains.filter(domain => domain.status === 0).map((domain, index) => (
+                             <tr className="w-full border-b-2" key={domain.id}>
+                                 <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                                     {index + 1}
+                                 </td>
+                                 <td className="min-w-[100px] sm:min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                                     {domain?.name || '_'}
+                                 </td>
+                                 <td className="min-w-[100px] sm:min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                                     {domain.store?.store_name || '_'}
+                                 </td>
+                                 <td className="min-w-[100px] sm:min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                                          {domain.store?.activity?.name || '_'}
+                                </td>
+                                <td className="min-w-[100px] sm:min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                                    {domain.user?.name || '_'}
+                                </td>
+                                <td className="min-w-[100px] sm:min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                                    {domain.user?.phone || '_'}
+                                </td>
+                                 <td className="min-w-[100px] sm:min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                                   {domain.status === 0 ? (
+                                       <span className="text-red-600 font-semibold">Rejected</span>
+                                   ) : '_'}
+                                   </td>
+                               </tr>
+                           ))}
+                   </tbody>
+               </table>
+                </div>
+            )}
+
+            {showPopup && (
+                <div className="fixed inset-0 bg-gray-500 bg-opacity-50 z-50 flex justify-center items-center">
+                    <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+                        <h2 className="text-2xl text-mainColor font-semibold mb-6">Choose Action</h2>
+                        <div className="flex flex-col gap-4">
+                            <label className="flex items-center gap-2 text-mainColor text-xl cursor-pointer">
                                 <input
-                                    type="date"
-                                    id="start_date"
-                                    name="start_date"
-                                    className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-mainColor"
-                                    value={formValues.start_date}
-                                    onChange={handleInputChange}
+                                    type="radio"
+                                    value="Approve"
+                                    checked={selectedOption === "Approve"}
+                                    onChange={handleOptionChange}
+                                    className="w-6 h-6 cursor-pointer"
                                 />
-                            </div>
-                            <div>
-                                <label htmlFor="end_date" className="block text-sm font-medium text-gray-700 mb-2">
-                                    End Date
-                                </label>
+                                Approve
+                            </label>
+                            <label className="flex items-center gap-2 text-mainColor text-xl cursor-pointer">
                                 <input
-                                    type="date"
-                                    id="end_date"
-                                    name="end_date"
-                                    className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-mainColor"
-                                    value={formValues.end_date}
-                                    onChange={handleInputChange}
+                                    type="radio"
+                                    value="Reject"
+                                    checked={selectedOption === "Reject"}
+                                    onChange={handleOptionChange}
+                                    className="w-6 h-6 cursor-pointer"
                                 />
-                            </div>
+                                Reject
+                            </label>
+
+                            {selectedOption === "Reject" && (
+                                <div className="flex flex-col">
+                                    <label className="text-mainColor mb-2 font-medium" htmlFor="rejectReason">
+                                        Reason for Rejection:
+                                    </label>
+                                    <input
+                                        id="rejectReason"
+                                        type="text"
+                                        value={rejectReason}
+                                        onChange={handleRejectReasonChange}
+                                        className="w-full p-2 border border-gray-300 rounded"
+                                        placeholder="Enter rejection reason"
+                                    />
+                                </div>
+                            )}
                         </div>
-                        <div className="flex justify-end gap-4 mt-6">
+
+                        <div className="mt-6 flex justify-between">
                             <button
-                                onClick={() => setShowModal(false)}
-                                className="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-all duration-200 shadow-sm"
+                                onClick={handleDone}
+                                className="bg-mainColor text-white py-2 px-4 rounded shadow hover:bg-mainColor-dark transition"
                             >
-                                Cancel
+                                Done
                             </button>
                             <button
-                                onClick={handleSubmit}
-                                className="px-4 py-2 bg-mainColor text-white rounded-lg hover:bg-green-600 transition-all duration-200 shadow-sm"
+                                onClick={closePopup}
+                                className="text-red-600 py-2 px-4 hover:underline"
                             >
-                                Submit
+                                Cancel
                             </button>
                         </div>
                     </div>
                 </div>
             )}
-                 <div className="w-full flex items-center justify-between mt-4 overflow-x-auto">
-                <table className="w-full sm:min-w-0">
-                    <thead className="w-full">
-                        <tr className="w-full border-b-2">
-                            <th className="min-w-[80px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">#</th>
-                            <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Name</th>
-                            <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Email</th>
-                            <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Phone</th>
-                            <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Activities</th>
-                            <th className="min-w-[100px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody className="w-full">
-                        {domains.map((request, index) => (
-                            <tr className="w-full border-b-2" key={request.id}>
-                                <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                                    {index + 1}
-                                </td>
-                                <td className="min-w-[100px] sm:min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                                    {request.users?.name || '_'}
-                                </td>
-                                <td className="min-w-[100px] sm:min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                                    {request.users?.email || '_'}
-                                </td>
-                                <td className="min-w-[100px] sm:min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                                    {request.users?.phone || '_'}
-                                </td>
-                                <td className="px-4 py-4 text-center">
-                                    {request.activity?.name || '_'}
-                                </td>
-                                <td>
-                                    {request.status === "1" ? (
-                                        <button className="w-full py-2 px-2 rounded bg-green-500 text-xl text-white font-medium">
-                                            Approved
-                                        </button>
-                                    ) : (
-                                        <button onClick={() => handlePendingClick(request)} className="w-full py-2 px-2 text-xl rounded bg-gray-500 text-white font-medium">
-                                            Pending
-                                        </button>
-                                    )}
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
         </div>
     );
 };
 
 export default DomainRequestPage;
-

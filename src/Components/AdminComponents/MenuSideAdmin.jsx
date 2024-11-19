@@ -1,5 +1,5 @@
 import React, { useState ,useEffect} from "react";
-import {DemorequestsIcon, DollerIcon, ExtraIcon, HomeIcon, OrderIcon, PaymentIcon, PlanIcon, PromoCodeIcon, SettingIcon, SubscriptionIcon, UserIcon,
+import {DemorequestsIcon, DollerIcon, DomainIcon, ExtraIcon, HomeIcon, OrderIcon, PaymentIcon, PlanIcon, PromoCodeIcon, SettingIcon, SubscriptionIcon, UserIcon,
     // ProfileIcon,StoreIcon,SubscriptionIcon,DomainIcon,ExtraIcon,PaymentIcon,TutorialIcon
 } from "../Icons/AllIcons";
 import { NavLink } from "react-router-dom";
@@ -268,7 +268,7 @@ const MenuSideAdmin = () => {
                                           <span className={`${isActiveDemoRequest ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Demo Requests</span>
                                    </Link>
                                    <Link to="domain_request" onClick={handleClickDomainRequest} className={`${isActiveDomainRequest ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
-                                          <DemorequestsIcon isActive={isActiveDomainRequest} />
+                                          <DomainIcon isActive={isActiveDomainRequest} />
                                           <span className={`${isActiveDomainRequest ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Domain Requests</span>
                                    </Link>
                                    <Link to="pending_payment" onClick={handleClickPaymentPending} className={`${isActivePaymentPending ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
