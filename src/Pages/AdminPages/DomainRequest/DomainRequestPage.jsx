@@ -9,7 +9,7 @@ const DomainRequestPage = () => {
     const auth = useAuth();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
-    const [requests, setRequests] = useState([]);
+    const [domains, setDomains] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [selectedRequest, setSelectedRequest] = useState(null);
     const [formValues, setFormValues] = useState({
@@ -23,14 +23,14 @@ const DomainRequestPage = () => {
     const fetchData = async () => {
         setIsLoading(true);
         try {
-            const response = await axios.get('https://login.wegostores.com/admin/v1/demoRequest/show', {
+            const response = await axios.get('https://login.wegostores.com/admin/v1/domains', {
                 headers: {
                     Authorization: `Bearer ${auth.user.token}`,
                 },
             });
             if (response.status === 200) {
-                console.log('Demo Request Data:', response.data.demoRequest);
-                setRequests(response.data.demoRequest);
+                console.log('Domain Request Data:', response.data);
+                setDomains(response.data.domains);
             }
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -100,10 +100,10 @@ const DomainRequestPage = () => {
         );
     }
 
-    if (!requests.length) {
+    if (!domains.length) {
         return (
             <div className="text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center">
-                No demo requests data available
+                No domain requests data available
             </div>
         );
     }
@@ -196,7 +196,7 @@ const DomainRequestPage = () => {
                         </tr>
                     </thead>
                     <tbody className="w-full">
-                        {requests.map((request, index) => (
+                        {domains.map((request, index) => (
                             <tr className="w-full border-b-2" key={request.id}>
                                 <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
                                     {index + 1}

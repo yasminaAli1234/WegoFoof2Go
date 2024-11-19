@@ -30,7 +30,7 @@ const UserProfilePage =()=>{
         <div className="w-full flex flex-col lg:flex-row gap-10 items-center">
             <div className='w-80 h-80 flex relative rounded-full border-2'>
                 <img
-                    src={image}
+                    src={user.image_link}
                     alt="ProfileImage"
                     className="w-full object-contain rounded-full"
                     />

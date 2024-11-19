@@ -173,7 +173,7 @@ const ExtraPage = () => {
                                           }
                                           </div> */}
                                               <div>
-                                {product.my_product === true ? (
+                                {product.my_extra === true ? (
                                 <button
                                     className={`w-full py-3 font-semibold rounded-lg transition-transform transform 
                                     bg-gray-300 text-gray-800 hover:scale-105`}
@@ -299,7 +299,7 @@ const ExtraPage = () => {
                                           </div> */}
 
                             <div>
-                                {product.my_product === true ? (
+                                {product.my_extra === true ? (
                                 <button
                                     className={`w-full py-3 font-semibold rounded-lg transition-transform transform 
                                     bg-gray-300 text-gray-800 hover:scale-105`}

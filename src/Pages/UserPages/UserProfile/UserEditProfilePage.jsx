@@ -158,54 +158,62 @@
 
 // export default UserEditProfilePage;
 
-
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import Loading from '../../../Components/Loading';
-import { useAuth } from '../../../Context/Auth';
-import InputCustom from '../../../Components/InputCustom';
-import { Link, useLocation } from 'react-router-dom';
+import Loading from "../../../Components/Loading";
+import { useAuth } from "../../../Context/Auth";
+import InputCustom from "../../../Components/InputCustom";
+import { Link, useLocation } from "react-router-dom";
 import { AiTwotoneEdit } from "react-icons/ai";
-import { Button } from '../../../Components/Button';
+import { Button } from "../../../Components/Button";
 
 const UserEditProfilePage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const auth = useAuth();
   const location = useLocation();
-  const user = location.state || {};
+  const uploadRef = useRef();
 
-  const [name, setName] = useState(user.userData.name);
-  const [phone, setPhone] = useState(user.userData.phone);
-  const [email, setEmail] = useState(user.userData.email);
-  const [image, setImage] = useState(user.userData.image);
-  const [selectedFile, setSelectedFile] = useState(null);
+  const user = location.state || {};
+  const userData = user?.userData || {};
+
+  const [name, setName] = useState(userData.name || "");
+  const [phone, setPhone] = useState(userData.phone || "");
+  const [email, setEmail] = useState(userData.email || "");
+  const [thumbnailFile, setThumbnailFile] = useState(null);
+  const [thumbnail, setThumbnail] = useState(userData.image || "");
 
   useEffect(() => {
-    console.log("userData", user); 
-  }, []);
+    console.log("User data:", userData);
+  }, [userData]);
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setSelectedFile(file);
-      setImage(URL.createObjectURL(file)); // Update preview with selected file
+  const handleInputClick = () => {
+    if (uploadRef.current) {
+      uploadRef.current.click();
     }
   };
 
-  const handleSubmitEdit = async (userId, event) => {
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setThumbnailFile(file);
+      setThumbnail(URL.createObjectURL(file)); // Set a preview URL
+    }
+  };
+
+  const handleSubmitEdit = async (event) => {
     event.preventDefault();
 
     if (!name || !phone || !email) {
-      auth.toastError('Please complete all fields.');
+      auth.toastError("Please complete all fields.");
       return;
     }
 
     const formData = new FormData();
-    formData.append('name', name);
-    formData.append('email', email);
-    formData.append('phone', phone);
-    if (selectedFile) {
-      formData.append('image', selectedFile); // Add image file to formData
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("phone", phone);
+    if (thumbnailFile) {
+      formData.append("image", thumbnailFile);
     }
 
     setIsLoading(true);
@@ -221,36 +229,38 @@ const UserEditProfilePage = () => {
       );
 
       if (response.status === 200) {
-        auth.toastSuccess('Profile updated successfully!');
-        // Navigate back or refresh data as needed
+        auth.toastSuccess("Profile updated successfully!");
       } else {
-        auth.toastError('Failed to update profile.');
+        auth.toastError("Failed to update profile.");
       }
     } catch (error) {
-      console.error(error);
-      auth.toastError('An error occurred while updating the profile.');
+      console.error("Error updating profile:", error);
+      auth.toastError("An error occurred while updating the profile.");
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <form onSubmit={(event) => handleSubmitEdit(user.userData.id, event)} className="w-full flex flex-col gap-y-10 p-4">
+    <form onSubmit={handleSubmitEdit} className="w-full flex flex-col gap-y-10 p-4">
       <div className="w-full flex flex-col lg:flex-row gap-10 items-center">
-        <div className='w-80 h-80 flex relative rounded-full border-2'>
+        <div className="w-80 h-80 flex relative rounded-full border-2">
           <img
-            src={image}
+            src={thumbnail}
             alt="Profile"
             className="w-full object-contain rounded-full"
+            onClick={handleInputClick}
           />
           <input
             type="file"
             accept="image/*"
             className="hidden"
-            id="file-input"
             onChange={handleFileChange}
+            ref={uploadRef}
           />
-          <label htmlFor="file-input" className="bg-white text-mainColor shadow p-2 rounded-full absolute flex items-center bottom-7 right-4 hover:bg-gray-300 cursor-pointer">
+          <label
+            className="bg-white text-mainColor shadow p-2 rounded-full absolute flex items-center bottom-7 right-4 hover:bg-gray-300 cursor-pointer"
+          >
             <AiTwotoneEdit size={40} />
           </label>
         </div>
@@ -289,7 +299,7 @@ const UserEditProfilePage = () => {
           </div>
         </div>
         <div className="w-full flex items-center justify-center">
-          <div className="flex items-center justify-center w-full lg:w-96 md:w-96 ">
+          <div className="flex items-center justify-center w-full lg:w-96 md:w-96">
             <Button
               type="submit"
               Text="Update Profile"
