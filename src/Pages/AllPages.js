@@ -43,6 +43,9 @@ export { default as EditPromoCodePage } from "./AdminPages/PromoCode/EditPromoCo
 export { default as AdminTutorialPage } from "./AdminPages/AdminTutorial/AdminTutorialPage";
 export { default as AddAdminTutorialPage } from "./AdminPages/AdminTutorial/AddAdminTutorialPage";
 export { default as EditAdminTutorialPage } from "./AdminPages/AdminTutorial/EditAdminTutorialPage";
+export { default as AddTutorialPage } from "./AdminPages/AdminTutorial/AddTutorialPage";
+export { default as EditTutorialPage } from "./AdminPages/AdminTutorial/EditTutorialPage";
+
 
 /* User Pages*/
 // User Home Page

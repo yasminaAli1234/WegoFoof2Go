@@ -1,9 +1,9 @@
 import React from "react";
-import { AddAdminTutorialPage } from "../../Pages/AllPages";
+import { EditTutorialPage } from "../../Pages/AllPages";
 import HeaderPageSection from '../../Components/HeaderPageSection'
 import { useNavigate } from 'react-router-dom';
 
-const AddAdminTutorialLayout =()=>{
+const EditTutorialLayout =()=>{
 
     const navigate = useNavigate();
     const handleGoBack = () => {
@@ -11,10 +11,10 @@ const AddAdminTutorialLayout =()=>{
     };
     return(
         <>
-        <HeaderPageSection handleClick={handleGoBack} name="Add Tutorial Group" />
-        <AddAdminTutorialPage/>
+        <HeaderPageSection handleClick={handleGoBack} name="Edit Tutorials" />
+        <EditTutorialPage/>
         </>
     )
 }
 
-export default AddAdminTutorialLayout;
+export default EditTutorialLayout;
