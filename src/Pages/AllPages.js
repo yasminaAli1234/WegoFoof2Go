@@ -41,6 +41,7 @@ export { default as AddPromoCodePage } from "./AdminPages/PromoCode/AddPromoCode
 export { default as EditPromoCodePage } from "./AdminPages/PromoCode/EditPromoCodePage";
 //Tutorial pages
 export { default as AdminTutorialPage } from "./AdminPages/AdminTutorial/AdminTutorialPage";
+export { default as TutorialDataPage } from "./AdminPages/AdminTutorial/TutorialDataPage";
 export { default as AddAdminTutorialPage } from "./AdminPages/AdminTutorial/AddAdminTutorialPage";
 export { default as EditAdminTutorialPage } from "./AdminPages/AdminTutorial/EditAdminTutorialPage";
 export { default as AddTutorialPage } from "./AdminPages/AdminTutorial/AddTutorialPage";

@@ -42,6 +42,7 @@ export { default as AddPromoCodeLayout } from "./AdminLayouts/AddPromoCodeLayout
 export { default as EditPromoCodeLayout } from "./AdminLayouts/EditPromoCodeLayout";
 //Tutorial Layout
 export { default as AdminTutorialLayout } from "./AdminLayouts/AdminTutorialLayout";
+export { default as TutorialDataLayout } from "./AdminLayouts/TutorialDataLayout";
 export { default as AddAdminTutorialLayout } from "./AdminLayouts/AddAdminTutorialLayout";
 export { default as EditAdminTutorialLayout } from "./AdminLayouts/EditAdminTutorialLayout";
 export { default as AddTutorialLayout } from "./AdminLayouts/AddTutorialLayout";

@@ -43,6 +43,7 @@ import { UserLayout,UserHomeLayout ,
     EditAdminTutorialLayout,
     AddTutorialLayout,
     EditTutorialLayout,
+    TutorialDataLayout,
 } from "./Layouts/AllLayouts";
 import Login from "./Pages/RegisterPages/Login.jsx";
 import SignUpPage from "./Pages/RegisterPages/SignUpPage.jsx";
@@ -279,6 +280,10 @@ export const router = createBrowserRouter([
               {
                 path:'',
                 element:<AdminTutorialLayout/>
+              },
+              {
+                path:'tutorial/:id',
+                element:<TutorialDataLayout/>
               },
               {
                 path:'add',

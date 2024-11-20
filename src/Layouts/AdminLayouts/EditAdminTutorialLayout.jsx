@@ -54,6 +54,17 @@ const EditAdminTutorialLayout = () => {
        const handleGoBack = () => {
        navigate(-1, { replace: true });
        };
+
+       if (isLoading) {
+              return (
+                <div className="w-1/4 h-full flex items-start mt-[10%] justify-center m-auto">
+                  <Loading />
+                </div>
+              );
+            }
+             if (!allTutorialGroupsData.length) {
+              return <div className="text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center">No Tutorial Groups data available</div>;
+            }
        return (
               <>
               <HeaderPageSection handleClick={handleGoBack} name="Edit Tutorial Group" />
