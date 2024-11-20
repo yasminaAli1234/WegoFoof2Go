@@ -289,11 +289,11 @@ const AdminTutorialPage = () => {
                 <span className="text-2xl font-semibold text-mainColor">{group.name}</span>
                 <div className="flex gap-3">
                   {/* Add Tutorial Icon */}
-                  <Link to={`/add-tutorial/${group.id}`}>
+                  <Link to={`add_tutorial/${group.id}`}>
                     <PiVideoFill className="text-green-500" size={25} title="Add Tutorial" />
                   </Link>
                   {/* Edit Icon */}
-                  <Link to={`/edit-group/${group.id}`}>
+                  <Link to={`edit/${group.id}`}>
                     <EditIcon className="text-blue-500" size={25} title="Edit Group" />
                   </Link>
                   {/* Delete Icon */}

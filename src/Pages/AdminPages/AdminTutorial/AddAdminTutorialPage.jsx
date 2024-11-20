@@ -92,8 +92,7 @@ const AddAdminTutorialPage = () => {
                       </div>
                       <button onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>
                   </div>
-        </form>
-           
+        </form>   
     );
 };
 
