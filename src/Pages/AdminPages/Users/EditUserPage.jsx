@@ -1,10 +1,182 @@
-import React from "react";
+import React, { useState, useRef,useEffect ,useContext} from 'react';
+import axios from 'axios';
+import InputCustom from '../../../Components/InputCustom';
+import { Button } from '../../../Components/Button';
+import { useAuth } from '../../../Context/Auth';
+import { useNavigate } from 'react-router-dom'
+import Loading from '../../../Components/Loading';
+import CheckBox from '../../../Components/CheckBox';
+import { UserAddingLayout } from '../../../Layouts/AdminLayouts/EditUserLayout';
 
 const EditUserPage =()=>{
+
+    const userContent = useContext(UserAddingLayout);
+
+    const auth = useAuth();
+    const [name, setName] = useState('');
+    const [phone, setPhone] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [activeUser, setActiveUser] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (userContent) {
+            setName(userContent.name|| '')
+            setPhone(userContent.phone|| '')
+            setEmail(userContent.email|| '')
+            setPassword(userContent.password|| '')
+            setActiveUser(userContent.status|| '')
+        }
+    }, [userContent]);
+
+    const handleClick = (e) => {
+        const isChecked = e.target.checked;
+        setActiveUser(isChecked ? 1 : 0);
+    };
+
+    const handleGoBack = () => {
+        navigate(-1, { replace: true });
+    };
+
+    const handleSubmitEdit = async (userId , event) => {
+        event.preventDefault();
+
+        if (!name) {
+            auth.toastError('Please Enter the Name.');
+            return;
+        }
+        if (!phone) {
+            auth.toastError('Please Enter the Phone.');
+            return;
+        }
+        if (!email) {
+            auth.toastError('Please Enter the Email.');
+            return;
+        }
+        // if (!password) {
+        //     auth.toastError('Please Enter the Password.');
+        //     return;
+        // }
+        if (!activeUser) {
+            auth.toastError('Please Enter the Status.');
+            return;
+        }
+
+        setIsLoading(true);
+        try {
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('phone', phone);
+            formData.append('email', email); // Append the file
+            formData.append('password', password); // Append the file
+            formData.append('status', activeUser); // Append the file
+
+            const response = await axios.post(
+                `https://login.wegostores.com/admin/v1/users/update/${userId}`,
+                formData,
+                {
+                    headers: {
+                        Authorization: `Bearer ${auth.user.token}`,
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }
+            );
+
+            if (response.status === 200) {
+                auth.toastSuccess('User updated successfully!');
+                handleGoBack();
+            } else {
+                console.error('Failed to updated User:', response.status, response.statusText);
+                auth.toastError('Failed to updated User.');
+            }
+        }  catch (error) {
+            const errors = error.response?.data?.error;
+            if (errors) {
+                if (errors.email?.includes('The email has already been taken.')) {
+                    auth.toastError('The email has already been taken.');
+                } else if (errors.phone?.includes('The phone has already been taken.')) {
+                    auth.toastError('The phone has already been taken.');
+                } else {
+                    auth.toastError('Unexpected error occurred.');
+                }
+            } else {
+                auth.toastError('Error posting data!');
+            }
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     return(
-        <>
-        <h1>Edit User Page</h1>
-        </>
+        <form onSubmit={(event) => handleSubmitEdit(userContent.id, event)} className="w-full flex flex-col items-center justify-center gap-y-10">
+        <div className="w-full flex flex-wrap items-center justify-start gap-10">
+            <div className="lg:w-[30%] sm:w-full">
+              <InputCustom
+                      type="text"
+                      borderColor="mainColor"
+                      placeholder="Name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      width="w-full"
+                  />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+              <InputCustom
+                      type="text"
+                      borderColor="mainColor"
+                      placeholder="Phone"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      width="w-full"
+                  />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+              <InputCustom
+                      type="text"
+                      borderColor="mainColor"
+                      placeholder="Email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      width="w-full"
+                  />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+              <InputCustom
+                      type="password"
+                      borderColor="mainColor"
+                      placeholder="Password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      width="w-full"
+                      required={false}
+                  />
+            </div>
+            <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
+                  <span className="text-2xl text-thirdColor font-medium">Active:</span>
+                  <div>
+                          <CheckBox checked={activeUser} handleClick={handleClick} />
+                  </div>
+              </div>
+        </div>
+
+        <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
+            <div className="flex items-center justify-center w-72">
+                <Button
+                    type="submit"
+                    Text="Done"
+                    BgColor="bg-mainColor"
+                    Color="text-white"
+                    Width="full"
+                    Size="text-2xl"
+                    px="px-28"
+                    rounded="rounded-2xl"
+                />
+            </div>
+            <button onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>
+        </div>
+        </form>  
     )
 }
 

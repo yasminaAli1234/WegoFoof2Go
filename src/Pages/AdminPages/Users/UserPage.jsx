@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import {Wroning,DeleteIcon,EditIcon} from '../../../Components/Icons/AllIcons';
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
 import { MdCheck } from "react-icons/md";
+import CheckBox from '../../../Components/CheckBox';
 
 const UserPage = () => {
 
@@ -16,6 +17,7 @@ const UserPage = () => {
     const [userChanged, setUserChanged] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
     const [openDialog, setOpenDialog] = useState(null);
+    const [userActive, setUserActive] = useState('');
 
     const fetchData = async () => {
         setIsLoading(true);
@@ -38,7 +40,8 @@ const UserPage = () => {
 
     useEffect(() => {
         fetchData(); 
-    }, []);
+    }, [userChanged]);
+
     const handleLoginUserClick = async (userId) => {
         try {
           // Replace with your actual API URL to fetch user data and token
@@ -81,52 +84,85 @@ const UserPage = () => {
                     }
       };
 
-    const handleOpenDialog = (paymentId) => {
-       setOpenDialog(paymentId);
+    const handleOpenDialog = (userId) => {
+       setOpenDialog(userId);
        };
 
     const handleCloseDialog = () => {
             setOpenDialog(null);
     };
 
-       const handleDelete = async (paymentId) => {
+       const handleDelete = async (userId) => {
               setIsDeleting(true);
-              const success = await deletePayment(paymentId, auth.user.token);
+              const success = await deleteUser(userId, auth.user.token);
               setIsDeleting(false);
               handleCloseDialog();
 
               if (success) {
-                     setPaymentChanged(!paymentChanged)
-                     auth.toastSuccess('Payment Method deleted successfully!');
-                     setPayments((prevPayment) =>
-                        prevPayment.filter((payment) => payment.id !== paymentId)
+                     setUserChanged(!userChanged)
+                     auth.toastSuccess('User deleted successfully!');
+                     setUsers((prevUser) =>
+                        prevUser.filter((user) => user.id !== userId)
                      );
               } else {
-                     auth.toastError('Failed to delete Payment Method.');
+                     auth.toastError('Failed to delete User.');
               }
        };
 
-       const deletePayment = async (paymentId, authToken) => {
+       const deleteUser = async (userId, authToken) => {
               try {
-                     const response = await axios.delete(`https://transitstation.online/api/admin/plan/delete/${paymentId}`, {
+                     const response = await axios.delete(`https://login.wegostores.com/admin/v1/users/delete/${userId}`, {
                             headers: {
                                    Authorization: `Bearer ${authToken}`,
                             },
                      });
 
                      if (response.status === 200) {
-                            console.log('payment method deleted successfully');
+                            console.log('User deleted successfully');
                             return true;
                      } else {
-                            console.error('Failed to delete payment method:', response.status, response.statusText);
+                            console.error('Failed to delete User:', response.status, response.statusText);
                             return false;
                      }
               } catch (error) {
-                     console.error('Error deleting payment method:', error);
+                     console.error('Error deleting User:', error);
                      return false;
               }
        };
 
+        const handleStatusChange = async (e, userId) => {
+                const isChecked = e.target.checked; // Determine if the checkbox is checked
+                const newStatus = isChecked ? 1 : 0; // Set the new status based on the checkbox
+                setUserActive(newStatus); // Update the local state if needed
+        
+                try {
+                const response = await axios.put(
+                `https://login.wegostores.com/admin/v1/users/status/${userId}`,
+                {status: newStatus },
+                {
+                headers: {
+                        Authorization: `Bearer ${auth.user.token}`,
+                },
+                }
+                );
+        
+                if (response.status === 200) {
+                auth.toastSuccess(`User status updated to ${newStatus === 1 ? 'Active' : 'Inactive'}`);
+                setUsers((prevUsers) =>
+                prevUsers.map((user) =>
+                        user.id === userId ? { ...user, status: newStatus } : user
+                )
+                );
+                } else {
+                auth.toastError('Failed to update user status');
+                }
+                } catch (error) {
+                console.error('Error updating user status:', error);
+                auth.toastError('An error occurred while updating the status');
+                }
+        };
+      
+      
 
     if (isLoading) {
         return (
@@ -156,6 +192,7 @@ const UserPage = () => {
                                                 <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Name</th>
                                                 <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Email</th>
                                                 <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Phone</th>
+                                                <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Active</th>
                                                 <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Login User</th>
                                                 <th className="min-w-[100px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Action</th>
                                         </tr>
@@ -182,6 +219,14 @@ const UserPage = () => {
                                                                 className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                                         >
                                                                 {user?.phone || 'Null'}
+                                                        </td>
+                                                        <td
+                                                                className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-green-500 text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
+                                                        >
+                                                                <CheckBox 
+                                                                checked={user?.status === 1} 
+                                                                handleClick={(e) => handleStatusChange(e, user.id)} 
+                                                                />
                                                         </td>
                                                         <td className="text-center">
                                                                 <button 
@@ -212,7 +257,7 @@ const UserPage = () => {
                                                                                                         <div className="flex items-center">
                                                                                                                 <div className="mt-2 text-center">
                                                                                                                         <DialogTitle as="h3" className="text-xl font-semibold leading-10 text-gray-900">
-                                                                                                                                You will delete payment method {user.name|| "null"}
+                                                                                                                                You will delete user {user.name|| "null"}
                                                                                                                         </DialogTitle>
                                                                                                                 </div>
                                                                                                         </div>

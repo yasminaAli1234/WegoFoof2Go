@@ -5,32 +5,22 @@ import { Button } from '../../../Components/Button';
 import { useAuth } from '../../../Context/Auth';
 import { useNavigate } from 'react-router-dom'
 import Loading from '../../../Components/Loading';
-
-// import CheckBox from '../../../Components/CheckBox';
+import CheckBox from '../../../Components/CheckBox';
 
 const AddUserPage = () => {
     const auth = useAuth();
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
-    const [storeName, setStoreName] = useState('');
+    const [password, setPassword] = useState('');
+    const [activeUser, setActiveUser] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
-    // const uploadRef = useRef();
 
-    // const handleInputClick = () => {
-    //     if (uploadRef.current) {
-    //         uploadRef.current.click(); // Trigger a click on the hidden file input
-    //     }
-    // };
-
-    // const handleFileChange = (e) => {
-    //     const file = e.target.files[0];
-    //     if (file) {
-    //         setThumbnailFile(file); // Set file object for upload
-    //         setThumbnails(file.name); // Display file name in the text input
-    //     }
-    // };
+    const handleClick = (e) => {
+        const isChecked = e.target.checked;
+        setActiveUser(isChecked ? 1 : 0);
+    };
 
     const handleGoBack = () => {
         navigate(-1, { replace: true });
@@ -39,58 +29,71 @@ const AddUserPage = () => {
     const handleSubmitAdd = async (event) => {
         event.preventDefault();
 
-        // if (!thumbnails) {
-        //     auth.toastError('Please upload the Thumbnail Image.');
-        //     return;
-        // }
-        // if (!title) {
-        //     auth.toastError('Please Enter the Title.');
-        //     return;
-        // }
-        // if (!description) {
-        //     auth.toastError('Please Enter the Description.');
-        //     return;
-        // }
+        if (!name) {
+            auth.toastError('Please Enter the Name.');
+            return;
+        }
+        if (!phone) {
+            auth.toastError('Please Enter the Phone.');
+            return;
+        }
+        if (!email) {
+            auth.toastError('Please Enter the Email.');
+            return;
+        }
+        if (!password) {
+            auth.toastError('Please Enter the Password.');
+            return;
+        }
+        if (!activeUser) {
+            auth.toastError('Please Enter the Status.');
+            return;
+        }
 
-        // setIsLoading(true);
-        // try {
-        //     const formData = new FormData();
-        //     formData.append('name', title);
-        //     formData.append('description', description);
-        //     formData.append('thumbnail', thumbnailFile); // Append the file
+        setIsLoading(true);
+        try {
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('phone', phone);
+            formData.append('email', email); // Append the file
+            formData.append('password', password); // Append the file
+            formData.append('status', activeUser); // Append the file
 
-        //     const response = await axios.post(
-        //         'https://login.wegostores.com/admin/v1/payment/method/create',
-        //         formData,
-        //         {
-        //             headers: {
-        //                 Authorization: `Bearer ${auth.user.token}`,
-        //                 'Content-Type': 'multipart/form-data',
-        //             },
-        //         }
-        //     );
+            const response = await axios.post(
+                'https://login.wegostores.com/admin/v1/users/add',
+                formData,
+                {
+                    headers: {
+                        Authorization: `Bearer ${auth.user.token}`,
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }
+            );
 
-        //     if (response.status === 200) {
-        //         console.log('Payment Method added successfully');
-        //         auth.toastSuccess('Payment Method added successfully!');
-        //         handleGoBack();
-        //     } else {
-        //         console.error('Failed to add Payment Method:', response.status, response.statusText);
-        //         auth.toastError('Failed to add Payment Method.');
-        //     }
-        // } catch (error) {
-        //     console.error('Error adding Payment Method:', error?.response?.data?.errors || 'Network error');
-        //     const errorMessages = error?.response?.data?.errors;
-        //     let errorMessageString = 'Error occurred';
-
-        //     if (errorMessages) {
-        //         errorMessageString = Object.values(errorMessages).flat().join(' ');
-        //     }
-
-        //     auth.toastError(errorMessageString);
-        // } finally {
-        //     setIsLoading(false);
-        // }
+            if (response.status === 200) {
+                auth.toastSuccess('User added successfully!');
+                handleGoBack();
+            } else {
+                console.error('Failed to add User:', response.status, response.statusText);
+                auth.toastError('Failed to add User.');
+            }
+        }  catch (error) {
+            const errors = error.response?.data?.error;
+            if (errors) {
+                if (errors.email?.includes('The email has already been taken.')) {
+                    auth.toastError('The email has already been taken.');
+                } else if (errors.phone?.includes('The phone has already been taken.')) {
+                    auth.toastError('The phone has already been taken.');
+                } else {
+                    auth.toastError('Unexpected error occurred.');
+                }
+            } else {
+                auth.toastError('Error posting data!');
+            }
+            console.log('Error details:', errors);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -128,31 +131,20 @@ const AddUserPage = () => {
                       </div>
                       <div className="lg:w-[30%] sm:w-full">
                         <InputCustom
-                                type="text"
+                                type="password"
                                 borderColor="mainColor"
-                                placeholder="Store Name"
-                                value={storeName}
-                                onChange={(e) => setStoreName(e.target.value)}
+                                placeholder="Password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                                 width="w-full"
                             />
                       </div>
-                      {/* <div className="lg:w-[30%] sm:w-full">
-                        <InputCustom
-                                type="text"
-                                borderColor="mainColor"
-                                placeholder="Thumbnail"
-                                value={emai}
-                                readOnly={true} 
-                                onClick={handleInputClick}
-                                upload="true"
-                            />
-                            <input
-                                type="file"
-                                className="hidden"
-                                onChange={handleFileChange}
-                                ref={uploadRef}
-                            />
-                        </div> */}
+                      <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
+                            <span className="text-2xl text-thirdColor font-medium">Active:</span>
+                            <div>
+                                    <CheckBox handleClick={handleClick} />
+                            </div>
+                        </div>
                   </div>
       
                   <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
@@ -166,13 +158,11 @@ const AddUserPage = () => {
                               Size="text-2xl"
                               px="px-28"
                               rounded="rounded-2xl"
-                            //   stateLoding={isLoading}
                           />
                       </div>
                       <button onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>
                   </div>
-        </form>
-           
+        </form>        
     );
 };
 
