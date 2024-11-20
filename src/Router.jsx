@@ -289,7 +289,7 @@ export const router = createBrowserRouter([
                 element:<EditAdminTutorialLayout/>
               },
               {
-                path:'add_tutorial/:tutorialId',
+                path:'add_tutorial/:groupId',
                 element:<AddTutorialLayout/>
               },
               {
