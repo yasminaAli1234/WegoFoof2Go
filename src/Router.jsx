@@ -38,6 +38,9 @@ import { UserLayout,UserHomeLayout ,
     AddPromoCodeLayout,
     EditPromoCodeLayout,
     DomainRequestLayout,
+    AdminTutorialLayout,
+    AddAdminTutorialLayout,
+    EditAdminTutorialLayout,
 } from "./Layouts/AllLayouts";
 import Login from "./Pages/RegisterPages/Login.jsx";
 import SignUpPage from "./Pages/RegisterPages/SignUpPage.jsx";
@@ -96,6 +99,11 @@ const AppLayoutPromoCode = () => (
     <Outlet/>
   </>
 );
+const AppLayoutAdminTutorial = () =>(
+  <>
+  <Outlet/>
+ </>
+)
 const AppLayoutTutorial = () =>(
   <>
   <Outlet/>
@@ -259,6 +267,24 @@ export const router = createBrowserRouter([
               {
                 path:'edit/:codeId',
                 element:<EditPromoCodeLayout/>
+              },
+            ]
+          },
+          {
+            path: 'tutorial_group',
+            element:<AppLayoutAdminTutorial/>,
+            children: [
+              {
+                path:'',
+                element:<AdminTutorialLayout/>
+              },
+              {
+                path:'add',
+                element:<AddAdminTutorialLayout/>
+              },
+              {
+                path:'edit/:groupId',
+                element:<EditAdminTutorialLayout/>
               },
             ]
           } 

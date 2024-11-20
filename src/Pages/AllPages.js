@@ -39,6 +39,10 @@ export { default as EditPaymentMethodPage } from "./AdminPages/PaymentMethod/Edi
 export { default as PromoCodePage } from "./AdminPages/PromoCode/PromoCodePage";
 export { default as AddPromoCodePage } from "./AdminPages/PromoCode/AddPromoCodePage";
 export { default as EditPromoCodePage } from "./AdminPages/PromoCode/EditPromoCodePage";
+//Tutorial pages
+export { default as AdminTutorialPage } from "./AdminPages/AdminTutorial/AdminTutorialPage";
+export { default as AddAdminTutorialPage } from "./AdminPages/AdminTutorial/AddAdminTutorialPage";
+export { default as EditAdminTutorialPage } from "./AdminPages/AdminTutorial/EditAdminTutorialPage";
 
 /* User Pages*/
 // User Home Page

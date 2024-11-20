@@ -1,5 +1,5 @@
 import React, { useState ,useEffect} from "react";
-import {DemorequestsIcon, DollerIcon, DomainIcon, ExtraIcon, HomeIcon, OrderIcon, PaymentIcon, PlanIcon, PromoCodeIcon, SettingIcon, SubscriptionIcon, UserIcon,
+import {DemorequestsIcon, DollerIcon, DomainIcon, ExtraIcon, HomeIcon, OrderIcon, PaymentIcon, PlanIcon, PromoCodeIcon, SettingIcon, SubscriptionIcon, TutorialIcon, UserIcon,
     // ProfileIcon,StoreIcon,SubscriptionIcon,DomainIcon,ExtraIcon,PaymentIcon,TutorialIcon
 } from "../Icons/AllIcons";
 import { NavLink } from "react-router-dom";
@@ -23,6 +23,7 @@ const MenuSideAdmin = () => {
        const [isActivePlan, setIsActivePlan] =  useState(savedState.isActivePlan ?? false);
        const [isActiveExtra, setIsActiveExtra] =  useState(savedState.isActiveExtra ?? false);
        const [isActivePayment, setIsActivePayment] =  useState(savedState.isActivePayment ?? false);
+       const [isActiveTutorial, setIsActiveTutorial] =  useState(savedState.isActiveTutorial ?? false);
 
        const [isActiveSetting, setIsActiveSetting] =  useState(savedState.isActiveSetting ?? false);
               const [isActiveSettingList, setIsActiveSettingList] =  useState(savedState.isActiveSettingList ?? false);
@@ -38,12 +39,12 @@ const MenuSideAdmin = () => {
        useEffect(() => {
               const sidebarAdminState = {
                      isActiveHome,isActiveDemoRequest,isActivePaymentPending,isActiveDomainRequest,
-                     isActiveOrder,isActiveUser,isActiveSubscription,isActivePlan,
+                     isActiveOrder,isActiveUser,isActiveSubscription,isActivePlan,isActiveTutorial,
                      isActiveExtra,isActivePayment,isActiveSetting,isActiveSettingList,isActivePromoCode
               };
               localStorage.setItem('sidebarAdminState', JSON.stringify(sidebarAdminState));
        }, [isActiveHome,isActiveDemoRequest,isActivePaymentPending,isActiveDomainRequest,
-           isActiveOrder,isActiveUser,isActiveSubscription,isActivePlan,
+           isActiveOrder,isActiveUser,isActiveSubscription,isActivePlan,isActiveTutorial,
            isActiveExtra,isActivePayment,isActiveSetting,isActiveSettingList,isActivePromoCode
        ]);
 
@@ -62,6 +63,7 @@ const MenuSideAdmin = () => {
               setIsActiveSettingList(false)
               setIsActivePaymentMethod(false)
               setIsActivePromoCode(false)
+              setIsActiveTutorial(false)
        };
        const handleClickDemoRequest = () => {
               setIsActiveHome(false);
@@ -78,6 +80,7 @@ const MenuSideAdmin = () => {
               setIsActiveSettingList(false)
               setIsActivePaymentMethod(false)
               setIsActivePromoCode(false)
+              setIsActiveTutorial(false)
        };
        const handleClickDomainRequest = () => {
               setIsActiveHome(false);
@@ -94,6 +97,7 @@ const MenuSideAdmin = () => {
               setIsActiveSettingList(false)
               setIsActivePaymentMethod(false)
               setIsActivePromoCode(false)
+              setIsActiveTutorial(false)
        };
        const handleClickPaymentPending =() =>{
               setIsActiveHome(false);
@@ -110,6 +114,7 @@ const MenuSideAdmin = () => {
               setIsActiveSettingList(false)
               setIsActivePaymentMethod(false)
               setIsActivePromoCode(false)
+              setIsActiveTutorial(false)
        }
        const handleClickOrder=() =>{
               setIsActiveHome(false);
@@ -126,6 +131,7 @@ const MenuSideAdmin = () => {
               setIsActiveSettingList(false)
               setIsActivePaymentMethod(false)
               setIsActivePromoCode(false)
+              setIsActiveTutorial(false)
        }
        const handleClickUser =() =>{
               setIsActiveHome(false);
@@ -142,6 +148,7 @@ const MenuSideAdmin = () => {
               setIsActiveSettingList(false)
               setIsActivePaymentMethod(false)
               setIsActivePromoCode(false)
+              setIsActiveTutorial(false)
        }
        const handleClickSubscription =() =>{
               setIsActiveHome(false);
@@ -158,6 +165,7 @@ const MenuSideAdmin = () => {
               setIsActiveSettingList(false)
               setIsActivePaymentMethod(false)
               setIsActivePromoCode(false)
+              setIsActiveTutorial(false)
        }
        const handleClickPlan =() =>{
               setIsActiveHome(false);
@@ -174,6 +182,7 @@ const MenuSideAdmin = () => {
               setIsActiveSettingList(false)
               setIsActivePaymentMethod(false)
               setIsActivePromoCode(false)
+              setIsActiveTutorial(false)
        }
        const handleClickExtra =() =>{
               setIsActiveHome(false);
@@ -190,6 +199,7 @@ const MenuSideAdmin = () => {
               setIsActiveSettingList(false)
               setIsActivePaymentMethod(false)
               setIsActivePromoCode(false)
+              setIsActiveTutorial(false)
        }
        const handleClickPayment =() =>{
               setIsActiveHome(false);
@@ -206,6 +216,7 @@ const MenuSideAdmin = () => {
               setIsActiveSettingList(false)
               setIsActivePaymentMethod(false)
               setIsActivePromoCode(false)
+              setIsActiveTutorial(false)
        }
        const handleClickSetting =() =>{
               setIsActiveHome(false);
@@ -222,6 +233,7 @@ const MenuSideAdmin = () => {
               setIsActiveSettingList(true)
               setIsActiveSetting(true)
               setIsActivePromoCode(false)
+              setIsActiveTutorial(false)
        }
        const handleClickPaymentMethod =() =>{
               setIsActiveHome(false);
@@ -238,6 +250,7 @@ const MenuSideAdmin = () => {
               setIsActiveSetting(false)
               setIsActivePaymentMethod(true)
               setIsActivePromoCode(false)
+              setIsActiveTutorial(false)
        }
        const handleClickPromoCode =() =>{
               setIsActiveHome(false);
@@ -254,6 +267,24 @@ const MenuSideAdmin = () => {
               setIsActiveSetting(false)
               setIsActivePaymentMethod(false)
               setIsActivePromoCode(true)
+              setIsActiveTutorial(false)
+       }
+       const handleClickTutorial =() =>{
+              setIsActiveHome(false);
+              setIsActiveDemoRequest(false)
+              setIsActiveDomainRequest(false)
+              setIsActivePaymentPending(false)
+              setIsActiveOrder(false)
+              setIsActiveUser(false)
+              setIsActiveSubscription(false)
+              setIsActivePlan(false)
+              setIsActiveExtra(false)
+              setIsActivePayment(false)
+              setIsActiveSettingList(false)
+              setIsActiveSetting(false)
+              setIsActivePaymentMethod(false)
+              setIsActivePromoCode(false)
+              setIsActiveTutorial(true)
        }
        return (
               <>
@@ -299,6 +330,10 @@ const MenuSideAdmin = () => {
                                    <Link to="payment" onClick={handleClickPayment} className={`${isActivePayment ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <PaymentIcon isActive={isActivePayment} />
                                           <span className={`${isActivePayment ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Payment</span>
+                                   </Link>
+                                   <Link to="tutorial_group" onClick={handleClickTutorial} className={`${isActiveTutorial ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
+                                          <TutorialIcon isActive={isActiveTutorial} />
+                                          <span className={`${isActiveTutorial ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Tutorial</span>
                                    </Link>
                                   
                                    {/* <Link to="setting" onClick={handleClickSetting} className={`${isActiveSetting ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>

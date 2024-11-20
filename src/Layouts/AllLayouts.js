@@ -40,6 +40,10 @@ export { default as EditPaymentMethodLayout } from "./AdminLayouts/EditPaymentMe
 export { default as PromoCodeLayout } from "./AdminLayouts/PromoCodeLayout";
 export { default as AddPromoCodeLayout } from "./AdminLayouts/AddPromoCodeLayout";
 export { default as EditPromoCodeLayout } from "./AdminLayouts/EditPromoCodeLayout";
+//Tutorial Layout
+export { default as AdminTutorialLayout } from "./AdminLayouts/AdminTutorialLayout";
+export { default as AddAdminTutorialLayout } from "./AdminLayouts/AddAdminTutorialLayout";
+export { default as EditAdminTutorialLayout } from "./AdminLayouts/EditAdminTutorialLayout";
 
 /* User Layout */
 export { default as UserDashboardLayout } from "./UserLayouts/UserDashboardLayout";
@@ -63,6 +67,6 @@ export { default as ExtraLayout } from "./UserLayouts/ExtraLayout";
 export { default as CheckoutLayout } from "./UserLayouts/CheckoutLayout";
 //User PaymentHistory Layout
 export { default as PaymentHistoryLayout } from "./UserLayouts/PaymentHistoryLayout";
-//User PaymentHistory Layout
+//User Tutorial Layout
 export { default as TutorialLayout } from "./UserLayouts/TutorialLayout";
 export { default as VideoTutorialLayout } from "./UserLayouts/VideoTutorialLayout";
