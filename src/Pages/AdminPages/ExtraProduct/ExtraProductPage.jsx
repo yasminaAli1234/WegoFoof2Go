@@ -65,9 +65,9 @@ const ExtraProductPage = () => {
               }
        };
 
-       const deleteProduct = async (paymentId, authToken) => {
+       const deleteProduct = async (productId, authToken) => {
               try {
-                     const response = await axios.delete(`https://transitstation.online/api/admin/product/delete/${productId}`, {
+                     const response = await axios.delete(`https://login.wegostores.com/admin/v1/extra/delete/${productId}`, {
                             headers: {
                                    Authorization: `Bearer ${authToken}`,
                             },
@@ -119,12 +119,6 @@ const ExtraProductPage = () => {
                                     <span className='text-maincolor text-xl xl:text-3xl font-semibold'>Description : </span>
                                     <p className='text-[#686868] text-lg xl:text-2xl'>{product.description}</p>
                              </div>
-                             {/* <div className="flex flex-wrap items-center gap-x-4 w-full">
-                                    <span className="text-xl xl:text-3xl text-mainColor font-medium">Application:</span>
-                                    <div>
-                                           <CheckBox checked={product.app}/>
-                                    </div>
-                             </div> */}
                              <div className='flex flex-wrap items-center gap-5'>
                                     <span className='text-maincolor text-xl xl:text-3xl font-semibold'>SetUp Fees : </span>
                                     <p className='text-[#686868] text-lg xl:text-2xl'>{product.setup_fees}</p>
