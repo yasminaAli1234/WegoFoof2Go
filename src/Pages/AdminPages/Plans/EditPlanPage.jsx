@@ -10,6 +10,7 @@ import { PlanDataContext } from '../../../Layouts/AdminLayouts/EditPlanLayout';
 const EditPlanPage =()=>{
 
     const auth = useAuth();
+    const [name, setName] = useState('');
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [fee, setFee] = useState('');
@@ -18,10 +19,27 @@ const EditPlanPage =()=>{
     const [thumbnailFile, setThumbnailFile] = useState(null); // Store the file object
     const [appActive, setAppActive] = useState(0); // Default status to 0
     const [isLoading, setIsLoading] = useState(false);
-    const [secondaryPrice, setSecondaryPrice] = useState(''); // Price for Secondary
-    const [monthlyPrice, setMonthlyPrice] = useState(''); // Price for Monthly
-    const [showSecondaryPriceInput, setShowSecondaryPriceInput] = useState(false); // Toggle for Secondary Price Input
-    const [showMonthlyPriceInput, setShowMonthlyPriceInput] = useState(false); // Toggle for Monthly Price Input
+
+    const [monthlyPrice, setMonthlyPrice] = useState('');
+    const [monthlyDiscountPrice, setMonthlyDiscountPrice] = useState('');
+    const [MonthlySetUpFeesPrice, setMonthlySetUpFeesPrice] = useState('');
+
+    const [quarterlyPrice, setQuarterlyPrice] = useState('');
+    const [quarterlyDiscountPrice, setQuarterlyDiscountPrice] = useState('');
+    const [quarterlySetUpFeesPrice, setQuarterlySetUpFeesPrice] = useState('');
+
+    const [semiAnnualPrice, setSemiAnnualPrice] = useState('');
+    const [semiAnnualDiscountPrice, setSemiAnnualDiscountPrice] = useState('');
+    const [semiAnnualSetUpFeesPrice, setSemiAnnualSetUpFeesPrice] = useState('');
+
+    const [yearlyPrice, setYearlyPrice] = useState(''); 
+    const [yearlyDiscountPrice, setYearlyDiscountPrice] = useState(''); 
+    const [yearlySetUpFeesPrice, setYearlySetUpFeesPrice] = useState(''); 
+
+    const [showMonthlyPriceInput, setShowMonthlyPriceInput] = useState(false);
+    const [showQuarterlyPriceInput, setShowQuarterlyPriceInput] = useState(false);
+    const [showSemiAnnualPriceInput, setShowSemiAnnualPriceInput] = useState(false);
+    const [showYearlyPriceInput, setShowYearlyPriceInput] = useState(false);
     const navigate = useNavigate();
     const uploadRef = useRef();
 
@@ -29,7 +47,8 @@ const EditPlanPage =()=>{
 
     useEffect(() => {
         if (planContent) {
-            setTitle(planContent.name || '');
+            setName(planContent.name || '');
+            setTitle(planContent.title || '');
             setDescription(planContent.description|| '');
             setFee(planContent.setup_fees|| '');
             setLimitPlan(planContent.limet_store|| '');
@@ -38,10 +57,22 @@ const EditPlanPage =()=>{
             if(planContent.price_per_month){
                 setShowMonthlyPriceInput(true)
                 setMonthlyPrice(planContent.price_per_month)
+                setMonthlyDiscountPrice(planContent.discount_monthly)
+            }
+            if(planContent.quarterly){
+                setShowQuarterlyPriceInput(true)
+                setQuarterlyPrice(planContent.quarterly)
+                setQuarterlyDiscountPrice(planContent.discount_quarterly)
+            }
+            if(planContent["semi-annual"]){
+                setShowSemiAnnualPriceInput(true)
+                setSemiAnnualPrice(planContent["semi-annual"])
+                setSemiAnnualDiscountPrice(planContent.discount_semi_annual)
             }
             if(planContent.price_per_year){
-                setShowSecondaryPriceInput(true)
-                setSecondaryPrice(planContent.price_per_year)
+                setShowYearlyPriceInput(true)
+                setYearlyPrice(planContent.price_per_year)
+                setYearlyDiscountPrice(planContent.discount_yearly)
             }
 
         }
@@ -91,8 +122,16 @@ const EditPlanPage =()=>{
             auth.toastError('Please Enter the Monthly Price.');
             return;
         }
-        if (!secondaryPrice) {
-            auth.toastError('Please Enter the Secondary Price.');
+        if (!quarterlyPrice) {
+            auth.toastError('Please Enter the Quarterly Price.');
+            return;
+        }
+        if (!semiAnnualPrice) {
+            auth.toastError('Please Enter the semi-Annual Price.');
+            return;
+        }
+        if (!yearlyPrice) {
+            auth.toastError('Please Enter the Yearly Price.');
             return;
         }
 
@@ -101,18 +140,33 @@ const EditPlanPage =()=>{
             const formData = new FormData();
             formData.append('plan_id', planId);
             formData.append('title', title);
-            formData.append('name', title);
+            formData.append('name', name);
             formData.append('description', description);
             formData.append('setup_fees', fee);
             formData.append('limet_store', limitPlan);
             formData.append('image', thumbnailFile); // Append the file
             formData.append('app', appActive); // Append the file
+
             // Append selected prices if inputs are shown and filled
-            if (showSecondaryPriceInput && secondaryPrice) {
-                formData.append('price_per_year', secondaryPrice);
-            }
             if (showMonthlyPriceInput && monthlyPrice) {
                 formData.append('price_per_month', monthlyPrice);
+                formData.append('discount_monthly', monthlyDiscountPrice);
+                // formData.append('setupFees_monthly', MonthlySetUpFeesPrice);
+            }
+            if (showQuarterlyPriceInput && quarterlyPrice) {
+                formData.append('quarterly', quarterlyPrice);
+                formData.append('discount_quarterly', quarterlyDiscountPrice);
+                // formData.append('setupFees_quarterly', quarterlyDiscountPrice);
+            }
+            if (showSemiAnnualPriceInput && semiAnnualPrice) {
+                formData.append('semi-annual', semiAnnualPrice);
+                formData.append('discount_semi_annual', semiAnnualDiscountPrice);
+                // formData.append('setupFees_semi_annual', semiAnnualSetUpFeesPrice);
+            }
+            if (showYearlyPriceInput && yearlyPrice) {
+                formData.append('price_per_year', yearlyPrice);
+                formData.append('discount_yearly', yearlyDiscountPrice);
+                // formData.append('setupFees_yearly', yearlySetUpFeesPrice);
             }
 
             for (let pair of formData.entries()) {
@@ -120,7 +174,7 @@ const EditPlanPage =()=>{
             } 
 
             const response = await axios.post(
-                'https://login.wegostores.com/admin/v1/plan/update',
+                `https://login.wegostores.com/admin/v1/plan/update`,
                 formData,
                 {
                     headers: {
@@ -132,7 +186,7 @@ const EditPlanPage =()=>{
              console.log(response)
             if (response.status === 200) {
                 auth.toastSuccess('Plan Updated successfully!');
-                handleGoBack();
+                // handleGoBack();
             } else {
                 auth.toastError('Failed to Updated Plan.');
             }
@@ -147,6 +201,16 @@ const EditPlanPage =()=>{
     return(
         <form onSubmit={(event) => handleSubmitEdit(planContent.id, event)} className="w-full flex flex-col items-center justify-center gap-y-10">
             <div className="w-full flex flex-wrap items-center justify-start gap-10">
+                <div className="lg:w-[30%] sm:w-full">
+                    <InputCustom
+                        type="text"
+                        borderColor="mainColor"
+                        placeholder="Name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        width="w-full"
+                    />
+                </div>
                 <div className="lg:w-[30%] sm:w-full">
                     <InputCustom
                         type="text"
@@ -211,64 +275,203 @@ const EditPlanPage =()=>{
                          <div>
                              <CheckBox handleClick={handleClick} checked={appActive}/>
                          </div>
-                     </div>
+                </div>
 
                 {/* Price Option Checkboxes */}
                 {/* <div className="lg:w-[30%] sm:w-full flex flex-col gap-2"> */}
-                    <div className="flex w-full lg:w-[50%] flex-col gap-10">
-                        {/* Secondary Price Checkbox */}
-                        <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
-                        <div className=" flex items-center gap-3 w-full lg:w-1/2">
-                            <input 
-                                type="checkbox" 
-                                checked={showSecondaryPriceInput}
-                                onChange={() => setShowSecondaryPriceInput(prev => !prev)}
-                                className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
-                            />
-                            <label  className="text-2xl text-mainColor font-medium">Secondary</label>
-                        </div>
-                            {/* Conditional Price Inputs */}
-                            {showSecondaryPriceInput && (
-                            <div className="lg:w-1/2 sm:w-full">
-                                <InputCustom
-                                    type="number"
-                                    borderColor="mainColor"
-                                    placeholder="Enter Secondary Price"
-                                    value={secondaryPrice}
-                                    onChange={(e) => setSecondaryPrice(e.target.value)}
-                                    width="w-full"
-                                />
-                            </div>
-                            )}
-                        </div>
-                        {/* Monthly Price Checkbox */}
-                        <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
-                        <div className="flex items-center gap-3 w-full lg:w-1/2 ">
-                            <input 
-                                type="checkbox" 
-                                checked={showMonthlyPriceInput}
-                                onChange={() => setShowMonthlyPriceInput(prev => !prev)}
-                                className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
-                            />
-                            <label  className="text-2xl text-mainColor font-medium">Monthly</label>
-                        </div>
-                            {showMonthlyPriceInput && (
+                <div className="flex w-full flex-col gap-5">
+                    {/* Monthly Price Checkbox */}
+                    <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
+                    <div className=" flex items-center gap-3 w-full lg:w-1/3">
+                        <input 
+                            type="checkbox" 
+                            checked={showMonthlyPriceInput}
+                            onChange={() => setShowMonthlyPriceInput(prev => !prev)}
+                            className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
+                        />
+                        <label  className="text-2xl text-mainColor font-medium">Monthly</label>
+                    </div>
+                        {/* Conditional Price Inputs */}
+                        {showMonthlyPriceInput && (
+                        <>
                         <div className="lg:w-1/2 sm:w-full">
                             <InputCustom
                                 type="number"
                                 borderColor="mainColor"
-                                placeholder="Enter Monthly Price"
+                                placeholder="Enter Price"
                                 value={monthlyPrice}
                                 onChange={(e) => setMonthlyPrice(e.target.value)}
                                 width="w-full"
                             />
                         </div>
-                            )}
+                        <div className="lg:w-1/2 sm:w-full">
+                         <InputCustom
+                             type="number"
+                             borderColor="mainColor"
+                             placeholder="Enter Discount Price"
+                             value={monthlyDiscountPrice}
+                             onChange={(e) => setMonthlyDiscountPrice(e.target.value)}
+                             width="w-full"
+                         />
                         </div>
+                        <div className="lg:w-1/2 sm:w-full">
+                        <InputCustom
+                            type="number"
+                            borderColor="mainColor"
+                            placeholder="Enter SetUp Fees"
+                            value={MonthlySetUpFeesPrice}
+                            onChange={(e) => setMonthlySetUpFeesPrice(e.target.value)}
+                            width="w-full"
+                        />
+                        </div>
+                        </>
+                        )}
                     </div>
 
-                   
+                    {/* 3 Months Price Checkbox */}
+                    <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
+                    <div className="flex items-center gap-3 w-full lg:w-1/3 ">
+                        <input 
+                            type="checkbox" 
+                            checked={showQuarterlyPriceInput}
+                            onChange={() => setShowQuarterlyPriceInput(prev => !prev)}
+                            className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
+                        />
+                        <label  className="text-2xl text-mainColor font-medium">Quarterly</label>
+                    </div>
+                    {showQuarterlyPriceInput && (
+                        <>
+                        <div className="lg:w-1/2 sm:w-full">
+                            <InputCustom
+                                type="number"
+                                borderColor="mainColor"
+                                placeholder="Enter Price"
+                                value={quarterlyPrice}
+                                onChange={(e) => setQuarterlyPrice(e.target.value)}
+                                width="w-full"
+                            />
+                        </div>
+                        <div className="lg:w-1/2 sm:w-full">
+                        <InputCustom
+                            type="number"
+                            borderColor="mainColor"
+                            placeholder="Enter Discount Price"
+                            value={quarterlyDiscountPrice}
+                            onChange={(e) => setQuarterlyDiscountPrice(e.target.value)}
+                            width="w-full"
+                        />
+                        </div>
+                        <div className="lg:w-1/2 sm:w-full">
+                        <InputCustom
+                            type="number"
+                            borderColor="mainColor"
+                            placeholder="Enter SetUp Fees"
+                            value={quarterlySetUpFeesPrice}
+                            onChange={(e) => setQuarterlySetUpFeesPrice(e.target.value)}
+                            width="w-full"
+                        />
+                        </div>
+                        </>
+                    )}
+                    </div>
+
+                    {/* 6 Months Price Checkbox */}
+                    <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
+                    <div className="flex items-center gap-3 w-full lg:w-1/3 ">
+                        <input 
+                            type="checkbox" 
+                            checked={showSemiAnnualPriceInput}
+                            onChange={() => setShowSemiAnnualPriceInput(prev => !prev)}
+                            className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
+                        />
+                        <label  className="text-2xl text-mainColor font-medium">Semi-Annual</label>
+                    </div>
+                    {showSemiAnnualPriceInput && (
+                        <>
+                        <div className="lg:w-1/2 sm:w-full">
+                            <InputCustom
+                                type="number"
+                                borderColor="mainColor"
+                                placeholder="Enter Price"
+                                value={semiAnnualPrice}
+                                onChange={(e) => setSemiAnnualPrice(e.target.value)}
+                                width="w-full"
+                            />
+                        </div>
+                        <div className="lg:w-1/2 sm:w-full">
+                        <InputCustom
+                            type="number"
+                            borderColor="mainColor"
+                            placeholder="Enter Discount Price"
+                            value={semiAnnualDiscountPrice}
+                            onChange={(e) => setSemiAnnualDiscountPrice(e.target.value)}
+                            width="w-full"
+                        />
+                        </div>
+                        <div className="lg:w-1/2 sm:w-full">
+                        <InputCustom
+                            type="number"
+                            borderColor="mainColor"
+                            placeholder="Enter SetUp Fees"
+                            value={semiAnnualSetUpFeesPrice}
+                            onChange={(e) => setSemiAnnualSetUpFeesPrice(e.target.value)}
+                            width="w-full"
+                        />
+                        </div>
+                        </>
+                    )}
+                    </div>
+
+                    {/* yearly Price Checkbox */}
+                    <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
+                    <div className="flex items-center gap-3 w-full lg:w-1/3 ">
+                        <input 
+                            type="checkbox" 
+                            checked={showYearlyPriceInput}
+                            onChange={() => setShowYearlyPriceInput(prev => !prev)}
+                            className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
+                        />
+                        <label  className="text-2xl text-mainColor font-medium">Yearly</label>
+                    </div>
+                    {showYearlyPriceInput && (
+                        <>
+                        <div className="lg:w-1/2 sm:w-full">
+                            <InputCustom
+                                type="number"
+                                borderColor="mainColor"
+                                placeholder="Enter Price"
+                                value={yearlyPrice}
+                                onChange={(e) => setYearlyPrice(e.target.value)}
+                                width="w-full"
+                            />
+                        </div>
+                        <div className="lg:w-1/2 sm:w-full">
+                        <InputCustom
+                            type="number"
+                            borderColor="mainColor"
+                            placeholder="Enter Discount Price"
+                            value={yearlyDiscountPrice}
+                            onChange={(e) => setYearlyDiscountPrice(e.target.value)}
+                            width="w-full"
+                        />
+                        </div>
+                        <div className="lg:w-1/2 sm:w-full">
+                        <InputCustom
+                            type="number"
+                            borderColor="mainColor"
+                            placeholder="Enter SetUp Fees"
+                            value={yearlySetUpFeesPrice}
+                            onChange={(e) => setYearlySetUpFeesPrice(e.target.value)}
+                            width="w-full"
+                        />
+                        </div>
+                        </>
+                    )}
+                    </div>
                 </div>
+
+                   
+            </div>
             {/* </div> */}
 
             <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">

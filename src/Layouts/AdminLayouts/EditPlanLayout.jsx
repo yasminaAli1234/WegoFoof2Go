@@ -53,6 +53,14 @@ const EditPlanLayout =()=>{
     const handleGoBack = () => {
       navigate(-1, { replace: true });
     };
+
+    if (isLoading) {
+       return (
+         <div className="w-1/4 h-full flex items-start mt-[10%] justify-center m-auto">
+           <Loading />
+         </div>
+       );
+     }
     return(
         <>
         <HeaderPageSection handleClick={handleGoBack} name="Edit Plan" />
