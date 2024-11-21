@@ -49,6 +49,7 @@ import Login from "./Pages/RegisterPages/Login.jsx";
 import SignUpPage from "./Pages/RegisterPages/SignUpPage.jsx";
 import SubscriptionLayout from "./Layouts/AdminLayouts/SubscriptionLayout.jsx";
 import { CartPage } from "./Pages/AllPages.js";
+import EmailVerification from "./Pages/RegisterPages/EmailVerification.jsx";
 /* User Dashboard */
 const AppLayoutUser = () => (
   <>
@@ -119,6 +120,12 @@ export const router = createBrowserRouter([
     {
       path: "login",
       element: <Login />,
+    },
+
+    //EmailVerification
+    {
+      path: "verification",
+      element: <EmailVerification />,
     },
 
     //SignUp user page

@@ -7,69 +7,109 @@ import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { toast } from 'react-toastify';
 
 const SignUpPage =()=>{
-    const auth = useAuth();
-    console.log('auth.user', auth.user)
+    // console.log('auth.user', auth.user)
     const [show, setShow] = useState(false);
     const [plan, setPlan] = useState('demo');
     const [billingType, setBillingType] = useState('');
     const [type, setType] = useState('user');
-    // const [isLoading, setIsLoading] = useState(false);
-    // const [error, setError] = useState('');
-    const navigate = useNavigate();
     const [data, setData] = useState(null);
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [confPassword, setConfPassword] = useState('');
-    const [error, setError] = useState('');
+    
+    const auth = useAuth();
+    const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
-
+    const [error, setError] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [verificationCode, setVerificationCode] = useState('');
-    const [verificationError, setVerificationError] = useState('');
+    const [verificationCode, setVerificationCode] = useState("");
+    const [apiCode, setApiCode] = useState(null);
+    const [verificationError, setVerificationError] = useState("");
+    const [confPassword, setConfPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
+const handleSubmit = async (event) => {
+    event.preventDefault();
     
-        // Validation Checks
-        if (phone.length < 11) {
-            setError("Phone number must be at least 11 characters.");
-            return;
-        }
-    
-        if (password.length < 8 || !/[a-zA-Z]/.test(password) || !/\d/.test(password) || !/[!@#$%^&*]/.test(password)) {
-            setError("Password must be at least 8 characters and include letters, numbers, and special characters.");
-            return;
-        }
-    
-        if (password !== confPassword) {
-            setError("Passwords do not match.");
-            return;
-        }
-    
-        setError(""); // Clear previous errors
-        setIsLoading(true);
-    
+    // Validation Checks
+    if (phone.length < 11) {
+        setError("Phone number must be at least 11 characters.");
+        return;
+    }
+
+    if (password.length < 8 || !/[a-zA-Z]/.test(password) || !/\d/.test(password) || !/[!@#$%^&*]/.test(password)) {
+        setError("Password must include letters, numbers, and special characters.");
+        return;
+    }
+
+    if (password !== confPassword) {
+        setError("Passwords do not match.");
+        return;
+    }
+
+    setError("");
+    setIsLoading(true);
+
+    try {
+        // Send email to Code API
+        const response = await axios.post(
+            "https://login.wegostores.com/user/v1/signUp/code",
+            { email },
+            { headers: { "Content-Type": "application/json" } }
+        );
+        if (response.status === 200) {
+            auth.toastSuccess('Code sent to your email successfully!');
+            setApiCode(response.data.code);
+            setIsModalOpen(true);
+          } else {
+            setError("Failed to send code. Please try again.");
+          }
+    } catch (error) {
+        console.error(error.response?.data || error.message);
+        auth.toastError("Error sending verification code.");
+    } finally {
+        setIsLoading(false);
+    }
+};
+
+    const handleVerifyCode = async () => {
+        setIsLoading(true); // Show loading spinner when starting the process
         try {
-            const response = await axios.post('https://login.wegostores.com/user/v1/signUp', {
-                name,
-                phone,
-                email,
-                password,
-                conf_password: confPassword,
-            }, {
-                headers: { 'Content-Type': 'application/json' },
-            });
-    
-            if (response.status === 200)  {
-                setIsModalOpen(true); // Open the modal to enter the verification code
-                setError('');
+            // Check if the code entered matches the expected code
+            if (String(verificationCode) === String(apiCode)) {
+                auth.toastSuccess('Email verified successfully!');
+
+                // Attempt to sign up the user
+                const response = await axios.post(
+                    "https://login.wegostores.com/user/v1/signUp",
+                    { name, phone, email, password, conf_password: confPassword },
+                    { headers: { 'Content-Type': 'application/json' } }
+                );
+
+                // Handle successful sign-up response
+                if (response.status === 200) {
+                    setError('');
+                    setIsModalOpen(false);
+                    auth.toastSuccess("Sign Up Successful!");
+                    navigate("/dashboard_user"); // Navigate to the user dashboard
+                } else {
+                    // Handle other response statuses, if needed
+                    auth.toastError('Unexpected error occurred during sign-up.');
+                }
+            } else {
+                // Handle incorrect code
+                auth.toastError("The code you entered is incorrect.");
+                setVerificationCode(''); // Clear the code field
+                return; // Stop further execution
             }
-        }catch (error) {
+        } catch (error) {
+            console.log(error)
+            // Handle errors during sign-up
+            setIsModalOpen(false); // Close modal if there was an error
             const errors = error.response?.data?.["signUp.errors"];
+
             if (errors) {
                 if (errors.email?.includes('The email has already been taken.')) {
                     auth.toastError('The email has already been taken.');
@@ -79,51 +119,34 @@ const SignUpPage =()=>{
                     auth.toastError('Unexpected error occurred.');
                 }
             } else {
+                // Generic error message if no specific error response
                 auth.toastError('Error posting data!');
             }
-            console.log('Error details:', error.response?.data || error.message);
+            
+            console.log('Error details:', error.response?.data || error.message); // Log the error details
         } finally {
-            setIsLoading(false);
-        }
-    };
-
-    const handleVerifyCode = async () => {
-        if (!verificationCode) {
-            auth.toastError("Enter The Code.");
-            return;
-        }
-        try {
-            const response = await axios.post('https://login.wegostores.com/user/v1/signUp/code', {
-                email,
-                code: verificationCode,
-            });
-
-            if (response.status === 200) {
-                console.log(response.data)
-                setIsModalOpen(false);
-                navigate("/dashboard_user");
-            }
-        } catch (error) {
-            console.log(error.response)
-            setVerificationError('Invalid code. Please try again.');
+            setIsLoading(false); // Hide loading spinner
         }
     };
 
     const handleResendCode = async () => {
+        setError("");
+        setIsLoading(true);
         try {
-            const response = await axios.post('https://login.wegostores.com/user/v1/signUp/resend_code', { email });
-            if (response.status === 200) {
-                console.log(response)
-                auth.toastSuccess('New Code Send To Your Email successfully!');
-                setIsModalOpen(true); // Open the modal to enter the verification code
-                setError('');
-            }
-        } catch (error) {
-            console.log(error)
-            setVerificationError('Invalid code. Please try again.');
+        const response = await axios.post('https://login.wegostores.com/user/v1/signUp/code', { email });
+        if (response.status === 200) {
+            auth.toastSuccess('Code resent to your email successfully!');
+            setApiCode(response.data.code);
+        } else {
+            setError("Failed to resend code. Please try again.");
+        }
+        } catch (err) {
+        console.error(err.response || err.message);
+        setError("An error occurred. Please try again.");
+        } finally {
+        setIsLoading(false);
         }
     };
-
     useEffect(() => {
         if (data) {
                console.log('Calling auth.login with data:', data); // Debugging line
@@ -299,7 +322,7 @@ const SignUpPage =()=>{
                     SignUp                
                 </button>
 
-                <div className='flex flex-col lg:flex-row gap-5 text-2xl font-medium'>
+                <div className='flex flex-col lg:flex-row gap-3 text-2xl font-medium'>
                     <p>I have an account?</p>
                     <Link to="/login_user" className='underline'>
                     Log In
@@ -338,4 +361,3 @@ const SignUpPage =()=>{
     }
 
     export default SignUpPage;
-

@@ -1,5 +1,5 @@
 import React, { useState ,useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate,Link } from 'react-router-dom'
 import ImageLogo from "../../../public/Images/LogoImage.png";
 import axios from 'axios';
 import { useAuth } from '../../Context/Auth';
@@ -128,6 +128,12 @@ const LoginUser =()=>{
                                 Login
                             </button>
                             
+                            <div className='flex flex-col lg:flex-row gap-3 text-2xl font-medium'>
+                            <p>Don't have an account?</p>
+                            <Link to="/signUp" className='underline'>
+                                  SignUp
+                            </Link>
+                            </div>      
                         </form>
                 </div>
                 <div className="w-full flex justify-center">
