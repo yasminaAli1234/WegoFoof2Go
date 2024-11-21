@@ -324,7 +324,7 @@ const handleSubmit = async (event) => {
 
                 <div className='flex flex-col lg:flex-row gap-3 text-2xl font-medium'>
                     <p>I have an account?</p>
-                    <Link to="/login_user" className='underline'>
+                    <Link to="/login" className='underline'>
                     Log In
                     </Link>
                 </div>
