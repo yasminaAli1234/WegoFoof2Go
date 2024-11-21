@@ -32,6 +32,7 @@ const SignUpPage =()=>{
 
 const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log(email)
     
     // Validation Checks
     if (phone.length < 11) {
