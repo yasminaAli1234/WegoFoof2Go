@@ -551,107 +551,113 @@ const CartPage = () => {
   const totalPrice = calculateTotal();
 
   return (
-    <div className="xl:container bg-gray-50 w-full m-0 xl:mx-auto p-4 xl:p-6 flex flex-wrap gap-6 lg:flex-nowrap">
-    {/* Left Section */}
-    <div className="w-full lg:w-2/3">
-      <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6 sm:mb-8">Shopping Cart</h1>
-      <div className="bg-white shadow-md rounded-lg p-4 sm:p-6">
-        {cartItems.length > 0 ? (
-          cartItems.map((item, index) => (
-            <div
-              key={index}
-              className="flex flex-col border-b border-gray-200 py-4 last:border-none"
-            >
-              <div className="flex justify-between items-center">
-                <h3 className="text-base sm:text-lg font-semibold text-gray-800">{item.name}</h3>
-                <p className="text-base sm:text-lg font-semibold text-gray-800">
-                  {(item.finalprice || item.price || 0).toFixed(2)} EGP
-                </p>
-              </div>
-              {item.type === "plan" && (
-                <div className="flex flex-wrap items-center mt-3 sm:mt-4">
-                  <label className="text-sm font-semibold text-gray-600 mr-3">
-                    Billing Period:
-                  </label>
-                  <select
-                    value={item.billingPeriod || "monthly"}
-                    onChange={(e) =>
-                      handleBillingPeriodChange(item.id, e.target.value, item)
-                    }
-                    className="bg-gray-50 border border-gray-300 text-gray-700 rounded-md p-2 focus:ring-2 focus:ring-blue-400"
-                  >
-                    <option value="monthly">Monthly</option>
-                    <option value="quarterly">3 Months</option>
-                    <option value="semiAnnually">6 Months</option>
-                    <option value="annually">Yearly</option>
-                  </select>
+
+  <div className='flex flex-col bg-gray-50 w-full p-4 xl:p-6'>
+    <div>
+    <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6 sm:mb-8">Shopping Cart</h1>
+    </div>
+    <div className="xl:container w-full m-0 xl:mx-auto flex flex-wrap gap-6 lg:flex-nowrap">
+      {/* Left Section */}
+      <div className="w-full lg:w-2/3">
+        <div className="bg-white shadow-md rounded-lg p-4 sm:p-6">
+          {cartItems.length > 0 ? (
+            cartItems.map((item, index) => (
+              <div
+                key={index}
+                className="flex flex-col border-b border-gray-200 py-4 last:border-none"
+              >
+                <div className="flex justify-between items-center">
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-800">{item.name}</h3>
+                  <p className="text-base sm:text-lg font-semibold text-gray-800">
+                    {(item.finalprice || item.price || 0).toFixed(2)} EGP
+                  </p>
                 </div>
-              )}
-            </div>
-          ))
-        ) : (
-          <p className="text-center text-gray-500 py-6">Your cart is empty.</p>
+                {item.type === "plan" && (
+                  <div className="flex flex-wrap items-center mt-3 sm:mt-4">
+                    <label className="text-sm font-semibold text-gray-600 mr-3">
+                      Billing Period:
+                    </label>
+                    <select
+                      value={item.billingPeriod || "monthly"}
+                      onChange={(e) =>
+                        handleBillingPeriodChange(item.id, e.target.value, item)
+                      }
+                      className="bg-gray-50 border border-gray-300 text-gray-700 rounded-md p-2 focus:ring-2 focus:ring-blue-400"
+                    >
+                      <option value="monthly">Monthly</option>
+                      <option value="quarterly">3 Months</option>
+                      <option value="semiAnnually">6 Months</option>
+                      <option value="annually">Yearly</option>
+                    </select>
+                  </div>
+                )}
+              </div>
+            ))
+          ) : (
+            <p className="text-center text-gray-500 py-6">Your cart is empty.</p>
+          )}
+        </div>
+    
+        {cartItems.length > 0 && (
+          <div className="mt-6 flex flex-wrap gap-4">
+            <button
+              onClick={handleClearCart}
+              className="flex-1 bg-red-500 hover:bg-red-600 text-white py-3 rounded-lg font-semibold text-base sm:text-lg transition"
+            >
+              Clear Cart
+            </button>
+            <Link
+              to="../checkout"
+              state={{ cartItems, totalPrice }}
+              className="flex-1"
+            >
+              <button className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg font-semibold text-base sm:text-lg transition">
+                Proceed to Checkout
+              </button>
+            </Link>
+          </div>
         )}
       </div>
-  
-      {cartItems.length > 0 && (
-        <div className="mt-6 flex flex-wrap gap-4">
-          <button
-            onClick={handleClearCart}
-            className="flex-1 bg-red-500 hover:bg-red-600 text-white py-3 rounded-lg font-semibold text-base sm:text-lg transition"
-          >
-            Clear Cart
-          </button>
-          <Link
-            to="../checkout"
-            state={{ cartItems, totalPrice }}
-            className="flex-1"
-          >
-            <button className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg font-semibold text-base sm:text-lg transition">
-              Proceed to Checkout
+    
+      {/* Right Section */}
+      <div className="w-full lg:w-1/3 space-y-6">
+        {/* Order Summary */}
+        <div className="bg-white p-2 xl:p-4 shadow-md rounded-lg">
+          <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-4">Order Summary</h3>
+          <div className="flex justify-between text-base sm:text-lg mb-3">
+            <span>Total Price:</span>
+            <span>{totalPrice} EGP</span>
+          </div>
+          <div className="flex justify-between text-base sm:text-lg text-red-500 mb-3">
+            <span>Discount:</span>
+            <span>-{discount} EGP</span>
+          </div>
+          <div className="flex justify-between text-base sm:text-lg font-bold text-green-600">
+            <span>Total After Discount:</span>
+            <span>{discountedPrice || totalPrice} EGP</span>
+          </div>
+        </div>
+
+          {/* Promo Code */}
+          <div className="bg-white p-2 xl:p-4 shadow-md rounded-lg">
+          <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-4">Have a Promo Code?</h3>
+          <div className="flex flex-wrap gap-4">
+            <input
+              type="text"
+              value={promoCode}
+              onChange={(e) => setPromoCode(e.target.value)}
+              placeholder="Enter promo code"
+              className="flex-1 text-base sm:text-lg px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+            <button
+              onClick={handleApplyPromo}
+              className="px-6 py-2 text-base sm:text-lg bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition"
+            >
+              {isLoading ? "Applying..." : "Apply"}
             </button>
-          </Link>
+          </div>
         </div>
-      )}
-    </div>
-  
-    {/* Right Section */}
-    <div className="w-full lg:w-1/3 space-y-6">
-      {/* Promo Code */}
-      <div className="bg-white p-2 xl:p-4 shadow-md rounded-lg">
-        <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-4">Have a Promo Code?</h3>
-        <div className="flex flex-wrap gap-4">
-          <input
-            type="text"
-            value={promoCode}
-            onChange={(e) => setPromoCode(e.target.value)}
-            placeholder="Enter promo code"
-            className="flex-1 text-base sm:text-lg px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-          />
-          <button
-            onClick={handleApplyPromo}
-            className="px-6 py-2 text-base sm:text-lg bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition"
-          >
-            {isLoading ? "Applying..." : "Apply"}
-          </button>
-        </div>
-      </div>
-  
-      {/* Order Summary */}
-      <div className="bg-white p-2 xl:p-4 shadow-md rounded-lg">
-        <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-4">Order Summary</h3>
-        <div className="flex justify-between text-base sm:text-lg mb-3">
-          <span>Total Price:</span>
-          <span>{totalPrice} EGP</span>
-        </div>
-        <div className="flex justify-between text-base sm:text-lg text-red-500 mb-3">
-          <span>Discount:</span>
-          <span>-{discount} EGP</span>
-        </div>
-        <div className="flex justify-between text-base sm:text-lg font-bold text-green-600">
-          <span>Total After Discount:</span>
-          <span>{discountedPrice || totalPrice} EGP</span>
-        </div>
+    
       </div>
     </div>
   </div>
