@@ -40,48 +40,48 @@ const SubscriptionPage = () => {
         fetchData(); 
     }, []);
 
-    const handleOpenDialog = (paymentId) => {
-       setOpenDialog(paymentId);
+    const handleOpenDialog = (userId) => {
+       setOpenDialog(userId);
        };
 
     const handleCloseDialog = () => {
             setOpenDialog(null);
     };
 
-       const handleDelete = async (paymentId) => {
+       const handleDelete = async (userId) => {
               setIsDeleting(true);
-              const success = await deletePayment(paymentId, auth.user.token);
+              const success = await deleteUser(userId, auth.user.token);
               setIsDeleting(false);
               handleCloseDialog();
 
               if (success) {
-                     setPaymentChanged(!paymentChanged)
-                     auth.toastSuccess('Payment Method deleted successfully!');
-                     setPayments((prevPayment) =>
-                        prevPayment.filter((payment) => payment.id !== paymentId)
+                     setUserChanged(!userChanged)
+                     auth.toastSuccess('Subscriper deleted successfully!');
+                     setUsers((prevUser) =>
+                        prevUser.filter((user) => user.id !== userId)
                      );
               } else {
-                     auth.toastError('Failed to delete Payment Method.');
+                     auth.toastError('Failed to delete Subscriper.');
               }
        };
 
-       const deletePayment = async (paymentId, authToken) => {
+       const deleteUser = async (userId, authToken) => {
               try {
-                     const response = await axios.delete(`https://transitstation.online/api/admin/plan/delete/${paymentId}`, {
+                     const response = await axios.delete(`https://login.wegostores.com/admin/v1/subscripe/delete/${userId}`, {
                             headers: {
                                    Authorization: `Bearer ${authToken}`,
                             },
                      });
 
                      if (response.status === 200) {
-                            console.log('payment method deleted successfully');
+                            console.log('Subscriper deleted successfully');
                             return true;
                      } else {
-                            console.error('Failed to delete payment method:', response.status, response.statusText);
+                            console.error('Failed to delete Subscriper:', response.status, response.statusText);
                             return false;
                      }
               } catch (error) {
-                     console.error('Error deleting payment method:', error);
+                     console.error('Error deleting Subscriper:', error);
                      return false;
               }
        };
@@ -102,11 +102,11 @@ const SubscriptionPage = () => {
        return (
               <>
               <div className='w-full flex flex-col gap-10'>
-                     {/* <div className='w-2/6 lg:w-1/6'>
+                     <div className='w-2/6 lg:w-1/6'>
                      <Link to={'add'}>
                             <ButtonAdd isWidth="true" BgColor ="mainColor" Color="white" iconColor="white"/>
                      </Link>
-                     </div> */}
+                     </div>
                      <div className="w-full flex items-center justify-between mt-4 overflow-x-auto">
                 <table className="w-full sm:min-w-0">
                     <thead className="w-full">
@@ -154,17 +154,17 @@ const SubscriptionPage = () => {
                                                 {user?.expire_date || '_'}
                                         </td>
 
-                                        {/* <td
+                                        <td
                                                 className="min-w-[100px] sm:min-w-[80px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                         >
                                                 <div className="flex items-center justify-center gap-x-3">
-                                                <Link to={`edit/${payment.id}`} state={payment.id} type="button">
+                                                <Link to={`edit/${user.id}`} state={user.id} type="button">
                                                         <EditIcon />
                                                 </Link>
-                                                <button type="button" onClick={() => handleOpenDialog(payment.id)}>
+                                                <button type="button" onClick={() => handleOpenDialog(user.id)}>
                                                         <DeleteIcon />
                                                 </button>
-                                                {openDialog === payment.id && (
+                                                {openDialog === user.id && (
                                                         <Dialog open={true} onClose={handleCloseDialog} className="relative z-10">
                                                                 <DialogBackdrop className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
                                                                 <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
@@ -175,7 +175,7 @@ const SubscriptionPage = () => {
                                                                                         <div className="flex items-center">
                                                                                                 <div className="mt-2 text-center">
                                                                                                         <DialogTitle as="h3" className="text-xl font-semibold leading-10 text-gray-900">
-                                                                                                                You will delete payment method {payment.name|| "null"}
+                                                                                                                You will delete subscriper {user.name|| "null"}
                                                                                                         </DialogTitle>
                                                                                                 </div>
                                                                                         </div>
@@ -183,7 +183,7 @@ const SubscriptionPage = () => {
                                                                                 <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                                                                                         <button
                                                                                                 type="button"
-                                                                                                onClick={() => handleDelete(payment.id)}
+                                                                                                onClick={() => handleDelete(user.id)}
                                                                                                 disabled={isDeleting}
                                                                                                 className="inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto"
                                                                                         >
@@ -204,7 +204,7 @@ const SubscriptionPage = () => {
                                                         </Dialog>
                                                 )}
                                                 </div>
-                                        </td> */}
+                                        </td>
                                 </tr>
                             ))}
                     </tbody>
