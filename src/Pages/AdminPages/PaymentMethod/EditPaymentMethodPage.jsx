@@ -26,8 +26,8 @@ const EditPaymentMethodPage =()=>{
         if (paymentContent) {
             setTitle(paymentContent.name || '');
             setDescription(paymentContent.description|| '');
-            // setThumbnailFile(paymentContent.thumbnailUrl|| '');
-            setThumbnails(paymentContent.thumbnailUrl|| '');
+            setThumbnailFile(paymentContent.thumbnailUrl || '');
+            setThumbnails(paymentContent.thumbnailUrl || '');
         }
     }, [paymentContent]);
 

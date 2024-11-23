@@ -40,48 +40,48 @@ const PromoCodePage = () => {
         fetchData(); 
     }, [promoCodeChanged]);
 
-    const handleOpenDialog = (paymentId) => {
-       setOpenDialog(paymentId);
+    const handleOpenDialog = (codeId) => {
+       setOpenDialog(codeId);
        };
 
     const handleCloseDialog = () => {
             setOpenDialog(null);
     };
 
-       const handleDelete = async (paymentId) => {
+       const handleDelete = async (codeId) => {
               setIsDeleting(true);
-              const success = await deletePayment(paymentId, auth.user.token);
+              const success = await deletePromoCode(codeId, auth.user.token);
               setIsDeleting(false);
               handleCloseDialog();
 
               if (success) {
-                     setPaymentChanged(!paymentChanged)
-                     auth.toastSuccess('Payment Method deleted successfully!');
-                     setPayments((prevPayment) =>
-                        prevPayment.filter((payment) => payment.id !== paymentId)
+                     setPromoCodeChanged(!promoCodeChanged)
+                     auth.toastSuccess('PromoCode deleted successfully!');
+                     setPromoCode((prevCode) =>
+                        prevCode.filter((code) => code.id !== codeId)
                      );
               } else {
-                     auth.toastError('Failed to delete Payment Method.');
+                     auth.toastError('Failed to delete PromoCode.');
               }
        };
 
-       const deletePayment = async (paymentId, authToken) => {
+       const deletePromoCode = async (codeId, authToken) => {
               try {
-                     const response = await axios.delete(`https://transitstation.online/api/admin/payment/show/history/delete/${paymentId}`, {
+                     const response = await axios.delete(`https://login.wegostores.com/admin/v1/promoCode/delete/${codeId}`, {
                             headers: {
                                    Authorization: `Bearer ${authToken}`,
                             },
                      });
 
                      if (response.status === 200) {
-                            console.log('payment history deleted successfully');
+                            console.log('PromoCode deleted successfully');
                             return true;
                      } else {
-                            console.error('Failed to delete payment history:', response.status, response.statusText);
+                            console.error('Failed to delete PromoCode:', response.status, response.statusText);
                             return false;
                      }
               } catch (error) {
-                     console.error('Error deleting payment history:', error);
+                     console.error('Error deleting PromoCode:', error);
                      return false;
               }
        };
@@ -112,12 +112,18 @@ const PromoCodePage = () => {
                     <thead className="w-full">
                         <tr className="w-full border-b-2">
                             <th className="min-w-[80px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">#</th>
+                            <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Title</th>
                             <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Code</th>
-                            <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Discount Amount</th>
-                            <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Type</th>
+                            <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Discount Monthly</th>
+                            <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Discount Quarterly</th>
+                            <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Discount semiAnnual</th>
+                            <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Discount Yearly</th>
                             <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Vaild From</th>
                             <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Vaild To</th>
-                            <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Usage Limit</th>
+                            <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Usage</th>
+                            <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Type</th>
+                            <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">User Type</th>
+                            <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">User Limit</th>
                             <th className="min-w-[100px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Action</th>
                         </tr>
                     </thead>
@@ -130,42 +136,83 @@ const PromoCodePage = () => {
                                                 {index + 1}
                                         </td>
                                         <td
-                                                className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
+                                                className="min-w-[100px] sm:min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
+                                        >
+                                                {code?.title || '_'}
+                                        </td>
+                                        <td
+                                                className="min-w-[100px] sm:min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                         >
                                                 {code?.code || '_'}
                                         </td>
-                                        <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                                                {code?.calculation_method === "percentage"
-                                                        ? `${code?.amount}%`
-                                                        : code?.amount}
+                                        <td
+                                                className="min-w-[100px] sm:min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
+                                        >                                                {code?.calculation_method === "percentage"
+                                                        ? `${code?.monthly}%`
+                                                        : code?.monthly}
                                         </td>
                                         <td
-                                                className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
+                                                className="min-w-[100px] sm:min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                         >
-                                                {code?.promo_type || 'Null'}
+                                                {code?.calculation_method === "percentage"
+                                                        ? `${code?.quarterly}%`
+                                                        : code?.quarterly}
                                         </td>
                                         <td
-                                                className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
+                                                className="min-w-[100px] sm:min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
+                                        >                                                
+                                                {code?.calculation_method === "percentage"
+                                                        ? `${code["semi-annual"]}%`
+                                                        : code["semi-annual"]}
+                                        </td>
+                                        <td
+                                                className="min-w-[100px] sm:min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
+                                        >
+                                                {code?.calculation_method === "percentage"
+                                                        ? `${code?.yearly}%`
+                                                        : code?.yearly}
+                                        </td>
+                                        <td
+                                                className="min-w-[100px] sm:min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                         >
                                                 {code?.start_date || 'Null'}
                                         </td>
                                         <td
-                                                className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
+                                                className="min-w-[100px] sm:min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                         >
                                                 {code?.end_date || 'Null'}
                                         </td>
-
-                                        {/* <td
+                                        <td
+                                                className="min-w-[100px] sm:min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
+                                        >
+                                                {code?.promo_status === "unlimited" ? "Unlimited" : code?.usage || "Null"}
+                                        </td>
+                                        <td
+                                                className="min-w-[100px] sm:min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
+                                        >
+                                                {code?.promo_type || 'Null'}
+                                        </td>
+                                        <td
+                                                className="min-w-[100px] sm:min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
+                                        >
+                                                {code?.user_type || 'Null'}
+                                        </td>
+                                        <td
+                                                className="min-w-[100px] sm:min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
+                                        >
+                                                {code?.user_usage || 'Null'}
+                                        </td>
+                                        <td
                                                 className="min-w-[100px] sm:min-w-[80px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                         >
                                                 <div className="flex items-center justify-center gap-x-3">
-                                                <Link to={`edit/${payment.id}`} state={payment.id} type="button">
+                                                <Link to={`edit/${code.id}`} state={code.id} type="button">
                                                         <EditIcon />
                                                 </Link>
-                                                <button type="button" onClick={() => handleOpenDialog(payment.id)}>
+                                                <button type="button" onClick={() => handleOpenDialog(code.id)}>
                                                         <DeleteIcon />
                                                 </button>
-                                                {openDialog === payment.id && (
+                                                {openDialog === code.id && (
                                                         <Dialog open={true} onClose={handleCloseDialog} className="relative z-10">
                                                                 <DialogBackdrop className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
                                                                 <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
@@ -176,7 +223,7 @@ const PromoCodePage = () => {
                                                                                         <div className="flex items-center">
                                                                                                 <div className="mt-2 text-center">
                                                                                                         <DialogTitle as="h3" className="text-xl font-semibold leading-10 text-gray-900">
-                                                                                                                You will delete payment method {payment.name|| "null"}
+                                                                                                                You will delete code {code.title|| "null"}
                                                                                                         </DialogTitle>
                                                                                                 </div>
                                                                                         </div>
@@ -184,7 +231,7 @@ const PromoCodePage = () => {
                                                                                 <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                                                                                         <button
                                                                                                 type="button"
-                                                                                                onClick={() => handleDelete(payment.id)}
+                                                                                                onClick={() => handleDelete(code.id)}
                                                                                                 disabled={isDeleting}
                                                                                                 className="inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto"
                                                                                         >
@@ -205,7 +252,7 @@ const PromoCodePage = () => {
                                                         </Dialog>
                                                 )}
                                                 </div>
-                                        </td> */}
+                                        </td>
                                 </tr>
                             ))}
                     </tbody>

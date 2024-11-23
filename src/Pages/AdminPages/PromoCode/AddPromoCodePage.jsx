@@ -33,16 +33,48 @@ const AddPromoCodePage = () => {
     const [selectUsageTypeName, setSelectUsageTypeName] = useState(null);
     const [openSelectUsageType, setOpenSelectUsageType] = useState(false);
 
+    const [statusData, setStatusData] = useState([{ name: 'UnLimited' }, { name: 'Fixed' }]);
+    const [selectStatus, setSelectStatus] = useState('Select Status');
+    const [selectStatusName, setSelectStatusName] = useState(null);
+    const [openSelectStatus, setOpenSelectStatus] = useState(false);
+
+    const [usageNumber,setUsageNumber]=useState('')
+
+    const [typeData, setTypeData] = useState([{ name: 'Plan' }, { name: 'Extra Product' }, { name: 'Domain' }]);
+    const [selectType, setSelectType] = useState('Select Type');
+    const [selectTypeName, setSelectTypeName] = useState(null);
+    const [openSelectType, setOpenSelectType] = useState(false);
+
+    const [amount,setAmount]=useState('')
+
     const dropdownValueTypeRef = useRef();
     const dropdownUsageTypeRef = useRef();
+    const dropdownStatusRef = useRef();
+    const dropdownTypeRef = useRef();
 
     const handleOpenValueType = () => {
         setOpenSelectValueType(!openSelectValueType);
         setOpenSelectUsageType(false)
+        setOpenSelectStatus(false)
+        setOpenSelectType(false)
       };
     const handleOpenUsageType = () => {
         setOpenSelectValueType(false);
         setOpenSelectUsageType(!openSelectUsageType);
+        setOpenSelectStatus(false)
+        setOpenSelectType(false)
+    };
+    const handleOpenStatus = () => {
+        setOpenSelectValueType(false);
+        setOpenSelectUsageType(false);
+        setOpenSelectStatus(!openSelectStatus)
+        setOpenSelectType(false)
+    };
+    const handleOpenType = () => {
+        setOpenSelectValueType(false);
+        setOpenSelectUsageType(false);
+        setOpenSelectStatus(false)
+        setOpenSelectType(!openSelectType)
     };
 
     const handleSelectValueType = (e) => {
@@ -63,6 +95,25 @@ const AddPromoCodePage = () => {
         setOpenSelectUsageType(false);
         console.log('Selected UsageType:', selectedOptionName);
       };
+      const handleSelectStatus = (e) => {
+        const inputElement = e.currentTarget.querySelector('.inputVal');
+        const selectedOptionName = e.currentTarget.textContent.trim();
+        const selectedOptionValue = inputElement ? inputElement.value : null;
+        setSelectStatus(selectedOptionName);
+        setSelectStatusName(selectedOptionValue)
+        setOpenSelectStatus(false);
+        console.log('Selected Status:', selectedOptionName);
+      };
+      const handleSelectType = (e) => {
+        const inputElement = e.currentTarget.querySelector('.inputVal');
+        const selectedOptionName = e.currentTarget.textContent.trim();
+        const selectedOptionValue = inputElement ? inputElement.value : null;
+        setSelectType(selectedOptionName);
+        setSelectTypeName(selectedOptionValue)
+        setOpenSelectType(false);
+        console.log('Selected Type:', selectedOptionName);
+      };
+
 
       useEffect(() => {
         document.addEventListener('mousedown', handleClickOutside);
@@ -73,10 +124,14 @@ const AddPromoCodePage = () => {
     
       const handleClickOutside = (event) => {
         if (dropdownValueTypeRef.current && !dropdownValueTypeRef.current.contains(event.target) &&
-            dropdownUsageTypeRef.current && !dropdownUsageTypeRef.current.contains(event.target)  
+            dropdownUsageTypeRef.current && !dropdownUsageTypeRef.current.contains(event.target) &&
+            dropdownStatusRef.current && !dropdownStatusRef.current.contains(event.target) && 
+            dropdownTypeRef.current && !dropdownTypeRef.current.contains(event.target)
         ) {
             setOpenSelectValueType(false)
             setOpenSelectUsageType(false)
+            setOpenSelectStatus(false)
+            setOpenSelectType(false);
         }
       };
  
@@ -118,6 +173,14 @@ const AddPromoCodePage = () => {
             auth.toastError('Please Enter Usage Type.');
             return;
         }
+        if (!selectStatusName) {
+            auth.toastError('Please Select Status.');
+            return;
+        }
+        if (!selectTypeName) {
+            auth.toastError('Please Select Type.');
+            return;
+        }
         
       
         const formData = new FormData();
@@ -125,7 +188,7 @@ const AddPromoCodePage = () => {
         formData.append('title', title);
         formData.append('start_date', startDate);
         formData.append('end_date', endDate);
-
+        formData.append('user_usage', limit);
 
         const calculationMethod = selectValueType === 'percentage' ? 'percentage' : 'amount';
         formData.append('calculation_method', calculationMethod);
@@ -137,6 +200,25 @@ const AddPromoCodePage = () => {
         formData.append('quarterly',valueQuarterly);
         formData.append('semi-annual', valueSemiAnnual);
         formData.append('yearly', valueYearly);
+
+        if(selectStatus=== 'UnLimited'){
+            formData.append('promo_status','unlimited');
+        }
+        else if (selectStatus=== 'Fixed'){
+            formData.append('promo_status','fixed');
+            formData.append('usage', usageNumber);
+        }
+
+        if(selectType === 'Plan'){
+            formData.append('promo_type','plan');
+        }
+        else if (selectType=== 'Extra Product'){
+            formData.append('promo_type','extra');
+        }
+        else if (selectType=== 'Domain'){
+            formData.append('promo_type','domain');
+            formData.append('amount', amount);
+        }
 
 
         for (let pair of formData.entries()) {
@@ -152,7 +234,7 @@ const AddPromoCodePage = () => {
                 },
             });
  
-            if (response.status === 201) {
+            if (response.status === 200) {
                 auth.toastSuccess('PromoCode added successfully!');
                 handleGoBack();
             } else {
@@ -160,12 +242,17 @@ const AddPromoCodePage = () => {
             }
         } catch (error) {    
             console.log(error)
-            const errorMessages = error?.response?.data.errors;
-            let errorMessageString = 'Error occurred';
-            if (errorMessages) {
-                errorMessageString = Object.values(errorMessages).flat().join(' ');
+            if (error.response.data.faild === 'You have exceeded the maximum use promo code'){
+                auth.toastError('You have exceeded the maximum use promo code');
+            }else{
+                const errorMessages = error?.response?.data.errors;
+                let errorMessageString = 'Error occurred';
+                if (errorMessages) {
+                    errorMessageString = Object.values(errorMessages).flat().join(' ');
+                }
+                auth.toastError('Error', errorMessageString);
             }
-            auth.toastError('Error', errorMessageString);
+    
         } finally {
             setIsLoading(false);
         }
@@ -209,6 +296,15 @@ const AddPromoCodePage = () => {
                               borderColor="mainColor"
                               value={endDate}
                               onChange={(e) => setEndDate(e.target.value)}
+                          />
+                      </div>
+                      <div className="lg:w-[30%] sm:w-full">
+                          <InputCustom
+                              type="number"
+                              placeholder="User Usage"
+                              borderColor="mainColor"
+                              value={limit}
+                              onChange={(e) => setLimit(e.target.value)}
                           />
                       </div>
                       <div className="lg:w-[30%] sm:w-full">
@@ -302,6 +398,48 @@ const AddPromoCodePage = () => {
                            />
                            </div>
                            </>
+                        )}
+
+                        <div className="lg:w-[30%] sm:w-full">
+                            <DropDownMenu
+                            ref={dropdownStatusRef}
+                            handleOpen={handleOpenStatus}
+                            handleOpenOption={handleSelectStatus}
+                            stateoption={selectStatus}
+                            openMenu={openSelectStatus}
+                            options={statusData}
+                            />
+                        </div> 
+                        {selectStatus === 'Fixed' && (
+                            <div className="lg:w-[30%] sm:w-full">
+                            <InputCustom
+                                placeholder="Value"
+                                borderColor="mainColor"
+                                value={usageNumber}
+                                onChange={(e) => setUsageNumber(e.target.value)}
+                            />
+                            </div>
+                        )}
+
+                        <div className="lg:w-[30%] sm:w-full">
+                            <DropDownMenu
+                            ref={dropdownTypeRef}
+                            handleOpen={handleOpenType}
+                            handleOpenOption={handleSelectType}
+                            stateoption={selectType}
+                            openMenu={openSelectType}
+                            options={typeData}
+                            />
+                        </div> 
+                        {selectType === 'Domain' && (
+                            <div className="lg:w-[30%] sm:w-full">
+                            <InputCustom
+                                placeholder="Amount"
+                                borderColor="mainColor"
+                                value={amount}
+                                onChange={(e) => setAmount(e.target.value)}
+                            />
+                            </div>
                         )}
                   </div>
       
