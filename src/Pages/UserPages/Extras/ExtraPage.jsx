@@ -17,23 +17,14 @@ const ExtraPage = () => {
 
     const auth = useAuth();
     const [isLoading, setIsLoading] = useState(false);
-    const [extraProduct, setExtraProduct] = useState('');
+    const [extraProduct, setExtraProduct] = useState([]);
     const dispatch = useDispatch();
     const [billingPeriod, setBillingPeriod] = useState({});
-    const [selectedProductId, setSelectedProductId] = useState(null);
+//     const [selectedProductId, setSelectedProductId] = useState(null);
     const navigate = useNavigate(); // Replace useHistory with useNavigate
 
-       // const handleAddToCart = (product) => {
-       //        // const productToCart = {
-       //        // id:product.id,
-       //        // name: product.name,
-       //        // price: product.status === "one_time" 
-       //        //        ? product.price 
-       //        //        : { yearly: product.yearly, monthly: product.monthly } // Include both yearly and monthly prices
-       //        // };
-       //        // dispatch(addToCart(productToCart));
-       //        dispatch(addToCart(product));
-       // };
+    const [selectedProductIds, setSelectedProductIds] = useState([]); // To track multiple selected product IDs
+
    
     const fetchData = async () => {
         setIsLoading(true);
@@ -54,6 +45,10 @@ const ExtraPage = () => {
         }
     };
 
+    useEffect(() => {
+       fetchData(); 
+   }, []);
+
     const handleAddToCart = (product) => {
        const selectedPeriod = billingPeriod[product.id] || 'monthly';
        const priceOptions = {
@@ -70,56 +65,143 @@ const ExtraPage = () => {
            finalprice: currentPrice 
        };
    
-       if (selectedProductId == product.id) {
-           // Deselect product and remove from cart
-           setSelectedProductId(null);
+       if (selectedProductIds.includes(product.id)) {
+           // If already selected, remove it from cart
+           setSelectedProductIds((prev) => prev.filter((id) => id !== product.id));
            dispatch(removeFromCart(productWithPeriodAndPrice));
-           localStorage.removeItem('selectedProductId');
+           localStorage.setItem(
+               'selectedProductIds',
+               JSON.stringify(selectedProductIds.filter((id) => id !== product.id))
+           );
        } else {
-           // Deselect previous product and add new product
-           if (selectedProductId !== null) {
-               const previousProduct = extraProduct.find((p) => p.id == selectedProductId);
-               const previousProductWithPeriodAndPrice = {
-                   ...previousProduct,
-                   billingPeriod: billingPeriod[previousProduct.id] || 'monthly',
-                   finalprice: priceOptions[billingPeriod[previousProduct.id] || 'monthly']
-               };
-               dispatch(removeFromCart(previousProductWithPeriodAndPrice));
-               localStorage.removeItem('selectedProductId');
-           }
+           // Add new product to selection and cart
+           setSelectedProductIds((prev) => [...prev, product.id]);
            dispatch(addToCart(productWithPeriodAndPrice));
-           setSelectedProductId(product.id);
-           localStorage.setItem('selectedProductId', product.id);  // Save selected product to localStorage
+           localStorage.setItem(
+               'selectedProductIds',
+               JSON.stringify([...selectedProductIds, product.id])
+           );
        }
    };
-   
-   // Handle billing period change
+
    const handleBillingPeriodChange = (productId, newPeriod) => {
        setBillingPeriod((prev) => ({ ...prev, [productId]: newPeriod }));
    };
 
-    useEffect(() => {
-        fetchData(); 
-    }, []);
-
-    useEffect(() => {
-       const savedProductId = localStorage.getItem('selectedProductId');
-       if (savedProductId && extraProduct.length > 0) {
-           setSelectedProductId(savedProductId);
-       }
-       console.log(savedProductId)
-   }, [extraProduct]); 
-
    useEffect(() => {
-       // If a product is selected, add it to the cart
-       if (selectedProductId) {
-           const selectedProduct = extraProduct.find((product) => product.id == selectedProductId);
-           console.log(selectedProduct)
-           if (selectedProduct) {
-               dispatch(addToCart(selectedProduct));
-           }
+       const savedProductIds = JSON.parse(localStorage.getItem('selectedProductIds')) || [];
+       if (Array.isArray(extraProduct) && savedProductIds.length > 0) {
+           setSelectedProductIds(savedProductIds);
+       } else {
+           console.warn("extraProduct is not an array:", extraProduct);
        }
-   }, [selectedProductId, extraProduct, dispatch]); // Ensure to run only when selectedProductId or product change
+   }, [extraProduct]);
+   
+   useEffect(() => {
+       if (Array.isArray(extraProduct)) {
+           const selectedProducts = extraProduct.filter((product) =>
+               selectedProductIds.includes(product.id)
+           );
+   
+           selectedProducts.forEach((product) => {
+               const selectedPeriod = billingPeriod[product.id] || 'monthly';
+               const priceOptions = {
+                   monthly: product.monthly,
+                   quarterly: product.quarterly || product.monthly * 3,
+                   semiAnnually: product["semi-annual"] || product.monthly * 6,
+                   annually: product.yearly,
+               };
+               const currentPrice = priceOptions[selectedPeriod];
+   
+               const productWithDetails = { 
+                   ...product, 
+                   billingPeriod: selectedPeriod, 
+                   finalprice: currentPrice 
+               };
+   
+               dispatch(addToCart(productWithDetails));
+           });
+       } else {
+           console.warn("extraProduct is not an array:", extraProduct);
+       }
+   }, [selectedProductIds, extraProduct, billingPeriod, dispatch]);
+
+   const handleRemoveFromCart = (product) => {
+       // Remove the product from the selectedProductIds array
+       setSelectedProductIds((prev) => prev.filter((id) => id !== product.id));
+       // Remove the product from the cart by dispatching the action
+       dispatch(removeFromCart(product)); // You might need to adjust this based on your actual implementation of the removeFromCart action.
+       localStorage.removeItem('selectedProductIds');
+
+     };
+     
+   
+
+//     const handleAddToCart = (product) => {
+//        const selectedPeriod = billingPeriod[product.id] || 'monthly';
+//        const priceOptions = {
+//            monthly: product.monthly,
+//            quarterly: product.quarterly || product.monthly * 3,
+//            semiAnnually: product["semi-annual"] || product.monthly * 6,
+//            annually: product.yearly,
+//        };
+//        const currentPrice = priceOptions[selectedPeriod];
+   
+//        const productWithPeriodAndPrice = { 
+//            ...product, 
+//            billingPeriod: selectedPeriod, 
+//            finalprice: currentPrice 
+//        };
+   
+//        if (selectedProductId == product.id) {
+//            // Deselect product and remove from cart
+//            setSelectedProductId(null);
+//            dispatch(removeFromCart(productWithPeriodAndPrice));
+       //     localStorage.removeItem('selectedProductId');
+//        } else {
+//            // Deselect previous product and add new product
+//            if (selectedProductId !== null) {
+//                const previousProduct = extraProduct.find((p) => p.id == selectedProductId);
+//                const previousProductWithPeriodAndPrice = {
+//                    ...previousProduct,
+//                    billingPeriod: billingPeriod[previousProduct.id] || 'monthly',
+//                    finalprice: priceOptions[billingPeriod[previousProduct.id] || 'monthly']
+//                };
+//                dispatch(removeFromCart(previousProductWithPeriodAndPrice));
+//                localStorage.removeItem('selectedProductId');
+//            }
+//            dispatch(addToCart(productWithPeriodAndPrice));
+//            setSelectedProductId(product.id);
+//            localStorage.setItem('selectedProductId', product.id);  // Save selected product to localStorage
+//        }
+//    };
+   
+//    // Handle billing period change
+//    const handleBillingPeriodChange = (productId, newPeriod) => {
+//        setBillingPeriod((prev) => ({ ...prev, [productId]: newPeriod }));
+//    };
+//     useEffect(() => {
+//         fetchData(); 
+//     }, []);
+
+//     useEffect(() => {
+//        const savedProductId = localStorage.getItem('selectedProductId');
+//        if (savedProductId && extraProduct.length > 0) {
+//            setSelectedProductId(savedProductId);
+//        }
+//        console.log(savedProductId)
+//    }, [extraProduct]); 
+
+//    useEffect(() => {
+//        // If a product is selected, add it to the cart
+//        if (selectedProductId) {
+//            const selectedProduct = extraProduct.find((product) => product.id == selectedProductId);
+//            console.log(selectedProduct)
+//            if (selectedProduct) {
+//                dispatch(addToCart(selectedProduct));
+//            }
+//        }
+//    }, [selectedProductId, extraProduct, dispatch]); // Ensure to run only when selectedProductId or product change
     
     if (isLoading) {
         return (
@@ -141,8 +223,8 @@ const ExtraPage = () => {
                                    return (
                                    <div
                                    key={product.id}
-                                   className={`relative flex flex-col justify-between p-6 bg-white shadow-md text-2xl rounded-lg border border-gray-200 hover:shadow-lg transition-all 
-                                   ${selectedProductId == product.id ? 'border-green-500 bg-green-100' : ''}`}
+                                   className={`relative flex flex-col justify-between p-6 shadow-md text-2xl rounded-lg border  hover:shadow-lg transition-all 
+                                      ${selectedProductIds.includes(product.id) ? 'border-green-500 bg-green-100' : ''}`}
                                    >
                                    <div>
                                           <h2 className="text-center text-mainColor font-semibold text-3xl mb-4">{product.name}</h2>
@@ -151,78 +233,106 @@ const ExtraPage = () => {
                                           <p className="text-gray-700 flex items-center gap-2"><CiMoneyCheck1 size={30} className='text-mainColor font-semibold' /><span className="font-semibold">SetUp Fees:</span> {product.setup_fees || '0'} EGP</p>
                                           <p className="text-gray-700 flex items-center gap-2"><MdAttachMoney size={30} className='text-mainColor font-semibold' /><span className="font-semibold">Price:</span> {product.price || '0'} EGP</p>
                                           </div>
-                                   </div>
-                                          {/* <div className="text-center">
-                                          {
-                                                 product.my_product === true ? (
+                                   </div>    
+                                          {/* <div>
+                                          {product.my_extra === true ? (
+                                          <button
+                                                 className={`w-full py-3 font-semibold rounded-lg transition-transform transform 
+                                                 bg-gray-300 text-gray-800 hover:scale-105`}
+                                          >
+                                                 My Extra Product
+                                          </button>
+                                          ) : (
+                                          <>
+                                                 <div className="w-full">
+                                                 {selectedProductId != product.id && (
                                                  <button
-                                                        className={`w-full py-3 font-semibold rounded-lg transition-transform transform 
-                                                        bg-mainColor text-white hover:scale-105`}
+                                                 onClick={() => handleAddToCart(product)}
+                                                 className={`w-full py-3 font-semibold rounded-lg transition-all duration-300 transform 
+                                                 ${selectedProductId === product.id ? 'bg-red-600 text-white hover:bg-red-700' : 'bg-mainColor text-white hover:bg-blue-700'} 
+                                                 hover:scale-105 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mainColor`}
                                                  >
-                                                        My Extra Product
+                                                 Add to Cart
                                                  </button>
-                                                 ) : (
+                                                 )}
+
+                                                 {selectedProductId == product.id && (
+                                                 <div className="flex space-x-3 mt-3">
                                                  <button
                                                         onClick={() => handleAddToCart(product)}
-                                                        className={`w-full py-3 font-semibold rounded-lg transition-transform transform 
-                                                        ${selectedProductId == product.id ? 'bg-green-500 text-white' : 'bg-mainColor text-white hover:scale-105'}`}
+                                                        className="w-full text-xl py-3 font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-md"
                                                  >
-                                                        {selectedProductId == product.id ? 'Selected Extra Product' : 'Add to Cart'}
+                                                        Remove from Cart
                                                  </button>
-                                                 )
-                                          }
+                                                 <button
+                                                        onClick={() => navigate('../cart')}
+                                                        className="w-full text-xl py-3 font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-md"
+                                                 >
+                                                        Go to Cart
+                                                 </button>
+                                                 </div>
+                                                 )}
+                                                 </div>
+                                          </>
+                                          )}
+                                          {selectedProductId == product.id && (
+                                          <div className="absolute top-0 left-0 p-2 bg-green-500 text-white text-sm font-semibold rounded-tr-lg">
+                                                 Selected
+                                          </div>
+                                          )}
                                           </div> */}
-                                              <div>
-                                {product.my_extra === true ? (
-                                <button
-                                    className={`w-full py-3 font-semibold rounded-lg transition-transform transform 
-                                    bg-gray-300 text-gray-800 hover:scale-105`}
-                                >
-                                    My Extra Product
-                                </button>
-                                ) : (
-                                <>
-                                   <div className="w-full">
-                                   {/* Add to Cart Button */}
-                                   {selectedProductId != product.id && (
-                                   <button
-                                   onClick={() => handleAddToCart(product)}
-                                   className={`w-full py-3 font-semibold rounded-lg transition-all duration-300 transform 
-                                   ${selectedProductId === product.id ? 'bg-red-600 text-white hover:bg-red-700' : 'bg-mainColor text-white hover:bg-blue-700'} 
-                                   hover:scale-105 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mainColor`}
-                                   >
-                                   Add to Cart
-                                   </button>
-                                   )}
 
-                                   {/* Remove from Cart and Go to Cart Buttons */}
-                                   {selectedProductId == product.id && (
-                                   <div className="flex space-x-3 mt-3">
-                                   <button
-                                          onClick={() => handleAddToCart(product)}
-                                          className="w-full text-xl py-3 font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-md"
-                                   >
-                                          Remove from Cart
-                                   </button>
-                                   <button
-                                          onClick={() => navigate('../cart')}
-                                          className="w-full text-xl py-3 font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-md"
-                                   >
-                                          Go to Cart
-                                   </button>
-                                   </div>
-                                   )}
-                                   </div>
-                                </>
-                                )}
+                                          <div>
+                                          {product.my_extra === true ? (
+                                          <button
+                                          className="w-full py-3 font-semibold rounded-lg transition-transform transform bg-gray-300 text-gray-800 hover:scale-105"
+                                          >
+                                          My Extra Product
+                                          </button>
+                                          ) : (
+                                          <>
+                                          <div className="w-full">
+                                                 {/* Add to Cart Button */}
+                                                 {!selectedProductIds.includes(product.id) && (
+                                                 <button
+                                                 onClick={() => handleAddToCart(product)}
+                                                 className={`w-full py-3 font-semibold rounded-lg transition-all duration-300 transform 
+                                                        ${selectedProductIds.includes(product.id) ? 'bg-red-600 text-white hover:bg-red-700' : 'bg-mainColor text-white hover:bg-blue-700'} 
+                                                        hover:scale-105 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mainColor`}
+                                                 >
+                                                 Add to Cart
+                                                 </button>
+                                                 )}
 
-                                {/* "Selected" Label */}
-                                {selectedProductId == product.id && (
-                                <div className="absolute top-0 left-0 p-2 bg-green-500 text-white text-sm font-semibold rounded-tr-lg">
-                                    Selected
-                                </div>
-                                )}
-                            </div>
+                                                 {/* Remove from Cart and Go to Cart Buttons */}
+                                                 {selectedProductIds.includes(product.id) && (
+                                                 <div className="flex space-x-3 mt-3">
+                                                 <button
+                                                        onClick={() => handleRemoveFromCart(product)}
+                                                        className="w-full text-xl py-3 font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-md"
+                                                 >
+                                                        Remove from Cart
+                                                 </button>
+                                                 <button
+                                                        onClick={() => navigate('../cart')}
+                                                        className="w-full text-xl py-3 font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-md"
+                                                 >
+                                                        Go to Cart
+                                                 </button>
+                                                 </div>
+                                                 )}
+                                          </div>
+                                          </>
+                                          )}
+
+                                          {/* "Selected" Label */}
+                                          {selectedProductIds.includes(product.id) && (
+                                          <div className="absolute top-0 left-0 p-2 bg-green-500 text-white text-sm font-semibold rounded-tr-lg">
+                                          Selected
+                                          </div>
+                                          )}
+                                          </div>
+
                                    </div>
                                    );
                             }
@@ -245,8 +355,8 @@ const ExtraPage = () => {
                             return (
                                    <div
                                           key={product.id}
-                                          className={`relative p-6 bg-white shadow-md text-2xl rounded-lg border border-gray-200 hover:shadow-lg transition-all 
-                                          ${selectedProductId == product.id ?  'border-green-500 bg-green-100' : ''}`}
+                                          className={`relative p-6 shadow-md text-2xl rounded-lg border hover:shadow-lg transition-all 
+                                             ${selectedProductIds.includes(product.id) ? 'border-green-500 bg-green-100' : ''}`}
                                    >
                                           <h2 className="text-center text-mainColor font-semibold text-3xl mb-4">{product.name}</h2>
                                           <div className="space-y-3">
@@ -276,29 +386,9 @@ const ExtraPage = () => {
                                           {savings > 0 && (
                                                  <p className="text-green-500 font-semibold mt-2">Save {savings} EGP per {selectedPeriod}</p>
                                           )}
-                                          </div>
-                                          {/* <div className="text-center">
-                                          {
-                                                 product.my_product === true ? (
-                                                 <button
-                                                        className={`w-full py-3 font-semibold rounded-lg transition-transform transform 
-                                                        bg-mainColor text-white hover:scale-105`}
-                                                 >
-                                                        My Extra Product
-                                                 </button>
-                                                 ) : (
-                                                 <button
-                                                        onClick={() => handleAddToCart(product)}
-                                                        className={`w-full py-3 font-semibold rounded-lg transition-transform transform 
-                                                        ${selectedProductId == product.id ? 'bg-green-500 text-white' : 'bg-mainColor text-white hover:scale-105'}`}
-                                                 >
-                                                        {selectedProductId == product.id ? 'Selected Extra Product' : 'Add to Cart'}
-                                                 </button>
-                                                 )
-                                          }
-                                          </div> */}
+                                          </div>            
 
-                            <div>
+                            {/* <div>
                                 {product.my_extra === true ? (
                                 <button
                                     className={`w-full py-3 font-semibold rounded-lg transition-transform transform 
@@ -309,7 +399,6 @@ const ExtraPage = () => {
                                 ) : (
                                 <>
                                    <div className="w-full">
-                                   {/* Add to Cart Button */}
                                    {selectedProductId != product.id && (
                                    <button
                                    onClick={() => handleAddToCart(product)}
@@ -320,8 +409,6 @@ const ExtraPage = () => {
                                    Add to Cart
                                    </button>
                                    )}
-
-                                   {/* Remove from Cart and Go to Cart Buttons */}
                                    {selectedProductId == product.id && (
                                    <div className="flex space-x-3 mt-3">
                                    <button
@@ -341,15 +428,64 @@ const ExtraPage = () => {
                                    </div>
                                 </>
                                 )}
-
-                                {/* "Selected" Label */}
                                 {selectedProductId == product.id && (
                                 <div className="absolute top-0 left-0 p-2 bg-green-500 text-white text-sm font-semibold rounded-tr-lg">
                                     Selected
                                 </div>
                                 )}
-                            </div>
+                            </div> */}
                                    
+                            <div>
+                            {product.my_extra === true ? (
+                            <button
+                            className="w-full py-3 font-semibold rounded-lg transition-transform transform bg-gray-300 text-gray-800 hover:scale-105"
+                            >
+                            My Extra Product
+                            </button>
+                            ) : (
+                            <>
+                            <div className="w-full">
+                                   {/* Add to Cart Button */}
+                                   {!selectedProductIds.includes(product.id) && (
+                                   <button
+                                   onClick={() => handleAddToCart(product)}
+                                   className={`w-full py-3 font-semibold rounded-lg transition-all duration-300 transform 
+                                          ${selectedProductIds.includes(product.id) ? 'bg-red-600 text-white hover:bg-red-700' : 'bg-mainColor text-white hover:bg-blue-700'} 
+                                          hover:scale-105 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mainColor`}
+                                   >
+                                   Add to Cart
+                                   </button>
+                                   )}
+
+                                   {/* Remove from Cart and Go to Cart Buttons */}
+                                   {selectedProductIds.includes(product.id) && (
+                                   <div className="flex space-x-3 mt-3">
+                                   <button
+                                          onClick={() => handleRemoveFromCart(product)}
+                                          className="w-full text-xl py-3 font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-md"
+                                   >
+                                          Remove from Cart
+                                   </button>
+                                   <button
+                                          onClick={() => navigate('../cart')}
+                                          className="w-full text-xl py-3 font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-md"
+                                   >
+                                          Go to Cart
+                                   </button>
+                                   </div>
+                                   )}
+                            </div>
+                            </>
+                            )}
+
+                            {/* "Selected" Label */}
+                            {selectedProductIds.includes(product.id) && (
+                            <div className="absolute top-0 left-0 p-2 bg-green-500 text-white text-sm font-semibold rounded-tr-lg">
+                            Selected
+                            </div>
+                            )}
+                            </div>
+
                                    </div>
                             );
                             })}

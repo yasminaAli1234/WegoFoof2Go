@@ -278,7 +278,7 @@ const cartSlice = createSlice({
       localStorage.removeItem('cart');
       localStorage.removeItem('selectedPlanId');
       localStorage.removeItem('selectedDomainId');
-      localStorage.removeItem('selectedProductId');
+      localStorage.removeItem('selectedProductIds');
       return [];
     },
 

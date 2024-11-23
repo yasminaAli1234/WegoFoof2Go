@@ -65,7 +65,7 @@ const [paymentStatuses, setPaymentStatuses] = useState({});
             } else if (selectedOption === "Reject") {
               response = await axios.post(` https://login.wegostores.com/admin/v1/payment/rejected/${selectedPaymentId}`,
                 {
-                  rejected_reason: rejectReason
+                        rejected_reason: rejectReason
                 },
                 {
                   headers: {

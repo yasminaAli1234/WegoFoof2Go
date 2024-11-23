@@ -144,8 +144,13 @@ const StorePage = () => {
                         to={store.link_store}
                         className="lg:w-[45%] xl:w-[30%] sm:w-full bg-mainColor rounded-xl"
                       >
-                        <div className="mb-5 p-4 pb-0 text-white text-3xl font-semibold leading-10">
-                          <h1 className="p-2">{store.store_name}</h1>
+                        <div className="mb-5 p-2 pb-0 text-white text-2xl font-semibold leading-10">
+                          <h1 className="p-2">Store Name : <span>{store.store_name}</span></h1>
+                          <h1 className="p-2">Store Activity : <span>{store.activity?.name}</span></h1>
+                          <h1 className="p-2">Store Link : <span>{store.link_store || '-'}</span></h1>
+                          <h1 className="p-2">User Email : <span>{store.email || '-'}</span></h1>
+                          <h1 className="p-2">User Password : <span>{store.password || '-'}</span></h1>
+
                         </div>
                         <div className="bg-white rounded-md m-5">
                           <div className="flex gap-x-5 p-4">

@@ -4,7 +4,7 @@ import { useAuth } from "../../../Context/Auth";
 import Loading from "../../../Components/Loading";
 import InputCustom from "../../../Components/InputCustom";
 import { Button } from "../../../Components/Button";
-import { useLocation } from "react-router-dom";
+import { useLocation ,useNavigate} from "react-router-dom";
 
 const CheckoutPage = () => {
   const auth = useAuth();
@@ -21,6 +21,8 @@ const CheckoutPage = () => {
   const [discountedPrice, setDiscountedPrice] = useState(totalPrice);
   const [discount, setDiscount] = useState(0); // State to store the discount amount
   const uploadRef = useRef(null);
+  const navigate = useNavigate();
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -133,7 +135,8 @@ const CheckoutPage = () => {
         .filter((item) => item.type === "plan")
         .map((item) => ({
           id: item.id,
-          package: durationMap[item.billingPeriod] || 1, // Default to "monthly" (1) if not provided
+          package: durationMap[item.billingPeriod] || 1, // Default to "monthly" (1) if not provided,
+          price_item: item.price || item.finalprice
         }));
   
       // Process Extra Items
@@ -142,6 +145,7 @@ const CheckoutPage = () => {
         .map((item) => ({
           id: item.id,
           package: durationMap[item.billingPeriod] || 1,
+          price_item: item.price || item.finalprice
         }));
   
       // Process Domain Items
@@ -150,6 +154,7 @@ const CheckoutPage = () => {
         .map((item) => ({
           id: item.id,
           package: durationMap[item.duration] || null,
+          price_item: item.price || item.finalprice
         }));
   
       // Prepare Request Data
@@ -179,7 +184,21 @@ const CheckoutPage = () => {
   
         if (response.status === 200) {
           console.log(response.data);
-          auth.toastSuccess('Order Send successfully!');
+          // auth.toastSuccess('Order Send successfully!');
+
+           // Show success modal
+        setShowSuccessModal(true);
+
+        // Remove cart from localStorage
+        localStorage.removeItem('cart');
+        localStorage.removeItem('selectedPlanId');
+        localStorage.removeItem('selectedDomainId');
+        localStorage.removeItem('selectedProductIds');
+        // Navigate to the cart page
+        setTimeout(() => {
+          navigate("/dashboard_user/cart");
+        }, 3000); // Allow time for modal before navigating
+      
         } else {
           alert("Failed to submit the order. Please try again.");
         }
@@ -245,6 +264,21 @@ const CheckoutPage = () => {
   
         if (response.status === 200) {
           console.log(response.data);
+
+               // Show success modal
+        setShowSuccessModal(true);
+
+        // Remove cart from localStorage
+        localStorage.removeItem('cart');
+        localStorage.removeItem('selectedPlanId');
+        localStorage.removeItem('selectedDomainId');
+        localStorage.removeItem('selectedProductIds');
+
+        //Navigate to the cart page
+        setTimeout(() => {
+          navigate("/dashboard_user/cart");
+        }, 3000); // Allow time for modal before navigating
+    
   
           if (response.data.url) {
             window.location.href = response.data.url;
@@ -417,6 +451,30 @@ const CheckoutPage = () => {
           Submit Order
         </button>
        </div>
+
+        {/* Success Modal */}
+        {showSuccessModal && (
+        <div className="fixed inset-0 flex justify-center items-center bg-gray-900 bg-opacity-50 z-50">
+          <div className="bg-white rounded-lg p-8 shadow-xl max-w-md mx-auto transition-transform transform scale-95 hover:scale-100">
+            <div className="text-center">
+              <h2 className="text-4xl font-extrabold text-green-600 mb-4">
+                Order Request Successful!
+              </h2>
+              <p className="text-lg text-gray-600 mb-8">
+                Thank you for your order! We’ll be in touch with you shortly to confirm the details.
+              </p>
+              <button
+  onClick={() => setShowSuccessModal(false)}
+  className="bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white px-8 py-3 rounded-lg shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none"
+>
+  Close
+</button>
+
+            </div>
+          </div>
+        </div>
+      )}
+
        
 
     </div>
