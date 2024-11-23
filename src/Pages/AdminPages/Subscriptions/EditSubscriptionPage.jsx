@@ -224,7 +224,7 @@ const EditSubscriptionPage =()=>{
             } 
 
             const response = await axios.post(
-                `https://login.wegostores.com/admin/v1/subscripe/update/${userId}`,
+                `https://login.wegostores.com/admin/v1/subscripe/update`,
                 formData,
                 {
                     headers: {

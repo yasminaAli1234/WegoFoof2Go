@@ -57,13 +57,13 @@ const [paymentStatuses, setPaymentStatuses] = useState({});
           try {
             let response;
             if (selectedOption === "Approve") {
-              response = await axios.put(`https://bdev.elmanhag.shop/admin/payment/pendding/approve/${selectedPaymentId}`, {}, {
+              response = await axios.post(`https://login.wegostores.com/admin/v1/payment/approve/${selectedPaymentId}`, {}, {
                 headers: {
                   Authorization: `Bearer ${auth.user.token}`,
                 },
               });
             } else if (selectedOption === "Reject") {
-              response = await axios.put(` https://bdev.elmanhag.shop/admin/payment/pendding/rejected/${selectedPaymentId}`,
+              response = await axios.post(` https://login.wegostores.com/admin/v1/payment/rejected/${selectedPaymentId}`,
                 {
                   rejected_reason: rejectReason
                 },

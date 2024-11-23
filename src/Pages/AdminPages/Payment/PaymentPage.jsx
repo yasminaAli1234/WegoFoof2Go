@@ -17,6 +17,9 @@ const PaymentPage = () => {
     const [isDeleting, setIsDeleting] = useState(false);
     const [openDialog, setOpenDialog] = useState(null);
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedOrders, setSelectedOrders] = useState([]);
+
     const fetchData = async () => {
         setIsLoading(true);
         try {
@@ -27,7 +30,7 @@ const PaymentPage = () => {
                });
                if (response.status === 200) {
                       console.log(response.data)
-                    //   setPaymentHistoryChanged(response.data.payment)
+                      setPaymentHistory(response.data.payment)
                }
         } catch (error) {
                console.error('Error fetching data:', error);
@@ -39,6 +42,16 @@ const PaymentPage = () => {
     useEffect(() => {
         fetchData(); 
     }, []);
+
+    const openModal = (orders) => {
+        setSelectedOrders(orders);
+        setIsModalOpen(true);
+      };
+    
+      const closeModal = () => {
+        setIsModalOpen(false);
+        setSelectedOrders([]);
+      };
 
     const handleOpenDialog = (paymentId) => {
        setOpenDialog(paymentId);
@@ -95,111 +108,191 @@ const PaymentPage = () => {
         );
     }    
       
-    // if (!paymentHistory) {
-    //     return <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No Payment history data available</div>;
-    // }
+    if (!paymentHistory) {
+        return <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No Payment history data available</div>;
+    }
 
        return (
               <>
               <div className='w-full flex flex-col gap-10'>
-                     {/* <div className='w-2/6 lg:w-1/6'>
-                     <Link to={'add'}>
-                            <ButtonAdd isWidth="true" BgColor ="mainColor" Color="white" iconColor="white"/>
-                     </Link>
-                     </div> */}
-                     <div className="w-full flex items-center justify-between mt-4 overflow-x-auto">
-                <table className="w-full sm:min-w-0">
-                    <thead className="w-full">
-                        <tr className="w-full border-b-2">
-                            <th className="min-w-[80px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">#</th>
-                            <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Name</th>
-                            <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Email</th>
-                            <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Phone</th>
-                            <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Details</th>
-                        </tr>
-                    </thead>
-                    {/* <tbody className="w-full">
-                            {payments.map((payment, index) => (
-                                <tr className="w-full border-b-2" key={payment.id}>
-                                        <td
-                                                className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
-                                        >
-                                                {index + 1}
-                                        </td>
-                                        <td
-                                                className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
-                                        >
-                                                {payment?.name || 'Null'}
-                                        </td>
-                                        <td
-                                                className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
-                                        >
-                                                <div className='w-full flex justify-center'>
-                                                <img src={payment?.thumbnailUrl || 'Null'} alt='payment method image' className='w-20 object-content'/>
-                                                </div>
-                                        </td>  
-                                        <td
-                                                className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
-                                        >
-                                                {payment?.description || 'Null'}
-                                        </td>
+                <div className="w-full flex items-center justify-between mt-4 overflow-x-auto">
+                        <table className="w-full sm:min-w-0">
+                        <thead className="w-full">
+                                <tr className="w-full border-b-2">
+                                <th className="min-w-[80px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">#</th>
+                                <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Name</th>
+                                <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Email</th>
+                                <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Phone</th>
+                                <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Payment Method</th>
+                                <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Orders</th>
+                                <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Status</th>
+                                </tr>
+                        </thead>
+                        <tbody className="w-full">
+                                {paymentHistory.map((payment, index) => (
+                                        <tr className="w-full border-b-2" key={payment.id}>
+                                                <td
+                                                        className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
+                                                >
+                                                        {index + 1}
+                                                </td>
+                                                <td
+                                                        className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
+                                                >
+                                                        {payment?.user?.name || 'Null'}
+                                                </td>
+                                                <td
+                                                        className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
+                                                >
+                                                        {payment?.user?.email || 'Null'}
+                                                </td>
+                                                <td
+                                                        className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
+                                                >
+                                                        {payment?.user?.phone || 'Null'}
+                                                </td>
+                                                <td
+                                                        className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
+                                                >
+                                                        {payment?.payment_method?.name || 'Null'}
+                                                </td>
+                                                <td
+                                                        className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
+                                                >
+                                                        <button
+                                                        onClick={() => openModal(payment.orders)}
+                                                        className="text-mainColor underline"
+                                                        >
+                                                        View Services
+                                                        </button>
+                                                </td>
+                                                <td
+                                                        className={`min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center ${payment.status === "approved" ? "text-green-500" : "text-red-500"} text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden`}>
+                                                        {payment?.status || '_'}
+                                                </td>
+                                                {/* <td
+                                                        className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
+                                                >
+                                                        <div className='w-full flex justify-center'>
+                                                        <img src={payment?.thumbnailUrl || 'Null'} alt='payment method image' className='w-20 object-content'/>
+                                                        </div>
+                                                </td>   */}
 
-                                        <td
-                                                className="min-w-[100px] sm:min-w-[80px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
-                                        >
-                                                <div className="flex items-center justify-center gap-x-3">
-                                                <Link to={`edit/${payment.id}`} state={payment.id} type="button">
-                                                        <EditIcon />
-                                                </Link>
-                                                <button type="button" onClick={() => handleOpenDialog(payment.id)}>
-                                                        <DeleteIcon />
-                                                </button>
-                                                {openDialog === payment.id && (
-                                                        <Dialog open={true} onClose={handleCloseDialog} className="relative z-10">
-                                                                <DialogBackdrop className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-                                                                <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-                                                                        <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                                                                                <DialogPanel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:max-w-lg">
-                                                                                <div className="flex flex-col items-center justify-center bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                                                                                        <Wroning Width='28' Height='28' aria-hidden="true" />
-                                                                                        <div className="flex items-center">
-                                                                                                <div className="mt-2 text-center">
-                                                                                                        <DialogTitle as="h3" className="text-xl font-semibold leading-10 text-gray-900">
-                                                                                                                You will delete payment method {payment.name|| "null"}
-                                                                                                        </DialogTitle>
+                                                {/* <td
+                                                        className="min-w-[100px] sm:min-w-[80px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
+                                                >
+                                                        <div className="flex items-center justify-center gap-x-3">
+                                                        <Link to={`edit/${payment.id}`} state={payment.id} type="button">
+                                                                <EditIcon />
+                                                        </Link>
+                                                        <button type="button" onClick={() => handleOpenDialog(payment.id)}>
+                                                                <DeleteIcon />
+                                                        </button>
+                                                        {openDialog === payment.id && (
+                                                                <Dialog open={true} onClose={handleCloseDialog} className="relative z-10">
+                                                                        <DialogBackdrop className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                                                                        <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                                                                                <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                                                                                        <DialogPanel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:max-w-lg">
+                                                                                        <div className="flex flex-col items-center justify-center bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                                                                                                <Wroning Width='28' Height='28' aria-hidden="true" />
+                                                                                                <div className="flex items-center">
+                                                                                                        <div className="mt-2 text-center">
+                                                                                                                <DialogTitle as="h3" className="text-xl font-semibold leading-10 text-gray-900">
+                                                                                                                        You will delete payment method {payment.name|| "null"}
+                                                                                                                </DialogTitle>
+                                                                                                        </div>
                                                                                                 </div>
                                                                                         </div>
+                                                                                        <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                                                                                                <button
+                                                                                                        type="button"
+                                                                                                        onClick={() => handleDelete(payment.id)}
+                                                                                                        disabled={isDeleting}
+                                                                                                        className="inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto"
+                                                                                                >
+                                                                                                        {isDeleting ? <div className="flex w-10 h-5"><Loading /></div> : 'Delete'}
+                                                                                                </button>
+                                                                                                <button
+                                                                                                        type="button"
+                                                                                                        data-autofocus
+                                                                                                        onClick={handleCloseDialog}
+                                                                                                        className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-6 py-3 text-sm font-medium text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:mt-0 sm:w-auto"
+                                                                                                >
+                                                                                                        Cancel
+                                                                                                </button>
+                                                                                        </div>
+                                                                                        </DialogPanel>
                                                                                 </div>
-                                                                                <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                                                                                        <button
-                                                                                                type="button"
-                                                                                                onClick={() => handleDelete(payment.id)}
-                                                                                                disabled={isDeleting}
-                                                                                                className="inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto"
-                                                                                        >
-                                                                                                {isDeleting ? <div className="flex w-10 h-5"><Loading /></div> : 'Delete'}
-                                                                                        </button>
-                                                                                        <button
-                                                                                                type="button"
-                                                                                                data-autofocus
-                                                                                                onClick={handleCloseDialog}
-                                                                                                className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-6 py-3 text-sm font-medium text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:mt-0 sm:w-auto"
-                                                                                        >
-                                                                                                Cancel
-                                                                                        </button>
-                                                                                </div>
-                                                                                </DialogPanel>
                                                                         </div>
-                                                                </div>
-                                                        </Dialog>
-                                                )}
-                                                </div>
-                                        </td>
-                                </tr>
-                            ))}
-                    </tbody> */}
-                </table>
-            </div>
+                                                                </Dialog>
+                                                        )}
+                                                        </div>
+                                                </td> */}
+                                        </tr>
+                                ))}
+
+                        {isModalOpen && (
+                                <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+                                <div className="bg-white p-6 rounded shadow-lg max-w-xl w-full overflow-y-auto max-h-96">
+                                <h2 className="text-3xl font-bold mb-4 text-gray-800">Service Details</h2>
+                                <ul className="space-y-6">
+                                {selectedOrders.map((order, idx) => (
+                                        <li key={idx} className="border-b pb-4">
+                                        <h3 className="text-2xl font-semibold text-gray-800 mb-2">Service {idx + 1}</h3>
+                                        
+                                        {/* Plan Section */}
+                                        {order.plans && (
+                                        <div className="mb-4">
+                                        <h4 className="text-xl font-semibold text-blue-600">Plan Details</h4>
+                                        <div className="text-gray-700 pl-4 text-xl">
+                                        <p><span className="font-semibold">Name:</span> {order.plans?.name || '-'}</p>
+                                        <p><span className="font-semibold">SetUp Fees: </span>{order.plans?.setup_fees || '0.00'} LE</p>
+                                        <p><span className="font-semibold">Price Per Month: </span>{order.plans?.price_per_month || '0.00'} LE</p>
+                                        <p><span className="font-semibold">Price Per Year: </span>{order.plans?.price_per_year || '0.00'} LE</p>
+                                        <p><span className="font-semibold">Limit Store:</span> {order.plans?.limet_store || 'N/A'}</p>
+                                        <p><span className="font-semibold">Included App:</span> {order.plans?.app === "1" ?"True" : "False" || 'N/A'}</p>
+                                        </div>
+                                        </div>
+                                        )}
+
+                                        {/* Domain Section */}
+                                        {order.domain && (
+                                        <div className="mb-4">
+                                        <h4 className="text-lg font-semibold text-green-600">Domain Details</h4>
+                                        <div className="text-gray-700 pl-4 text-xl">
+                                                <p><span className="font-semibold">Domain Name:</span> {order.domain.name || '-'}</p>
+                                                <p><span className="font-semibold">Price:</span> {order.domain.price || '-'}</p>
+                                                <p><span className="font-semibold">Store Name:</span> {order.domain.status || '-'}</p>
+                                        </div>
+                                        </div>
+                                        )}
+
+                                        {order.extra && order.extra !== null && (
+                                        <div>
+                                        <h4 className="text-lg font-semibold text-purple-600">Extra Product</h4>
+                                        <div className="text-gray-700 pl-4 text-xl">
+                                                <p><span className="font-semibold">Product Name:</span> {order.extra?.name || '-'}</p>
+                                        </div>
+                                        </div>
+                                        )}
+                                        </li>
+                                ))}
+                                </ul>
+                                <div className='flex items-center justify-center'>
+                                <button
+                                onClick={closeModal}
+                                className="mt-6 bg-mainColor text-center text-xl text-white py-2 px-6 rounded hover:bg-blue-600"
+                                >
+                                Close
+                                </button>
+                                </div>
+                                </div>
+                                </div>
+                        )}
+                        </tbody>
+                        </table>
+                </div>
               </div>
               </>
        )

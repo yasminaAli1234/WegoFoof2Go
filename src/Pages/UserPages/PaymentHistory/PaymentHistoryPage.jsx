@@ -86,7 +86,7 @@ const PaymentHistoryPage = () => {
                 <div className="w-full flex items-center justify-between mt-4 overflow-x-auto">
                         <table className="w-full sm:min-w-0">
                                 <thead className="w-full">
-                                        <tr className="w-full border-b-2">
+                                        <tr className="w-full border-b-2"> 
                                         <th className="min-w-[80px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">#</th>
                                         <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Payment Method</th>
                                         <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Service</th>
