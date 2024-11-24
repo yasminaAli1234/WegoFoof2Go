@@ -10,8 +10,32 @@ import image from '../../../../public/Images/logo.png'
 
 const UserProfilePage =()=>{
   const [isLoading, setIsLoading] = useState(false);
+  const [userData, setUserData] = useState('');
+  const auth = useAuth();
 
-  const {user} = useAuth();
+
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+        const response = await axios.get('https://login.wegostores.com/user/v1/profile', {
+            headers: {
+                Authorization: `Bearer ${auth.user.token}`,
+            },
+        });
+        if (response.status === 200) {
+            console.log(response.data)
+            setUserData(response.data.user);
+        }
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    } finally {
+        setIsLoading(false);
+    }
+    };
+
+    useEffect(()=>{
+        fetchData()
+    },[])
 
     if (isLoading) {
         return (
@@ -21,28 +45,24 @@ const UserProfilePage =()=>{
         );
     }  
     
-    useEffect(() => {
-        console.log(user); 
-    }, []);
-      
     return(
         <form className="w-full flex flex-col gap-y-10 p-4">
-        <div className="w-full flex flex-col lg:flex-row gap-10 items-center">
+         <div className="w-full flex flex-col lg:flex-row gap-10 items-center">
             <div className='w-80 h-80 flex relative rounded-full border-2'>
                 <img
-                    src={user.image_link}
+                    src={userData.image_link}
                     alt="ProfileImage"
                     className="w-full object-contain rounded-full"
                     />
-             <Link to={'edit'} type="button" state={{userData:user}}>
+             <Link to={'edit'} type="button" state={{userData:userData}}>
              <button className="bg-white text-mainColor shadow p-2 rounded-full absolute flex items-center bottom-7 right-4 hover:bg-gray-300">
                         <AiTwotoneEdit size={40}/>
                     </button>
                 </Link>
             </div>
             <div className="flex flex-col gap-3">
-                <h1 className="text-3xl lg:text-5xl text-mainColor">{user.name}</h1>
-                <h1 className="text-3xl lg:text-5xl text-mainColor font-light">{user.email}</h1>
+                <h1 className="text-3xl lg:text-5xl text-mainColor">{userData.name}</h1>
+                <h1 className="text-3xl lg:text-5xl text-mainColor font-light">{userData.email}</h1>
             </div>
         </div>
      
@@ -53,7 +73,7 @@ const UserProfilePage =()=>{
                         type="text"
                         placeholder="Name"
                         borderColor="mainColor"
-                        value={user.name}
+                        value={userData.name}
                         readonly="true"
                     />
                 </div>
@@ -62,7 +82,7 @@ const UserProfilePage =()=>{
                         type="email"
                         placeholder="Email"
                         borderColor="mainColor"
-                        value={user.email}
+                        value={userData.email}
                         readonly="true"
                     />
                 </div>
@@ -73,22 +93,13 @@ const UserProfilePage =()=>{
                         type="text"
                         placeholder="Phone"
                         borderColor="mainColor"
-                        value={user.phone}
+                        value={userData.phone}
                         readonly="true"
                     />
                 </div>
-                {/* <div className="lg:w-[35%] sm:w-full">
-                    <InputCustom
-                        type="text"
-                        placeholder="Position"
-                        borderColor="mainColor"
-                        value={auth.user.data.admin_position.name}
-                        readonly="true"
-                    />
-                </div> */}
             </div>
              <div className="w-full flex items-center justify-center">
-             <Link to={'edit'} type="button" state={{userData:user}}>
+             <Link to={'edit'} type="button" state={{userData:userData}}>
              <div className="flex items-center justify-center w-full lg:w-96 md:w-96 ">
                           <Button
                               Text="Edit Profile"
@@ -104,7 +115,7 @@ const UserProfilePage =()=>{
                 </Link>
             </div>
         </div>
-    </form>
+        </form>
     )
 }
 
