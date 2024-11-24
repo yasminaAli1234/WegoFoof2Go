@@ -9,7 +9,8 @@ import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/re
 import { MdCheck } from "react-icons/md";
 import CheckBox from '../../../Components/CheckBox';
 import { MdOutlinePending } from "react-icons/md";
-
+import { FaStore, FaLink, FaTrashAlt, FaShoppingCart } from "react-icons/fa";
+import { MdPending } from "react-icons/md";
 const StorePage = () => {
 
     const auth = useAuth();
@@ -137,7 +138,8 @@ const StorePage = () => {
                       />
                     </Link>
                   </div>
-                  <div className="w-full flex flex-wrap items-center justify-start gap-10">
+
+                  {/* <div className="w-full flex flex-wrap items-center justify-start gap-10">
                     {stores.map((store) => (
                       <Link
                         key={store.id}
@@ -226,7 +228,128 @@ const StorePage = () => {
                         </div>
                       </Link>
                     ))}
+                  </div> */}
+
+<div className="w-full flex flex-wrap items-center justify-start gap-10">
+  {stores.map((store) => (
+    <Link
+      key={store.id}
+      to={store.link_store}
+      className="lg:w-[45%] xl:w-[30%] sm:w-full bg-white rounded-3xl shadow-lg hover:shadow-xl transition-all transform hover:scale-105 p-5"
+    >
+      <div className="flex items-center justify-between bg-gradient-to-r from-indigo-600 to-blue-500 text-white p-4 rounded-t-3xl">
+        <div>
+          <h2 className="text-2xl font-semibold">{store.store_name}</h2>
+          <p className="mt-2 text-lg">{store.activity?.name || 'N/A'}</p>
+        </div>
+        <FaStore className="text-4xl text-white" />
+      </div>
+
+      <div className="p-4 bg-gray-100 rounded-b-3xl">
+        <div className="mb-4">
+          <p className="text-lg">Store Link:</p>
+          <a
+            href={store.link_store || '#'}
+            className="text-lg text-blue-600 hover:text-blue-800"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {store.link_store || '-'}
+            <FaLink className="inline ml-1" />
+          </a>
+        </div>
+
+        <div className="mb-4">
+          <p className="text-lg">Email:</p>
+          <p className="text-lg">{store.email || '-'}</p>
+        </div>
+
+        <div className="mb-4">
+          <p className="text-lg">Password:</p>
+          <p className="text-lg">{store.password || '-'}</p>
+        </div>
+
+        {store.deleted === 1 ? (
+          <div className="flex items-center text-lg gap-1 text-gray-700">
+            <MdPending className="text-yellow-500" size={30} />
+            <p className="text-yellow-600 font-semibold">Pending Deletion</p>
+          </div>
+        ) : (
+          <div className="flex justify-between items-center">
+            <button
+              type="button"
+              onClick={() => handleOpenDialog(store.id)}
+              className="inline-flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg shadow-md transition-all duration-300"
+            >
+              <FaTrashAlt />
+              <span>Delete Store</span>
+            </button>
+            <button
+              onClick={() => window.open(store.link_store, '_blank')}
+              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-md transition-all duration-300"
+            >
+              <FaShoppingCart />
+              <span>Go to Store</span>
+            </button>
+          </div>
+        )}
+      </div>
+
+      {openDialog === store.id && (
+        <Dialog
+          open={true}
+          onClose={handleCloseDialog}
+          className="relative z-10"
+        >
+          <DialogBackdrop className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+          <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+              <DialogPanel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:max-w-lg">
+                <div className="flex flex-col items-center justify-center bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                  <Wroning Width="28" Height="28" aria-hidden="true" />
+                  <div className="mt-2 text-center">
+                    <DialogTitle
+                      as="h3"
+                      className="text-xl font-semibold leading-10 text-gray-900"
+                    >
+                      Are you sure you want to delete store{" "}
+                      <span className="text-blue-600">{store.store_name || "_"}</span>?
+                    </DialogTitle>
                   </div>
+                </div>
+                <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                  <button
+                    type="button"
+                    onClick={() => handleDelete(store.id)}
+                    disabled={isDeleting}
+                    className="inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto"
+                  >
+                    {isDeleting ? (
+                      <div className="flex w-10 h-5">
+                        <Loading />
+                      </div>
+                    ) : (
+                      "Delete"
+                    )}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleCloseDialog}
+                    className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-6 py-3 text-sm font-medium text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:mt-0 sm:w-auto"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </DialogPanel>
+            </div>
+          </div>
+        </Dialog>
+      )}
+    </Link>
+  ))}
+</div>
+
+
                 </div>
               )}
             </>

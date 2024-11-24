@@ -266,7 +266,7 @@ const CheckoutPage = () => {
           console.log(response.data);
 
                // Show success modal
-        setShowSuccessModal(true);
+        // setShowSuccessModal(true);
 
         // Remove cart from localStorage
         localStorage.removeItem('cart');
