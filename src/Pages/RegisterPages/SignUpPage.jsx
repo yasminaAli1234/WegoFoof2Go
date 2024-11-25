@@ -16,6 +16,7 @@ const SignUpPage =()=>{
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
+    const [address, setAddress] = useState('');
     const [password, setPassword] = useState('');
     
     const auth = useAuth();
@@ -85,7 +86,7 @@ const handleSubmit = async (event) => {
                 // Attempt to sign up the user
                 const response = await axios.post(
                     "https://login.wegostores.com/user/v1/signUp",
-                    { name, phone, email, password, conf_password: confPassword },
+                    { name, phone, email, password, conf_password: confPassword ,address },
                     { headers: { 'Content-Type': 'application/json' } }
                 );
 
@@ -256,8 +257,20 @@ const handleSubmit = async (event) => {
                     required
                     />
                 </div>
+
+                 {/* Address Input */}
+                 <div className="relative w-full">
+                <input
+                    type="text"
+                    placeholder="Address"
+                    className="w-full text-secoundColor bg-mainColor border-b-2 border-secoundColor outline-none px-2 py-3 text-2xl font-normal"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    required
+                    />
+                </div>
+
                 <div className="flex flex-col md:flex-row gap-5 w-full">
-                {/* Password Input */}
                 {/* Password Input */}
                 <div className="relative w-full">
                                 <input
