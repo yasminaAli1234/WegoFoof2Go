@@ -6,6 +6,7 @@ const resources = {
     translation: {
       "hello": "Hello",
       "dashboard": "Dashboard",
+      "search": "Search"
       // Add more translations
     },
   },
@@ -13,6 +14,7 @@ const resources = {
     translation: {
       "hello": "مرحباً",
       "dashboard": "لوحة التحكم",
+      "search": "بحث"
       // Add more translations
     },
   },

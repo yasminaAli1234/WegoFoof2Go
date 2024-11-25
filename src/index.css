@@ -7,14 +7,30 @@
 .loginPage {
   font-family: 'Exo 2';
 }
-
+/* 
 .contentSection {
   position: absolute;
   top: 0;
   right: 2%;
   border-radius: 0 15px 15px 0;
   background: #fff;
+} */
+
+.contentSection {
+  position: absolute;
+  top: 0;
+  right: 2%; /* Default for LTR (left to right) */
+  border-radius: 0 15px 15px 0;
+  background: #fff;
+  transition: right 0.3s ease, left 0.3s ease; /* Smooth transition when switching languages */
 }
+
+/* When the language is Arabic (RTL), adjust the positioning */
+html[dir="rtl"] .contentSection {
+  right: auto; /* Reset right */
+  left: 2%; /* Move to the left side for RTL */
+}
+
 .MenuSide a.active {
   padding-left: 20px;
   border-radius: 12px;
