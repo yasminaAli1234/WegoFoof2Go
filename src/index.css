@@ -33,6 +33,7 @@ html[dir="rtl"] .contentSection {
 
 .MenuSide a.active {
   padding-left: 20px;
+  padding-right: 20px;
   border-radius: 12px;
   background: #fff;
   color: #3F4CD0 !important;

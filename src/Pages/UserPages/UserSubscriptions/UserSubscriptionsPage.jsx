@@ -58,10 +58,10 @@
     // const handleAddToCart = (plan) => {
     //     const selectedPeriod = billingPeriod[plan.id] || 'monthly';
     //     const priceOptions = {
-    //         monthly: plan.price_per_month,
-    //         quarterly: plan.price_per_quarter || plan.price_per_month * 3,
-    //         semiAnnually: plan.price_per_semi_annual || plan.price_per_month * 6,
-    //         annually: plan.price_per_year,
+    //         monthly: plan.monthly,
+    //         quarterly: plan.quarterly || plan.monthly * 3,
+    //         semiAnnually: plan.semi-annual || plan.monthly * 6,
+    //         annually: plan.yearly,
     //     };
     //     const currentPrice = priceOptions[selectedPeriod];
     
@@ -142,18 +142,18 @@
 //                 {plans.map((plan, index) => {
 //                     const selectedPeriod = billingPeriod[plan.id] || 'monthly';
 //                     const priceOptions = {
-//                         monthly: plan.price_per_month,
-//                         quarterly: plan.price_per_quarter || plan.price_per_month * 3,
-//                         semiAnnually: plan.price_per_semi_annual || plan.price_per_month * 6,
-//                         annually: plan.price_per_year,
+//                         monthly: plan.monthly,
+//                         quarterly: plan.quarterly || plan.monthly * 3,
+//                         semiAnnually: plan.semi-annual || plan.monthly * 6,
+//                         annually: plan.yearly,
 //                     };
 //                     const currentPrice = priceOptions[selectedPeriod];
 
 //                     // Calculate savings
 //                     const savings = selectedPeriod === 'monthly' ? 0 :
-//                         selectedPeriod === 'quarterly' ? (plan.price_per_month * 3 - currentPrice) :
-//                         selectedPeriod === 'semiAnnually' ? (plan.price_per_month * 6 - currentPrice) :
-//                         selectedPeriod === 'annually' ? (plan.price_per_month * 12 - currentPrice) : 0;
+//                         selectedPeriod === 'quarterly' ? (plan.monthly * 3 - currentPrice) :
+//                         selectedPeriod === 'semiAnnually' ? (plan.monthly * 6 - currentPrice) :
+//                         selectedPeriod === 'annually' ? (plan.monthly * 12 - currentPrice) : 0;
 
 //                     return (
 //                         <div
@@ -263,6 +263,7 @@ const UserSubscriptionsPage = () => {
                 },
             });
             if (response.status === 200) {
+                console.log(response.data)
                 setPlans(response.data.plans);
             }
         } catch (error) {
@@ -276,10 +277,10 @@ const UserSubscriptionsPage = () => {
     const handleAddToCart = (plan) => {
         const selectedPeriod = billingPeriod[plan.id] || 'monthly';
         const priceOptions = {
-            monthly: plan.price_per_month,
-            quarterly: plan.price_per_quarter || plan.price_per_month * 3,
-            semiAnnually: plan.price_per_semi_annual || plan.price_per_month * 6,
-            annually: plan.price_per_year,
+            monthly: plan.monthly,
+            quarterly: plan.quarterly || plan.monthly * 3,
+            semiAnnually: plan["semi-annual"] || plan.monthly * 6,
+            annually: plan.yearly,
         };
         const currentPrice = priceOptions[selectedPeriod];
     
@@ -358,18 +359,18 @@ const UserSubscriptionsPage = () => {
                 {plans.map((plan, index) => {
                     const selectedPeriod = billingPeriod[plan.id] || 'monthly';
                     const priceOptions = {
-                        monthly: plan.price_per_month,
-                        quarterly: plan.price_per_quarter || plan.price_per_month * 3,
-                        semiAnnually: plan.price_per_semi_annual || plan.price_per_month * 6,
-                        annually: plan.price_per_year,
+                        monthly: plan.monthly,
+                        quarterly: plan.quarterly || plan.monthly * 3,
+                        semiAnnually: plan["semi-annual"] || plan.monthly * 6,
+                        annually: plan.yearly,
                     };
                     const currentPrice = priceOptions[selectedPeriod];
 
                     // Calculate savings
                     const savings = selectedPeriod === 'monthly' ? 0 :
-                        selectedPeriod === 'quarterly' ? (plan.price_per_month * 3 - currentPrice) :
-                        selectedPeriod === 'semiAnnually' ? (plan.price_per_month * 6 - currentPrice) :
-                        selectedPeriod === 'annually' ? (plan.price_per_month * 12 - currentPrice) : 0;
+                        selectedPeriod === 'quarterly' ? (plan.monthly * 3 - currentPrice) :
+                        selectedPeriod === 'semiAnnually' ? (plan.monthly * 6 - currentPrice) :
+                        selectedPeriod === 'annually' ? (plan.monthly * 12 - currentPrice) : 0;
 
                     return (
                         <div
