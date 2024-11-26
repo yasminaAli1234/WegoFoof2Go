@@ -17,7 +17,13 @@ const resources = {
       "extras": "Extras",
       "payment_history": "Payment History",
       "tutorial": "Tutorial",
-      "log_out": "Log Out"
+      "log_out": "Log Out",
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "password": "Password",
+      "Edit Profile" :"Edit Profile",
+      "Update Profile": "Update Profile"
       // Add more translations
     },
   },
@@ -36,7 +42,13 @@ const resources = {
       "extras": "الإضافات",
       "payment_history": "سجل المدفوعات",
       "tutorial": "الدليل",
-      "log_out": "تسجيل الخروج"
+      "log_out": "تسجيل الخروج",
+      "name": "الاسم",
+      "email": "البريد الالكتروني",
+      "phone": "رقم التليفون",
+      "password": "الرقم السري",
+      "Edit Profile" :"تعديل الملف الشخصي",
+      "Update Profile": "تحديث الملف الشخصي"
       // Add more translations
     },
   },

@@ -81,7 +81,7 @@ const UserDashboardLayout = () => {
         className={`contentSection md:w-full sm:w-full lg:w-4/5 min-h-screen transition-opacity ${isSidebarOpen ? 'opacity-50' : 'opacity-100'} ${isRTL ? 'pr-5' : 'pl-5'}`}
       >
         <NavbarUser />
-        <div className="pl-5">
+        <div className="pl-1">
           <Outlet />
         </div>
       </div>

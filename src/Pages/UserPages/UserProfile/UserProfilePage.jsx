@@ -7,12 +7,13 @@ import { Link } from 'react-router-dom';
 import { AiTwotoneEdit } from "react-icons/ai";
 import { Button } from '../../../Components/Button';
 import image from '../../../../public/Images/logo.png'
+import { useTranslation } from 'react-i18next';
 
 const UserProfilePage =()=>{
   const [isLoading, setIsLoading] = useState(false);
   const [userData, setUserData] = useState('');
   const auth = useAuth();
-
+  const { t, i18n } = useTranslation();
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -55,7 +56,7 @@ const UserProfilePage =()=>{
                     className="w-full object-contain rounded-full"
                     />
              <Link to={'edit'} type="button" state={{userData:userData}}>
-             <button className="bg-white text-mainColor shadow p-2 rounded-full absolute flex items-center bottom-7 right-4 hover:bg-gray-300">
+             <button className={`bg-white text-mainColor shadow p-2 rounded-full absolute flex items-center bottom-7 ${i18n.language ? 'left-4' : 'right-4'} hover:bg-gray-300`}>
                         <AiTwotoneEdit size={40}/>
                     </button>
                 </Link>
@@ -71,7 +72,7 @@ const UserProfilePage =()=>{
                 <div className="lg:w-[35%] sm:w-full">
                     <InputCustom
                         type="text"
-                        placeholder="Name"
+                        placeholder={t('name')} // Use the correct translation key for the placeholder
                         borderColor="mainColor"
                         value={userData.name}
                         readonly="true"
@@ -80,7 +81,7 @@ const UserProfilePage =()=>{
                 <div className="lg:w-[35%] sm:w-full">
                     <InputCustom
                         type="email"
-                        placeholder="Email"
+                        placeholder={t('email')}
                         borderColor="mainColor"
                         value={userData.email}
                         readonly="true"
@@ -91,7 +92,7 @@ const UserProfilePage =()=>{
                 <div className="lg:w-[35%] sm:w-full">
                 <InputCustom
                         type="text"
-                        placeholder="Phone"
+                        placeholder={t('phone')}
                         borderColor="mainColor"
                         value={userData.phone}
                         readonly="true"
@@ -102,7 +103,7 @@ const UserProfilePage =()=>{
              <Link to={'edit'} type="button" state={{userData:userData}}>
              <div className="flex items-center justify-center w-full lg:w-96 md:w-96 ">
                           <Button
-                              Text="Edit Profile"
+                              Text={t('Edit Profile')}
                               BgColor="bg-mainColor"
                               Color="text-white"
                               Width="full"

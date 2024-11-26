@@ -7,6 +7,7 @@ import { Link, useLocation ,useNavigate} from "react-router-dom";
 import { AiTwotoneEdit } from "react-icons/ai";
 import { Button } from "../../../Components/Button";
 import { CiCamera } from "react-icons/ci";
+import { useTranslation } from 'react-i18next';
 
 const UserEditProfilePage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -14,6 +15,7 @@ const UserEditProfilePage = () => {
   const location = useLocation();
   const uploadRef = useRef();
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
 
   const user = location.state || {};
   const userData = user?.userData || {};
@@ -109,7 +111,7 @@ const UserEditProfilePage = () => {
             ref={uploadRef}
           />
           <label
-            className="bg-white text-mainColor shadow p-2 rounded-full absolute flex items-center bottom-7 right-4 hover:bg-gray-300 cursor-pointer"
+            className={`bg-white text-mainColor shadow p-2 rounded-full absolute flex items-center  ${i18n.language ? 'left-4' : 'right-4'} bottom-7 hover:bg-gray-300 cursor-pointer`}
           >
             <CiCamera size={40} />
           </label>
@@ -121,7 +123,7 @@ const UserEditProfilePage = () => {
           <div className="lg:w-[35%] sm:w-full">
             <InputCustom
               type="text"
-              placeholder="Name"
+              placeholder={t('name')}
               borderColor="mainColor"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -130,7 +132,7 @@ const UserEditProfilePage = () => {
           <div className="lg:w-[35%] sm:w-full">
             <InputCustom
               type="email"
-              placeholder="Email"
+              placeholder={t('email')}
               borderColor="mainColor"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -141,7 +143,7 @@ const UserEditProfilePage = () => {
           <div className="lg:w-[35%] sm:w-full">
             <InputCustom
               type="text"
-              placeholder="Phone"
+              placeholder={t('phone')}
               borderColor="mainColor"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
@@ -150,7 +152,7 @@ const UserEditProfilePage = () => {
           <div className="lg:w-[35%] sm:w-full">
             <InputCustom
               type="password"
-              placeholder="Password"
+              placeholder={t('password')}
               borderColor="mainColor"
               required={false}
               value={password}
@@ -162,7 +164,7 @@ const UserEditProfilePage = () => {
           <div className="flex items-center justify-center w-full lg:w-96 md:w-96">
             <Button
               type="submit"
-              Text="Update Profile"
+              Text={t('Update Profile')}
               BgColor="bg-mainColor"
               Color="text-white"
               Width="full"
