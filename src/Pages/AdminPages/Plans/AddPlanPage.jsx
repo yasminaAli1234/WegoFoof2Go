@@ -282,7 +282,7 @@ const AddPlanPage = () => {
                              width="w-full"
                          />
                         </div>
-                        <div className="lg:w-1/2 sm:w-full">
+                        {/* <div className="lg:w-1/2 sm:w-full">
                         <InputCustom
                             type="number"
                             borderColor="mainColor"
@@ -291,7 +291,7 @@ const AddPlanPage = () => {
                             onChange={(e) => setMonthlySetUpFeesPrice(e.target.value)}
                             width="w-full"
                         />
-                        </div>
+                        </div> */}
                         </>
                         )}
                     </div>
@@ -329,7 +329,7 @@ const AddPlanPage = () => {
                             width="w-full"
                         />
                         </div>
-                        <div className="lg:w-1/2 sm:w-full">
+                        {/* <div className="lg:w-1/2 sm:w-full">
                         <InputCustom
                             type="number"
                             borderColor="mainColor"
@@ -338,7 +338,7 @@ const AddPlanPage = () => {
                             onChange={(e) => setQuarterlySetUpFeesPrice(e.target.value)}
                             width="w-full"
                         />
-                        </div>
+                        </div> */}
                         </>
                     )}
                     </div>
@@ -376,7 +376,7 @@ const AddPlanPage = () => {
                             width="w-full"
                         />
                         </div>
-                        <div className="lg:w-1/2 sm:w-full">
+                        {/* <div className="lg:w-1/2 sm:w-full">
                         <InputCustom
                             type="number"
                             borderColor="mainColor"
@@ -385,7 +385,7 @@ const AddPlanPage = () => {
                             onChange={(e) => setSemiAnnualSetUpFeesPrice(e.target.value)}
                             width="w-full"
                         />
-                        </div>
+                        </div> */}
                         </>
                     )}
                     </div>
@@ -423,7 +423,7 @@ const AddPlanPage = () => {
                             width="w-full"
                         />
                         </div>
-                        <div className="lg:w-1/2 sm:w-full">
+                        {/* <div className="lg:w-1/2 sm:w-full">
                         <InputCustom
                             type="number"
                             borderColor="mainColor"
@@ -432,7 +432,7 @@ const AddPlanPage = () => {
                             onChange={(e) => setYearlySetUpFeesPrice(e.target.value)}
                             width="w-full"
                         />
-                        </div>
+                        </div> */}
                         </>
                     )}
                     </div>
