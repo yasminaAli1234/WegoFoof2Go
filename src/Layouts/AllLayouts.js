@@ -36,6 +36,10 @@ export { default as PaymentLayout } from "./AdminLayouts/PaymentLayout";
 export { default as PaymentMethodLayout } from "./AdminLayouts/PaymentMethodLayout";
 export { default as AddPaymentMethodLayout } from "./AdminLayouts/AddPaymentMethodLayout";
 export { default as EditPaymentMethodLayout } from "./AdminLayouts/EditPaymentMethodLayout";
+//Activity Layout
+export { default as ActivityLayout } from "./AdminLayouts/ActivityLayout";
+export { default as AddActivityLayout } from "./AdminLayouts/AddActivityLayout";
+export { default as EditActivityLayout } from "./AdminLayouts/EditActivityLayout";
 //PromoCode Layout
 export { default as PromoCodeLayout } from "./AdminLayouts/PromoCodeLayout";
 export { default as AddPromoCodeLayout } from "./AdminLayouts/AddPromoCodeLayout";

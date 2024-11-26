@@ -44,6 +44,9 @@ import { UserLayout,UserHomeLayout ,
     AddTutorialLayout,
     EditTutorialLayout,
     TutorialDataLayout,
+    ActivityLayout,
+    AddActivityLayout,
+    EditActivityLayout,
 } from "./Layouts/AllLayouts";
 import Login from "./Pages/RegisterPages/Login.jsx";
 import SignUpPage from "./Pages/RegisterPages/SignUpPage.jsx";
@@ -94,6 +97,11 @@ const AppLayoutExtraProduct = () => (
   </>
 );
 const AppLayoutPaymentMethod = () => (
+  <>
+    <Outlet/>
+  </>
+);
+const AppLayoutActivity = () => (
   <>
     <Outlet/>
   </>
@@ -277,6 +285,24 @@ export const router = createBrowserRouter([
               {
                 path:'edit/:codeId',
                 element:<EditPromoCodeLayout/>
+              },
+            ]
+          },
+          {
+            path: 'activity',
+            element: <AppLayoutActivity/>,
+            children:[
+              {
+                path:'',
+                element: <ActivityLayout/>,
+              },
+              {
+                path:'add',
+                element: <AddActivityLayout/>,
+              },
+              {
+                path:'edit/:activityId',
+                element: <EditActivityLayout/>,
               },
             ]
           },

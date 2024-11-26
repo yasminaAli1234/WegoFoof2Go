@@ -35,6 +35,10 @@ export { default as PaymentPage } from "./AdminPages/Payment/PaymentPage";
 export { default as PaymentMethodPage } from "./AdminPages/PaymentMethod/PaymentMethodPage";
 export { default as AddPaymentMethodPage } from "./AdminPages/PaymentMethod/AddPaymentMethodPage";
 export { default as EditPaymentMethodPage } from "./AdminPages/PaymentMethod/EditPaymentMethodPage";
+//Activity Pages
+export { default as ActivityPage } from "./AdminPages/Activity/ActivityPage";
+export { default as AddActivityPage } from "./AdminPages/Activity/AddActivityPage";
+export { default as EditActivityPage } from "./AdminPages/Activity/EditActivityPage";
 //PromoCode Page
 export { default as PromoCodePage } from "./AdminPages/PromoCode/PromoCodePage";
 export { default as AddPromoCodePage } from "./AdminPages/PromoCode/AddPromoCodePage";

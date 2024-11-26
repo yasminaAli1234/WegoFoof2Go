@@ -107,7 +107,7 @@ const AddPaymentMethodPage = () => {
                         <InputCustom
                                 type="text"
                                 borderColor="mainColor"
-                                placeholder="Title"
+                                placeholder="Name"
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
                                 width="w-full"
