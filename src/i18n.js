@@ -23,7 +23,20 @@ const resources = {
       "phone": "Phone",
       "password": "Password",
       "Edit Profile" :"Edit Profile",
-      "Update Profile": "Update Profile"
+      "Update Profile": "Update Profile",
+      "Add": "Add",
+      "Buy Plan": "Buy Plan",
+      "Store Link": "Store Link",
+      "Delete Store": "Delete Store",
+      "Go to Store": "Go to Store",
+      "Store Name": "Store Name",
+      "Instagram Link": "Instagram Link",
+      "Facebook Link": "Facebook Link",
+      "Store Logo": "Store Logo",
+      "done": "Done",
+      "cancel": "Cancel",
+      "Select Store Activity": "Select Store Activity",
+      "Add Store": "Add Store"
       // Add more translations
     },
   },
@@ -45,10 +58,24 @@ const resources = {
       "log_out": "تسجيل الخروج",
       "name": "الاسم",
       "email": "البريد الالكتروني",
-      "phone": "رقم التليفون",
+      "phone": "رقم الهاتف",
       "password": "الرقم السري",
       "Edit Profile" :"تعديل الملف الشخصي",
-      "Update Profile": "تحديث الملف الشخصي"
+      "Update Profile": "تحديث الملف الشخصي",
+      "Add": "إضافه",
+      "Buy Plan": "شراء باقه",
+      "Store Link": "رابط المتجر",
+      "Delete Store": "حذف المتجر",
+      "Go to Store": "الذهب الي المتجر",
+      "Store Name": "اسم المتجر",
+      "Instagram Link": "رابط إنستجرام",
+      "Facebook Link": "رابط فيسبوك",
+      "Store Logo": "شعار المتجر",
+      "done": "تم",
+      "cancel": "إلغاء",
+      "Select Store Activity": "اختر نشاط المتجر",
+      "Add Store": "إضافة متجر"
+
       // Add more translations
     },
   },

@@ -190,7 +190,7 @@ const [isDropdownVisible, setDropdownVisible] = useState(false);
                                         <td className="py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">{order.created_at ? new Date(order.created_at).toLocaleDateString() : '-'}</td>
                                         <td className="py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">{order.order_number || '-'}</td>
                                         <td className="py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">
-                                        {order.domain?.name || order.plans?.name || order.extra?.name || '-'}
+                                        {order.domain?.name || order.plans?.name || order.extra?.name ||order.store?.store_name|| '-'}
                                         </td>
                                         <td className="py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">
                                         <button
@@ -236,6 +236,13 @@ const [isDropdownVisible, setDropdownVisible] = useState(false);
                                                 <h4 className="font-semibold text-lg">Domain Details</h4>
                                                 <p><b>Extra Name:</b> {selectedOrder.extra?.name || '-'}</p>
                                                 <p><b>Price:</b> {selectedOrder.extra?.price || '0.00'}</p>
+                                                </div>
+                                                )}
+                                                {selectedOrder.store && (
+                                                <div>
+                                                <h4 className="font-semibold text-lg">Store Details</h4>
+                                                <p><b>Store Name:</b> {selectedOrder.store?.store_name || '-'}</p>
+                                                {/* <p><b>Price:</b> {selectedOrder.extra?.price || '0.00'}</p> */}
                                                 </div>
                                                 )}
                                         </ul>
@@ -314,7 +321,7 @@ const [isDropdownVisible, setDropdownVisible] = useState(false);
                                   <td className="py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">{order.created_at ? new Date(order.created_at).toLocaleDateString() : '-'}</td>
                                   <td className="py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">{order.order_number || '-'}</td>
                                   <td className="py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">
-                                  {order.domain?.name || order.plans?.name || order.extra?.name || '-'}
+                                  {order.domain?.name || order.plans?.name || order.extra?.name ||order.store?.store_name|| '-'}
                                   </td>
                                   <td className="py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">
                                   <button
@@ -360,6 +367,13 @@ const [isDropdownVisible, setDropdownVisible] = useState(false);
                                           <h4 className="font-semibold text-lg">Domain Details</h4>
                                           <p><b>Extra Name:</b> {selectedOrder.extra?.name || '-'}</p>
                                           <p><b>Price:</b> {selectedOrder.extra?.price || '0.00'}</p>
+                                          </div>
+                                          )}
+                                        {selectedOrder.store && (
+                                          <div>
+                                          <h4 className="font-semibold text-lg">Store Details</h4>
+                                          <p><b>Store Name:</b> {selectedOrder.store?.store_name || '-'}</p>
+                                          {/* <p><b>Price:</b> {selectedOrder.extra?.price || '0.00'}</p> */}
                                           </div>
                                           )}
                                   </ul>
@@ -439,7 +453,7 @@ const [isDropdownVisible, setDropdownVisible] = useState(false);
                                   <td className="py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">{order.created_at ? new Date(order.created_at).toLocaleDateString() : '-'}</td>
                                   <td className="py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">{order.order_number || '-'}</td>
                                   <td className="py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">
-                                  {order.domain?.name || order.plans?.name || order.extra?.name || '-'}
+                                  {order.domain?.name || order.plans?.name || order.extra?.name ||order.store?.store_name|| '-'}
                                   </td>
                                   <td className="py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">
                                   <button
@@ -485,6 +499,13 @@ const [isDropdownVisible, setDropdownVisible] = useState(false);
                                           <h4 className="font-semibold text-lg">Domain Details</h4>
                                           <p><b>Extra Name:</b> {selectedOrder.extra?.name || '-'}</p>
                                           <p><b>Price:</b> {selectedOrder.extra?.price || '0.00'}</p>
+                                          </div>
+                                          )}
+                                          {selectedOrder.store && (
+                                          <div>
+                                          <h4 className="font-semibold text-lg">Store Details</h4>
+                                          <p><b>Store Name:</b> {selectedOrder.store?.store_name || '-'}</p>
+                                          {/* <p><b>Price:</b> {selectedOrder.extra?.price || '0.00'}</p> */}
                                           </div>
                                           )}
                                   </ul>

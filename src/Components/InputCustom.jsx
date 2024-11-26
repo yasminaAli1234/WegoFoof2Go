@@ -77,7 +77,7 @@ const InputCustom = ({ type,bgColor,placeholderColor, required = true, minDate =
                                    required={required} 
                                    autoComplete="off"
                             />
-                            {upload ? <LuUpload className={`absolute  top-1/3 text-mainColor text-2xl cursor-pointer ${iconDirection ? 'left-4' : 'right-2'} `} /> : ''}
+                            {upload ? <LuUpload className={`absolute  top-1/3 text-mainColor text-2xl cursor-pointer ${i18n.language ? 'left-4' : 'right-2'} `} /> : ''}
                             {source == 'external' ? <FaExternalLinkAlt className='absolute right-4 top-1/3 text-mainColor text-2xl cursor-pointer' /> :
                                    source == 'embedded' ? <FaLink className='absolute top-1/3 text-mainColor text-2xl cursor-pointer' /> :
                                           source == 'upload' ? <LuUpload className={`absolute right-4 top-1/3 text-mainColor text-2xl cursor-pointer ${iconDirection ? 'left-4' : 'right-2'} `} />

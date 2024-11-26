@@ -6,8 +6,10 @@ import Loading from '../../../Components/Loading';
 import { useAuth } from '../../../Context/Auth';
 import { useNavigate } from 'react-router-dom';
 import DropDownMenu from '../../../Components/DropDownMenu';
+import { useTranslation } from 'react-i18next';
 
 const AddStorePage = () => {
+    const { t } = useTranslation();
 
     const auth = useAuth();
     const navigate = useNavigate();
@@ -18,7 +20,13 @@ const AddStorePage = () => {
     const [facebookLink, setFacebookLink] = useState('');
 
     const [activityData ,setActivityData] =useState([])
-    const [selectActivity, setSelectActivity] = useState('Select Store Activity');
+    // const [selectActivity, setSelectActivity] = useState('Select Store Activity');
+    const [selectActivity, setSelectActivity] = useState("");
+
+  useEffect(() => {
+    setSelectActivity(t("Select Store Activity"));
+  }, [t]); // Ensure it updates if the language changes
+
     const [selectActivityId, setSelectActivityId] = useState([]);
     const [openSelectActivity, setOpenSelectActivity] = useState(false);
    
@@ -171,7 +179,16 @@ const AddStorePage = () => {
         setIsLoading(false);
     }
     };
+    
 
+
+    if (isLoading) {
+        return (
+          <div className="w-1/4 h-full flex items-start mt-[10%] justify-center m-auto">
+            <Loading />
+          </div>
+        );
+    }    
 
        return (
               <>
@@ -180,7 +197,7 @@ const AddStorePage = () => {
                       <div className="lg:w-[30%] sm:w-full">
                           <InputCustom
                               type="text"
-                              placeholder="Store Name"
+                              placeholder={t("Store Name")}
                               borderColor="mainColor"
                               value={storeName}
                               onChange={(e) => setStoreName(e.target.value)}
@@ -199,7 +216,7 @@ const AddStorePage = () => {
                       <div className="lg:w-[30%] sm:w-full">
                           <InputCustom
                               type="text"
-                              placeholder="Phone"
+                              placeholder={t("phone")}
                               borderColor="mainColor"
                               value={phone}
                               onChange={(e) => setPhone(e.target.value)}
@@ -208,26 +225,28 @@ const AddStorePage = () => {
                       <div className="lg:w-[30%] sm:w-full">
                           <InputCustom
                               type="text"
-                              placeholder="Instgram Link"
+                              placeholder={t("Instagram Link")}
                               borderColor="mainColor"
                               value={instgramLink}
                               onChange={(e) => setInstgramLink(e.target.value)}
+                              required={false}
                           />
                       </div>
                       <div className="lg:w-[30%] sm:w-full">
                           <InputCustom
                               type="text"
-                              placeholder="Facebook Link"
+                              placeholder={t("Facebook Link")}
                               borderColor="mainColor"
                               value={facebookLink}
                               onChange={(e) => setFacebookLink(e.target.value)}
+                              required={false}
                           />
                       </div>
                        <div className="lg:w-[30%] sm:w-full">
                         <InputCustom
                             type="text"
                             borderColor="mainColor"
-                            placeholder="Store Logo"
+                            placeholder={t("Store Logo")}
                             value={thumbnails}
                             readOnly={true}
                             onClick={handleInputClick}
@@ -248,7 +267,7 @@ const AddStorePage = () => {
                       <div className="flex items-center justify-center w-72">
                           <Button
                               type="submit"
-                              Text="Done"
+                              Text={t("done")}
                               BgColor="bg-mainColor"
                               Color="text-white"
                               Width="full"
@@ -258,7 +277,7 @@ const AddStorePage = () => {
                             //   stateLoding={isLoading}
                           />
                       </div>
-                      <button onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>
+                      <button onClick={handleGoBack} className="text-2xl text-mainColor">{t("cancel")}</button>
                   </div>
               </form>
               </>

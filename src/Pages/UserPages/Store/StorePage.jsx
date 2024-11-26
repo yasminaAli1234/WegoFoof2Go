@@ -11,7 +11,10 @@ import CheckBox from '../../../Components/CheckBox';
 import { MdOutlinePending } from "react-icons/md";
 import { FaStore, FaLink, FaTrashAlt, FaShoppingCart } from "react-icons/fa";
 import { MdPending } from "react-icons/md";
+import { useTranslation } from 'react-i18next';
+
 const StorePage = () => {
+  const { t } = useTranslation();
 
     const auth = useAuth();
     const [isLoading, setIsLoading] = useState(false);
@@ -247,7 +250,7 @@ const StorePage = () => {
 
       <div className="p-4 bg-gray-100 rounded-b-3xl">
         <div className="mb-4">
-          <p className="text-lg">Store Link:</p>
+          <p className="text-lg">{t('Store Link')}:</p>
           <a
             href={store.link_store || '#'}
             className="text-lg text-blue-600 hover:text-blue-800"
@@ -260,12 +263,12 @@ const StorePage = () => {
         </div>
 
         <div className="mb-4">
-          <p className="text-lg">Email:</p>
+          <p className="text-lg">{t('email')}:</p>
           <p className="text-lg">{store.email || '-'}</p>
         </div>
 
         <div className="mb-4">
-          <p className="text-lg">Password:</p>
+          <p className="text-lg">{t('password')}:</p>
           <p className="text-lg">{store.password || '-'}</p>
         </div>
 
@@ -282,14 +285,14 @@ const StorePage = () => {
               className="inline-flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg shadow-md transition-all duration-300"
             >
               <FaTrashAlt />
-              <span>Delete Store</span>
+              <span>{t('Delete Store')}</span>
             </button>
             <button
               onClick={() => window.open(store.link_store, '_blank')}
               className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-md transition-all duration-300"
             >
               <FaShoppingCart />
-              <span>Go to Store</span>
+              <span>{t('Go to Store')}</span>
             </button>
           </div>
         )}
