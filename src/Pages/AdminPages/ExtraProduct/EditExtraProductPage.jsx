@@ -114,7 +114,7 @@ const EditExtraProductPage =()=>{
         setAppActive(isChecked ? 1 : 0);
     };
 
-    const handleSubmitAdd = async (event) => {
+    const handleSubmitEdit = async (productId,event) => {
         event.preventDefault();
     
         // Input validation based on the selected type
@@ -200,7 +200,7 @@ const EditExtraProductPage =()=>{
     
             // Sending the form data via POST request
             const response = await axios.post(
-                'https://login.wegostores.com/admin/v1/extra/create',
+                `https://login.wegostores.com/admin/v1/extra/update/${productId}`,
                 formData,
                 {
                     headers: {
@@ -211,10 +211,10 @@ const EditExtraProductPage =()=>{
             );
     
             if (response.status === 200) {
-                auth.toastSuccess('Extra Product added successfully!');
+                auth.toastSuccess('Extra Product updated successfully!');
                 handleGoBack();
             } else {
-                auth.toastError('Failed to add Extra Product.');
+                auth.toastError('Failed to update Extra Product.');
             }
         } catch (error) {
             console.log(error);
@@ -226,7 +226,7 @@ const EditExtraProductPage =()=>{
     };
     return(
     <>
-        <form onSubmit={handleSubmitAdd} className="w-full flex flex-col items-center justify-center gap-y-10">
+        <form onSubmit={(event) => handleSubmitEdit(productContent.id, event)} className="w-full flex flex-col items-center justify-center gap-y-10">
             <div className="w-full flex flex-wrap items-center justify-start gap-10">
                 <div className="lg:w-[30%] sm:w-full">
                     <InputCustom
