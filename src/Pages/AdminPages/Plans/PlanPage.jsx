@@ -133,11 +133,11 @@ const PlanPage = () => {
                                    </div>
                                    <div className='flex flex-wrap items-center gap-5'>
                                           <span className='text-maincolor text-xl xl:text-3xl font-semibold'>Price per year  : </span>
-                                          <p className='text-[#686868] text-lg xl:text-2xl'>{plan.price_per_year} EGP</p>
+                                          <p className='text-[#686868] text-lg xl:text-2xl'>{plan.yearly} EGP</p>
                                    </div>
                                    <div className='flex flex-wrap items-center gap-5'>
                                           <span className='text-maincolor text-xl xl:text-3xl font-semibold'>Price per Month  : </span>
-                                          <p className='text-[#686868] text-lg xl:text-2xl'>{plan.price_per_month} EGP</p>
+                                          <p className='text-[#686868] text-lg xl:text-2xl'>{plan.monthly} EGP</p>
                                    </div>
                             </div>
                             <div className='p-4'>

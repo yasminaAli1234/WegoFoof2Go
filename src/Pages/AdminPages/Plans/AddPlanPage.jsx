@@ -116,7 +116,7 @@ const AddPlanPage = () => {
 
             // Append selected prices if inputs are shown and filled
             if (showMonthlyPriceInput && monthlyPrice) {
-                formData.append('price_per_month', monthlyPrice);
+                formData.append('monthly', monthlyPrice);
                 formData.append('discount_monthly', monthlyDiscountPrice);
                 // formData.append('setupFees_monthly', MonthlySetUpFeesPrice);
             }
@@ -131,7 +131,7 @@ const AddPlanPage = () => {
                 // formData.append('setupFees_semi_annual', semiAnnualSetUpFeesPrice);
             }
             if (showYearlyPriceInput && yearlyPrice) {
-                formData.append('price_per_year', yearlyPrice);
+                formData.append('yearly', yearlyPrice);
                 formData.append('discount_yearly', yearlyDiscountPrice);
                 // formData.append('setupFees_yearly', yearlySetUpFeesPrice);
             }
