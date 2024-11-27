@@ -51,16 +51,6 @@ const CheckoutPage = () => {
     console.log("totalPrice", totalPrice);
   }, []);
 
-
-  // Check for success query parameter
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    if (params.get("success") === "1") {
-      setShowSuccessModal(true);
-    }
-  }, [location.search]);
-
-
   const handleInputClick = () => {
     if (uploadRef.current) {
       uploadRef.current.click();
@@ -275,25 +265,26 @@ const CheckoutPage = () => {
         if (response.status === 200) {
           console.log(response.data);
 
-        // Show success modal
+               // Show success modal
         // setShowSuccessModal(true);
 
+        // Remove cart from localStorage
+        localStorage.removeItem('cart');
+        localStorage.removeItem('selectedPlanId');
+        localStorage.removeItem('selectedDomainId');
+        localStorage.removeItem('selectedProductIds');
+
+        //Navigate to the cart page
+        setTimeout(() => {
+          navigate("/dashboard_user/cart");
+        }, 3000); // Allow time for modal before navigating
+    
+  
           if (response.data.url) {
             window.location.href = response.data.url;
           } else {
             alert("No redirect URL found in the response.");
           }
-
-          localStorage.removeItem('cart');
-          localStorage.removeItem('selectedPlanId');
-          localStorage.removeItem('selectedDomainId');
-          localStorage.removeItem('selectedProductIds');
-  
-          //Navigate to the cart page
-          setTimeout(() => {
-            navigate("/dashboard_user/cart");
-          }, 3000); // Allow time for modal before navigating
-
         } else {
           alert("Failed to submit the order. Please try again.");
         }
@@ -445,6 +436,7 @@ const CheckoutPage = () => {
             )}
           </div>
         ))}
+
               
       </div>
 
@@ -472,11 +464,12 @@ const CheckoutPage = () => {
                 Thank you for your order! We’ll be in touch with you shortly to confirm the details.
               </p>
               <button
-                onClick={() => setShowSuccessModal(false)}
-                className="bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white px-8 py-3 rounded-lg shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none"
-              >
-                Close
-              </button>
+  onClick={() => setShowSuccessModal(false)}
+  className="bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white px-8 py-3 rounded-lg shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none"
+>
+  Close
+</button>
+
             </div>
           </div>
         </div>
