@@ -11,8 +11,8 @@ const SignUpPage =()=>{
     const [show, setShow] = useState(false);
     const [plan, setPlan] = useState('demo');
     const [billingType, setBillingType] = useState('');
-    const [type, setType] = useState('user');
     const [data, setData] = useState(null);
+    const [type, setType] = useState('');
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
@@ -30,6 +30,20 @@ const SignUpPage =()=>{
     const [confPassword, setConfPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+    useEffect(() => {
+        if (data) {
+          console.log('Calling auth.login with data:', data); // Debugging line
+          auth.login(data); // Call auth.login with the updated data
+    
+          setIsLoading(false);
+        //   navigate("/dashboard", { replace: true });
+
+        if (type === "user") {
+        navigate("/dashboard_user", { replace: true });
+        }
+        }
+      }, [data]);
 
 const handleSubmit = async (event) => {
     event.preventDefault();
@@ -90,16 +104,24 @@ const handleSubmit = async (event) => {
                     { headers: { 'Content-Type': 'application/json' } }
                 );
 
-                // Handle successful sign-up response
                 if (response.status === 200) {
+                    const userData = {
+                      ...response.data.user,
+                      roles: ['user'] // Assuming type represents the user's role
+                    };
                     setError('');
                     setIsModalOpen(false);
-                    auth.toastSuccess("Sign Up Successful!");
-                    navigate("/dashboard_user"); // Navigate to the user dashboard
-                } else {
-                    // Handle other response statuses, if needed
+                    setData(userData);
+                    setType(response.data.user.role);
+                    console.log("response", response);
+                    console.log("response role", response.data.user.role);
+            
+                  } else {
                     auth.toastError('Unexpected error occurred during sign-up.');
-                }
+                    setError('Failed to post data');
+                    console.log("error", error);
+                    setIsLoading(false)
+                  }
             } else {
                 // Handle incorrect code
                 auth.toastError("The code you entered is incorrect.");
@@ -149,17 +171,6 @@ const handleSubmit = async (event) => {
         setIsLoading(false);
         }
     };
-    useEffect(() => {
-        if (data) {
-               console.log('Calling auth.login with data:', data); // Debugging line
-               auth.login(data); // Call auth.login with the updated data
-               setIsLoading(false);
-
-               if (type === "user") {
-                      navigate("/dashboard_user", { replace: true });
-               }
-        }
-    }, [data]);
 
     const togglePasswordVisibility = () => setShowPassword(!showPassword);
     const toggleConfirmPasswordVisibility = () => setShowConfirmPassword(!showConfirmPassword);

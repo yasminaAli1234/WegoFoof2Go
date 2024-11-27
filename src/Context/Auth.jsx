@@ -28,8 +28,16 @@ export const ContextProvider = ({ children }) => {
 
 const logout = async () => {
   setUser(null);
-  localStorage.removeItem('user');
-  localStorage.removeItem("sidebarAdminState")
+  // localStorage.removeItem('user');
+  // localStorage.removeItem("sidebarAdminState")
+  // localStorage.removeItem("sidebarUserState")
+  // localStorage.removeItem("i18nextLng")
+  // localStorage.removeItem('cart');
+  // localStorage.removeItem('selectedPlanId');
+  // localStorage.removeItem('selectedDomainId');
+  // localStorage.removeItem('selectedProductIds');
+  localStorage.clear();
+
 };
 
 
