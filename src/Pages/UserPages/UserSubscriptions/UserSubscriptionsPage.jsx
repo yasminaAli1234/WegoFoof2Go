@@ -243,6 +243,7 @@ import { addToCart, removeFromCart } from '../../../Redux/CartSlice.js';
 import { PiStorefront } from "react-icons/pi";
 import { CiMoneyCheck1 } from "react-icons/ci";
 import { useNavigate } from 'react-router-dom';  // Import useNavigate
+import { useTranslation } from 'react-i18next';
 
 const UserSubscriptionsPage = () => {
     const auth = useAuth();
@@ -252,6 +253,7 @@ const UserSubscriptionsPage = () => {
     const [billingPeriod, setBillingPeriod] = useState({});
     const [selectedPlanId, setSelectedPlanId] = useState(null);
     const navigate = useNavigate(); // Replace useHistory with useNavigate
+    const { t } = useTranslation();
 
     // Fetch plans from API and set localStorage if a plan is selected
     const fetchData = async () => {
