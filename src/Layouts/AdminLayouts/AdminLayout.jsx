@@ -26,7 +26,7 @@ const AdminLayout = () => {
       </div>
 
       {/* Sidebar that overlays the content on small screens */}
-      <SidebarAdmin isOpen={isSidebarOpen} />
+      <SidebarAdmin isOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen}/>
 
       {/* Main Content Section */}
       <div className={`contentSection md:w-full sm:w-full lg:w-4/5 min-h-screen transition-opacity ${isSidebarOpen ? 'opacity-50' : 'opacity-100'}`}>

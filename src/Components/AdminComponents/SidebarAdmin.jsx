@@ -1,7 +1,7 @@
 import React from "react";
 import StoreLogo from '../../../public/Images/logo white.png'
 import MenuSideAdmin from "../../Components/AdminComponents/MenuSideAdmin";
-const SidebarAdmin =({ isOpen }) => {
+const SidebarAdmin =({ isOpen , setIsSidebarOpen}) => {
        return (
               <>
                 <aside
@@ -12,7 +12,7 @@ const SidebarAdmin =({ isOpen }) => {
                 <div className="w-full lg:mt-0 sm:mt-6 flex text-white items-center justify-center border-b-2 py-6 px-4 text-xl font-semibold">
                   <img src={StoreLogo} alt="wegoStore"/>
                 </div>
-                <MenuSideAdmin />
+                <MenuSideAdmin setIsSidebarOpen={setIsSidebarOpen}/>
                 </aside>      
               </>
        );

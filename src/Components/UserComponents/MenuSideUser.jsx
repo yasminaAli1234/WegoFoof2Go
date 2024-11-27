@@ -6,13 +6,17 @@ import { Link, useNavigate } from 'react-router-dom'
 import { IoIosLogOut } from "react-icons/io";
 import { useTranslation } from 'react-i18next';
 
-const MenuSideUser = () => {
+const MenuSideUser =  ({setIsSidebarOpen }) => {
 
        const auth = useAuth();
        const navigate = useNavigate();
        const savedState = JSON.parse(localStorage.getItem('sidebarUserState')) || {};
        const { t, i18n } = useTranslation();
 
+       const handleLinkClick = () => {
+              setIsSidebarOpen(false);  // Close the sidebar when a link is clicked
+       };
+      
        const [isActiveHome, setIsActiveHome] =  useState(savedState.isActiveHome ?? true);
        const [isActiveProfile, setIsActiveProfile] =  useState(savedState.isActiveProfile ?? false);
        const [isActiveStore, setIsActiveStore] =  useState(savedState.isActiveStore ?? false);
@@ -183,30 +187,30 @@ const MenuSideUser = () => {
               <>
                      <div className="w-full h-full mt-3 flex justify-center mb-10">
                             <div className="MenuSide w-5/6 flex flex-col items-center gap-y-4">                      
-                                   <Link to="/dashboard_user" onClick={handleClickHome} className={`${isActiveHome ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
+                                   <Link to="/dashboard_user" onClick={() =>{handleClickHome();handleLinkClick();}} className={`${isActiveHome ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <HomeIcon isActive={isActiveHome} />
                                           <span className={`${isActiveHome ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}> {t('home')}</span>
                                    </Link>
-                                   <Link to="profile" onClick={handleClickProfile} className={`${isActiveProfile ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
+                                   <Link to="profile" onClick={() =>{handleClickProfile();handleLinkClick();}} className={`${isActiveProfile ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <ProfileIcon isActive={isActiveProfile} />
                                           <span className={`${isActiveProfile ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>{t('profile')}</span>
                                    </Link>
-                                   <Link to="store" onClick={handleClickStore} className={`${isActiveStore ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
+                                   <Link to="store" onClick={() =>{handleClickStore();handleLinkClick();}} className={`${isActiveStore ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <StoreIcon isActive={isActiveStore} />
                                           <span className={`${isActiveStore ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>{t('store')}</span>
                                    </Link>
-                                   <Link to="subscription" onClick={handleClickSubscription} className={`${isActiveSubscription ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
+                                   <Link to="subscription" onClick={() =>{handleClickSubscription();handleLinkClick();}} className={`${isActiveSubscription ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <SubscriptionIcon isActive={isActiveSubscription} />
                                           <span className={`${isActiveSubscription ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>{t('subscriptions')}</span>
                                    </Link>                      
-                                   {/* <Link to="domain" onClick={handleClickDomain} className={`${isActiveDomain ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
+                                   {/* <Link to="domain" onClick={() =>{handleClickDomain();handleLinkClick();}} className={`${isActiveDomain ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <DomainIcon isActive={isActiveDomain} />
                                           <span className={`${isActiveDomain ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Domain</span>
                                    </Link> */}
                                     <>
                                    <Link
                                           to="my_domain"
-                                          onClick={handleClickDomain}
+                                          onClick={() =>{handleClickDomain();handleLinkClick();}}
                                           className={`${isActiveDomain ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}
                                    >
                                           <DomainIcon isActive={isActiveDomain} />
@@ -217,7 +221,7 @@ const MenuSideUser = () => {
                                           <ul className="h-full listUser ml-10 mr-10 bg-blacks transition-all duration-700 flex flex-col gap-y-2">
                                                  <Link
                                                  to="my_domain"
-                                                 onClick={handleClickMyDomain}
+                                                 onClick={() =>{handleClickMyDomain();handleLinkClick();}}
                                                  className={`${isActiveMyDomain ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}
                                                  >
                                                  <span className={`${isActiveMyDomain ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>
@@ -226,7 +230,7 @@ const MenuSideUser = () => {
                                                  </Link>
                                                  <Link
                                                  to="buy_domain"
-                                                 onClick={handleClickBuyDomain}
+                                                 onClick={() =>{handleClickBuyDomain();handleLinkClick();}}
                                                  className={`${isActiveBuyDomain ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}
                                                  >
                                                  <span className={`${isActiveBuyDomain ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>
@@ -236,19 +240,19 @@ const MenuSideUser = () => {
                                           </div>
                                    )}
                                    </>
-                                   <Link to="extra" onClick={handleClickExtra} className={`${isActiveExtra ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
+                                   <Link to="extra" onClick={() =>{handleClickExtra();handleLinkClick();}} className={`${isActiveExtra ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <ExtraIcon isActive={isActiveExtra} />
                                           <span className={`${isActiveExtra ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>{t('extras')}</span>
                                    </Link>
-                                   <Link to="payment_history" onClick={handleClickPayment} className={`${isActivePayment ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
+                                   <Link to="payment_history" onClick={() =>{handleClickPayment();handleLinkClick();}} className={`${isActivePayment ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <PaymentIcon isActive={isActivePayment} />
                                           <span className={`${isActivePayment ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>{t('payment_history')}</span>
                                    </Link>
-                                   <Link to="tutorial" onClick={handleClickTutorial} className={`${isActiveTutorial ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
+                                   <Link to="tutorial" onClick={() =>{handleClickTutorial();handleLinkClick();}} className={`${isActiveTutorial ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <TutorialIcon isActive={isActiveTutorial} />
                                           <span className={`${isActiveTutorial ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>{t('tutorial')}</span>
                                    </Link>
-                                   <Link to="/" onClick={handleLogout} className="w-full flex items-center justify-start px-0 py-2 gap-x-5">
+                                   <Link to="/" onClick={() =>{handleLogout();handleLinkClick();}} className="w-full flex items-center justify-start px-0 py-2 gap-x-5">
                                           <IoIosLogOut size={23} style={{ strokeWidth: 2 }} color="#ffff"/>
                                           <span className="text-secoundColor text-xl font-medium">{t('log_out')}</span>
                                    </Link>               
