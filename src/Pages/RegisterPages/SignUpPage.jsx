@@ -16,7 +16,7 @@ const SignUpPage =()=>{
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
-    const [address, setAddress] = useState('');
+    // const [address, setAddress] = useState('');
     const [password, setPassword] = useState('');
     
     const auth = useAuth();
@@ -86,7 +86,7 @@ const handleSubmit = async (event) => {
                 // Attempt to sign up the user
                 const response = await axios.post(
                     "https://login.wegostores.com/user/v1/signUp",
-                    { name, phone, email, password, conf_password: confPassword ,address },
+                    { name, phone, email, password, conf_password: confPassword },
                     { headers: { 'Content-Type': 'application/json' } }
                 );
 
@@ -259,7 +259,7 @@ const handleSubmit = async (event) => {
                 </div>
 
                  {/* Address Input */}
-                 <div className="relative w-full">
+                 {/* <div className="relative w-full">
                 <input
                     type="text"
                     placeholder="Address"
@@ -268,7 +268,7 @@ const handleSubmit = async (event) => {
                     onChange={(e) => setAddress(e.target.value)}
                     required
                     />
-                </div>
+                </div> */}
 
                 <div className="flex flex-col md:flex-row gap-5 w-full">
                 {/* Password Input */}
@@ -328,13 +328,25 @@ const handleSubmit = async (event) => {
                 )}
 
                 {/* Submit Button */}
-                <button
+                {/* <button
                     type="submit"
                     className="w-full mt-5 text-center text-3xl font-medium px-6 py-3 text-mainColor bg-secoundColor rounded-md"
                     disabled={isLoading}
                 >
                     SignUp                
-                </button>
+                </button> */}
+
+                    <button
+                        type="submit"
+                        className={`w-full mt-10 text-center text-3xl font-medium px-6 py-3 text-mainColor bg-secoundColor rounded-md transition-all duration-200 ease-in-out 
+                            ${isLoading ? "bg-gray-400 cursor-not-allowed" : "hover:shadow-lg hover:scale-105 active:scale-95"}
+                            disabled:opacity-50 disabled:cursor-not-allowed`}
+                        onClick={handleSubmit}
+                        disabled={isLoading}
+                    >
+                        {isLoading ? "Loading..." : "SignUp"}
+                    </button>
+
 
                 <div className='flex flex-col lg:flex-row gap-3 text-2xl font-medium'>
                     <p>I have an account?</p>

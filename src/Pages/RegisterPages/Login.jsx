@@ -120,12 +120,22 @@ const LoginUser =()=>{
 
                                 {error && <div className="w-full text-white text-center text-2xl mb-4 font-bold">{error}</div>}
                                  
-                                <button
+                                {/* <button
                                 type="submit"
                                 className="w-full mt-10 text-center text-3xl font-medium px-6 py-3 text-mainColor bg-secoundColor rounded-md"
                                 disabled={isLoading}
                             >
                                 Login
+                            </button> */}
+                              <button
+                                type="submit"
+                                className={`w-full mt-10 text-center text-3xl font-medium px-6 py-3 text-mainColor bg-secoundColor rounded-md transition-all duration-200 ease-in-out 
+                                    ${isLoading ? "bg-gray-400 cursor-not-allowed" : "hover:shadow-lg hover:scale-105 active:scale-95"}
+                                    disabled:opacity-50 disabled:cursor-not-allowed`}
+                                onClick={handleSubmit}
+                                disabled={isLoading}
+                            >
+                                {isLoading ? "Loading..." : "Login"}
                             </button>
                             
                             <div className='flex flex-col lg:flex-row gap-3 text-2xl font-medium'>

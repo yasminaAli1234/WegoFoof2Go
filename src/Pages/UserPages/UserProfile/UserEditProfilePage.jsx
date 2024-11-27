@@ -111,7 +111,7 @@ const UserEditProfilePage = () => {
             ref={uploadRef}
           />
           <label
-            className={`bg-white text-mainColor shadow p-2 rounded-full absolute flex items-center  ${i18n.language ? 'left-4' : 'right-4'} bottom-7 hover:bg-gray-300 cursor-pointer`}
+            className={`bg-white text-mainColor shadow p-2 rounded-full absolute flex items-center  ${i18n.language ? 'right-4' : 'left-4'} bottom-7 hover:bg-gray-300 cursor-pointer`}
           >
             <CiCamera size={40} />
           </label>

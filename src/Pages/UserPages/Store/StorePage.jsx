@@ -22,6 +22,8 @@ const StorePage = () => {
     const [storeChanged, setStoreChanged] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
     const [openDialog, setOpenDialog] = useState(null);
+    const [userData, setUserData] = useState('');
+    const [userPlanId, setUserPlanId] = useState('');
 
     const fetchData = async () => {
         setIsLoading(true);
@@ -42,6 +44,30 @@ const StorePage = () => {
         }
     };
 
+    const ProfilefetchData = async () => {
+      setIsLoading(true);
+      try {
+          const response = await axios.get('https://login.wegostores.com/user/v1/profile', {
+              headers: {
+                  Authorization: `Bearer ${auth.user.token}`,
+              },
+          });
+          if (response.status === 200) {
+              console.log(response.data)
+              setUserData(response.data.user);
+              setUserPlanId(response.data.user.plan_id);
+          }
+      } catch (error) {
+          console.error('Error fetching data:', error);
+      } finally {
+          setIsLoading(false);
+      }
+      };
+  
+      useEffect(()=>{
+        ProfilefetchData()
+      },[])
+  
     useEffect(() => {
         fetchData(); 
     }, [storeChanged]);
@@ -101,7 +127,7 @@ const StorePage = () => {
       
        return (
               <>
-              {auth.user.plan_id === null ? (
+              {userPlanId === null ? (
                 <div className="w-2/6 lg:w-1/6">
                   <Link to="../subscription">
                     <ButtonAdd

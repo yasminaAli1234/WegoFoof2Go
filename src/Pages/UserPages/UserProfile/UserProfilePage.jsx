@@ -15,13 +15,13 @@ const UserProfilePage =()=>{
   const auth = useAuth();
   const { t, i18n } = useTranslation();
 
-  const fetchData = async () => {
+const fetchData = async () => {
     setIsLoading(true);
     try {
         const response = await axios.get('https://login.wegostores.com/user/v1/profile', {
             headers: {
                 Authorization: `Bearer ${auth.user.token}`,
-            },
+              },
         });
         if (response.status === 200) {
             console.log(response.data)
@@ -56,7 +56,7 @@ const UserProfilePage =()=>{
                     className="w-full object-contain rounded-full"
                     />
              <Link to={'edit'} type="button" state={{userData:userData}}>
-             <button className={`bg-white text-mainColor shadow p-2 rounded-full absolute flex items-center bottom-7 ${i18n.language ? 'left-4' : 'right-4'} hover:bg-gray-300`}>
+             <button className={`bg-white text-mainColor shadow p-2 rounded-full absolute flex items-center bottom-7 ${i18n.language ? 'right-4' : 'left-4'} hover:bg-gray-300`}>
                         <AiTwotoneEdit size={40}/>
                     </button>
                 </Link>
