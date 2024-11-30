@@ -287,7 +287,7 @@ const UserSubscriptionsPage = () => {
         const planWithPeriodAndPrice = { 
             ...plan, 
             billingPeriod: selectedPeriod, 
-            finalprice: currentPrice 
+            finalprice: currentPrice + plan.setup_fees
         };
     
         if (selectedPlanId == plan.id) {
@@ -302,7 +302,7 @@ const UserSubscriptionsPage = () => {
                 const previousPlanWithPeriodAndPrice = {
                     ...previousPlan,
                     billingPeriod: billingPeriod[previousPlan.id] || 'monthly',
-                    finalprice: priceOptions[billingPeriod[previousPlan.id] || 'monthly']
+                    finalprice: priceOptions[billingPeriod[previousPlan.id] || 'monthly']+ plan.setup_fees
                 };
                 dispatch(removeFromCart(previousPlanWithPeriodAndPrice));
                 localStorage.removeItem('selectedPlanId');

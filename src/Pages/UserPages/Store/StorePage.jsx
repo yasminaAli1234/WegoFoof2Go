@@ -11,6 +11,7 @@ import CheckBox from '../../../Components/CheckBox';
 import { MdOutlinePending } from "react-icons/md";
 import { FaStore, FaLink, FaTrashAlt, FaShoppingCart } from "react-icons/fa";
 import { MdPending } from "react-icons/md";
+import { FaCogs } from "react-icons/fa";
 import { useTranslation } from 'react-i18next';
 
 const StorePage = () => {
@@ -167,94 +168,121 @@ const StorePage = () => {
                       />
                     </Link>
                   </div>
-
                   {/* <div className="w-full flex flex-wrap items-center justify-start gap-10">
                     {stores.map((store) => (
                       <Link
                         key={store.id}
                         to={store.link_store}
-                        className="lg:w-[45%] xl:w-[30%] sm:w-full bg-mainColor rounded-xl"
+                        className="lg:w-[45%] xl:w-[30%] sm:w-full bg-white rounded-3xl shadow-lg hover:shadow-xl transition-all transform hover:scale-105 p-5"
                       >
-                        <div className="mb-5 p-2 pb-0 text-white text-2xl font-semibold leading-10">
-                          <h1 className="p-2">Store Name : <span>{store.store_name}</span></h1>
-                          <h1 className="p-2">Store Activity : <span>{store.activity?.name}</span></h1>
-                          <h1 className="p-2">Store Link : <span>{store.link_store || '-'}</span></h1>
-                          <h1 className="p-2">User Email : <span>{store.email || '-'}</span></h1>
-                          <h1 className="p-2">User Password : <span>{store.password || '-'}</span></h1>
-
+                        <div className="flex items-center justify-between bg-gradient-to-r from-indigo-600 to-blue-500 text-white p-4 rounded-t-3xl">
+                          <div>
+                            <h2 className="text-2xl font-semibold">{store.store_name}</h2>
+                            <p className="mt-2 text-lg">{store.activity?.name || 'N/A'}</p>
+                          </div>
+                          <FaStore className="text-4xl text-white" />
                         </div>
-                        <div className="bg-white rounded-md m-5">
-                          <div className="flex gap-x-5 p-4">
-                            {store.deleted === 1 ? (
-                              <span className="flex items-center text-2xl gap-1 text-gray-700">
-                                <MdOutlinePending className="text-[#D01025]" size={30} />
-                                <p>Pending Delete</p>
-                              </span>
-                            ) : (
+
+                        <div className="p-4 bg-gray-100 rounded-b-3xl">
+                          <div className="mb-4">
+                            <p className="text-lg">{t('Store Link')}:</p>
+                            <a
+                              href={store.link_store || '#'}
+                              className="text-lg text-blue-600 hover:text-blue-800"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {store.link_store || '-'}
+                              <FaLink className="inline ml-1" />
+                            </a>
+                          </div>
+
+                          <div className="mb-4">
+                            <p className="text-lg">{t('email')}:</p>
+                            <p className="text-lg">{store.email || '-'}</p>
+                          </div>
+
+                          <div className="mb-4">
+                            <p className="text-lg">{t('password')}:</p>
+                            <p className="text-lg">{store.password || '-'}</p>
+                          </div>
+
+                          {store.deleted === 1 ? (
+                            <div className="flex items-center text-lg gap-1 text-gray-700">
+                              <MdPending className="text-yellow-500" size={30} />
+                              <p className="text-yellow-600 font-semibold">Pending Deletion</p>
+                            </div>
+                          ) : (
+                            <div className="flex justify-between items-center">
                               <button
                                 type="button"
                                 onClick={() => handleOpenDialog(store.id)}
+                                className="inline-flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg shadow-md transition-all duration-300"
                               >
-                                <span className="flex items-center text-2xl gap-1">
-                                  <DeleteIcon />
-                                  <p>Delete</p>
-                                </span>
+                                <FaTrashAlt />
+                                <span>{t('Delete Store')}</span>
                               </button>
-                            )}
-                            {openDialog === store.id && (
-                              <Dialog
-                                open={true}
-                                onClose={handleCloseDialog}
-                                className="relative z-10"
+                              <button
+                                onClick={() => window.open(store.link_store, '_blank')}
+                                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-md transition-all duration-300"
                               >
-                                <DialogBackdrop className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-                                <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-                                  <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                                    <DialogPanel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:max-w-lg">
-                                      <div className="flex flex-col items-center justify-center bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                                        <Wroning Width="28" Height="28" aria-hidden="true" />
-                                        <div className="flex items-center">
-                                          <div className="mt-2 text-center">
-                                            <DialogTitle
-                                              as="h3"
-                                              className="text-xl font-semibold leading-10 text-gray-900"
-                                            >
-                                              You will delete store{" "}
-                                              {store.store_name || "_"}
-                                            </DialogTitle>
-                                          </div>
-                                        </div>
-                                      </div>
-                                      <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                                        <button
-                                          type="button"
-                                          onClick={() => handleDelete(store.id)}
-                                          disabled={isDeleting}
-                                          className="inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto"
-                                        >
-                                          {isDeleting ? (
-                                            <div className="flex w-10 h-5">
-                                              <Loading />
-                                            </div>
-                                          ) : (
-                                            "Delete"
-                                          )}
-                                        </button>
-                                        <button
-                                          type="button"
-                                          onClick={handleCloseDialog}
-                                          className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-6 py-3 text-sm font-medium text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:mt-0 sm:w-auto"
-                                        >
-                                          Cancel
-                                        </button>
-                                      </div>
-                                    </DialogPanel>
-                                  </div>
-                                </div>
-                              </Dialog>
-                            )}
-                          </div>
+                                <FaShoppingCart />
+                                <span>{t('Go to Store')}</span>
+                              </button>
+                            </div>
+                          )}
                         </div>
+
+                        {openDialog === store.id && (
+                          <Dialog
+                            open={true}
+                            onClose={handleCloseDialog}
+                            className="relative z-10"
+                          >
+                            <DialogBackdrop className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                            <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                              <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                                <DialogPanel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:max-w-lg">
+                                  <div className="flex flex-col items-center justify-center bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                                    <Wroning Width="28" Height="28" aria-hidden="true" />
+                                    <div className="mt-2 text-center">
+                                      <DialogTitle
+                                        as="h3"
+                                        className="text-xl font-semibold leading-10 text-gray-900"
+                                      >
+                                        Are you sure you want to delete store{" "}
+                                        <span className="text-blue-600">{store.store_name || "_"}</span>?
+                                      </DialogTitle>
+                                    </div>
+                                  </div>
+                                  <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                                    <button
+                                      type="button"
+                                      onClick={() => handleDelete(store.id)}
+                                      disabled={isDeleting}
+                                      className="inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto"
+                                    >
+                                      {isDeleting ? (
+                                        <div className="flex w-10 h-5">
+                                          <Loading />
+                                        </div>
+                                      ) : (
+                                        "Delete"
+                                      )}
+                                    </button>
+                                    <button
+                                      type="button"
+                                      onClick={handleCloseDialog}
+                                      className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-6 py-3 text-sm font-medium text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:mt-0 sm:w-auto"
+                                    >
+                                      Cancel
+                                    </button>
+                                  </div>
+                                </DialogPanel>
+                              </div>
+                            </div>
+                          </Dialog>
+                        )}
                       </Link>
                     ))}
                   </div> */}
@@ -275,54 +303,68 @@ const StorePage = () => {
       </div>
 
       <div className="p-4 bg-gray-100 rounded-b-3xl">
-        <div className="mb-4">
-          <p className="text-lg">{t('Store Link')}:</p>
-          <a
-            href={store.link_store || '#'}
-            className="text-lg text-blue-600 hover:text-blue-800"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {store.link_store || '-'}
-            <FaLink className="inline ml-1" />
-          </a>
-        </div>
-
-        <div className="mb-4">
-          <p className="text-lg">{t('email')}:</p>
-          <p className="text-lg">{store.email || '-'}</p>
-        </div>
-
-        <div className="mb-4">
-          <p className="text-lg">{t('password')}:</p>
-          <p className="text-lg">{store.password || '-'}</p>
-        </div>
-
-        {store.deleted === 1 ? (
-          <div className="flex items-center text-lg gap-1 text-gray-700">
-            <MdPending className="text-yellow-500" size={30} />
-            <p className="text-yellow-600 font-semibold">Pending Deletion</p>
-          </div>
-        ) : (
-          <div className="flex justify-between items-center">
-            <button
-              type="button"
-              onClick={() => handleOpenDialog(store.id)}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg shadow-md transition-all duration-300"
-            >
-              <FaTrashAlt />
-              <span>{t('Delete Store')}</span>
-            </button>
-            <button
-              onClick={() => window.open(store.link_store, '_blank')}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-md transition-all duration-300"
-            >
-              <FaShoppingCart />
-              <span>{t('Go to Store')}</span>
-            </button>
-          </div>
-        )}
+  {store.status === "pending" ? (
+    <div className="flex items-center text-lg gap-2 text-yellow-600">
+      <MdPending className="text-yellow-500" size={30} />
+      <span className="font-semibold">{t("Pending")}</span>
+    </div>
+  ) : (
+    <>
+      <div className="mb-4">
+        <p className="text-lg">{t("Store Link")}:</p>
+        <a
+          href={store.link_store || "#"}
+          className="text-lg text-blue-600 hover:text-blue-800"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {store.link_store || "-"}
+          <FaLink className="inline ml-1" />
+        </a>
       </div>
+
+      <div className="mb-4">
+        <p className="text-lg">{t("email")}:</p>
+        <p className="text-lg">{store.email || "-"}</p>
+      </div>
+
+      <div className="mb-4">
+        <p className="text-lg">{t("password")}:</p>
+        <p className="text-lg">{store.password || "-"}</p>
+      </div>
+
+      <div className="flex justify-between items-center gap-4">
+        {/* Go to Store button */}
+        <button
+          onClick={() => window.open(store.link_store, "_blank")}
+          className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg shadow-md transition-all duration-300"
+        >
+          <FaLink />
+          <span>{t("Go to Store")}</span>
+        </button>
+
+        {/* CPanel button */}
+        <button
+          onClick={() => console.log("Navigate to Control Panel")}
+          className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-md transition-all duration-300"
+        >
+          <FaCogs />
+          <span>{t("CPanel")}</span>
+        </button>
+
+        {/* Delete icon */}
+        <button
+          type="button"
+          onClick={() => handleOpenDialog(store.id)}
+          className="text-red-600 hover:text-red-700 transition-all duration-300"
+        >
+          <FaTrashAlt size={24} />
+        </button>
+      </div>
+    </>
+  )}
+</div>
+
 
       {openDialog === store.id && (
         <Dialog
@@ -377,7 +419,6 @@ const StorePage = () => {
     </Link>
   ))}
 </div>
-
 
                 </div>
               )}

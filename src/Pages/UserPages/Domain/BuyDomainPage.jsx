@@ -8,6 +8,7 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { addToCart ,removeFromCart} from '../../../Redux/CartSlice.js';
 import DropDownMenu from '../../../Components/DropDownMenu';
+import { useTranslation } from 'react-i18next';
 
 const BuyDomainPage =()=>{
     const auth = useAuth();
@@ -20,17 +21,22 @@ const BuyDomainPage =()=>{
     const [domainRejected, setDomainRejected] = useState('');
     const [domainPendding, setDomainPending] = useState('');
     const [activeTab, setActiveTab] = useState("Approved");
+    const { t, i18n } = useTranslation();
 
      // State to control modal visibility and content
      const [showModal, setShowModal] = useState(false);
      const [selectedReason, setSelectedReason] = useState('');
 
     const [storeData ,setStoreData] =useState([])
-    const [selectStore, setSelectStore] = useState('Select Store');
+    const [selectStore, setSelectStore] = useState('');
     const [selectStoreId, setSelectStoreId] = useState('');
     const [openSelectStore, setOpenSelectStore] = useState(false);
 
     const dropdownStoreRef =useRef();
+
+    useEffect(() => {
+        setSelectStore(t("Select Store"));
+      }, [t]); // Ensure it updates if the language changes
 
      const fetchStoresData = async () => {
         setIsLoading(true);
@@ -240,7 +246,7 @@ const BuyDomainPage =()=>{
 
             <form onSubmit={handleSubmitAdd} className="w-full flex flex-col gap-y-8 bg-gradient-to-b from-white to-gray-50 rounded-2xl shadow-lg">
             <div className="w-full flex flex-col gap-6 p-6 bg-white rounded-lg shadow-sm border border-gray-200">
-                <h1 className="text-3xl text-mainColor font-bold tracking-tight mb-4">Request Your Own Domain</h1>
+                <h1 className="text-3xl text-mainColor font-bold tracking-tight mb-4">{t('Request Your Custom Domain')}</h1>
 
                 <div className="w-full flex flex-col md:flex-row justify-between items-center gap-6">
                 {/* Dropdown and Input Group */}
@@ -262,7 +268,7 @@ const BuyDomainPage =()=>{
                     <input
                     className="p-4 font-semibold text-lg w-full bg-gray-50 border-l border-gray-200 rounded-r-lg focus:bg-white focus:border-mainColor focus:ring-2 focus:ring-mainColor/30 outline-none transition-all duration-300 ease-in-out"
                     type="text"
-                    placeholder="Enter Domain Name"
+                    placeholder={t("Enter Domain Name")}
                     value={domainRequest}
                     onChange={(e) => setDomainRequest(e.target.value)}
                     />
@@ -271,15 +277,15 @@ const BuyDomainPage =()=>{
                 {/* Submit Button */}
                 <div className=" flex items-center justify-center">
                     <Button
-                    type="submit"
-                    Text="Send"
-                    BgColor="bg-mainColor hover:bg-mainColor/90 transition duration-200 ease-in-out"
-                    Color="text-white"
-                    Width="w-full md:w-auto"
-                    Size="text-xl"
-                    px="px-16"
-                    py="py-3"
-                    rounded="rounded-full shadow-md"
+                        type="submit"
+                        Text={t("send")}
+                        BgColor="bg-mainColor hover:bg-mainColor/90 transition duration-200 ease-in-out"
+                        Color="text-white"
+                        Width="w-full md:w-auto"
+                        Size="text-xl"
+                        px="px-16"
+                        py="py-3"
+                        rounded="rounded-full shadow-md"
                     />
                 </div>
                 </div>
@@ -287,13 +293,13 @@ const BuyDomainPage =()=>{
             </form>
 
             <div className='mt-10 mb-10'>
-                <h1 className='font-semibold text-center text-3xl'>Domains Requests</h1>
+                <h1 className='font-semibold text-center text-3xl'>{t("Domains Requests")}</h1>
                 <div>
                 <div className="flex w-full gap-3 mt-5 mb-5">
                         {/* Tab buttons */}
                         <div className='sm:w-2/4'> 
                         <Button
-                        Text="Pending Requests"
+                        Text={t("Pending Requests")}
                         Width="full"
                         px="px-1"
                         Size='text-xl'
@@ -304,7 +310,7 @@ const BuyDomainPage =()=>{
                         </div>
                         <div className='sm:w-2/4'> 
                         <Button
-                        Text="Approved Requests"
+                        Text={t("Approved Requests")}
                         Width="full"
                         px="px-1"
                         Size='text-xl'
@@ -315,7 +321,7 @@ const BuyDomainPage =()=>{
                         </div>
                         <div className='sm:w-2/4'> 
                         <Button
-                        Text="Rejected Requests"
+                        Text={t("Rejected Requests")}
                         Width="full"
                         px="px-1"
                         Size='text-xl'
@@ -335,11 +341,11 @@ const BuyDomainPage =()=>{
                                 <>
                                     <div key={domain.id} className="lg:w-[80%] xl:w-[30%] text-mainColor sm:w-full border border-mainColor rounded-2xl">
                                         <div className='mb-2 p-4 pb-0 text-xl md:text-2xl xl:text-2xl font-semibold'>
-                                            <h1 className='p-2'><span>Domain : </span>{domain.name || '-'}</h1>
+                                            <h1 className='p-2'><span>{t("domain")} : </span>{domain.name || '-'}</h1>
                                             {/* <h1 className='p-2'><span>Price : </span>{domain.price || '-'}</h1> */}
-                                            <h1 className='p-2'><span>Store : </span>{domain.store?.store_name || '-'}</h1>
+                                            <h1 className='p-2'><span>{t("store")} : </span>{domain.store?.store_name || '-'}</h1>
                                             {/* <h1 className='p-2'><span>Renew Date : </span>{domain.renewdate || '-'}</h1> */}
-                                            <h1 className='p-2 text-gray-500'><span className='text-mainColor'>Status : </span>{domain.status === 1? "Pending" :'Pending'}</h1>
+                                            <h1 className='p-2 text-gray-500'><span className='text-mainColor'>{t("status")} : </span>{domain.status === 1? t("pending") : t("pending")}</h1>
                                         </div>
                                     </div>       
                                 </>
@@ -350,7 +356,7 @@ const BuyDomainPage =()=>{
                     ):(
                             <>
                             <div className='w-full flex flex-col gap-5 justify-center items-center'>
-                                    <h1 className='text-center text-2xl lg:text-3xl text-mainColor font-semibold'>There is no pending domain requests available</h1>
+                                    <h1 className='text-center text-2xl lg:text-3xl text-mainColor font-semibold'>{t("noPendingRequests")}</h1>
                             </div>
                             </>
                     )
@@ -364,28 +370,6 @@ const BuyDomainPage =()=>{
                         <>
                         <div className='w-full flex flex-col gap-10'>
                         <div className="w-full flex flex-wrap items-center justify-start gap-10">
-                            {/* {domainApproved.map((domain, index) => (
-                                <>
-                                    <div key={domain.id} className={`lg:w-[80%] xl:w-[30%] text-mainColor sm:w-full border rounded-2xl ${selectedDomainId == domain.id ? 'border-green-500' : 'border-mainColor'}`}>
-                                        <div className='mb-2 p-4 pb-0 text-xl md:text-2xl xl:text-2xl font-semibold'>
-                                            <h1 className='p-2'><span>Domain : </span>{domain.name || '-'}</h1>
-                                            <h1 className='p-2'><span>Price : </span>{domain.price || '-'}</h1>
-                                            <h1 className='p-2'><span>Store : </span>{domain.store?.store_name || '-'}</h1>
-                                            <h1 className='p-2'><span>Renew Date : </span>{domain.renewdate || '-'}</h1>
-                                            <h1 className='p-2 text-green-600'><span className='text-mainColor'>Status : </span>{domain.status === 1? "Approved" :'Approved'}</h1>
-                                        </div>
-                                        <div className={`text-center font-semibold text-2xl border-t-2 ${selectedDomainId == domain.id ? 'border-green-500' : 'border-mainColor'}`}>
-                                             <button
-                                                onClick={() => handleAddToCart(domain)}
-                                                className={`w-full p-4 font-semibold rounded-b-xl
-                                                ${selectedDomainId == domain.id ? 'bg-green-500 text-white' : 'bg-mainColor text-white'}`}
-                                            >
-                                                {selectedDomainId == domain.id ? 'Selected Domain' : 'Add to Cart'}
-                                            </button>
-                                        </div>
-                                    </div>       
-                                </>
-                            ))} */}
                            {domainApproved.map((domain, index) => (
                                 <div
                                     key={domain.id}
@@ -394,17 +378,17 @@ const BuyDomainPage =()=>{
                                     {/* "Selected" Label */}
                                     {selectedDomainId == domain.id && (
                                     <div className="absolute top-0 right-0 p-2 bg-green-500 text-white text-sm font-semibold rounded-md shadow-md">
-                                        Selected
+                                       {t("selected")}
                                     </div>
                                     )}
 
                                     {/* Domain Details Section */}
                                     <div className="p-6 text-lg md:text-xl xl:text-2xl font-semibold text-mainColor space-y-4">
-                                    <h1><span className="font-medium">Domain:</span> {domain.name || '-'}</h1>
-                                    <h1><span className="font-medium">Price:</span> {domain.price || '-'}</h1>
-                                    <h1><span className="font-medium">Store:</span> {domain.store?.store_name || '-'}</h1>
-                                    <h1><span className="font-medium">Renew Date:</span> {domain.renewdate || '-'}</h1>
-                                    <h1 className="text-green-600"><span className="font-medium text-mainColor">Status:</span> {domain.status === 1 ? 'Approved' : 'Pending'}</h1>
+                                    <h1><span className="font-medium">{t("domain")}:</span> {domain.name || '-'}</h1>
+                                    <h1><span className="font-medium">{t("price")}:</span> {domain.price || '-'}</h1>
+                                    <h1><span className="font-medium">{t("store")}:</span> {domain.store?.store_name || '-'}</h1>
+                                    {/* <h1><span className="font-medium">Renew Date:</span> {domain.renewdate || '-'}</h1> */}
+                                    <h1 className="text-green-600"><span className="font-medium text-mainColor">{t("status")}:</span> {domain.status === 1 ? t('approved') : 'Approved'}</h1>
                                     </div>
 
                                     {/* Button Section */}
@@ -414,7 +398,7 @@ const BuyDomainPage =()=>{
                                         onClick={() => handleAddToCart(domain)}
                                         className="w-full p-4 font-semibold text-xl bg-mainColor text-white hover:bg-mainColor"
                                         >
-                                        Add to Cart
+                                        {t("Add to Cart")}
                                         </button>
                                     ) : (
                                         <div className="flex">
@@ -422,13 +406,13 @@ const BuyDomainPage =()=>{
                                             onClick={() => handleAddToCart(domain)} // Remove from cart logic
                                             className="w-full py-3 text-xl font-semibold text-white bg-red-600 hover:bg-red-700 shadow-md"
                                         >
-                                            Remove from Cart
+                                          {t("Remove from Cart")}
                                         </button>
                                         <button
                                         onClick={() => navigate('../cart')} // Go to cart page
                                             className="w-full py-3 text-xl font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-md "
                                         >
-                                            Go to Cart
+                                           {t("Go to Cart")}
                                         </button>
                                         </div>
                                     )}
@@ -441,7 +425,7 @@ const BuyDomainPage =()=>{
                     ):(
                             <>
                             <div className='w-full flex flex-col gap-5 justify-center items-center'>
-                                    <h1 className='text-center text-2xl lg:text-3xl text-mainColor font-semibold'>There is no approved domain requests available</h1>
+                                    <h1 className='text-center text-2xl lg:text-3xl text-mainColor font-semibold'>{t("noApprovedRequests")}</h1>
                             </div>
                             </>
                     )
@@ -459,17 +443,18 @@ const BuyDomainPage =()=>{
                                 <>
                                     <div key={domain.id} className="lg:w-[80%] xl:w-[30%] text-mainColor sm:w-full border border-mainColor rounded-2xl">
                                         <div className='mb-2 p-4 pb-0 text-xl md:text-2xl xl:text-2xl font-semibold'>
-                                            <h1 className='p-2'><span>Domain : </span>{domain.name || '-'}</h1>
-                                            <h1 className='p-2'><span>Price : </span>{domain.price || '-'}</h1>
-                                            <h1 className='p-2'><span>Store : </span>{domain.store?.store_name || '-'}</h1>
+                                            <h1 className='p-2'><span>{t("domain")} : </span>{domain.name || '-'}</h1>
+                                            <h1 className='p-2'><span>{("price")} : </span>{domain.price || '-'}</h1>
+                                            <h1 className='p-2'><span>{t("store")} : </span>{domain.store?.store_name || '-'}</h1>
                                             {/* <h1 className='p-2'><span>Renew Date : </span>{domain.renewdate || '-'}</h1> */}
-                                            <h1 className='p-2 text-red-500'><span className='text-mainColor'>Status : </span>{domain.status === 0? "Rejected" :'Rejected'}</h1>
+                                            <h1 className='p-2 text-red-500'><span className='text-mainColor'>{t("status")} : </span>{domain.status === 0? t("Rejected") :t('Rejected')}</h1>
                                             <h1 className='p-2'>
-                                                <span>Rejected Reason : </span>
+                                                <span>{t("rejectedReason")}
+                                                : </span>
                                                 <button 
                                                     className="text-red-500 underline cursor-pointer" 
                                                     onClick={() => handleViewReason(domain.rejected_reason)}>
-                                                    View
+                                                    {t("view")}
                                                 </button>
                                             </h1>                                       
                                         </div>
@@ -480,12 +465,12 @@ const BuyDomainPage =()=>{
                                 {showModal && (
                                     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                                         <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-                                            <h2 className="text-2xl font-bold mb-4">Rejected Reason</h2>
+                                            <h2 className="text-2xl font-bold mb-4">{t("rejectedReason")}</h2>
                                             <p className="text-lg mb-4">{selectedReason}</p>
                                             <button 
                                                 className="bg-mainColor text-white px-4 py-2 rounded" 
                                                 onClick={closeModal}>
-                                                Close
+                                                {t("close")}
                                             </button>
                                         </div>
                                     </div>
@@ -496,7 +481,7 @@ const BuyDomainPage =()=>{
                     ):(
                             <>
                             <div className='w-full flex flex-col gap-5 justify-center items-center'>
-                                    <h1 className='text-center text-2xl lg:text-3xl text-mainColor font-semibold'>There is no approved domain requests available</h1>
+                                    <h1 className='text-center text-2xl lg:text-3xl text-mainColor font-semibold'>{t("noRejectedRequests")}</h1>
                             </div>
                             </>
                     )

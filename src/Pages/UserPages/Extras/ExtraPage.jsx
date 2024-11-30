@@ -62,7 +62,7 @@ const ExtraPage = () => {
        const productWithPeriodAndPrice = { 
            ...product, 
            billingPeriod: selectedPeriod, 
-           finalprice: currentPrice 
+           finalprice: Number(currentPrice) || Number(product.price) + product.setup_fees
        };
    
        if (selectedProductIds.includes(product.id)) {
