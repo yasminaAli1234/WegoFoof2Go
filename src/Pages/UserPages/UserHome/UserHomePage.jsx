@@ -95,9 +95,49 @@
 // export default UserHomePage;
 
 
-import React from "react";
+import React, { useEffect, useState } from 'react';
+import { useAuth } from '../../../Context/Auth';
+import Loading from '../../../Components/Loading';
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { addToCart, removeFromCart } from '../../../Redux/CartSlice.js';
+import { PiStorefront } from "react-icons/pi";
+import { CiMoneyCheck1 } from "react-icons/ci";
+import { useNavigate } from 'react-router-dom';  // Import useNavigate
+import { useTranslation } from 'react-i18next';
 
 const UserHomePage = () => {
+
+  const auth = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState([]);
+  const dispatch = useDispatch();
+  const navigate = useNavigate(); // Replace useHistory with useNavigate
+  const { t } = useTranslation();
+
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+        const response = await axios.get('https://login.wegostores.com/user/v1/my_service', {
+            headers: {
+                Authorization: `Bearer ${auth.user.token}`,
+            },
+        });
+        if (response.status === 200) {
+            console.log(response.data)
+            setData(response.data.plans);
+        }
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    } finally {
+        setIsLoading(false);
+    }
+};
+
+    useEffect(() => {
+      fetchData();
+    }, []); 
+
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
       {/* Header */}
