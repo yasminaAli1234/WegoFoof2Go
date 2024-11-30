@@ -54,9 +54,9 @@ const EditPlanPage =()=>{
             setLimitPlan(planContent.limet_store|| '');
             setAppActive(planContent.app|| '');
 
-            if(planContent.price_per_month){
+            if(planContent.monthly){
                 setShowMonthlyPriceInput(true)
-                setMonthlyPrice(planContent.price_per_month)
+                setMonthlyPrice(planContent.monthly)
                 setMonthlyDiscountPrice(planContent.discount_monthly)
             }
             if(planContent.quarterly){
@@ -69,9 +69,9 @@ const EditPlanPage =()=>{
                 setSemiAnnualPrice(planContent["semi-annual"])
                 setSemiAnnualDiscountPrice(planContent.discount_semi_annual)
             }
-            if(planContent.price_per_year){
+            if(planContent.yearly){
                 setShowYearlyPriceInput(true)
-                setYearlyPrice(planContent.price_per_year)
+                setYearlyPrice(planContent.yearly)
                 setYearlyDiscountPrice(planContent.discount_yearly)
             }
 
@@ -149,7 +149,7 @@ const EditPlanPage =()=>{
 
             // Append selected prices if inputs are shown and filled
             if (showMonthlyPriceInput && monthlyPrice) {
-                formData.append('monthly', monthlyPrice);
+                formData.append('price_per_month', monthlyPrice);
                 formData.append('discount_monthly', monthlyDiscountPrice);
                 // formData.append('setupFees_monthly', MonthlySetUpFeesPrice);
             }
@@ -164,7 +164,7 @@ const EditPlanPage =()=>{
                 // formData.append('setupFees_semi_annual', semiAnnualSetUpFeesPrice);
             }
             if (showYearlyPriceInput && yearlyPrice) {
-                formData.append('yearly', yearlyPrice);
+                formData.append('price_per_year', yearlyPrice);
                 formData.append('discount_yearly', yearlyDiscountPrice);
                 // formData.append('setupFees_yearly', yearlySetUpFeesPrice);
             }
