@@ -303,67 +303,67 @@ const StorePage = () => {
       </div>
 
       <div className="p-4 bg-gray-100 rounded-b-3xl">
-  {store.status === "pending" ? (
-    <div className="flex items-center text-lg gap-2 text-yellow-600">
-      <MdPending className="text-yellow-500" size={30} />
-      <span className="font-semibold">{t("Pending")}</span>
+      {store.status === "pending" ? (
+        <div className="flex items-center text-lg gap-2 text-yellow-600">
+          <MdPending className="text-yellow-500" size={30} />
+          <span className="font-semibold">{t("pending")}</span>
+        </div>
+      ) : (
+        <>
+          <div className="mb-4">
+            <p className="text-lg">{t("Store Link")}:</p>
+            <a
+              href={store.link_store || "#"}
+              className="text-lg text-blue-600 hover:text-blue-800"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {store.link_store || "-"}
+              <FaLink className="inline ml-1" />
+            </a>
+          </div>
+
+          <div className="mb-4">
+            <p className="text-lg">{t("email")}:</p>
+            <p className="text-lg">{store.email || "-"}</p>
+          </div>
+
+          <div className="mb-4">
+            <p className="text-lg">{t("password")}:</p>
+            <p className="text-lg">{store.password || "-"}</p>
+          </div>
+
+          <div className="flex justify-between items-center gap-4">
+            {/* Go to Store button */}
+            <button
+              onClick={() => window.open(store.link_store, "_blank")}
+              className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg shadow-md transition-all duration-300"
+            >
+              <FaLink />
+              <span>{t("Go to Store")}</span>
+            </button>
+
+            {/* CPanel button */}
+            <button
+              onClick={() => console.log("Navigate to Control Panel")}
+              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-md transition-all duration-300"
+            >
+              <FaCogs />
+              <span>{t("CPanel")}</span>
+            </button>
+
+            {/* Delete icon */}
+            <button
+              type="button"
+              onClick={() => handleOpenDialog(store.id)}
+              className="text-red-600 hover:text-red-700 transition-all duration-300"
+            >
+              <FaTrashAlt size={24} />
+            </button>
+          </div>
+        </>
+      )}
     </div>
-  ) : (
-    <>
-      <div className="mb-4">
-        <p className="text-lg">{t("Store Link")}:</p>
-        <a
-          href={store.link_store || "#"}
-          className="text-lg text-blue-600 hover:text-blue-800"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {store.link_store || "-"}
-          <FaLink className="inline ml-1" />
-        </a>
-      </div>
-
-      <div className="mb-4">
-        <p className="text-lg">{t("email")}:</p>
-        <p className="text-lg">{store.email || "-"}</p>
-      </div>
-
-      <div className="mb-4">
-        <p className="text-lg">{t("password")}:</p>
-        <p className="text-lg">{store.password || "-"}</p>
-      </div>
-
-      <div className="flex justify-between items-center gap-4">
-        {/* Go to Store button */}
-        <button
-          onClick={() => window.open(store.link_store, "_blank")}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg shadow-md transition-all duration-300"
-        >
-          <FaLink />
-          <span>{t("Go to Store")}</span>
-        </button>
-
-        {/* CPanel button */}
-        <button
-          onClick={() => console.log("Navigate to Control Panel")}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-md transition-all duration-300"
-        >
-          <FaCogs />
-          <span>{t("CPanel")}</span>
-        </button>
-
-        {/* Delete icon */}
-        <button
-          type="button"
-          onClick={() => handleOpenDialog(store.id)}
-          className="text-red-600 hover:text-red-700 transition-all duration-300"
-        >
-          <FaTrashAlt size={24} />
-        </button>
-      </div>
-    </>
-  )}
-</div>
 
 
       {openDialog === store.id && (
