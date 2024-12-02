@@ -164,8 +164,8 @@ const ExtraPage = () => {
                                           <h2 className="text-center text-mainColor font-semibold text-3xl mb-4">{product.name}</h2>
                                           <div className="space-y-3 mb-6">
                                           <p className="text-gray-700"> {product.description}</p>
-                                          <p className="text-gray-700 flex items-center gap-2"><CiMoneyCheck1 size={30} className='text-mainColor font-semibold' /><span className="font-semibold">SetUp Fees:</span> {product.setup_fees || '0'} EGP</p>
-                                          <p className="text-gray-700 flex items-center gap-2"><MdAttachMoney size={30} className='text-mainColor font-semibold' /><span className="font-semibold">Price:</span> {product.price || '0'} EGP</p>
+                                          <p className="text-gray-700 flex items-center gap-2"><CiMoneyCheck1 size={30} className='text-mainColor font-semibold' /><span className="font-semibold">{t("SetUp Fees")}:</span> {product.setup_fees || '0'} {t("EGP")}</p>
+                                          <p className="text-gray-700 flex items-center gap-2"><MdAttachMoney size={30} className='text-mainColor font-semibold' /><span className="font-semibold">{t("price")}:</span> {product.price || '0'} {t("EGP")}</p>
                                           </div>
                                    </div>    
 

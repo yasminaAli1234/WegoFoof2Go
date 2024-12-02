@@ -1,49 +1,3 @@
-// import React, { useEffect, useState } from 'react';
-// import { useAuth } from '../../../Context/Auth';
-// import Loading from '../../../Components/Loading';
-// import axios from 'axios';
-// import {Button} from '../../../Components/Button'
-// import {ButtonAdd} from '../../../Components/Button'
-// import { Link ,useNavigate} from 'react-router-dom';
-
-// const AdminHomePage =()=>{
-
-    // const auth = useAuth();
-    // const navigate = useNavigate();
-    // const [isLoading, setIsLoading] = useState(false);
-    // const [data, setData] = useState('');
-
-    // const fetchData = async () => {
-    //     setIsLoading(true);
-    //     try {
-    //            const response = await axios.get('https://login.wegostores.com/admin/v1/home', {
-    //                   headers: {
-    //                          Authorization: `Bearer ${auth.user.token}`,
-    //                   },
-    //            });
-    //            if (response.status === 200) {
-    //                   console.log(response.data)
-    //                   setData(response.data.order)
-    //            }
-    //     } catch (error) {
-    //            console.error('Error fetching data:', error);
-    //     } finally {
-    //            setIsLoading(false);
-    //     }
-    // };
-
-    // useEffect(() => {
-    //     fetchData(); 
-    // }, []);
-
-//     return(
-//         <>
-//         <h1>Dashboard Admin</h1>
-//         </>
-//     )
-// }
-
-// export default AdminHomePage;
 import React, { useEffect, useState } from "react";
 import { FaMoneyBill, FaShoppingCart, FaUsers, FaChartLine } from "react-icons/fa";
 import { useAuth } from '../../../Context/Auth';
@@ -78,7 +32,7 @@ const AdminHomePage = () => {
              });
              if (response.status === 200) {
                     console.log(response.data)
-                    setData2(response.data.order)
+                    setData2(response.data)
              }
       } catch (error) {
              console.error('Error fetching data:', error);
@@ -111,8 +65,8 @@ const AdminHomePage = () => {
               +10%
             </span>
           </div>
-          <h2 className="mt-4 text-lg font-semibold">Bending Payment</h2>
-          <p className="text-3xl font-bold mt-2">{data.bending_payment}</p>
+          <h2 className="mt-4 text-lg font-semibold">Pending Payment</h2>
+          <p className="text-3xl font-bold mt-2">{data2.pending_payments}</p>
         </div>
 
         {/* Revenue Card */}
@@ -124,7 +78,7 @@ const AdminHomePage = () => {
             </span>
           </div>
           <h2 className="mt-4 text-lg font-semibold">Revenue</h2>
-          <p className="text-3xl font-bold mt-2">${data.revenue}</p>
+          <p className="text-3xl font-bold mt-2">${data2.payment_year}</p>
         </div>
 
         {/* Order Pending Card */}
@@ -136,7 +90,7 @@ const AdminHomePage = () => {
             </span>
           </div>
           <h2 className="mt-4 text-lg font-semibold">Order Pending</h2>
-          <p className="text-3xl font-bold mt-2">{data.order_pending}</p>
+          <p className="text-3xl font-bold mt-2">{data2.pending_orders}</p>
         </div>
 
         {/* Order In Progress Card */}
@@ -148,7 +102,7 @@ const AdminHomePage = () => {
             </span>
           </div>
           <h2 className="mt-4 text-lg font-semibold">Order In Progress</h2>
-          <p className="text-3xl font-bold mt-2">{data.order_in_progress}</p>
+          <p className="text-3xl font-bold mt-2">{data2.in_progress_orders}</p>
         </div>
       </div>
 

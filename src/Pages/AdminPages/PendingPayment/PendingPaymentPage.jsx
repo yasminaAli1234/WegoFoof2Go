@@ -176,7 +176,7 @@ const [paymentStatuses, setPaymentStatuses] = useState({});
                                     <td
                                             className="min-w-[150px] sm:min-w-[120px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                     >
-                                            {payment?.plan?.amount || '_'}
+                                            {payment?.amount || '_'}
                                     </td>
                                     <td className="px-4 py-3 text-center">
                                         <span

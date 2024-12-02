@@ -28,7 +28,7 @@ const UserHomePage = () => {
         });
         if (response.status === 200) {
             console.log(response.data)
-            setData(response.data.plans);
+            setData(response.data);
         }
     } catch (error) {
         console.error('Error fetching data:', error);
@@ -78,10 +78,12 @@ const UserHomePage = () => {
         {/* Subscription Plan Section */}
         <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
           <h2 className="text-lg font-semibold text-gray-700 mb-2">Your Plan</h2>
-          <p className="text-gray-500 mb-4">Plan: <strong>Basic</strong> (Expires in 10 days)</p>
+          <p className="text-gray-500 mb-4">Plan: <strong>{data.plan?.name}</strong> (Expires in 10 days)</p>
+          <Link to="subscription">
           <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">
             Upgrade Plan
           </button>
+          </Link>
         </div>
 
         {/* Store Overview */}

@@ -464,11 +464,11 @@ const CheckoutPage = () => {
                 Thank you for your order! We’ll be in touch with you shortly to confirm the details.
               </p>
               <button
-  onClick={() => setShowSuccessModal(false)}
-  className="bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white px-8 py-3 rounded-lg shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none"
->
-  Close
-</button>
+                onClick={() => setShowSuccessModal(false)}
+                className="bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white px-8 py-3 rounded-lg shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none"
+              >
+                Close
+              </button>
 
             </div>
           </div>
