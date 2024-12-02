@@ -12,8 +12,10 @@ import { useDispatch } from 'react-redux';
 import { addToCart, removeFromCart } from '../../../Redux/CartSlice.js'; // Added removeFromCart
 import { CiMoneyCheck1 } from "react-icons/ci";
 import { MdAttachMoney } from "react-icons/md";
+import { useTranslation } from 'react-i18next';
 
 const ExtraPage = () => {
+       const { t } = useTranslation();
 
     const auth = useAuth();
     const [isLoading, setIsLoading] = useState(false);
@@ -122,7 +124,7 @@ const ExtraPage = () => {
                dispatch(addToCart(productWithDetails));
            });
        } else {
-           console.warn("extraProduct is not an array:", extraProduct);
+           console.log("extraProduct is not an array:", extraProduct);
        }
    }, [selectedProductIds, extraProduct, billingPeriod, dispatch]);
 
@@ -135,74 +137,6 @@ const ExtraPage = () => {
 
      };
      
-   
-
-//     const handleAddToCart = (product) => {
-//        const selectedPeriod = billingPeriod[product.id] || 'monthly';
-//        const priceOptions = {
-//            monthly: product.monthly,
-//            quarterly: product.quarterly || product.monthly * 3,
-//            semiAnnually: product["semi-annual"] || product.monthly * 6,
-//            annually: product.yearly,
-//        };
-//        const currentPrice = priceOptions[selectedPeriod];
-   
-//        const productWithPeriodAndPrice = { 
-//            ...product, 
-//            billingPeriod: selectedPeriod, 
-//            finalprice: currentPrice 
-//        };
-   
-//        if (selectedProductId == product.id) {
-//            // Deselect product and remove from cart
-//            setSelectedProductId(null);
-//            dispatch(removeFromCart(productWithPeriodAndPrice));
-       //     localStorage.removeItem('selectedProductId');
-//        } else {
-//            // Deselect previous product and add new product
-//            if (selectedProductId !== null) {
-//                const previousProduct = extraProduct.find((p) => p.id == selectedProductId);
-//                const previousProductWithPeriodAndPrice = {
-//                    ...previousProduct,
-//                    billingPeriod: billingPeriod[previousProduct.id] || 'monthly',
-//                    finalprice: priceOptions[billingPeriod[previousProduct.id] || 'monthly']
-//                };
-//                dispatch(removeFromCart(previousProductWithPeriodAndPrice));
-//                localStorage.removeItem('selectedProductId');
-//            }
-//            dispatch(addToCart(productWithPeriodAndPrice));
-//            setSelectedProductId(product.id);
-//            localStorage.setItem('selectedProductId', product.id);  // Save selected product to localStorage
-//        }
-//    };
-   
-//    // Handle billing period change
-//    const handleBillingPeriodChange = (productId, newPeriod) => {
-//        setBillingPeriod((prev) => ({ ...prev, [productId]: newPeriod }));
-//    };
-//     useEffect(() => {
-//         fetchData(); 
-//     }, []);
-
-//     useEffect(() => {
-//        const savedProductId = localStorage.getItem('selectedProductId');
-//        if (savedProductId && extraProduct.length > 0) {
-//            setSelectedProductId(savedProductId);
-//        }
-//        console.log(savedProductId)
-//    }, [extraProduct]); 
-
-//    useEffect(() => {
-//        // If a product is selected, add it to the cart
-//        if (selectedProductId) {
-//            const selectedProduct = extraProduct.find((product) => product.id == selectedProductId);
-//            console.log(selectedProduct)
-//            if (selectedProduct) {
-//                dispatch(addToCart(selectedProduct));
-//            }
-//        }
-//    }, [selectedProductId, extraProduct, dispatch]); // Ensure to run only when selectedProductId or product change
-    
     if (isLoading) {
         return (
           <div className="w-1/4 h-full flex items-start mt-[10%] justify-center m-auto">
@@ -234,104 +168,57 @@ const ExtraPage = () => {
                                           <p className="text-gray-700 flex items-center gap-2"><MdAttachMoney size={30} className='text-mainColor font-semibold' /><span className="font-semibold">Price:</span> {product.price || '0'} EGP</p>
                                           </div>
                                    </div>    
-                                          {/* <div>
-                                          {product.my_extra === true ? (
+
+                                   <div>
+                                   {product.my_extra === true ? (
+                                   <button
+                                   className="w-full py-3 font-semibold rounded-lg transition-transform transform bg-gray-300 text-gray-800 hover:scale-105"
+                                   >
+                                   {t("My Extra Product")}
+                                   </button>
+                                   ) : (
+                                   <>
+                                   <div className="w-full">
+                                          {/* Add to Cart Button */}
+                                          {!selectedProductIds.includes(product.id) && (
                                           <button
-                                                 className={`w-full py-3 font-semibold rounded-lg transition-transform transform 
-                                                 bg-gray-300 text-gray-800 hover:scale-105`}
-                                          >
-                                                 My Extra Product
-                                          </button>
-                                          ) : (
-                                          <>
-                                                 <div className="w-full">
-                                                 {selectedProductId != product.id && (
-                                                 <button
-                                                 onClick={() => handleAddToCart(product)}
-                                                 className={`w-full py-3 font-semibold rounded-lg transition-all duration-300 transform 
-                                                 ${selectedProductId === product.id ? 'bg-red-600 text-white hover:bg-red-700' : 'bg-mainColor text-white hover:bg-blue-700'} 
+                                          onClick={() => handleAddToCart(product)}
+                                          className={`w-full py-3 font-semibold rounded-lg transition-all duration-300 transform 
+                                                 ${selectedProductIds.includes(product.id) ? 'bg-red-600 text-white hover:bg-red-700' : 'bg-mainColor text-white hover:bg-blue-700'} 
                                                  hover:scale-105 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mainColor`}
-                                                 >
-                                                 Add to Cart
-                                                 </button>
-                                                 )}
-
-                                                 {selectedProductId == product.id && (
-                                                 <div className="flex space-x-3 mt-3">
-                                                 <button
-                                                        onClick={() => handleAddToCart(product)}
-                                                        className="w-full text-xl py-3 font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-md"
-                                                 >
-                                                        Remove from Cart
-                                                 </button>
-                                                 <button
-                                                        onClick={() => navigate('../cart')}
-                                                        className="w-full text-xl py-3 font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-md"
-                                                 >
-                                                        Go to Cart
-                                                 </button>
-                                                 </div>
-                                                 )}
-                                                 </div>
-                                          </>
-                                          )}
-                                          {selectedProductId == product.id && (
-                                          <div className="absolute top-0 left-0 p-2 bg-green-500 text-white text-sm font-semibold rounded-tr-lg">
-                                                 Selected
-                                          </div>
-                                          )}
-                                          </div> */}
-
-                                          <div>
-                                          {product.my_extra === true ? (
-                                          <button
-                                          className="w-full py-3 font-semibold rounded-lg transition-transform transform bg-gray-300 text-gray-800 hover:scale-105"
                                           >
-                                          My Extra Product
+                                          {t("Add to Cart")}
                                           </button>
-                                          ) : (
-                                          <>
-                                          <div className="w-full">
-                                                 {/* Add to Cart Button */}
-                                                 {!selectedProductIds.includes(product.id) && (
-                                                 <button
-                                                 onClick={() => handleAddToCart(product)}
-                                                 className={`w-full py-3 font-semibold rounded-lg transition-all duration-300 transform 
-                                                        ${selectedProductIds.includes(product.id) ? 'bg-red-600 text-white hover:bg-red-700' : 'bg-mainColor text-white hover:bg-blue-700'} 
-                                                        hover:scale-105 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mainColor`}
-                                                 >
-                                                 Add to Cart
-                                                 </button>
-                                                 )}
-
-                                                 {/* Remove from Cart and Go to Cart Buttons */}
-                                                 {selectedProductIds.includes(product.id) && (
-                                                 <div className="flex space-x-3 mt-3">
-                                                 <button
-                                                        onClick={() => handleRemoveFromCart(product)}
-                                                        className="w-full text-xl py-3 font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-md"
-                                                 >
-                                                        Remove from Cart
-                                                 </button>
-                                                 <button
-                                                        onClick={() => navigate('../cart')}
-                                                        className="w-full text-xl py-3 font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-md"
-                                                 >
-                                                        Go to Cart
-                                                 </button>
-                                                 </div>
-                                                 )}
-                                          </div>
-                                          </>
                                           )}
 
-                                          {/* "Selected" Label */}
+                                          {/* Remove from Cart and Go to Cart Buttons */}
                                           {selectedProductIds.includes(product.id) && (
-                                          <div className="absolute top-0 left-0 p-2 bg-green-500 text-white text-sm font-semibold rounded-tr-lg">
-                                          Selected
+                                          <div className="flex space-x-3 mt-3">
+                                          <button
+                                                 onClick={() => handleRemoveFromCart(product)}
+                                                 className="w-full text-xl py-3 font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-md"
+                                          >
+                                                 {t("Remove from Cart")}
+                                          </button>
+                                          <button
+                                                 onClick={() => navigate('../cart')}
+                                                 className="w-full text-xl py-3 font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-md"
+                                          >
+                                                 {t("Go to Cart")}
+                                          </button>
                                           </div>
                                           )}
-                                          </div>
+                                   </div>
+                                   </>
+                                   )}
+
+                                   {/* "Selected" Label */}
+                                   {selectedProductIds.includes(product.id) && (
+                                   <div className="absolute top-0 left-0 p-2 bg-green-500 text-white text-sm font-semibold rounded-tr-lg">
+                                   {t("selected")}
+                                   </div>
+                                   )}
+                                   </div>
 
                                    </div>
                                    );
@@ -364,27 +251,27 @@ const ExtraPage = () => {
                                           {/* <p className="text-gray-700 flex items-center gap-2"><CiMoneyCheck1 size={30} className='text-mainColor font-semibold' /><span className="font-semibold">SetUp Fees:</span> {product.setup_fees || '0'} EGP</p> */}
                                           </div>
                                           <div className="flex justify-between items-center mb-4">
-                                          <label htmlFor={`billing-${product.id}`} className="text-xl md:text-2xl font-semibold text-gray-800">Billing Period:</label>
+                                          <label htmlFor={`billing-${product.id}`} className="text-xl md:text-2xl font-semibold text-gray-800">{t("Billing Period")}:</label>
                                           <select
                                                  id={`billing-${product.id}`}
                                                  value={selectedPeriod}
                                                  onChange={(e) => handleBillingPeriodChange(product.id, e.target.value)}
                                                  className="bg-gray-100 border border-gray-400 text-gray-700 rounded-lg p-2"
                                           >
-                                                 <option value="monthly">Monthly</option>
-                                                 <option value="quarterly">3 Months</option>
-                                                 <option value="semiAnnually">6 Months</option>
-                                                 <option value="annually">Yearly</option>
+                                                 <option value="monthly">{t("Monthly")}</option>
+                                                 <option value="quarterly">{t("3 Months")}</option>
+                                                 <option value="semiAnnually">{t("6 Months")}</option>
+                                                 <option value="annually">{t("Yearly")}</option>
                                           </select>
                                           </div>
                                           <div className="text-center mb-4">
                                           {selectedPeriod !== 'monthly' && (
-                                                 <p className="text-lg text-gray-500">{priceOptions.monthly} EGP / month</p>
+                                                 <p className="text-lg text-gray-500">{priceOptions.monthly} {t("EGP")} / {t("month")}</p>
                                           )}
-                                          <p className="text-3xl font-bold text-mainColor">{currentPrice} EGP</p>
-                                          <span className="text-gray-600">{selectedPeriod === 'monthly' ? 'per month' : `per ${selectedPeriod}`}</span>
+                                          <p className="text-3xl font-bold text-mainColor">{currentPrice} {t("EGP")}</p>
+                                          <span className="text-gray-600">{selectedPeriod === 'monthly' ? t('per month') : `per ${selectedPeriod}`}</span>
                                           {savings > 0 && (
-                                                 <p className="text-green-500 font-semibold mt-2">Save {savings} EGP per {selectedPeriod}</p>
+                                                 <p className="text-green-500 font-semibold mt-2">{t("Save")} {savings} {t("EGP per")} {selectedPeriod}</p>
                                           )}
                                           </div>            
 
@@ -440,7 +327,7 @@ const ExtraPage = () => {
                             <button
                             className="w-full py-3 font-semibold rounded-lg transition-transform transform bg-gray-300 text-gray-800 hover:scale-105"
                             >
-                            My Extra Product
+                            {t("My Extra Product")}
                             </button>
                             ) : (
                             <>
@@ -453,7 +340,7 @@ const ExtraPage = () => {
                                           ${selectedProductIds.includes(product.id) ? 'bg-red-600 text-white hover:bg-red-700' : 'bg-mainColor text-white hover:bg-blue-700'} 
                                           hover:scale-105 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mainColor`}
                                    >
-                                   Add to Cart
+                                   {t("Add to Cart")}
                                    </button>
                                    )}
 
@@ -464,13 +351,13 @@ const ExtraPage = () => {
                                           onClick={() => handleRemoveFromCart(product)}
                                           className="w-full text-xl py-3 font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-md"
                                    >
-                                          Remove from Cart
+                                          {t("Remove from Cart")}
                                    </button>
                                    <button
                                           onClick={() => navigate('../cart')}
                                           className="w-full text-xl py-3 font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-md"
                                    >
-                                          Go to Cart
+                                          {t("Go to Cart")}
                                    </button>
                                    </div>
                                    )}
@@ -481,7 +368,7 @@ const ExtraPage = () => {
                             {/* "Selected" Label */}
                             {selectedProductIds.includes(product.id) && (
                             <div className="absolute top-0 left-0 p-2 bg-green-500 text-white text-sm font-semibold rounded-tr-lg">
-                            Selected
+                            {t("selected")}
                             </div>
                             )}
                             </div>
@@ -494,7 +381,7 @@ const ExtraPage = () => {
               </>
               ) : (
               <div className='w-full flex flex-col gap-5 justify-center items-center'>
-                     <h1 className='text-center text-2xl lg:text-3xl text-mainColor font-semibold'>No extra product data available</h1>
+                     <h1 className='text-center text-2xl lg:text-3xl text-mainColor font-semibold'>{t("No extra product data available")}</h1>
               </div>
               )}
               </>

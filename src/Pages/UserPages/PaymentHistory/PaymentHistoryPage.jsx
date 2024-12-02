@@ -9,8 +9,10 @@ import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/re
 import { MdCheck } from "react-icons/md";
 import CheckBox from '../../../Components/CheckBox';
 import PaymentModel from '../../../Components/PaymentModel';
+import { useTranslation } from 'react-i18next';
 
 const PaymentHistoryPage = () => {
+        const { t } = useTranslation();
 
     const auth = useAuth();
     const [isLoading, setIsLoading] = useState(false);
@@ -88,10 +90,10 @@ const PaymentHistoryPage = () => {
                                 <thead className="w-full">
                                         <tr className="w-full border-b-2"> 
                                         <th className="min-w-[80px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">#</th>
-                                        <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Payment Method</th>
-                                        <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Service</th>
-                                        <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Invoice</th>
-                                        <th className="min-w-[100px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Action</th>
+                                        <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">{t("Payment Method")}</th>
+                                        <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">{t("Service")}</th>
+                                        <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">{t("Invoice")}</th>
+                                        <th className="min-w-[100px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">{t("Action")}</th>
                                         </tr>
                                 </thead>
                                 <tbody className="w-full">
@@ -114,7 +116,7 @@ const PaymentHistoryPage = () => {
                                                                 onClick={() => openModal(payment.orders)}
                                                                 className="text-mainColor underline"
                                                                 >
-                                                                View Services
+                                                                {t("View Services")}
                                                                 </button>
                                                         </td>
                                                         <td
@@ -124,7 +126,7 @@ const PaymentHistoryPage = () => {
                                                                 onClick={() => openPaymentModel(payment)}
                                                                 className="text-mainColor underline"
                                                                 >
-                                                                View Inovice
+                                                                {t("View Invoice")}
                                                                 </button>
                                                         </td>
                                                         <td
@@ -143,23 +145,23 @@ const PaymentHistoryPage = () => {
                         {isModalOpen && (
                                 <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center">
                                 <div className="bg-white p-6 rounded shadow-lg max-w-xl w-full overflow-y-auto max-h-96">
-                                <h2 className="text-3xl font-bold mb-4 text-gray-800">Service Details</h2>
+                                <h2 className="text-3xl font-bold mb-4 text-gray-800">{t("Service Details")}</h2>
                                 <ul className="space-y-6">
                                 {selectedOrders.map((order, idx) => (
                                         <li key={idx} className="border-b pb-4">
-                                        <h3 className="text-2xl font-semibold text-gray-800 mb-2">Service {idx + 1}</h3>
+                                        <h3 className="text-2xl font-semibold text-gray-800 mb-2">{t("Service")} {idx + 1}</h3>
                                         
                                         {/* Plan Section */}
                                         {order.plans && (
                                         <div className="mb-4">
-                                        <h4 className="text-xl font-semibold text-blue-600">Plan Details</h4>
+                                        <h4 className="text-xl font-semibold text-blue-600">{t("Plan Details")}</h4>
                                         <div className="text-gray-700 pl-4 text-xl">
-                                        <p><span className="font-semibold">Name:</span> {order.plans?.name || '-'}</p>
-                                        <p><span className="font-semibold">SetUp Fees: </span>{order.plans?.setup_fees || '0.00'} LE</p>
-                                        <p><span className="font-semibold">Price Per Month: </span>{order.plans?.price_per_month || '0.00'} LE</p>
-                                        <p><span className="font-semibold">Price Per Year: </span>{order.plans?.price_per_year || '0.00'} LE</p>
-                                        <p><span className="font-semibold">Limit Store:</span> {order.plans?.limet_store || 'N/A'}</p>
-                                        <p><span className="font-semibold">Included App:</span> {order.plans?.app === "1" ?"True" : "False" || 'N/A'}</p>
+                                        <p><span className="font-semibold">{t("name")}:</span> {order.plans?.name || '-'}</p>
+                                        <p><span className="font-semibold">{t("SetUp Fees")}: </span>{order.plans?.setup_fees || '0.00'} {t("LE")}</p>
+                                        <p><span className="font-semibold">{t("Price Per Month")}: </span>{order.plans?.price_per_month || '0.00'} {t("LE")}</p>
+                                        <p><span className="font-semibold">{t("Price Per Year")}: </span>{order.plans?.price_per_year || '0.00'} {t("LE")}</p>
+                                        <p><span className="font-semibold">{t("Limit Store")}:</span> {order.plans?.limet_store || 'N/A'}</p>
+                                        <p><span className="font-semibold">{t("Included App")}:</span> {order.plans?.app === "1" ?t("True") : t("False") || 'N/A'}</p>
                                         </div>
                                         </div>
                                         )}
@@ -167,20 +169,20 @@ const PaymentHistoryPage = () => {
                                         {/* Domain Section */}
                                         {order.domain && (
                                         <div className="mb-4">
-                                        <h4 className="text-lg font-semibold text-green-600">Domain Details</h4>
+                                        <h4 className="text-lg font-semibold text-green-600">{t("Domain Details")}</h4>
                                         <div className="text-gray-700 pl-4 text-xl">
-                                                <p><span className="font-semibold">Domain Name:</span> {order.domain.name || '-'}</p>
-                                                <p><span className="font-semibold">Price:</span> {order.domain.price || '-'}</p>
-                                                <p><span className="font-semibold">Store Name:</span> {order.domain.status || '-'}</p>
+                                                <p><span className="font-semibold">{t("Domain Name")}:</span> {order.domain.name || '-'}</p>
+                                                <p><span className="font-semibold">{t("Price")}:</span> {order.domain.price || '-'}</p>
+                                                <p><span className="font-semibold">{t("Store Name")}:</span> {order.domain.status || '-'}</p>
                                         </div>
                                         </div>
                                         )}
 
                                         {order.extra && order.extra !== null && (
                                         <div>
-                                        <h4 className="text-lg font-semibold text-purple-600">Extra Product</h4>
+                                        <h4 className="text-lg font-semibold text-purple-600">{t("Extra Product")}</h4>
                                         <div className="text-gray-700 pl-4 text-xl">
-                                                <p><span className="font-semibold">Product Name:</span> {order.extra?.name || '-'}</p>
+                                                <p><span className="font-semibold">{t("Product Name")}:</span> {order.extra?.name || '-'}</p>
                                         </div>
                                         </div>
                                         )}
@@ -192,7 +194,7 @@ const PaymentHistoryPage = () => {
                                 onClick={closeModal}
                                 className="mt-6 bg-mainColor text-center text-xl text-white py-2 px-6 rounded hover:bg-blue-600"
                                 >
-                                Close
+                                {t("close")}
                                 </button>
                                 </div>
                                 </div>
@@ -204,7 +206,7 @@ const PaymentHistoryPage = () => {
               ):(
                      <>
                      <div className='w-full flex flex-col gap-5 justify-center items-center'>
-                            <h1 className='text-center text-2xl lg:text-3xl text-mainColor font-semibold'>No payment history data available</h1>
+                            <h1 className='text-center text-2xl lg:text-3xl text-mainColor font-semibold'>{t("No payment history data available")}</h1>
                      </div>
                      </>
               )

@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import { PiVideoFill } from "react-icons/pi";
+import { useTranslation } from 'react-i18next';
 
 const TutorialPage = () => {
     const auth = useAuth();
@@ -14,6 +15,7 @@ const TutorialPage = () => {
     const [tutorialGroups, setTutorialGroups] = useState([]);
     const [selectedGroup, setSelectedGroup] = useState(null); // This tracks the selected group
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const fetchData = async () => {
         setIsLoading(true);
@@ -63,7 +65,7 @@ const TutorialPage = () => {
       
     return (
         <div>
-            <h1 className='text-center font-semibold mb-5 text-2xl text-mainColor'>Tutorial Groups</h1>
+            <h1 className='text-center font-semibold mb-5 text-2xl text-mainColor'>{t("Tutorial Groups")}</h1>
             {/* Display all tutorial groups */}
             {isLoading ? (
                 <Loading /> // Display loading component if fetching data
@@ -94,7 +96,7 @@ const TutorialPage = () => {
                         {selectedGroup?.name === group.name && (
                             <div className="flex flex-col gap-5 bg-gray-100 border rounded-lg w-full p-4">
                                 {group.tutorials.length === 0 ? (
-                                    <p className="text-center text-mainColor text-xl font-semibold">There are no tutorials</p>
+                                    <p className="text-center text-mainColor text-xl font-semibold">{t("There are no tutorials")}</p>
                                 ) : (
                                     group.tutorials.map((tutorial, index) => (
                                             <button
