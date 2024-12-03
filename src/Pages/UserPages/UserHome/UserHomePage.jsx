@@ -49,9 +49,9 @@ const UserHomePage = () => {
       );
   }    
     
-  // if (!data) {
-  //     return <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No Orders data available</div>;
-  // }
+  if (!data) {
+      return <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No data available</div>;
+  }
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
@@ -77,8 +77,8 @@ const UserHomePage = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {/* Subscription Plan Section */}
         <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-          <h2 className="text-lg font-semibold text-gray-700 mb-2">Your Plan</h2>
-          <p className="text-gray-500 mb-4">Plan: <strong>{data.plan?.name}</strong> (Expires in 10 days)</p>
+          <h2 className="text-lg font-semibold text-gray-700 mb-2">{t("Your Plan")}</h2>
+          <p className="text-gray-500 mb-4">{t("plan")}: <strong>{data.plan?.name}</strong></p>
           <Link to="subscription">
           <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">
             Upgrade Plan
@@ -106,8 +106,13 @@ const UserHomePage = () => {
 
         {/* Domain Requests */}
         <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-          <h2 className="text-lg font-semibold text-gray-700 mb-2">Domain Requests</h2>
-          <p className="text-gray-500 mb-4">You have <strong>1</strong> pending request</p>
+          <h2 className="text-lg font-semibold text-gray-700 mb-2">Domains</h2>
+          {
+            data.domains?.map((domain,index) =>(
+              <p className="text-gray-500 mb-4">{domain.name}</p>
+            ))
+          }
+          {/* <p className="text-gray-500 mb-4">You have <strong>1</strong> pending request</p> */}
           <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
             Request New Domain
           </button>
@@ -115,25 +120,16 @@ const UserHomePage = () => {
 
         {/* Extra Products */}
         <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-          <h2 className="text-lg font-semibold text-gray-700 mb-4">Extra Products</h2>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="flex flex-col items-center">
-              <img
-                src="https://via.placeholder.com/150"
-                alt="Product"
-                className="w-20 h-20 mb-2"
-              />
-              <button className="text-blue-500 hover:underline">Buy Now</button>
-            </div>
-            <div className="flex flex-col items-center">
-              <img
-                src="https://via.placeholder.com/150"
-                alt="Product"
-                className="w-20 h-20 mb-2"
-              />
-              <button className="text-blue-500 hover:underline">Buy Now</button>
-            </div>
-          </div>
+          <h2 className="text-lg font-semibold text-gray-700 mb-2">Extra Product</h2>
+          {
+            data.extras?.map((extra,index) =>(
+              <p className="text-gray-500 mb-4">{extra.name}</p>
+            ))
+          }
+          {/* <p className="text-gray-500 mb-4">You have <strong>1</strong> pending request</p> */}
+          <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
+            Request New Extra Product
+          </button>
         </div>
 
         {/* Tutorials */}

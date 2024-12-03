@@ -78,7 +78,7 @@ const AdminHomePage = () => {
             </span>
           </div>
           <h2 className="mt-4 text-lg font-semibold">Revenue</h2>
-          <p className="text-3xl font-bold mt-2">${data2.payment_year}</p>
+          <p className="text-3xl font-bold mt-2">{data2.payment_year} EGP</p>
         </div>
 
         {/* Order Pending Card */}
@@ -114,12 +114,12 @@ const AdminHomePage = () => {
           <div className="mt-4 flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Total Signups</p>
-              <p className="text-2xl font-bold text-gray-800">{data.signups}</p>
+              <p className="text-2xl font-bold text-gray-800">{data2.total_users}</p>
             </div>
             <div>
               <p className="text-sm text-gray-500">This Month</p>
               <p className="text-2xl font-bold text-blue-500">
-                {data.monthly_signups}
+                {data2.users_this_month}
               </p>
             </div>
           </div>
@@ -166,13 +166,13 @@ const AdminHomePage = () => {
             <div>
               <p className="text-sm text-gray-500">Total</p>
               <p className="text-2xl font-bold text-gray-800">
-                {data.subscriptions}
+                {data2.total_subscriptions}
               </p>
             </div>
             <div>
               <p className="text-sm text-gray-500">This Month</p>
               <p className="text-2xl font-bold text-green-500">
-                {data.monthly_subscriptions}
+                {data2.subscriptions_this_month}
               </p>
             </div>
           </div>

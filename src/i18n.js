@@ -71,7 +71,8 @@ const resources = {
       "Service": "Service",
       "Invoice": "Invoice",
       "Action": "Action",
-
+      "plan": "plan",
+      "Your Plan": "Your Plan",
       "View Services": "View Services",
       "View Invoice": "View Invoice",
       "Service Details": "Service Details",
@@ -178,7 +179,8 @@ const resources = {
       "Service": "الخدمة",
       "Invoice": "الفاتورة",
       "Action": "الإجراء",
-
+      "plan": "الخطة",
+      "Your Plan": "Your Plan",
       "View Services": "عرض الخدمات",
       "View Invoice": "عرض الفاتورة",
       "Service Details": "تفاصيل الخدمة",
