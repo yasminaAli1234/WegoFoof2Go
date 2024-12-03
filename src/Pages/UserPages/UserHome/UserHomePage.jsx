@@ -14,6 +14,7 @@ const UserHomePage = () => {
   const auth = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
+  const [tutorialGroups, setTutorialGroups] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate(); // Replace useHistory with useNavigate
   const { t } = useTranslation();
@@ -35,7 +36,31 @@ const UserHomePage = () => {
     } finally {
         setIsLoading(false);
     }
-};
+  };
+
+  const fetchTutorial = async () => {
+    setIsLoading(true);
+    try {
+        const response = await axios.get('https://login.wegostores.com/user/v1/tutorial', {
+            headers: {
+                Authorization: `Bearer ${auth.user.token}`,
+            },
+        });
+        if (response.status === 200) {
+            console.log(response.data)
+            setTutorialGroups(response.data.tutorial_groups);
+        }
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    } finally {
+        setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+      fetchData();
+      fetchTutorial();
+  }, []);
 
     useEffect(() => {
       fetchData();
@@ -54,98 +79,135 @@ const UserHomePage = () => {
   }
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      {/* Header */}
-      <header className="flex flex-col sm:flex-row sm:justify-between sm:items-center bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-4 shadow-md rounded-lg mb-6">
-        <div className="mb-4 sm:mb-0">
-          <h1 className="text-2xl font-semibold">Welcome back</h1>
-          <p className="text-gray-200">Here’s an overview of your dashboard</p>
-        </div>
-        <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-2 sm:space-y-0">
+    <div className="p-2 xl:p-6 bg-gray-50 min-h-screen font-sans">
+    {/* Header */}
+    <header className="flex flex-col sm:flex-row sm:justify-between sm:items-center bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-6 rounded-xl shadow-lg mb-8">
+      <div>
+        <h1 className="text-3xl font-bold mb-2">{t("Welcome Back!")}</h1>
+        <p className="text-gray-200 text-sm">
+          {t("Here’s an overview of your dashboard")}
+        </p>
+      </div>
+      <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-2 sm:space-y-0 mt-4 sm:mt-0">
         <Link to="store">
-        <button className="bg-white text-blue-600 px-5 py-2 rounded shadow hover:bg-gray-200 transition">
-            Create Store
+          <button className="bg-white text-blue-600 px-5 py-3 rounded-lg shadow-md hover:shadow-lg transition hover:bg-gray-200 text-sm font-semibold">
+            {t("Create Store")}
           </button>
         </Link>
-          <button className="bg-mainColor text-white px-5 py-2 rounded shadow hover:bg-blue-600 transition">
-            Request Demo
-          </button>
-        </div>
-      </header>
+        <button className="bg-mainColor text-white px-5 py-3 rounded-lg shadow-md hover:shadow-lg transition hover:bg-blue-700 text-sm font-semibold">
+          {t("Request Demo")}
+        </button>
+      </div>
+    </header>
 
-      {/* Main Content */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {/* Subscription Plan Section */}
-        <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-          <h2 className="text-lg font-semibold text-gray-700 mb-2">{t("Your Plan")}</h2>
-          <p className="text-gray-500 mb-4">{t("plan")}: <strong>{data.plan?.name}</strong></p>
-          <Link to="subscription">
-          <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">
-            Upgrade Plan
+    {/* Main Content */}
+    <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2 xl:gap-8">
+      {/* Subscription Plan Section */}
+      <div className="bg-white p-2 xl:p-6 rounded-xl shadow-lg hover:shadow-xl transition flex flex-col">
+        <h2 className="text-xl font-semibold text-gray-800 mb-4 text-center">
+          {t("Your Plan")}
+        </h2>
+        <p className="text-gray-600 mb-6 text-xl">
+          {t("Plan")}: <strong className="text-gray-800">{data.plan?.name || t("No Plan Available")}</strong>
+        </p>
+        <Link to="subscription" className="mt-auto text-center bg-blue-800 text-white px-4 py-3 rounded-lg hover:bg-blue-900 text-xl transition font-semibold">
+          <button>
+            {t("Upgrade Plan")}
           </button>
-          </Link>
-        </div>
+        </Link>
+      </div>
 
-        {/* Store Overview */}
-        <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-          <h2 className="text-lg font-semibold text-gray-700 mb-2">Your Stores</h2>
-          <ul className="space-y-2 mb-4">
-            <li className="flex justify-between text-gray-600">
-              <span>Store Name 1</span>
-              <button className="text-blue-500 hover:underline">Manage</button>
-            </li>
-            <li className="flex justify-between text-gray-600">
-              <span>Store Name 2</span>
-              <button className="text-blue-500 hover:underline">Manage</button>
-            </li>
-          </ul>
-          <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
-            Create New Store
-          </button>
-        </div>
-
-        {/* Domain Requests */}
-        <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-          <h2 className="text-lg font-semibold text-gray-700 mb-2">Domains</h2>
-          {
-            data.domains?.map((domain,index) =>(
-              <p className="text-gray-500 mb-4">{domain.name}</p>
+      {/* Store Overview */}
+      <div className="bg-white p-4 xl:p-6 rounded-xl shadow-lg hover:shadow-xl transition flex flex-col">
+        <h2 className="text-xl font-semibold text-gray-800 mb-4 text-center">
+        {t("Your Stores")}
+        </h2>
+        <ul className="space-y-3 mb-6 max-h-40 overflow-y-auto">
+          {data.stores?.length > 0 ? (
+            data.stores.map((store, index) => (
+              <li
+                key={index}
+                className="flex justify-between items-center text-gray-600 border-b pb-2">
+                <span className="text-xl">{store.name}</span>
+              </li>
             ))
-          }
-          {/* <p className="text-gray-500 mb-4">You have <strong>1</strong> pending request</p> */}
-          <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
-            Request New Domain
+          ) : (
+            <p className="text-gray-600 text-xl">{t("No Stores Available")}</p>
+          )}
+        </ul>
+        <Link to="store" className="mt-auto text-center bg-blue-800 text-white px-4 py-3 rounded-lg hover:bg-blue-900 text-xl transition font-semibold">
+          <button>
+          {t("Create New Store")}
           </button>
-        </div>
+        </Link>
+      </div>
 
-        {/* Extra Products */}
-        <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-          <h2 className="text-lg font-semibold text-gray-700 mb-2">Extra Product</h2>
-          {
-            data.extras?.map((extra,index) =>(
-              <p className="text-gray-500 mb-4">{extra.name}</p>
+      {/* Domain Requests */}
+      <div className="bg-white p-4 xl:p-6 rounded-xl shadow-lg hover:shadow-xl transition flex flex-col">
+      <h2 className="text-xl font-semibold text-gray-800 mb-4 text-center">
+      {t("Domains")}
+        </h2>
+        <div className="space-y-3 mb-6 max-h-40 overflow-y-auto">
+          {data.domains?.length > 0 ? (
+            data.domains.map((domain, index) => (
+              <p key={index} className="text-gray-600 text-xl">
+                {domain.name}
+              </p>
             ))
-          }
-          {/* <p className="text-gray-500 mb-4">You have <strong>1</strong> pending request</p> */}
-          <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
-            Request New Extra Product
-          </button>
+          ) : (
+            <p className="text-gray-600 text-sm">{t("No Domains Available")}</p>
+          )}
         </div>
+        <Link to="buy_domain" className="mt-auto text-center bg-blue-800 text-white px-4 py-3 rounded-lg hover:bg-blue-900 text-xl transition font-semibold">
+          <button>
+          {t("Request New Domain")}
+          </button>
+        </Link>
+      </div>
 
-        {/* Tutorials */}
-        <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-          <h2 className="text-lg font-semibold text-gray-700 mb-4">Learn and Grow</h2>
-          <ul className="space-y-2">
-            <li className="text-blue-500 hover:underline">How to set up your store</li>
-            <li className="text-blue-500 hover:underline">Best practices for marketing</li>
-            <li className="text-blue-500 hover:underline">Managing domains effectively</li>
-          </ul>
-          <button className="mt-4 bg-indigo-500 text-white px-4 py-2 rounded hover:bg-indigo-600 transition">
-            Explore Tutorials
-          </button>
+      {/* Extra Products */}
+      <div className="bg-white p-4 xl:p-6 rounded-xl shadow-lg hover:shadow-xl transition flex flex-col">
+      <h2 className="text-xl font-semibold text-gray-800 mb-4 text-center">
+      {t("Extra Products")}
+        </h2>
+        <div className="space-y-3 mb-6 max-h-40 overflow-y-auto">
+          {data.extras?.length > 0 ? (
+            data.extras.map((extra, index) => (
+              <p key={index} className="text-gray-600 text-xl">
+                {extra.name}
+              </p>
+            ))
+          ) : (
+            <p className="text-gray-600 text-xl">{t("No Extra Products Available")}</p>
+          )}
         </div>
+        <Link to="buy_domain" className="mt-auto text-center bg-blue-800 text-white px-4 py-3 rounded-lg hover:bg-blue-900 text-xl transition font-semibold">
+          <button>
+          {t("Request New Extra Product")}
+          </button>
+        </Link>
+      </div>
+
+      {/* Tutorials */}
+      <div className="bg-white p-4 xl:p-6 rounded-xl shadow-lg hover:shadow-xl transition flex flex-col">
+      <h2 className="text-xl font-semibold text-gray-800 mb-4 text-center">
+      {t("Learn and Grow")}
+        </h2>
+        <ul className="space-y-3 mb-6">
+          {tutorialGroups.map((tutorial, index) => (
+            <li key={index} className="text-blue-500 text-xl font-medium hover:underline">
+              {tutorial.name}
+            </li>
+          ))}
+        </ul>
+        <Link to="buy_domain" className="mt-auto text-center bg-blue-800 text-white px-4 py-3 rounded-lg hover:bg-blue-900 text-xl transition font-semibold">
+          <button>
+          {t("Explore Tutorials")}
+          </button>
+        </Link>
       </div>
     </div>
+  </div>
   );
 };
 

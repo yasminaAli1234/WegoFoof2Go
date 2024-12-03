@@ -218,7 +218,7 @@ const MenuSideUser =  ({setIsSidebarOpen }) => {
                                    </Link>
                                    {isActiveDomainList && (
                                           <div className="h-22 w-full transition-all duration-500">
-                                          <ul className="h-full listUser ml-10 mr-10 bg-blacks transition-all duration-700 flex flex-col gap-y-2">
+                                          <ul className={`h-full listUser ${i18n.language === 'ar' ? 'mr-10' : 'ml-10'} bg-blacks transition-all duration-700 flex flex-col gap-y-2`}>
                                                  <Link
                                                  to="my_domain"
                                                  onClick={() =>{handleClickMyDomain();handleLinkClick();}}
