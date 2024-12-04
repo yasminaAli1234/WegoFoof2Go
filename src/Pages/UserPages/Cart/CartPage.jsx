@@ -528,17 +528,33 @@ const CartPage = () => {
   };
 
   const handleBillingPeriodChange = (itemId, newPeriod, item) => {
+    // const priceOptions = {
+    //   monthly: item.price_per_month,
+    //   quarterly: item.price_per_month * 3,
+    //   semiAnnually: item.price_per_month * 6,
+    //   annually: item.price_per_year,
+    // };
+
     const priceOptions = {
-      monthly: item.price_per_month,
-      quarterly: item.price_per_month * 3,
-      semiAnnually: item.price_per_month * 6,
-      annually: item.price_per_year,
+      monthly: item.monthly,
+      quarterly: item.quarterly || item.monthly * 3,
+      semiAnnually: item["semi-annual"] || item.monthly * 6,
+      annually: item.yearly || item.monthly * 12,
+    };
+    const discountOptions = {
+        monthly: item.discount_monthly,
+        quarterly: item.discount_quarterly,
+        semiAnnually: item.discount_semi_annual,
+        annually: item.discount_yearly,
     };
 
     const updatedItem = {
       ...item,
       billingPeriod: newPeriod,
-      finalprice: priceOptions[newPeriod],
+      // finalprice: priceOptions[newPeriod],
+      finalprice: (discountOptions[newPeriod] 
+        ? discountOptions[newPeriod]
+        : priceOptions[newPeriod]) + item.setup_fees,
     };
 
     dispatch(updateCartItem({ id: itemId, type: item.type, updatedItem }));

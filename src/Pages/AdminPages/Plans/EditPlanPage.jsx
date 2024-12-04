@@ -312,6 +312,7 @@ const EditPlanPage =()=>{
                              value={monthlyDiscountPrice}
                              onChange={(e) => setMonthlyDiscountPrice(e.target.value)}
                              width="w-full"
+                             required={false}
                          />
                         </div>
                         {/* <div className="lg:w-1/2 sm:w-full">
@@ -359,6 +360,7 @@ const EditPlanPage =()=>{
                             value={quarterlyDiscountPrice}
                             onChange={(e) => setQuarterlyDiscountPrice(e.target.value)}
                             width="w-full"
+                            required={false}
                         />
                         </div>
                         {/* <div className="lg:w-1/2 sm:w-full">
@@ -406,6 +408,7 @@ const EditPlanPage =()=>{
                             value={semiAnnualDiscountPrice}
                             onChange={(e) => setSemiAnnualDiscountPrice(e.target.value)}
                             width="w-full"
+                            required={false}
                         />
                         </div>
                         {/* <div className="lg:w-1/2 sm:w-full">
@@ -453,6 +456,7 @@ const EditPlanPage =()=>{
                             value={yearlyDiscountPrice}
                             onChange={(e) => setYearlyDiscountPrice(e.target.value)}
                             width="w-full"
+                            required={false}
                         />
                         </div>
                         {/* <div className="lg:w-1/2 sm:w-full">

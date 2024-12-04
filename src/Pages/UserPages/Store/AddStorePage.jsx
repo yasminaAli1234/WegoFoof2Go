@@ -130,10 +130,10 @@ const AddStorePage = () => {
     //     auth.toastError('Please Enter Facebook Link.');
     //     return;
     // }
-    if (!thumbnailFile) {
-        auth.toastError('Please Enter Store Logo.');
-        return;
-    }
+    // if (!thumbnailFile) {
+    //     auth.toastError('Please Enter Store Logo.');
+    //     return;
+    // }
 
     const formData = new FormData();
     formData.append('store_name', storeName);
@@ -225,7 +225,7 @@ const AddStorePage = () => {
                       <div className="lg:w-[30%] sm:w-full">
                           <InputCustom
                               type="text"
-                              placeholder={t("Instagram Link")}
+                              placeholder={t("Instagram Link (Optional)")}
                               borderColor="mainColor"
                               value={instgramLink}
                               onChange={(e) => setInstgramLink(e.target.value)}
@@ -235,7 +235,7 @@ const AddStorePage = () => {
                       <div className="lg:w-[30%] sm:w-full">
                           <InputCustom
                               type="text"
-                              placeholder={t("Facebook Link")}
+                              placeholder={t("Facebook Link (Optional)")}
                               borderColor="mainColor"
                               value={facebookLink}
                               onChange={(e) => setFacebookLink(e.target.value)}

@@ -280,6 +280,7 @@ const AddPlanPage = () => {
                              value={monthlyDiscountPrice}
                              onChange={(e) => setMonthlyDiscountPrice(e.target.value)}
                              width="w-full"
+                             required={false}
                          />
                         </div>
                         {/* <div className="lg:w-1/2 sm:w-full">
@@ -327,6 +328,7 @@ const AddPlanPage = () => {
                             value={quarterlyDiscountPrice}
                             onChange={(e) => setQuarterlyDiscountPrice(e.target.value)}
                             width="w-full"
+                            required={false}
                         />
                         </div>
                         {/* <div className="lg:w-1/2 sm:w-full">
@@ -374,6 +376,7 @@ const AddPlanPage = () => {
                             value={semiAnnualDiscountPrice}
                             onChange={(e) => setSemiAnnualDiscountPrice(e.target.value)}
                             width="w-full"
+                            required={false}
                         />
                         </div>
                         {/* <div className="lg:w-1/2 sm:w-full">
@@ -389,8 +392,6 @@ const AddPlanPage = () => {
                         </>
                     )}
                     </div>
-
-                    {/* yearly Price Checkbox */}
                     <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
                     <div className="flex items-center gap-3 w-full lg:w-1/3 ">
                         <input 
@@ -421,6 +422,7 @@ const AddPlanPage = () => {
                             value={yearlyDiscountPrice}
                             onChange={(e) => setYearlyDiscountPrice(e.target.value)}
                             width="w-full"
+                            required={false}
                         />
                         </div>
                         {/* <div className="lg:w-1/2 sm:w-full">

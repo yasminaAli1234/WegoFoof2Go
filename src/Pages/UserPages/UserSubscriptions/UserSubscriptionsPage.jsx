@@ -3,9 +3,10 @@
 // import Loading from '../../../Components/Loading';
 // import axios from 'axios';
 // import { useDispatch } from 'react-redux';
-// import { addToCart, removeFromCart } from '../../../Redux/CartSlice.js'; // Added removeFromCart
+// import { addToCart, removeFromCart } from '../../../Redux/CartSlice.js';
 // import { PiStorefront } from "react-icons/pi";
 // import { CiMoneyCheck1 } from "react-icons/ci";
+// import { useNavigate } from 'react-router-dom';  // Import useNavigate
 
 // const UserSubscriptionsPage = () => {
 //     const auth = useAuth();
@@ -14,6 +15,7 @@
 //     const dispatch = useDispatch();
 //     const [billingPeriod, setBillingPeriod] = useState({});
 //     const [selectedPlanId, setSelectedPlanId] = useState(null);
+//     const navigate = useNavigate(); // Replace useHistory with useNavigate
 
 //     // Fetch plans from API and set localStorage if a plan is selected
 //     const fetchData = async () => {
@@ -35,32 +37,13 @@
 //         }
 //     };
 
-//     // Handle adding/removing plans from the cart
-//     // const handleAddToCart = (plan) => {
-//     //     if (selectedPlanId == plan.id) {
-//     //         // Deselect plan and remove from cart
-//     //         setSelectedPlanId(null);
-//     //         dispatch(removeFromCart(plan));
-//     //         localStorage.removeItem('selectedPlanId');
-//     //     } else {
-//     //         // Deselect previous plan and add new plan
-//     //         if (selectedPlanId !== null) {
-//     //             const previousPlan = plans.find((p) => p.id == selectedPlanId);
-//     //             dispatch(removeFromCart(previousPlan));
-//     //             localStorage.removeItem('selectedPlanId');
-//     //         }
-//     //         dispatch(addToCart(plan));
-//     //         setSelectedPlanId(plan.id);
-//     //         localStorage.setItem('selectedPlanId', plan.id);  // Save selected plan to localStorage
-//     //     }
-//     // };
 
     // const handleAddToCart = (plan) => {
     //     const selectedPeriod = billingPeriod[plan.id] || 'monthly';
     //     const priceOptions = {
     //         monthly: plan.monthly,
     //         quarterly: plan.quarterly || plan.monthly * 3,
-    //         semiAnnually: plan.semi-annual || plan.monthly * 6,
+    //         semiAnnually: plan["semi-annual"] || plan.monthly * 6,
     //         annually: plan.yearly,
     //     };
     //     const currentPrice = priceOptions[selectedPeriod];
@@ -68,7 +51,7 @@
     //     const planWithPeriodAndPrice = { 
     //         ...plan, 
     //         billingPeriod: selectedPeriod, 
-    //         finalprice: currentPrice 
+    //         finalprice: currentPrice + plan.setup_fees
     //     };
     
     //     if (selectedPlanId == plan.id) {
@@ -83,7 +66,7 @@
     //             const previousPlanWithPeriodAndPrice = {
     //                 ...previousPlan,
     //                 billingPeriod: billingPeriod[previousPlan.id] || 'monthly',
-    //                 finalprice: priceOptions[billingPeriod[previousPlan.id] || 'monthly']
+    //                 finalprice: priceOptions[billingPeriod[previousPlan.id] || 'monthly']+ plan.setup_fees
     //             };
     //             dispatch(removeFromCart(previousPlanWithPeriodAndPrice));
     //             localStorage.removeItem('selectedPlanId');
@@ -99,30 +82,28 @@
     //     setBillingPeriod((prev) => ({ ...prev, [planId]: newPeriod }));
     // };
 
-//     // Set the selected plan from localStorage on initial load
-//     useEffect(() => {
-//         // Fetch plans first
-//         fetchData();
-//     }, []); // Only fetch plans on initial load
+    // // Set the selected plan from localStorage on initial load
+    // useEffect(() => {
+    //     // Fetch plans first
+    //     fetchData();
+    // }, []); // Only fetch plans on initial load
 
-//     useEffect(() => {
-//         const savedPlanId = localStorage.getItem('selectedPlanId');
-//         if (savedPlanId && plans.length > 0) {
-//             setSelectedPlanId(savedPlanId);
-//         }
-//         console.log(savedPlanId)
-//     }, [plans]); // Run this effect when plans are set
+    // useEffect(() => {
+    //     const savedPlanId = localStorage.getItem('selectedPlanId');
+    //     if (savedPlanId && plans.length > 0) {
+    //         setSelectedPlanId(savedPlanId);
+    //     }
+    // }, [plans]); // Run this effect when plans are set
 
-//     useEffect(() => {
-//         // If a plan is selected, add it to the cart
-//         if (selectedPlanId) {
-//             const selectedPlan = plans.find((plan) => plan.id == selectedPlanId);
-//             console.log(selectedPlan)
-//             if (selectedPlan) {
-//                 dispatch(addToCart(selectedPlan));
-//             }
-//         }
-//     }, [selectedPlanId, plans, dispatch]); // Ensure to run only when selectedPlanId or plans change
+    // useEffect(() => {
+    //     // If a plan is selected, add it to the cart
+    //     if (selectedPlanId) {
+    //         const selectedPlan = plans.find((plan) => plan.id == selectedPlanId);
+    //         if (selectedPlan) {
+    //             dispatch(addToCart(selectedPlan));
+    //         }
+    //     }
+    // }, [selectedPlanId, plans, dispatch]); // Ensure to run only when selectedPlanId or plans change
 
 //     if (isLoading) {
 //         return (
@@ -144,83 +125,113 @@
 //                     const priceOptions = {
 //                         monthly: plan.monthly,
 //                         quarterly: plan.quarterly || plan.monthly * 3,
-//                         semiAnnually: plan.semi-annual || plan.monthly * 6,
+//                         semiAnnually: plan["semi-annual"] || plan.monthly * 6,
 //                         annually: plan.yearly,
 //                     };
 //                     const currentPrice = priceOptions[selectedPeriod];
 
-//                     // Calculate savings
-//                     const savings = selectedPeriod === 'monthly' ? 0 :
-//                         selectedPeriod === 'quarterly' ? (plan.monthly * 3 - currentPrice) :
-//                         selectedPeriod === 'semiAnnually' ? (plan.monthly * 6 - currentPrice) :
-//                         selectedPeriod === 'annually' ? (plan.monthly * 12 - currentPrice) : 0;
+                    // // Calculate savings
+                    // const savings = selectedPeriod === 'monthly' ? 0 :
+                    //     selectedPeriod === 'quarterly' ? (plan.monthly * 3 - currentPrice) :
+                    //     selectedPeriod === 'semiAnnually' ? (plan.monthly * 6 - currentPrice) :
+                    //     selectedPeriod === 'annually' ? (plan.monthly * 12 - currentPrice) : 0;
 
 //                     return (
 //                         <div
-//                             key={index}
-//                             className={`relative p-6 bg-white shadow-md text-2xl rounded-lg border border-gray-200 hover:shadow-lg transition-all 
-//                                 ${selectedPlanId == plan.id ? 'border-green-500' : ''}`}
-//                         >
+//                             key={plan.id}
+//                             className={`relative p-6  shadow-md text-2xl rounded-lg border border-gray-200 hover:shadow-lg transition-all 
+//                                 ${selectedPlanId == plan.id ? 'border-green-500 bg-green-100' : ''}`}
+//                             >
+//                             {/* Header */}
 //                             <h2 className="text-center text-mainColor font-semibold text-3xl mb-4">{plan.name}</h2>
 
+//                             {/* Plan Details */}
 //                             <div className="space-y-3 mb-6">
-//                                 <p className="text-gray-700"> {plan.description}</p>
-//                                 <p className="text-gray-700 flex items-center gap-2"><PiStorefront size={26} className='text-mainColor' /><span className="font-semibold">Number of stores : </span> {plan.limet_store || '0'}</p>
+//                                 <p className="text-gray-700">{plan.description}</p>
+//                                 <p className="text-gray-700 flex items-center gap-2"><PiStorefront size={26} className='text-mainColor' /><span className="font-semibold">Number of stores:</span> {plan.limet_store || '0'}</p>
 //                                 <p className="text-gray-700 flex items-center gap-2"><CiMoneyCheck1 size={30} className='text-mainColor font-semibold' /><span className="font-semibold">SetUp Fees:</span> {plan.setup_fees || '0'} EGP</p>
 //                             </div>
 
-//                             <div className="flex justify-between items-center mb-4">
-//                                 <label htmlFor={`billing-${index}`} className="text-xl md:text-2xl font-semibold text-gray-800">Billing Period:</label>
-//                                 <select
-//                                     id={`billing-${index}`}
-//                                     value={selectedPeriod}
-//                                     onChange={(e) => handleBillingPeriodChange(plan.id, e.target.value)}
-//                                     className="bg-gray-100 border border-gray-400 text-gray-700 rounded-lg p-2"
+                            // {/* Billing Period */}
+                            // <div className="flex justify-between items-center mb-4">
+                            //     <label htmlFor={`billing-${plan.id}`} className="text-xl md:text-2xl font-semibold text-gray-800">Billing Period:</label>
+                            //     <select
+                            //     id={`billing-${plan.id}`}
+                            //     value={selectedPeriod}
+                            //     onChange={(e) => handleBillingPeriodChange(plan.id, e.target.value)}
+                            //     className="bg-gray-100 border border-gray-400 text-gray-700 rounded-lg p-2"
+                            //     >
+                            //     <option value="monthly">Monthly</option>
+                            //     <option value="quarterly">3 Months</option>
+                            //     <option value="semiAnnually">6 Months</option>
+                            //     <option value="annually">Yearly</option>
+                            //     </select>
+                            // </div>
+
+                            // {/* Price Info */}
+                            // <div className="text-center mb-4">
+                            //     {selectedPeriod !== 'monthly' && (
+                            //     <p className="text-lg text-gray-500">{priceOptions.monthly} EGP / month</p>
+                            //     )}
+                            //     <p className="text-3xl font-bold text-mainColor">{currentPrice} EGP</p>
+                            //     <span className="text-gray-600">{selectedPeriod === 'monthly' ? 'per month' : `per ${selectedPeriod}`}</span>
+
+                            //     {savings > 0 && (
+                            //     <p className="text-green-500 font-semibold mt-2">Save {savings} EGP per {selectedPeriod}</p>
+                            //     )}
+                            // </div>
+
+//                             {/* Add to Cart and Remove from Cart */}
+//                             <div>
+//                                 {plan.my_plan === true ? (
+//                                 <button
+//                                     className={`w-full py-3 font-semibold rounded-lg transition-transform transform 
+//                                     bg-gray-300 text-gray-800 hover:scale-105`}
 //                                 >
-//                                     <option value="monthly">Monthly</option>
-//                                     <option value="quarterly">3 Months</option>
-//                                     <option value="semiAnnually">6 Months</option>
-//                                     <option value="annually">Yearly</option>
-//                                 </select>
-//                             </div>
-
-//                             <div className="text-center mb-4">
-//                                 {selectedPeriod !== 'monthly' && (
-//                                     <p className="text-lg text-gray-500">{priceOptions.monthly} EGP / month</p>
-//                                 )}
-//                                 <p className="text-3xl font-bold text-mainColor">{currentPrice} EGP</p>
-//                                 <span className="text-gray-600">{selectedPeriod === 'monthly' ? 'per month' : `per ${selectedPeriod}`}</span>
-
-//                                 {savings > 0 && (
-//                                     <p className="text-green-500 font-semibold mt-2">Save {savings} EGP per {selectedPeriod}</p>
-//                                 )}
-//                             </div>
-
-//                             <div className="text-center">
-//                                 {
-//                                     plan.my_plan=== true?(
-//                                         <>
+//                                     My Plan
+//                                 </button>
+//                                 ) : (
+//                                 <>
+//                                     <div className="w-full">
+//                                     {/* Add to Cart Button */}
+//                                     {selectedPlanId != plan.id && (
 //                                         <button
-//                                             className={`w-full py-3 font-semibold rounded-lg transition-transform transform 
-//                                             bg-mainColor text-white hover:scale-105`}
+//                                         onClick={() => handleAddToCart(plan)}
+//                                         className={`w-full py-3 font-semibold rounded-lg transition-all duration-300 transform 
+//                                         ${selectedPlanId === plan.id ? 'bg-red-600 text-white hover:bg-red-700' : 'bg-mainColor text-white hover:bg-blue-700'} 
+//                                         hover:scale-105 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mainColor`}
 //                                         >
-//                                             My Plan
+//                                         Add to Cart
 //                                         </button>
-//                                         </>
+//                                     )}
 
-//                                     ):
-//                                     (
-//                                         <>
-//                                         <button
-//                                             onClick={() => handleAddToCart(plan)}
-//                                             className={`w-full py-3 font-semibold rounded-lg transition-transform transform 
-//                                             ${selectedPlanId == plan.id ? 'bg-green-500 text-white' : 'bg-mainColor text-white hover:scale-105'}`}
-//                                         >
-//                                             {selectedPlanId == plan.id ? 'Selected Plan' : 'Add to Cart'}
-//                                         </button>
-//                                         </>
-//                                     )
-//                                 }
+                                //     {/* Remove from Cart and Go to Cart Buttons */}
+                                //     {selectedPlanId == plan.id && (
+                                //         <div className="flex space-x-3 mt-3">
+                                //         <button
+                                //             onClick={() => handleAddToCart(plan)}
+                                //             className="w-full text-xl py-3 font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-md"
+                                //         >
+                                //             Remove from Cart
+                                //         </button>
+                                //         <button
+                                //             onClick={() => navigate('../cart')}
+                                //             className="w-full text-xl py-3 font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-md"
+                                //         >
+                                //             Go to Cart
+                                //         </button>
+                                //         </div>
+                                //     )}
+                                //     </div>
+                                // </>
+                                // )}
+
+//                                 {/* "Selected" Label */}
+//                                 {selectedPlanId == plan.id && (
+//                                 <div className="absolute top-0 left-0 p-2 bg-green-500 text-white text-sm font-semibold rounded-tr-lg">
+//                                     Selected
+//                                 </div>
+//                                 )}
 //                             </div>
 //                         </div>
 //                     );
@@ -233,7 +244,6 @@
 // export default UserSubscriptionsPage;
 
 
-
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../../Context/Auth';
 import Loading from '../../../Components/Loading';
@@ -243,6 +253,7 @@ import { addToCart, removeFromCart } from '../../../Redux/CartSlice.js';
 import { PiStorefront } from "react-icons/pi";
 import { CiMoneyCheck1 } from "react-icons/ci";
 import { useNavigate } from 'react-router-dom';  // Import useNavigate
+import { FaCrown } from "react-icons/fa";
 
 const UserSubscriptionsPage = () => {
     const auth = useAuth();
@@ -251,9 +262,9 @@ const UserSubscriptionsPage = () => {
     const dispatch = useDispatch();
     const [billingPeriod, setBillingPeriod] = useState({});
     const [selectedPlanId, setSelectedPlanId] = useState(null);
-    const navigate = useNavigate(); // Replace useHistory with useNavigate
+    const navigate = useNavigate();
 
-    // Fetch plans from API and set localStorage if a plan is selected
+    // Fetch plans from API
     const fetchData = async () => {
         setIsLoading(true);
         try {
@@ -263,7 +274,7 @@ const UserSubscriptionsPage = () => {
                 },
             });
             if (response.status === 200) {
-                console.log(response.data)
+                console.log(response.data.plans)
                 setPlans(response.data.plans);
             }
         } catch (error) {
@@ -273,7 +284,7 @@ const UserSubscriptionsPage = () => {
         }
     };
 
-
+    // Add to cart logic
     const handleAddToCart = (plan) => {
         const selectedPeriod = billingPeriod[plan.id] || 'monthly';
         const priceOptions = {
@@ -282,54 +293,102 @@ const UserSubscriptionsPage = () => {
             semiAnnually: plan["semi-annual"] || plan.monthly * 6,
             annually: plan.yearly,
         };
-        const currentPrice = priceOptions[selectedPeriod];
-    
+        const discountOptions = {
+            monthly: plan.discount_monthly,
+            quarterly: plan.discount_quarterly,
+            semiAnnually: plan.discount_semi_annual,
+            annually: plan.discount_yearly,
+        };
+
+        const currentPrice = discountOptions[selectedPeriod] 
+        ? discountOptions[selectedPeriod] 
+        : priceOptions[selectedPeriod];
+
         const planWithPeriodAndPrice = { 
             ...plan, 
             billingPeriod: selectedPeriod, 
             finalprice: currentPrice + plan.setup_fees
         };
-    
+
         if (selectedPlanId == plan.id) {
-            // Deselect plan and remove from cart
             setSelectedPlanId(null);
             dispatch(removeFromCart(planWithPeriodAndPrice));
             localStorage.removeItem('selectedPlanId');
         } else {
-            // Deselect previous plan and add new plan
             if (selectedPlanId !== null) {
                 const previousPlan = plans.find((p) => p.id == selectedPlanId);
+                const previousPrice = priceOptions[billingPeriod[previousPlan.id] || 'monthly'];
                 const previousPlanWithPeriodAndPrice = {
                     ...previousPlan,
                     billingPeriod: billingPeriod[previousPlan.id] || 'monthly',
-                    finalprice: priceOptions[billingPeriod[previousPlan.id] || 'monthly']+ plan.setup_fees
+                    finalprice: previousPrice + plan.setup_fees,
                 };
                 dispatch(removeFromCart(previousPlanWithPeriodAndPrice));
                 localStorage.removeItem('selectedPlanId');
             }
             dispatch(addToCart(planWithPeriodAndPrice));
             setSelectedPlanId(plan.id);
-            localStorage.setItem('selectedPlanId', plan.id);  // Save selected plan to localStorage
+            localStorage.setItem('selectedPlanId', plan.id);
         }
     };
+
+    // const handleAddToCart = (plan) => {
+    //     const selectedPeriod = billingPeriod[plan.id] || 'monthly';
+    //     const priceOptions = {
+    //         monthly: plan.monthly,
+    //         quarterly: plan.quarterly || plan.monthly * 3,
+    //         semiAnnually: plan["semi-annual"] || plan.monthly * 6,
+    //         annually: plan.yearly,
+    //     };
+    //     const currentPrice = priceOptions[selectedPeriod];
     
+    //     const planWithPeriodAndPrice = { 
+    //         ...plan, 
+    //         billingPeriod: selectedPeriod, 
+    //         finalprice: currentPrice + plan.setup_fees
+    //     };
+    
+    //     if (selectedPlanId == plan.id) {
+    //         // Deselect plan and remove from cart
+    //         setSelectedPlanId(null);
+    //         dispatch(removeFromCart(planWithPeriodAndPrice));
+    //         localStorage.removeItem('selectedPlanId');
+    //     } else {
+    //         // Deselect previous plan and add new plan
+    //         if (selectedPlanId !== null) {
+    //             const previousPlan = plans.find((p) => p.id == selectedPlanId);
+    //             const previousPlanWithPeriodAndPrice = {
+    //                 ...previousPlan,
+    //                 billingPeriod: billingPeriod[previousPlan.id] || 'monthly',
+    //                 finalprice: priceOptions[billingPeriod[previousPlan.id] || 'monthly']+ plan.setup_fees
+    //             };
+    //             dispatch(removeFromCart(previousPlanWithPeriodAndPrice));
+    //             localStorage.removeItem('selectedPlanId');
+    //         }
+    //         dispatch(addToCart(planWithPeriodAndPrice));
+    //         setSelectedPlanId(plan.id);
+    //         localStorage.setItem('selectedPlanId', plan.id);  // Save selected plan to localStorage
+    //     }
+    // };
+
     // Handle billing period change
+   
     const handleBillingPeriodChange = (planId, newPeriod) => {
         setBillingPeriod((prev) => ({ ...prev, [planId]: newPeriod }));
     };
 
-    // Set the selected plan from localStorage on initial load
+    // Set selected plan from localStorage
     useEffect(() => {
-        // Fetch plans first
         fetchData();
-    }, []); // Only fetch plans on initial load
+        console.log(auth.user.package)
+    }, []);
 
     useEffect(() => {
         const savedPlanId = localStorage.getItem('selectedPlanId');
         if (savedPlanId && plans.length > 0) {
             setSelectedPlanId(savedPlanId);
         }
-    }, [plans]); // Run this effect when plans are set
+    }, [plans]);
 
     useEffect(() => {
         // If a plan is selected, add it to the cart
@@ -340,6 +399,7 @@ const UserSubscriptionsPage = () => {
             }
         }
     }, [selectedPlanId, plans, dispatch]); // Ensure to run only when selectedPlanId or plans change
+
 
     if (isLoading) {
         return (
@@ -356,41 +416,61 @@ const UserSubscriptionsPage = () => {
     return (
         <div className="w-full p-2 flex flex-col">
             <div className="w-full grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-3">
-                {plans.map((plan, index) => {
+                {plans.map((plan) => {
                     const selectedPeriod = billingPeriod[plan.id] || 'monthly';
                     const priceOptions = {
                         monthly: plan.monthly,
                         quarterly: plan.quarterly || plan.monthly * 3,
                         semiAnnually: plan["semi-annual"] || plan.monthly * 6,
-                        annually: plan.yearly,
+                        annually: plan.yearly || plan.monthly * 12,
+                    };
+                    const discountOptions = {
+                        monthly: plan.discount_monthly,
+                        quarterly: plan.discount_quarterly,
+                        semiAnnually: plan.discount_semi_annual,
+                        annually: plan.discount_yearly,
                     };
                     const currentPrice = priceOptions[selectedPeriod];
+                    const discountedPrice = discountOptions[selectedPeriod];
+                    const savings = discountedPrice ? currentPrice - discountedPrice : 0;
 
-                    // Calculate savings
-                    const savings = selectedPeriod === 'monthly' ? 0 :
-                        selectedPeriod === 'quarterly' ? (plan.monthly * 3 - currentPrice) :
-                        selectedPeriod === 'semiAnnually' ? (plan.monthly * 6 - currentPrice) :
-                        selectedPeriod === 'annually' ? (plan.monthly * 12 - currentPrice) : 0;
+                    // const savings = discountedPrice 
+                    // ? currentPrice - discountedPrice 
+                    // : selectedPeriod === 'monthly' 
+                    //     ? 0 
+                    //     : selectedPeriod === 'quarterly' 
+                    //         ? (plan.monthly * 3 - currentPrice) 
+                    //         : selectedPeriod === 'semiAnnually' 
+                    //             ? (plan.monthly * 6 - currentPrice) 
+                    //             : selectedPeriod === 'annually' 
+                    //                 ? (plan.monthly * 12 - currentPrice) 
+                    //                 : 0;                
+
 
                     return (
                         <div
                             key={plan.id}
-                            className={`relative p-6  shadow-md text-2xl rounded-lg border border-gray-200 hover:shadow-lg transition-all 
+                            className={`relative p-6 ${plan.my_plan === true && selectedPlanId != plan.id  ? 'bg-blue-800 text-white' : 'text-mainColor'}  shadow-md text-2xl rounded-lg border border-gray-200 hover:shadow-lg transition-all 
                                 ${selectedPlanId == plan.id ? 'border-green-500 bg-green-100' : ''}`}
                             >
                             {/* Header */}
-                            <h2 className="text-center text-mainColor font-semibold text-3xl mb-4">{plan.name}</h2>
+                            <h2 className="text-center font-semibold text-3xl mb-4">{plan.name}</h2>
 
                             {/* Plan Details */}
                             <div className="space-y-3 mb-6">
-                                <p className="text-gray-700">{plan.description}</p>
-                                <p className="text-gray-700 flex items-center gap-2"><PiStorefront size={26} className='text-mainColor' /><span className="font-semibold">Number of stores:</span> {plan.limet_store || '0'}</p>
-                                <p className="text-gray-700 flex items-center gap-2"><CiMoneyCheck1 size={30} className='text-mainColor font-semibold' /><span className="font-semibold">SetUp Fees:</span> {plan.setup_fees || '0'} EGP</p>
+                                <p>{plan.description}</p>
+                                <p className="flex items-center gap-2"><PiStorefront size={26} /><span className="font-semibold">Number of stores:</span> {plan.limet_store || '0'}</p>
+
+                                {plan.my_plan !== true && (
+                                <>
+                                <p className="flex items-center gap-2"><CiMoneyCheck1 size={30} className='text-mainColor font-semibold' /><span className="font-semibold text-mainColor">SetUp Fees:</span> {plan.setup_fees || '0'} EGP</p>
+                                </>
+                                )}
                             </div>
 
                             {/* Billing Period */}
                             <div className="flex justify-between items-center mb-4">
-                                <label htmlFor={`billing-${plan.id}`} className="text-xl md:text-2xl font-semibold text-gray-800">Billing Period:</label>
+                                <label htmlFor={`billing-${plan.id}`} className="text-xl md:text-2xl font-semibold">Billing Period:</label>
                                 <select
                                 id={`billing-${plan.id}`}
                                 value={selectedPeriod}
@@ -403,71 +483,118 @@ const UserSubscriptionsPage = () => {
                                 <option value="annually">Yearly</option>
                                 </select>
                             </div>
-
-                            {/* Price Info */}
+ 
                             <div className="text-center mb-4">
-                                {selectedPeriod !== 'monthly' && (
-                                <p className="text-lg text-gray-500">{priceOptions.monthly} EGP / month</p>
-                                )}
-                                <p className="text-3xl font-bold text-mainColor">{currentPrice} EGP</p>
-                                <span className="text-gray-600">{selectedPeriod === 'monthly' ? 'per month' : `per ${selectedPeriod}`}</span>
-
-                                {savings > 0 && (
-                                <p className="text-green-500 font-semibold mt-2">Save {savings} EGP per {selectedPeriod}</p>
+                                {discountedPrice ? (
+                                    <>
+                                        <p className="text-lg line-through">{currentPrice} EGP</p>
+                                        <p className="text-3xl font-bold">{discountedPrice} EGP</p>
+                                        <p className="text-green-500 font-semibold mt-2">Save {savings} EGP per {selectedPeriod}</p>
+                                    </>
+                                ) : (
+                                    <>
+                                        <p className="text-lg text-gray-500 line-through">{priceOptions['monthly']} EGP x {selectedPeriod === 'quarterly' ? 3 : selectedPeriod === 'semiAnnually' ? 6 : 12} months</p>
+                                        <p className="text-3xl font-bold text-mainColor">{currentPrice} EGP</p>
+                                        {selectedPeriod !== 'monthly' && (
+                                            <p className="text-green-500 font-semibold mt-2">
+                                                Save {priceOptions['monthly'] * (selectedPeriod === 'quarterly' ? 3 : selectedPeriod === 'semiAnnually' ? 6 : 12) - currentPrice} EGP
+                                            </p>
+                                        )}
+                                    </>
                                 )}
                             </div>
 
-                            {/* Add to Cart and Remove from Cart */}
                             <div>
-                                {plan.my_plan === true ? (
-                                <button
-                                    className={`w-full py-3 font-semibold rounded-lg transition-transform transform 
-                                    bg-gray-300 text-gray-800 hover:scale-105`}
-                                >
-                                    My Plan
-                                </button>
-                                ) : (
-                                <>
-                                    <div className="w-full">
-                                    {/* Add to Cart Button */}
-                                    {selectedPlanId != plan.id && (
-                                        <button
-                                        onClick={() => handleAddToCart(plan)}
-                                        className={`w-full py-3 font-semibold rounded-lg transition-all duration-300 transform 
-                                        ${selectedPlanId === plan.id ? 'bg-red-600 text-white hover:bg-red-700' : 'bg-mainColor text-white hover:bg-blue-700'} 
-                                        hover:scale-105 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mainColor`}
-                                        >
-                                        Add to Cart
-                                        </button>
-                                    )}
-
-                                    {/* Remove from Cart and Go to Cart Buttons */}
-                                    {selectedPlanId == plan.id && (
-                                        <div className="flex space-x-3 mt-3">
-                                        <button
-                                            onClick={() => handleAddToCart(plan)}
-                                            className="w-full text-xl py-3 font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-md"
-                                        >
-                                            Remove from Cart
-                                        </button>
-                                        <button
-                                            onClick={() => navigate('../cart')}
-                                            className="w-full text-xl py-3 font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-md"
-                                        >
-                                            Go to Cart
-                                        </button>
+                            {plan.my_plan === true ? (
+                                    <>
+                                    <div className="w-full relative border rounded-lg p-4 bg-gray-50 shadow-lg">
+                                        {/* Badge indicating "My Plan" */}
+                                        <div className="absolute flex items-center top-0 left-0 transform -translate-y-2 -translate-x-2 bg-mainColor text-white text-sm font-bold py-2 px-4 rounded-full shadow-lg">
+                                            <FaCrown  className="fas fa-crown text-yellow-400 mr-1"/> My Plan
                                         </div>
-                                    )}
+                            
+                                        {/* Plan Details and Upgrade Options */}
+                                        {/* <div className="text-center mb-2">
+                                            <p className="text-xl font-semibold text-gray-800">
+                                                This is your current plan!
+                                            </p>
+                                            <p className="text-sm text-gray-600 mt-1">
+                                                Enjoy exclusive benefits with your plan, or upgrade to a higher one.
+                                            </p>
+                                        </div> */}
+                            
+                                        {/* Upgrade Button */}
+                                        {selectedPlanId != plan.id && (
+                                            <button
+                                                onClick={() => handleAddToCart(plan)}
+                                                className="w-full py-3 mt-4 font-semibold rounded-lg transition-all duration-300 transform bg-blue-800 text-white hover:bg-blue-700 hover:scale-105 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                                            >
+                                                Upgrade Now
+                                            </button>
+                                        )}
+                            
+                                        {/* Remove from Cart and Go to Cart Buttons */}
+                                        {selectedPlanId == plan.id && (
+                                            <div className="flex space-x-3 mt-4">
+                                                <button
+                                                    onClick={() => handleAddToCart(plan)}
+                                                    className="w-full text-xl py-3 font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-md"
+                                                >
+                                                    Remove from Cart
+                                                </button>
+                                                <button
+                                                    onClick={() => navigate('../cart')}
+                                                    className="w-full text-xl py-3 font-semibold text-white bg-green-600 hover:bg-green-700 rounded-lg shadow-md"
+                                                >
+                                                    Go to Cart
+                                                </button>
+                                            </div>
+                                        )}
                                     </div>
                                 </>
+                            )   
+                            : (
+                            <>
+                                <div className="w-full">
+                                {/* Add to Cart Button */}
+                                {selectedPlanId != plan.id && (
+                                    <button
+                                    onClick={() => handleAddToCart(plan)}
+                                    className={`w-full py-3 font-semibold rounded-lg transition-all duration-300 transform 
+                                    ${selectedPlanId === plan.id ? 'bg-red-600 text-white hover:bg-red-700' : 'bg-mainColor text-white hover:bg-blue-700'} 
+                                    hover:scale-105 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mainColor`}
+                                    >
+                                    Add to Cart
+                                    </button>
                                 )}
 
-                                {/* "Selected" Label */}
+                                {/* Remove from Cart and Go to Cart Buttons */}
                                 {selectedPlanId == plan.id && (
-                                <div className="absolute top-0 left-0 p-2 bg-green-500 text-white text-sm font-semibold rounded-tr-lg">
-                                    Selected
-                                </div>
+                                    <div className="flex space-x-3 mt-3">
+                                    <button
+                                        onClick={() => handleAddToCart(plan)}
+                                        className="w-full text-xl py-3 font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-md"
+                                    >
+                                        Remove from Cart
+                                    </button>
+                                    <button
+                                        onClick={() => navigate('../cart')}
+                                        className="w-full text-xl py-3 font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-md"
+                                    >
+                                        Go to Cart
+                                    </button>
+                                    </div>
                                 )}
+                                </div>
+                            </>
+                            )}
+
+                            {/* "Selected" Label */}
+                            {selectedPlanId == plan.id && (
+                            <div className="absolute top-0 left-0 p-2 bg-green-500 text-white text-sm font-semibold rounded-tr-lg">
+                                Selected
+                            </div>
+                            )}
                             </div>
                         </div>
                     );

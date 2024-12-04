@@ -12,6 +12,11 @@ const OrderPage = () => {
 
     const auth = useAuth();
     const navigate = useNavigate();
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [storeLink, setStoreLink] = useState('');
+    const [storeCpanel, setStoreCpanel] = useState('');
+
     const [isLoading, setIsLoading] = useState(false);
     const [activeTab, setActiveTab] = useState("pending");
     const [orders, setOrders] = useState('');
@@ -108,6 +113,44 @@ const [isDropdownVisible, setDropdownVisible] = useState(false);
         }
     };
 
+    const handleStatusStoreChange = async (status,orderId) => {
+        // if (!selectedOrder) return;
+        setIsLoading(true);
+        try {
+            const response = await axios.post(`https://login.wegostores.com/admin/v1/store/approve`,{
+                store_id:orderId,status:status ,email:username ,password:password,link_store:storeLink,link_cbanal:storeCpanel
+            }, {
+                headers: {
+                    Authorization: `Bearer ${auth.user.token}`,
+                    'Content-Type': 'application/json', // Use JSON since we're sending a JSON object now
+                },
+            });
+ 
+            if (response.status === 200) {
+                auth.toastSuccess('Status Updated successfully!');
+                setIsStatusModalOpen(false);
+                // handleGoBack();
+                setOrderChanged(!orderChanged)
+                setOrders((prevOrder) =>
+                        prevOrder.filter((order) => order.id !== orderId)
+                 );
+                // setIsLoading(true);
+            } else {
+                auth.toastError('Failed to Update Status.');
+            }
+        } catch (error) {    
+            console.log(error)
+                const errorMessages = error?.response?.data.errors;
+                let errorMessageString = 'Error occurred';
+                if (errorMessages) {
+                    errorMessageString = Object.values(errorMessages).flat().join(' ');}
+                auth.toastError('Error', errorMessageString);
+    
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     if (isLoading) {
         return (
           <div className="w-1/4 h-full flex items-start mt-[10%] justify-center m-auto">
@@ -172,8 +215,9 @@ const [isDropdownVisible, setDropdownVisible] = useState(false);
                                         <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Email</th>
                                         <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Phone</th>
                                         <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Date</th>
-                                        <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Order Number</th>
-                                        <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Service Name</th>
+                                        <th className="min-w-[100px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Order Number</th>
+                                        <th className="min-w-[100px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Service Name</th>
+                                        <th className="min-w-[100px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Status</th>
                                         <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Details</th>
                                         <th className="min-w-[100px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Status</th>
                                         </tr>
@@ -187,11 +231,12 @@ const [isDropdownVisible, setDropdownVisible] = useState(false);
                                         <td className="py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">{order.users?.name || '-'}</td>
                                         <td className="py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">{order.users?.email || '-'}</td>
                                         <td className="py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">{order.users?.phone || '-'}</td>
-                                        <td className="py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">{order.created_at ? new Date(order.created_at).toLocaleDateString() : '-'}</td>
-                                        <td className="py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">{order.order_number || '-'}</td>
-                                        <td className="py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">
+                                        <td className="text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">{order.created_at ? new Date(order.created_at).toLocaleDateString() : '-'}</td>
+                                        <td className="text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">{order.order_number || '-'}</td>
+                                        <td className="text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">
                                         {order.domain?.name || order.plans?.name || order.extra?.name ||order.store?.store_name|| '-'}
                                         </td>
+                                        <td className="text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">{order.status || '-'}</td>
                                         <td className="py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">
                                         <button
                                                 onClick={() => openModal(order)}
@@ -233,9 +278,9 @@ const [isDropdownVisible, setDropdownVisible] = useState(false);
                                                 )}
                                                 {selectedOrder.extra && (
                                                 <div>
-                                                <h4 className="font-semibold text-lg">Domain Details</h4>
+                                                <h4 className="font-semibold text-lg">Extra Details</h4>
                                                 <p><b>Extra Name:</b> {selectedOrder.extra?.name || '-'}</p>
-                                                <p><b>Price:</b> {selectedOrder.extra?.price || '0.00'}</p>
+                                                <p><b>Price:</b>{Number(selectedOrder.extra?.price) || '0.00'}</p>
                                                 </div>
                                                 )}
                                                 {selectedOrder.store && (
@@ -255,7 +300,8 @@ const [isDropdownVisible, setDropdownVisible] = useState(false);
                                         </div>
                                         </div>
                                         )}
-                                        {isStatusModalOpen && (
+
+                                        {/* {isStatusModalOpen && (
                                         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                                         <div className="bg-white rounded-lg shadow-2xl w-11/12 max-w-md p-6">
                                         <h2 className="text-2xl font-semibold text-gray-800 text-center mb-6">
@@ -286,7 +332,140 @@ const [isDropdownVisible, setDropdownVisible] = useState(false);
                                         </button>
                                         </div>
                                         </div>
-                                        )}
+                                        )} */}
+{
+  selectedOrder?.store_id == null ? (
+    // Show the modal with status buttons when store_id is null
+    isStatusModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="bg-white rounded-lg shadow-2xl w-11/12 max-w-md p-6">
+        <h2 className="text-2xl font-semibold text-gray-800 text-center mb-6">
+                Update Order Status
+        </h2>
+        <p className="text-center text-gray-600 mb-4">
+                Please select the current status of the order.
+        </p>
+        <div className="flex gap-4 justify-center">
+                <button
+                onClick={() => updateOrderStatus("in_progress", selectedOrder.id)}
+                className="flex-1 px-6 py-3 bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-600 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-yellow-300 active:bg-yellow-700"
+                >
+                In Progress
+                </button>
+                <button
+                onClick={() => updateOrderStatus("done", selectedOrder.id)}
+                className="flex-1 px-6 py-3 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-300 active:bg-green-700"
+                >
+                Done
+                </button>
+        </div>
+        <button
+                onClick={closeStatusModal}
+                className="mt-6 block w-full py-3 bg-gray-900 text-white font-medium rounded-lg shadow-md hover:bg-gray-800 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-300 active:bg-gray-700"
+        >
+                Cancel
+        </button>
+        </div>
+        </div>
+    )
+  ) : (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                <div className="bg-white rounded-lg shadow-2xl w-11/12 max-w-md p-6">
+                <h2 className="text-2xl font-semibold text-gray-800 text-center mb-2">
+                Please Enter Store Details
+                </h2>
+                {/* Input for Username */}
+                <input
+                type="text"
+                className="flex-1 w-full px-6 py-3 mb-4 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+                placeholder="Enter Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                />
+
+                {/* Input for Password */}
+                <input
+                type="password"
+                className="flex-1 w-full px-6 py-3 mb-4 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+                placeholder="Enter Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                />
+
+                {/* Input for StoreLink */}
+                <input
+                type="url"
+                className="flex-1 w-full px-6 py-3 mb-4 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+                placeholder="Enter Store Link"
+                value={storeLink}
+                onChange={(e) => setStoreLink(e.target.value)}
+                />
+
+                {/* Input for StoreCpanel */}
+                <input
+                type="url"
+                className="flex-1 w-full px-6 py-3 mb-4 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+                placeholder="Enter Store Cpanel Link"
+                value={storeCpanel}
+                onChange={(e) => setStoreCpanel(e.target.value)}
+                />
+
+                {/* Title and Description */}
+                <p className="text-center text-gray-600 mb-4">
+                Please select the current status of the order.
+                </p>
+
+                {/* Buttons for status */}
+                <div className="flex gap-4 justify-center">
+                <button
+                        onClick={() => handleStatusStoreChange("in_progress",selectedOrder.id)}
+                        className="flex-1 px-6 py-3 bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-600 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-yellow-300 active:bg-yellow-700"
+                >
+                        In Progress
+                </button>
+                <button
+                        onClick={() => handleStatusStoreChange("done",selectedOrder.id)}
+                        className="flex-1 px-6 py-3 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-300 active:bg-green-700"
+                >
+                        Done
+                </button>
+                </div>
+
+                {/* Cancel Button */}
+                <button
+                onClick={closeStatusModal}
+                className="mt-6 block w-full py-3 bg-gray-900 text-white font-medium rounded-lg shadow-md hover:bg-gray-800 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-300 active:bg-gray-700"
+                >
+                Cancel
+                </button>
+                </div>
+        </div>
+
+    // Show inputs and two buttons (Done or In Progress) when store_id is not null
+//     <div className="flex gap-4 justify-center">
+//       <input
+//         type="text"
+//         className="flex-1 px-6 py-3 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+//         placeholder="Enter status"
+//       />
+//       <div className="flex gap-4 justify-center">
+//         <button
+//           onClick={() => updateOrderStatus("in_progress", selectedOrder.id)}
+//           className="flex-1 px-6 py-3 bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-600 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-yellow-300 active:bg-yellow-700"
+//         >
+//           In Progress
+//         </button>
+//         <button
+//           onClick={() => updateOrderStatus("done", selectedOrder.id)}
+//           className="flex-1 px-6 py-3 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-300 active:bg-green-700"
+//         >
+//           Done
+//         </button>
+//       </div>
+//     </div>
+  )
+}
+
 
                                 </tbody>
                                 </table>
@@ -297,32 +476,34 @@ const [isDropdownVisible, setDropdownVisible] = useState(false);
                           <div className="w-full flex items-center justify-between mt-4 overflow-x-auto">
                           <table className="w-full sm:min-w-0">
                           <thead className="w-full">
-                                  <tr className="w-full border-b-2">
-                                  <th className="min-w-[80px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">#</th>
-                                  <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Name</th>
-                                  <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Email</th>
-                                  <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Phone</th>
-                                  <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Date</th>
-                                  <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Order Number</th>
-                                  <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Service Name</th>
-                                  <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Details</th>
-                                  <th className="min-w-[100px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Status</th>
-                                  </tr>
+                                <tr className="w-full border-b-2">
+                                <th className="min-w-[80px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">#</th>
+                                <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Name</th>
+                                <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Email</th>
+                                <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Phone</th>
+                                <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Date</th>
+                                <th className="min-w-[100px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Order Number</th>
+                                <th className="min-w-[100px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Service Name</th>
+                                <th className="min-w-[100px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Status</th>
+                                <th className="min-w-[150px] sm:w-2/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Details</th>
+                                <th className="min-w-[100px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Status</th>
+                                </tr>
                           </thead>
                           <tbody className="w-full">
                           {orders
                           .filter(order => order.order_status === "in_progress")
                           .map((order, index) => (
-                                  <tr className="w-full border-b-2" key={order.id}>
-                                  <td className="py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">{index + 1}</td>
-                                  <td className="py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">{order.users?.name || '-'}</td>
-                                  <td className="py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">{order.users?.email || '-'}</td>
-                                  <td className="py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">{order.users?.phone || '-'}</td>
-                                  <td className="py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">{order.created_at ? new Date(order.created_at).toLocaleDateString() : '-'}</td>
-                                  <td className="py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">{order.order_number || '-'}</td>
-                                  <td className="py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">
-                                  {order.domain?.name || order.plans?.name || order.extra?.name ||order.store?.store_name|| '-'}
-                                  </td>
+                                <tr className="w-full border-b-2" key={order.id}>
+                                <td className="py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">{index + 1}</td>
+                                <td className="py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">{order.users?.name || '-'}</td>
+                                <td className="py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">{order.users?.email || '-'}</td>
+                                <td className="py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">{order.users?.phone || '-'}</td>
+                                <td className="text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">{order.created_at ? new Date(order.created_at).toLocaleDateString() : '-'}</td>
+                                <td className="text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">{order.order_number || '-'}</td>
+                                <td className="text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">
+                                {order.domain?.name || order.plans?.name || order.extra?.name ||order.store?.store_name|| '-'}
+                                </td>
+                                <td className="text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">{order.status || '-'}</td>
                                   <td className="py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">
                                   <button
                                           onClick={() => openModal(order)}
