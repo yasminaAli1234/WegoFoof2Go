@@ -257,33 +257,33 @@ const [isDropdownVisible, setDropdownVisible] = useState(false);
                                         </tr>
                                         ))}
 
-                                        {isModalOpen && selectedOrder && (
+                                        {isModalOpen && (
                                         <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center">
                                         <div className="bg-white p-6 rounded shadow-lg max-w-xl w-full overflow-y-auto max-h-96">
                                         <h2 className="text-3xl font-bold mb-4 text-gray-800">Service Details</h2>
                                         <ul className="space-y-4">
-                                                {selectedOrder.plans && (
+                                                {selectedOrder?.plans && (
                                                 <div>
                                                 <h4 className="font-semibold text-lg">Plan Details</h4>
                                                 <p><b>Name:</b> {selectedOrder.plans?.name || '-'}</p>
                                                 <p><b>SetUp Fees:</b> {selectedOrder.plans?.setup_fees || '0.00'} LE</p>
                                                 </div>
                                                 )}
-                                                {selectedOrder.domain && (
+                                                {selectedOrder?.domain && (
                                                 <div>
                                                 <h4 className="font-semibold text-lg">Domain Details</h4>
                                                 <p><b>Domain Name:</b> {selectedOrder.domain?.name || '-'}</p>
                                                 <p><b>Price:</b> {selectedOrder.domain?.price || '0.00'}</p>
                                                 </div>
                                                 )}
-                                                {selectedOrder.extra && (
+                                                {selectedOrder?.extra && (
                                                 <div>
                                                 <h4 className="font-semibold text-lg">Extra Details</h4>
                                                 <p><b>Extra Name:</b> {selectedOrder.extra?.name || '-'}</p>
                                                 <p><b>Price:</b>{Number(selectedOrder.extra?.price) || '0.00'}</p>
                                                 </div>
                                                 )}
-                                                {selectedOrder.store && (
+                                                {selectedOrder?.store && (
                                                 <div>
                                                 <h4 className="font-semibold text-lg">Store Details</h4>
                                                 <p><b>Store Name:</b> {selectedOrder.store?.store_name || '-'}</p>
@@ -301,172 +301,78 @@ const [isDropdownVisible, setDropdownVisible] = useState(false);
                                         </div>
                                         )}
 
-                                        {/* {isStatusModalOpen && (
-                                        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                                        <div className="bg-white rounded-lg shadow-2xl w-11/12 max-w-md p-6">
-                                        <h2 className="text-2xl font-semibold text-gray-800 text-center mb-6">
-                                                Update Order Status
-                                        </h2>
-                                        <p className="text-center text-gray-600 mb-4">
-                                                Please select the current status of the order.
-                                        </p>
-                                        <div className="flex gap-4 justify-center">
-                                                <button
-                                                onClick={() => updateOrderStatus("in_progress", selectedOrder.id)}
-                                                className="flex-1 px-6 py-3 bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-600 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-yellow-300 active:bg-yellow-700"
-                                                >
-                                                In Progress
-                                                </button>
-                                                <button
-                                                onClick={() => updateOrderStatus("done", selectedOrder.id)}
-                                                className="flex-1 px-6 py-3 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-300 active:bg-green-700"
-                                                >
-                                                Done
-                                                </button>
-                                        </div>
-                                        <button
-                                                onClick={closeStatusModal}
-                                                className="mt-6 block w-full py-3 bg-gray-900 text-white font-medium rounded-lg shadow-md hover:bg-gray-800 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-300 active:bg-gray-700"
-                                        >
-                                                Cancel
-                                        </button>
-                                        </div>
-                                        </div>
-                                        )} */}
-{
-  selectedOrder?.store_id == null ? (
-    // Show the modal with status buttons when store_id is null
-    isStatusModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div className="bg-white rounded-lg shadow-2xl w-11/12 max-w-md p-6">
-        <h2 className="text-2xl font-semibold text-gray-800 text-center mb-6">
-                Update Order Status
-        </h2>
-        <p className="text-center text-gray-600 mb-4">
-                Please select the current status of the order.
-        </p>
-        <div className="flex gap-4 justify-center">
-                <button
-                onClick={() => updateOrderStatus("in_progress", selectedOrder.id)}
-                className="flex-1 px-6 py-3 bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-600 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-yellow-300 active:bg-yellow-700"
-                >
-                In Progress
-                </button>
-                <button
-                onClick={() => updateOrderStatus("done", selectedOrder.id)}
-                className="flex-1 px-6 py-3 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-300 active:bg-green-700"
-                >
-                Done
-                </button>
-        </div>
-        <button
-                onClick={closeStatusModal}
-                className="mt-6 block w-full py-3 bg-gray-900 text-white font-medium rounded-lg shadow-md hover:bg-gray-800 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-300 active:bg-gray-700"
-        >
-                Cancel
-        </button>
-        </div>
-        </div>
-    )
-  ) : (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                <div className="bg-white rounded-lg shadow-2xl w-11/12 max-w-md p-6">
-                <h2 className="text-2xl font-semibold text-gray-800 text-center mb-2">
-                Please Enter Store Details
-                </h2>
-                {/* Input for Username */}
-                <input
-                type="text"
-                className="flex-1 w-full px-6 py-3 mb-4 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-300"
-                placeholder="Enter Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                />
-
-                {/* Input for Password */}
-                <input
-                type="password"
-                className="flex-1 w-full px-6 py-3 mb-4 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-300"
-                placeholder="Enter Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                />
-
-                {/* Input for StoreLink */}
-                <input
-                type="url"
-                className="flex-1 w-full px-6 py-3 mb-4 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-300"
-                placeholder="Enter Store Link"
-                value={storeLink}
-                onChange={(e) => setStoreLink(e.target.value)}
-                />
-
-                {/* Input for StoreCpanel */}
-                <input
-                type="url"
-                className="flex-1 w-full px-6 py-3 mb-4 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-300"
-                placeholder="Enter Store Cpanel Link"
-                value={storeCpanel}
-                onChange={(e) => setStoreCpanel(e.target.value)}
-                />
-
-                {/* Title and Description */}
-                <p className="text-center text-gray-600 mb-4">
-                Please select the current status of the order.
-                </p>
-
-                {/* Buttons for status */}
-                <div className="flex gap-4 justify-center">
-                <button
-                        onClick={() => handleStatusStoreChange("in_progress",selectedOrder.id)}
-                        className="flex-1 px-6 py-3 bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-600 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-yellow-300 active:bg-yellow-700"
-                >
-                        In Progress
-                </button>
-                <button
-                        onClick={() => handleStatusStoreChange("done",selectedOrder.id)}
-                        className="flex-1 px-6 py-3 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-300 active:bg-green-700"
-                >
-                        Done
-                </button>
-                </div>
-
-                {/* Cancel Button */}
-                <button
-                onClick={closeStatusModal}
-                className="mt-6 block w-full py-3 bg-gray-900 text-white font-medium rounded-lg shadow-md hover:bg-gray-800 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-300 active:bg-gray-700"
-                >
-                Cancel
-                </button>
-                </div>
-        </div>
-
-    // Show inputs and two buttons (Done or In Progress) when store_id is not null
-//     <div className="flex gap-4 justify-center">
-//       <input
-//         type="text"
-//         className="flex-1 px-6 py-3 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-300"
-//         placeholder="Enter status"
-//       />
-//       <div className="flex gap-4 justify-center">
-//         <button
-//           onClick={() => updateOrderStatus("in_progress", selectedOrder.id)}
-//           className="flex-1 px-6 py-3 bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-600 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-yellow-300 active:bg-yellow-700"
-//         >
-//           In Progress
-//         </button>
-//         <button
-//           onClick={() => updateOrderStatus("done", selectedOrder.id)}
-//           className="flex-1 px-6 py-3 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-300 active:bg-green-700"
-//         >
-//           Done
-//         </button>
-//       </div>
-//     </div>
-  )
-}
-
-
+                                        {isStatusModalOpen && (
+                                                <>
+                                                        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                                                                <div className="bg-white rounded-lg shadow-2xl w-11/12 max-w-md p-6">
+                                                                        {
+                                                                                selectedOrder?.store_id !== null && (
+                                                                                        <div>
+                                                                                        <h2 className="text-2xl font-semibold text-gray-800 text-center mb-2">
+                                                                                        Please Enter Store Details
+                                                                                        </h2>
+                                                                                        <input
+                                                                                        type="text"
+                                                                                        className="flex-1 w-full px-6 py-3 mb-4 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                                                                        placeholder="Enter Username"
+                                                                                        value={username}
+                                                                                        onChange={(e) => setUsername(e.target.value)}
+                                                                                        />
+                                                                                        <input
+                                                                                        type="password"
+                                                                                        className="flex-1 w-full px-6 py-3 mb-4 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                                                                        placeholder="Enter Password"
+                                                                                        value={password}
+                                                                                        onChange={(e) => setPassword(e.target.value)}
+                                                                                        />
+                                                                                        <input
+                                                                                        type="url"
+                                                                                        className="flex-1 w-full px-6 py-3 mb-4 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                                                                        placeholder="Enter Store Link"
+                                                                                        value={storeLink}
+                                                                                        onChange={(e) => setStoreLink(e.target.value)}
+                                                                                        />
+                                                                                        <input
+                                                                                        type="url"
+                                                                                        className="flex-1 w-full px-6 py-3 mb-4 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                                                                        placeholder="Enter Store Cpanel Link"
+                                                                                        value={storeCpanel}
+                                                                                        onChange={(e) => setStoreCpanel(e.target.value)}
+                                                                                        />
+                                                                                        </div>
+                                                                                )
+                                                                        }
+                                                                        <div>
+                                                                        <div>
+                                                                                <p className="text-center text-gray-600 mb-4">
+                                                                                Please select the current status of the order.
+                                                                                </p>
+                                                                                <div className="flex gap-4 justify-center">
+                                                                                <button
+                                                                                        onClick={() => handleStatusStoreChange("in_progress",selectedOrder.id)}
+                                                                                        className="flex-1 px-6 py-3 bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-600 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-yellow-300 active:bg-yellow-700"
+                                                                                >
+                                                                                        In Progress
+                                                                                </button>
+                                                                                <button
+                                                                                        onClick={() => handleStatusStoreChange("done",selectedOrder.id)}
+                                                                                        className="flex-1 px-6 py-3 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-300 active:bg-green-700"
+                                                                                >
+                                                                                        Done
+                                                                                </button>
+                                                                                </div>
+                                                                                <button
+                                                                                onClick={closeStatusModal}
+                                                                                className="mt-6 block w-full py-3 bg-gray-900 text-white font-medium rounded-lg shadow-md hover:bg-gray-800 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-300 active:bg-gray-700"
+                                                                                >
+                                                                                Cancel
+                                                                                </button>
+                                                                        </div>
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                </>
+                                        )}
                                 </tbody>
                                 </table>
                                 </div>

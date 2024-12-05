@@ -153,7 +153,7 @@ const CheckoutPage = () => {
         .filter((item) => item.type === "domain")
         .map((item) => ({
           id: item.id,
-          package: durationMap[item.duration] || null,
+          package: durationMap[item.billingPeriod] || null,
           price_item: item.price || item.finalprice
         }));
   
@@ -220,21 +220,21 @@ const CheckoutPage = () => {
       .filter((item) => item.type === "plan")
       .map((item) => ({
         plan_id: item.id,
-        price_cycle: item.duration || "monthly",
+        price_cycle: item.billingPeriod || "monthly",
       }));
   
       const extraItems = cartItems
         .filter((item) => item.type === "extra")
         .map((item) => ({
           extra_id: item.id,
-          price_cycle: item.duration || "monthly",
+          price_cycle: item.billingPeriod || "monthly",
         }));
   
       const domainItems = cartItems
         .filter((item) => item.type === "domain")
         .map((item) => ({
           domain_id: item.id,
-          price_cycle: item.duration || "monthly",
+          price_cycle: item.billingPeriod || "monthly",
         }));
   
       const requestData = {

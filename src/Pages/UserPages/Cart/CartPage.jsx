@@ -607,6 +607,25 @@ const CartPage = () => {
                     </select>
                   </div>
                 )}
+                 {item.type === "extra" && item.status === "recurring" &&(
+                  <div className="flex flex-wrap items-center mt-3 sm:mt-4">
+                    <label className="text-sm font-semibold text-gray-600 mr-3">
+                      Billing Period:
+                    </label>
+                    <select
+                      value={item.billingPeriod || "monthly"}
+                      onChange={(e) =>
+                        handleBillingPeriodChange(item.id, e.target.value, item)
+                      }
+                      className="bg-gray-50 border border-gray-300 text-gray-700 rounded-md p-2 focus:ring-2 focus:ring-blue-400"
+                    >
+                      <option value="monthly">Monthly</option>
+                      <option value="quarterly">3 Months</option>
+                      <option value="semiAnnually">6 Months</option>
+                      <option value="annually">Yearly</option>
+                    </select>
+                  </div>
+                )}
               </div>
             ))
           ) : (

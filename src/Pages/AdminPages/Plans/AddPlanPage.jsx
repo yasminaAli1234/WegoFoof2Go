@@ -153,7 +153,7 @@ const AddPlanPage = () => {
              console.log(response)
             if (response.status === 200) {
                 auth.toastSuccess('Plan added successfully!');
-                handleGoBack();
+                // handleGoBack();
             } else {
                 auth.toastError('Failed to add Plan.');
             }
@@ -189,16 +189,26 @@ const AddPlanPage = () => {
                         width="w-full"
                     />
                 </div>
-                <div className="lg:w-[30%] sm:w-full">
+                {/* <div className="lg:w-[30%] sm:w-full">
                     <InputCustom
-                        type="text"
+                        type="textarea"
                         borderColor="mainColor"
                         placeholder="Description"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         width="w-full"
                     />
+                </div> */}
+                <div className="lg:w-[30%] sm:w-full">
+                <textarea
+                    className="w-full px-2 py-4 border-2 font-normal eleValueInput rounded-xl border-mainColor text-2xl focus:outline-none focus:ring-2 focus:ring-mainColor"
+                    placeholder="Description"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    rows={1}
+                ></textarea>
                 </div>
+
                 <div className="lg:w-[30%] sm:w-full">
                     <InputCustom
                         type="number"

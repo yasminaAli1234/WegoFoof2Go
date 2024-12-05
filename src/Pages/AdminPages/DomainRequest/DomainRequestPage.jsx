@@ -15,6 +15,7 @@ const DomainRequestPage = () => {
     const [selectedDomain, setSelectedDomain] = useState(null);
     const [selectedOption, setSelectedOption] = useState("");
     const [rejectReason, setRejectReason] = useState("");
+    const [price, setPrice] = useState("");
 
     const fetchData = async () => {
         setIsLoading(true);
@@ -71,7 +72,7 @@ const DomainRequestPage = () => {
     
                 const response = await axios.put(
                     `https://login.wegostores.com/admin/v1/domains/approve/${selectedDomain.id}`,
-                    {}, // No body required
+                    {price}, // No body required
                     {
                         headers: {
                             Authorization: `Bearer ${auth.user.token}`, // Ensure token is correct
@@ -338,6 +339,21 @@ const DomainRequestPage = () => {
                                 />
                                 Reject
                             </label>
+                            {selectedOption === "Approve" && (
+                                <div className="flex flex-col">
+                                    <label className="text-mainColor mb-2 font-medium" htmlFor="price">
+                                        Enter the price of domain:
+                                    </label>
+                                    <input
+                                        id="price"
+                                        type="number"
+                                        value={price}
+                                        onChange={(e) => setPrice(e.target.value)}
+                                        className="w-full p-2 border border-gray-300 rounded"
+                                        placeholder="Enter Price"
+                                    />
+                                </div>
+                            )}
 
                             {selectedOption === "Reject" && (
                                 <div className="flex flex-col">

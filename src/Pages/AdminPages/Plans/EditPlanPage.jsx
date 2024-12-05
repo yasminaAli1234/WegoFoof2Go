@@ -222,14 +222,13 @@ const EditPlanPage =()=>{
                     />
                 </div>
                 <div className="lg:w-[30%] sm:w-full">
-                    <InputCustom
-                        type="text"
-                        borderColor="mainColor"
-                        placeholder="Description"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        width="w-full"
-                    />
+                <textarea
+                    className="w-full px-2 py-4 border-2 font-normal eleValueInput rounded-xl border-mainColor text-2xl focus:outline-none focus:ring-2 focus:ring-mainColor"
+                    placeholder="Description"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    rows={1}
+                ></textarea>
                 </div>
                 <div className="lg:w-[30%] sm:w-full">
                     <InputCustom

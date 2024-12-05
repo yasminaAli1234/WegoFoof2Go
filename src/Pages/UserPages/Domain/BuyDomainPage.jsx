@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import { addToCart ,removeFromCart} from '../../../Redux/CartSlice.js';
 import DropDownMenu from '../../../Components/DropDownMenu';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 const BuyDomainPage =()=>{
     const auth = useAuth();
@@ -211,12 +212,16 @@ const BuyDomainPage =()=>{
                 setDomainRequest('');
                 setSelectStore('Select Store'); // Or an empty string '' if that fits your requirements better
                 setSelectStoreId(''); // Or an empty string '' if that fits your requirements better
-                handleGoBack();
+                // handleGoBack();
+                window.location.reload(true);
             } else {
                 auth.toastError('Failed to Send Domain.');
             }
         } catch (error) {
-            console.log(error.response.data.faild)
+            toast.error(error.response.data.faild)
+            setDomainRequest('');
+            setSelectStore('Select Store'); // Or an empty string '' if that fits your requirements better
+            setSelectStoreId(''); // Or an empty string '' if that fits your requirements better
             const errorMessages = error?.response?.data.errors;
             let errorMessageString = 'Error occurred';
     

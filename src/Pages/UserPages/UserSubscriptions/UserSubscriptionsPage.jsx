@@ -493,13 +493,19 @@ const UserSubscriptionsPage = () => {
                                     </>
                                 ) : (
                                     <>
-                                        <p className="text-lg text-gray-500 line-through">{priceOptions['monthly']} EGP x {selectedPeriod === 'quarterly' ? 3 : selectedPeriod === 'semiAnnually' ? 6 : 12} months</p>
+                                        <p className="text-lg text-gray-500 line-through">{priceOptions['monthly'] * (selectedPeriod === 'monthly' ? 1: selectedPeriod === 'quarterly' ? 3 : selectedPeriod === 'semiAnnually' ? 6 : 12)} EGP / month </p>
                                         <p className="text-3xl font-bold text-mainColor">{currentPrice} EGP</p>
-                                        {selectedPeriod !== 'monthly' && (
+                                        {selectedPeriod !== 'monthly' ? (
                                             <p className="text-green-500 font-semibold mt-2">
                                                 Save {priceOptions['monthly'] * (selectedPeriod === 'quarterly' ? 3 : selectedPeriod === 'semiAnnually' ? 6 : 12) - currentPrice} EGP
                                             </p>
-                                        )}
+                                        ):
+                                        (
+                                            <p className="text-green-500 font-semibold mt-2">
+                                                Save 0 EGP
+                                            </p>
+                                        )
+                                        }
                                     </>
                                 )}
                             </div>
