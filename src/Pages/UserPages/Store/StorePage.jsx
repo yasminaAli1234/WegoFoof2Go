@@ -204,15 +204,15 @@ const StorePage = () => {
                               >
                                 <div className="mb-4">
                                   <p className="text-lg">{t("Store Link")}:</p>
-                                  <a
+                                  <Link
                                     href={store.link_store || "#"}
                                     className="text-lg text-blue-600 hover:text-blue-800"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                   >
-                                    {store.link_store || "-"}
                                     <FaLink className="inline ml-1" />
-                                  </a>
+                                    {store.link_store || "-"}
+                                  </Link>
                                 </div>
 
                                 <div className="mb-4">

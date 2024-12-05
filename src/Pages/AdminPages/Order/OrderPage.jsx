@@ -349,13 +349,13 @@ const [isDropdownVisible, setDropdownVisible] = useState(false);
                                                                                         </p>
                                                                                         <div className="flex gap-4 justify-center">
                                                                                         <button
-                                                                                                onClick={() => handleStatusStoreChange("in_progress",selectedOrder.id)}
+                                                                                                onClick={() => handleStatusStoreChange("in_progress",selectedOrder.store_id)}
                                                                                                 className="flex-1 px-6 py-3 bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-600 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-yellow-300 active:bg-yellow-700"
                                                                                         >
                                                                                                 In Progress
                                                                                         </button>
                                                                                         <button
-                                                                                                onClick={() => handleStatusStoreChange("done",selectedOrder.id)}
+                                                                                                onClick={() => handleStatusStoreChange("done",selectedOrder.store_id)}
                                                                                                 className="flex-1 px-6 py-3 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-300 active:bg-green-700"
                                                                                         >
                                                                                                 Done
