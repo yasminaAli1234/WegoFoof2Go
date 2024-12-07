@@ -160,7 +160,7 @@ const CheckoutPage = () => {
       // Prepare Request Data
       const requestData = {
         payment_method_id: selectedMethod.id,
-        plan: planItems,
+        plan: planItems.length > 0 ? extraItems : null,
         extra: extraItems.length > 0 ? extraItems : null,
         domain: domainItems.length > 0 ? domainItems : null,
         invoice_image: thumbnailFile,
@@ -199,12 +199,13 @@ const CheckoutPage = () => {
           navigate("/dashboard_user/cart");
         }, 3000); // Allow time for modal before navigating
       
-        } else {
-          alert("Failed to submit the order. Please try again.");
-        }
+        } 
+        // else {
+        //   alert("Failed to submit the order. Please try again.");
+        // }
       } catch (error) {
         console.error("Error during order submission:", error);
-        alert("An error occurred while submitting the order.");
+        // alert("An error occurred while submitting the order.");
       } finally {
         setIsLoading(false); // Reset loading state
       }

@@ -510,6 +510,7 @@ const CartPage = () => {
       );
 
       if (response.status === 200) {
+        console.log(response.data)
         const { discount } = response.data; // Extract the discount
         setDiscount(discount); // Update the discount state
         const newTotal = totalPrice - discount; // Calculate the discounted total
