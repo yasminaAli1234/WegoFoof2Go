@@ -28,7 +28,7 @@ const AddPromoCodePage = () => {
     const [selectValueTypeName, setSelectValueTypeName] = useState(null);
     const [openSelectValueType, setOpenSelectValueType] = useState(false);
 
-    const [usageTypeData, setUsageTypeData] = useState([{ name: 'First Usage' }, { name: 'Renueve' }]);
+    const [usageTypeData, setUsageTypeData] = useState([{ name: 'First Usage' }, { name: 'Renew' }]);
     const [selectUsageType, setSelectUsageType] = useState('Select UsageType');
     const [selectUsageTypeName, setSelectUsageTypeName] = useState(null);
     const [openSelectUsageType, setOpenSelectUsageType] = useState(false);
@@ -198,7 +198,7 @@ const AddPromoCodePage = () => {
 
         formData.append('monthly',valueMonthly);
         formData.append('quarterly',valueQuarterly);
-        formData.append('semi-annual', valueSemiAnnual);
+        formData.append('semi_annual', valueSemiAnnual);
         formData.append('yearly', valueYearly);
 
         if(selectStatus=== 'UnLimited'){

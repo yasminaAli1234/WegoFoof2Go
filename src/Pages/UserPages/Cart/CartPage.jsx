@@ -539,7 +539,7 @@ const CartPage = () => {
     const priceOptions = {
       monthly: item.monthly,
       quarterly: item.quarterly || item.monthly * 3,
-      semiAnnually: item["semi-annual"] || item.monthly * 6,
+      semiAnnually: item["semi_annual"] || item.monthly * 6,
       annually: item.yearly || item.monthly * 12,
     };
     const discountOptions = {

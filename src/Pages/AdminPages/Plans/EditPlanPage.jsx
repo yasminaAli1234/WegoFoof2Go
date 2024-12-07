@@ -48,7 +48,7 @@ const EditPlanPage =()=>{
     useEffect(() => {
         if (planContent) {
             setName(planContent.name || '');
-            setTitle(planContent.title || '');
+            // setTitle(planContent.title || '');
             setDescription(planContent.description|| '');
             setFee(planContent.setup_fees|| '');
             setLimitPlan(planContent.limet_store|| '');
@@ -64,9 +64,9 @@ const EditPlanPage =()=>{
                 setQuarterlyPrice(planContent.quarterly)
                 setQuarterlyDiscountPrice(planContent.discount_quarterly)
             }
-            if(planContent["semi-annual"]){
+            if(planContent["semi_annual"]){
                 setShowSemiAnnualPriceInput(true)
-                setSemiAnnualPrice(planContent["semi-annual"])
+                setSemiAnnualPrice(planContent["semi_annual"])
                 setSemiAnnualDiscountPrice(planContent.discount_semi_annual)
             }
             if(planContent.yearly){
@@ -139,7 +139,7 @@ const EditPlanPage =()=>{
         try {
             const formData = new FormData();
             formData.append('plan_id', planId);
-            formData.append('title', title);
+            // formData.append('title', title);
             formData.append('name', name);
             formData.append('description', description);
             formData.append('setup_fees', fee);
@@ -150,22 +150,22 @@ const EditPlanPage =()=>{
             // Append selected prices if inputs are shown and filled
             if (showMonthlyPriceInput && monthlyPrice) {
                 formData.append('monthly', monthlyPrice);
-                formData.append('discount_monthly', monthlyDiscountPrice);
+                formData.append('discount_monthly', monthlyDiscountPrice || 0);
                 // formData.append('setupFees_monthly', MonthlySetUpFeesPrice);
             }
             if (showQuarterlyPriceInput && quarterlyPrice) {
                 formData.append('quarterly', quarterlyPrice);
-                formData.append('discount_quarterly', quarterlyDiscountPrice);
+                formData.append('discount_quarterly', quarterlyDiscountPrice || 0);
                 // formData.append('setupFees_quarterly', quarterlyDiscountPrice);
             }
             if (showSemiAnnualPriceInput && semiAnnualPrice) {
-                formData.append('semi-annual', semiAnnualPrice);
-                formData.append('discount_semi_annual', semiAnnualDiscountPrice);
+                formData.append('semi_annual', semiAnnualPrice);
+                formData.append('discount_semi_annual', semiAnnualDiscountPrice || 0);
                 // formData.append('setupFees_semi_annual', semiAnnualSetUpFeesPrice);
             }
             if (showYearlyPriceInput && yearlyPrice) {
                 formData.append('yearly', yearlyPrice);
-                formData.append('discount_yearly', yearlyDiscountPrice);
+                formData.append('discount_yearly', yearlyDiscountPrice || 0);
                 // formData.append('setupFees_yearly', yearlySetUpFeesPrice);
             }
 
@@ -211,7 +211,7 @@ const EditPlanPage =()=>{
                         width="w-full"
                     />
                 </div>
-                <div className="lg:w-[30%] sm:w-full">
+                {/* <div className="lg:w-[30%] sm:w-full">
                     <InputCustom
                         type="text"
                         borderColor="mainColor"
@@ -220,7 +220,7 @@ const EditPlanPage =()=>{
                         onChange={(e) => setTitle(e.target.value)}
                         width="w-full"
                     />
-                </div>
+                </div> */}
                 <div className="lg:w-[30%] sm:w-full">
                 <textarea
                     className="w-full px-2 py-4 border-2 font-normal eleValueInput rounded-xl border-mainColor text-2xl focus:outline-none focus:ring-2 focus:ring-mainColor"

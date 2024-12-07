@@ -106,7 +106,7 @@ const AddPlanPage = () => {
         setIsLoading(true);
         try {
             const formData = new FormData();
-            formData.append('title', title);
+            // formData.append('title', title);
             formData.append('name', name);
             formData.append('description', description);
             formData.append('setup_fees', fee);
@@ -117,22 +117,22 @@ const AddPlanPage = () => {
             // Append selected prices if inputs are shown and filled
             if (showMonthlyPriceInput && monthlyPrice) {
                 formData.append('monthly', monthlyPrice);
-                formData.append('discount_monthly', monthlyDiscountPrice);
+                formData.append('discount_monthly', monthlyDiscountPrice ||0);
                 // formData.append('setupFees_monthly', MonthlySetUpFeesPrice);
             }
             if (showQuarterlyPriceInput && quarterlyPrice) {
                 formData.append('quarterly', quarterlyPrice);
-                formData.append('discount_quarterly', quarterlyDiscountPrice);
+                formData.append('discount_quarterly', quarterlyDiscountPrice ||0);
                 // formData.append('setupFees_quarterly', quarterlyDiscountPrice);
             }
             if (showSemiAnnualPriceInput && semiAnnualPrice) {
-                formData.append('semi-annual', semiAnnualPrice);
-                formData.append('discount_semi_annual', semiAnnualDiscountPrice);
+                formData.append('semi_annual', semiAnnualPrice);
+                formData.append('discount_semi_annual', semiAnnualDiscountPrice||0);
                 // formData.append('setupFees_semi_annual', semiAnnualSetUpFeesPrice);
             }
             if (showYearlyPriceInput && yearlyPrice) {
                 formData.append('yearly', yearlyPrice);
-                formData.append('discount_yearly', yearlyDiscountPrice);
+                formData.append('discount_yearly', yearlyDiscountPrice||0);
                 // formData.append('setupFees_yearly', yearlySetUpFeesPrice);
             }
 
@@ -153,7 +153,7 @@ const AddPlanPage = () => {
              console.log(response)
             if (response.status === 200) {
                 auth.toastSuccess('Plan added successfully!');
-                // handleGoBack();
+                handleGoBack();
             } else {
                 auth.toastError('Failed to add Plan.');
             }
@@ -179,7 +179,7 @@ const AddPlanPage = () => {
                         width="w-full"
                     />
                 </div>
-                <div className="lg:w-[30%] sm:w-full">
+                {/* <div className="lg:w-[30%] sm:w-full">
                     <InputCustom
                         type="text"
                         borderColor="mainColor"
@@ -188,7 +188,7 @@ const AddPlanPage = () => {
                         onChange={(e) => setTitle(e.target.value)}
                         width="w-full"
                     />
-                </div>
+                </div> */}
                 {/* <div className="lg:w-[30%] sm:w-full">
                     <InputCustom
                         type="textarea"

@@ -138,7 +138,7 @@ const AddExtraProductPage = () => {
                 // formData.append('setupFees_quarterly', quarterlyDiscountPrice);
             }
             if (showSemiAnnualPriceInput && semiAnnualPrice) {
-                formData.append('semi-annual', semiAnnualPrice);
+                formData.append('semi_annual', semiAnnualPrice);
                 formData.append('discount_semi_annual', semiAnnualDiscountPrice);
                 // formData.append('setupFees_semi_annual', semiAnnualSetUpFeesPrice);
             }

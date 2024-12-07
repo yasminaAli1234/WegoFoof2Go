@@ -30,7 +30,7 @@ const EditPromoCodePage =()=>{
     const [selectValueTypeName, setSelectValueTypeName] = useState(null);
     const [openSelectValueType, setOpenSelectValueType] = useState(false);
 
-    const [usageTypeData, setUsageTypeData] = useState([{ name: 'First Usage' }, { name: 'Renueve' }]);
+    const [usageTypeData, setUsageTypeData] = useState([{ name: 'First Usage' }, { name: 'Renew' }]);
     const [selectUsageType, setSelectUsageType] = useState('Select UsageType');
     const [selectUsageTypeName, setSelectUsageTypeName] = useState(null);
     const [openSelectUsageType, setOpenSelectUsageType] = useState(false);
@@ -64,8 +64,8 @@ const EditPromoCodePage =()=>{
             setLimit(promoCodeContent.user_usage)
 
             if (promoCodeContent.user_type === 'renueve') {
-                    setSelectUsageType("Renueve");
-                    setSelectUsageTypeName("Renueve");
+                    setSelectUsageType("Renew");
+                    setSelectUsageTypeName("Renew");
 
             } else if (promoCodeContent.user_type === 'first_usage') {
                 setSelectUsageType("First Usage");
@@ -80,7 +80,7 @@ const EditPromoCodePage =()=>{
             setSelectValueType("Percentage");
             setSelectValueTypeName("Percentage");
 
-        } else if (promoCodeContent.user_type === 'amount') {
+        } else if (promoCodeContent.calculation_method === 'amount') {
             setSelectValueType("Value");
             setSelectValueTypeName("Value");
         } 
@@ -312,7 +312,7 @@ const EditPromoCodePage =()=>{
  
             if (response.status === 200) {
                 auth.toastSuccess('PromoCode Updated successfully!');
-                handleGoBack();
+                // handleGoBack();
             } else {
                 auth.toastError('Failed to Update PromoCode.');
             }

@@ -162,8 +162,8 @@ const PromoCodePage = () => {
                                                 className="min-w-[100px] sm:min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                         >                                                
                                                 {code?.calculation_method === "percentage"
-                                                        ? `${code["semi-annual"]}%`
-                                                        : code["semi-annual"]}
+                                                        ? `${code["semi_annual"]}%`
+                                                        : code["semi_annual"]}
                                         </td>
                                         <td
                                                 className="min-w-[100px] sm:min-w-[100px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"

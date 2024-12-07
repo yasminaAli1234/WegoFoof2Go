@@ -365,7 +365,7 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
                                           <HomeIcon isActive={isActiveHome} />
                                           <span className={`${isActiveHome ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Home</span>
                                    </Link>
-                                   <Link to="welcom_offer" onClick={() =>{handleClickWelcomOffer();handleLinkClick();}} className={`${isActiveWelcomOffer ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
+                                   <Link to="welcome_offer" onClick={() =>{handleClickWelcomOffer();handleLinkClick();}} className={`${isActiveWelcomOffer ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <WelcomOfferIcon isActive={isActiveWelcomOffer} />
                                           <span className={`${isActiveWelcomOffer ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Welcom Offer</span>
                                    </Link>

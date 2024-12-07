@@ -57,7 +57,7 @@ const ExtraPage = () => {
        const priceOptions = {
            monthly: product.monthly,
            quarterly: product.quarterly || product.monthly * 3,
-           semiAnnually: product["semi-annual"] || product.monthly * 6,
+           semiAnnually: product["semi_annual"] || product.monthly * 6,
            annually: product.yearly,
        };
 
@@ -127,7 +127,7 @@ const ExtraPage = () => {
                const priceOptions = {
                    monthly: product.monthly,
                    quarterly: product.quarterly || product.monthly * 3,
-                   semiAnnually: product["semi-annual"] || product.monthly * 6,
+                   semiAnnually: product["semi_annual"] || product.monthly * 6,
                    annually: product.yearly,
                };
 
@@ -290,7 +290,7 @@ const ExtraPage = () => {
                             // const priceOptions = {
                             //        monthly: product.monthly,
                             //        quarterly: product.quarterly || product.monthly * 3,
-                            //        semiAnnually: product["semi-annual"] || product.monthly * 6,
+                            //        semiAnnually: product["semi_annual"] || product.monthly * 6,
                             //        annually: product.yearly,
                             // };
                             // const currentPrice = priceOptions[selectedPeriod];
@@ -305,7 +305,7 @@ const ExtraPage = () => {
                             const priceOptions = {
                                    monthly: product.monthly,
                                    quarterly: product.quarterly || product.monthly * 3,
-                                   semiAnnually: product["semi-annual"] || product.monthly * 6,
+                                   semiAnnually: product["semi_annual"] || product.monthly * 6,
                                    annually: product.yearly || product.monthly * 12,
                             };
                             const discountOptions = {

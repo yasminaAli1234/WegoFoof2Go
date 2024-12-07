@@ -345,7 +345,7 @@ export const router = createBrowserRouter([
             ]
           },
           {
-            path: 'welcom_offer',
+            path: 'welcome_offer',
             element:<AppLayoutWelcomOffer/>,
             children: [
               {
@@ -357,7 +357,7 @@ export const router = createBrowserRouter([
                 element:<AddWelcomOfferLayout/>
               },
               {
-                path:'edit/:offerId',
+                path:'edit/:welcomeOfferId',
                 element:<EditWelcomOfferLayout/>
               },
             ]

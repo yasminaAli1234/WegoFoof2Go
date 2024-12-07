@@ -75,9 +75,9 @@ const EditExtraProductPage =()=>{
                         setQuarterlyPrice(productContent.quarterly)
                         setQuarterlyDiscountPrice(productContent.discount_quarterly)
                     }
-                    if(productContent["semi-annual"]){
+                    if(productContent["semi_annual"]){
                         setShowSemiAnnualPriceInput(true)
-                        setSemiAnnualPrice(productContent["semi-annual"])
+                        setSemiAnnualPrice(productContent["semi_annual"])
                         setSemiAnnualDiscountPrice(productContent.discount_semi_annual)
                     }
                     if(productContent.yearly){
@@ -182,7 +182,7 @@ const EditExtraProductPage =()=>{
                 // formData.append('setupFees_quarterly', quarterlyDiscountPrice);
             }
             if (showSemiAnnualPriceInput && semiAnnualPrice) {
-                formData.append('semi-annual', semiAnnualPrice);
+                formData.append('semi_annual', semiAnnualPrice);
                 formData.append('discount_semi_annual', semiAnnualDiscountPrice);
                 // formData.append('setupFees_semi_annual', semiAnnualSetUpFeesPrice);
             }

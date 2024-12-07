@@ -11,7 +11,7 @@ const AddWelcomOfferLayout =()=>{
     };
     return(
         <>
-        <HeaderPageSection handleClick={handleGoBack} name="Add Welcom Offer" />
+        <HeaderPageSection handleClick={handleGoBack} name="Add Welcome Offer" />
         <AddWelcomOfferPage/>
         </>
     )

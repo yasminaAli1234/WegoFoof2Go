@@ -290,7 +290,7 @@ const UserSubscriptionsPage = () => {
         const priceOptions = {
             monthly: plan.monthly,
             quarterly: plan.quarterly || plan.monthly * 3,
-            semiAnnually: plan["semi-annual"] || plan.monthly * 6,
+            semiAnnually: plan["semi_annual"] || plan.monthly * 6,
             annually: plan.yearly,
         };
         const discountOptions = {
@@ -421,7 +421,7 @@ const UserSubscriptionsPage = () => {
                     const priceOptions = {
                         monthly: plan.monthly,
                         quarterly: plan.quarterly || plan.monthly * 3,
-                        semiAnnually: plan["semi-annual"] || plan.monthly * 6,
+                        semiAnnually: plan["semi_annual"] || plan.monthly * 6,
                         annually: plan.yearly || plan.monthly * 12,
                     };
                     const discountOptions = {
