@@ -1,6 +1,6 @@
 import React from 'react'
 
-const HomeIcon = ({ Width = "24", Height = "24", isActive = '#fff' }) => {
+const StoreIcon = ({ Width = "24", Height = "24", isActive = '#fff' }) => {
     return (
         <svg width={Width} height={Height} viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clipPath="url(#clip0_107_2892)">
@@ -20,4 +20,4 @@ const HomeIcon = ({ Width = "24", Height = "24", isActive = '#fff' }) => {
     )
 }
 
-export default HomeIcon
+export default StoreIcon

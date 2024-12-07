@@ -30,6 +30,10 @@ export { default as AddExtraProductPage } from "./AdminPages/ExtraProduct/AddExt
 export { default as EditExtraProductPage } from "./AdminPages/ExtraProduct/EditExtraProductPage";
 //Payment Page
 export { default as PaymentPage } from "./AdminPages/Payment/PaymentPage";
+//WelcomOffer Page
+export { default as WelcomOfferPage } from "./AdminPages/WelcomOffer/WelcomOfferPage";
+export { default as AddWelcomOfferPage } from "./AdminPages/WelcomOffer/AddWelcomOfferPage";
+export { default as EditWelcomOfferPage } from "./AdminPages/WelcomOffer/EditWelcomOfferPage";
 //Setting 
 //PaymentMethod Pages
 export { default as PaymentMethodPage } from "./AdminPages/PaymentMethod/PaymentMethodPage";

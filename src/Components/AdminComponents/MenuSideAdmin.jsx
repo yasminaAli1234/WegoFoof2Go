@@ -1,5 +1,5 @@
 import React, { useState ,useEffect} from "react";
-import {DemorequestsIcon, DollerIcon, DomainIcon, ExtraIcon, HomeIcon, OrderIcon, PaymentIcon, PlanIcon, PromoCodeIcon, SettingIcon, SubscriptionIcon, TutorialIcon, UserIcon,
+import {DemorequestsIcon, DollerIcon, DomainIcon, ExtraIcon, HomeIcon, OrderIcon, PaymentIcon, PlanIcon, PromoCodeIcon, SettingIcon, SubscriptionIcon, TutorialIcon, UserIcon, WelcomOfferIcon,
     // ProfileIcon,StoreIcon,SubscriptionIcon,DomainIcon,ExtraIcon,PaymentIcon,TutorialIcon
 } from "../Icons/AllIcons";
 import { NavLink } from "react-router-dom";
@@ -28,6 +28,7 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
        const [isActiveExtra, setIsActiveExtra] =  useState(savedState.isActiveExtra ?? false);
        const [isActivePayment, setIsActivePayment] =  useState(savedState.isActivePayment ?? false);
        const [isActiveTutorial, setIsActiveTutorial] =  useState(savedState.isActiveTutorial ?? false);
+       const [isActiveWelcomOffer, setIsActiveWelcomOffer] =  useState(savedState.isActiveWelcomOffer ?? false);
 
        const [isActiveSetting, setIsActiveSetting] =  useState(savedState.isActiveSetting ?? false);
               const [isActiveSettingList, setIsActiveSettingList] =  useState(savedState.isActiveSettingList ?? false);
@@ -42,12 +43,12 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
 
        useEffect(() => {
               const sidebarAdminState = {
-                     isActiveHome,isActiveDemoRequest,isActivePaymentPending,isActiveDomainRequest,
+                     isActiveHome,isActiveDemoRequest,isActivePaymentPending,isActiveDomainRequest,isActiveWelcomOffer,
                      isActiveOrder,isActiveUser,isActiveSubscription,isActivePlan,isActiveTutorial,isActiveActivity,
                      isActiveExtra,isActivePayment,isActiveSetting,isActiveSettingList,isActivePromoCode
               };
               localStorage.setItem('sidebarAdminState', JSON.stringify(sidebarAdminState));
-       }, [isActiveHome,isActiveDemoRequest,isActivePaymentPending,isActiveDomainRequest,
+       }, [isActiveHome,isActiveDemoRequest,isActivePaymentPending,isActiveDomainRequest,isActiveWelcomOffer,
            isActiveOrder,isActiveUser,isActiveSubscription,isActivePlan,isActiveTutorial,isActiveActivity,
            isActiveExtra,isActivePayment,isActiveSetting,isActiveSettingList,isActivePromoCode
        ]);
@@ -69,6 +70,7 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
               setIsActivePromoCode(false)
               setIsActiveTutorial(false)
               setIsActiveActivity(false)
+              setIsActiveWelcomOffer(false)
        };
        const handleClickDemoRequest = () => {
               setIsActiveHome(false);
@@ -87,6 +89,7 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
               setIsActivePromoCode(false)
               setIsActiveTutorial(false)
               setIsActiveActivity(false)
+              setIsActiveWelcomOffer(false)
        };
        const handleClickDomainRequest = () => {
               setIsActiveHome(false);
@@ -105,6 +108,7 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
               setIsActivePromoCode(false)
               setIsActiveTutorial(false)
               setIsActiveActivity(false)
+              setIsActiveWelcomOffer(false)
        };
        const handleClickPaymentPending =() =>{
               setIsActiveHome(false);
@@ -123,6 +127,7 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
               setIsActivePromoCode(false)
               setIsActiveTutorial(false)
               setIsActiveActivity(false)
+              setIsActiveWelcomOffer(false)
        }
        const handleClickOrder=() =>{
               setIsActiveHome(false);
@@ -141,6 +146,7 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
               setIsActivePromoCode(false)
               setIsActiveTutorial(false)
               setIsActiveActivity(false)
+              setIsActiveWelcomOffer(false)
        }
        const handleClickUser =() =>{
               setIsActiveHome(false);
@@ -159,6 +165,7 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
               setIsActivePromoCode(false)
               setIsActiveTutorial(false)
               setIsActiveActivity(false)
+              setIsActiveWelcomOffer(false)
        }
        const handleClickSubscription =() =>{
               setIsActiveHome(false);
@@ -177,6 +184,7 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
               setIsActivePromoCode(false)
               setIsActiveTutorial(false)
               setIsActiveActivity(false)
+              setIsActiveWelcomOffer(false)
        }
        const handleClickPlan =() =>{
               setIsActiveHome(false);
@@ -195,6 +203,7 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
               setIsActivePromoCode(false)
               setIsActiveTutorial(false)
               setIsActiveActivity(false)
+              setIsActiveWelcomOffer(false)
        }
        const handleClickExtra =() =>{
               setIsActiveHome(false);
@@ -213,6 +222,7 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
               setIsActivePromoCode(false)
               setIsActiveTutorial(false)
               setIsActiveActivity(false)
+              setIsActiveWelcomOffer(false)
        }
        const handleClickPayment =() =>{
               setIsActiveHome(false);
@@ -231,6 +241,7 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
               setIsActivePromoCode(false)
               setIsActiveTutorial(false)
               setIsActiveActivity(false)
+              setIsActiveWelcomOffer(false)
        }
        const handleClickSetting =() =>{
               setIsActiveHome(false);
@@ -249,6 +260,7 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
               setIsActivePromoCode(false)
               setIsActiveTutorial(false)
               setIsActiveActivity(false)
+              setIsActiveWelcomOffer(false)
        }
        const handleClickPaymentMethod =() =>{
               setIsActiveHome(false);
@@ -267,6 +279,7 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
               setIsActivePromoCode(false)
               setIsActiveTutorial(false)
               setIsActiveActivity(false)
+              setIsActiveWelcomOffer(false)
        }
        const handleClickPromoCode =() =>{
               setIsActiveHome(false);
@@ -285,6 +298,7 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
               setIsActivePromoCode(true)
               setIsActiveTutorial(false)
               setIsActiveActivity(false)
+              setIsActiveWelcomOffer(false)
        }
        const handleClickActivity =() =>{
               setIsActiveHome(false);
@@ -303,6 +317,7 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
               setIsActivePromoCode(false)
               setIsActiveTutorial(false)
               setIsActiveActivity(true)
+              setIsActiveWelcomOffer(false)
        }
        const handleClickTutorial =() =>{
               setIsActiveHome(false);
@@ -321,6 +336,26 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
               setIsActivePromoCode(false)
               setIsActiveTutorial(true)
               setIsActiveActivity(false)
+              setIsActiveWelcomOffer(false)
+       }
+       const handleClickWelcomOffer =() =>{
+              setIsActiveHome(false);
+              setIsActiveDemoRequest(false)
+              setIsActiveDomainRequest(false)
+              setIsActivePaymentPending(false)
+              setIsActiveOrder(false)
+              setIsActiveUser(false)
+              setIsActiveSubscription(false)
+              setIsActivePlan(false)
+              setIsActiveExtra(false)
+              setIsActivePayment(false)
+              setIsActiveSettingList(false)
+              setIsActiveSetting(false)
+              setIsActivePaymentMethod(false)
+              setIsActivePromoCode(false)
+              setIsActiveTutorial(false)
+              setIsActiveActivity(false)
+              setIsActiveWelcomOffer(true)
        }
        return (
               <>
@@ -329,6 +364,10 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
                                    <Link to="/dashboard_admin" onClick={() =>{handleClickHome();handleLinkClick();}} className={`${isActiveHome ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <HomeIcon isActive={isActiveHome} />
                                           <span className={`${isActiveHome ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Home</span>
+                                   </Link>
+                                   <Link to="welcom_offer" onClick={() =>{handleClickWelcomOffer();handleLinkClick();}} className={`${isActiveWelcomOffer ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
+                                          <WelcomOfferIcon isActive={isActiveWelcomOffer} />
+                                          <span className={`${isActiveWelcomOffer ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Welcom Offer</span>
                                    </Link>
                                    <Link to="demo_request" onClick={() =>{handleClickDemoRequest();handleLinkClick();}} className={`${isActiveDemoRequest ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <DemorequestsIcon isActive={isActiveDemoRequest} />

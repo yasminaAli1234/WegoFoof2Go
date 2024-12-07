@@ -47,6 +47,9 @@ import { UserLayout,UserHomeLayout ,
     ActivityLayout,
     AddActivityLayout,
     EditActivityLayout,
+    WelcomOfferLayout,
+    AddWelcomOfferLayout,
+    EditWelcomOfferLayout,
 } from "./Layouts/AllLayouts";
 import Login from "./Pages/RegisterPages/Login.jsx";
 import SignUpPage from "./Pages/RegisterPages/SignUpPage.jsx";
@@ -117,6 +120,11 @@ const AppLayoutAdminTutorial = () =>(
  </>
 )
 const AppLayoutTutorial = () =>(
+  <>
+  <Outlet/>
+ </>
+)
+const AppLayoutWelcomOffer = () =>(
   <>
   <Outlet/>
  </>
@@ -335,7 +343,25 @@ export const router = createBrowserRouter([
                 element:<EditTutorialLayout/>
               },
             ]
-          } 
+          },
+          {
+            path: 'welcom_offer',
+            element:<AppLayoutWelcomOffer/>,
+            children: [
+              {
+                path:'',
+                element:<WelcomOfferLayout/>
+              },
+              {
+                path:'add',
+                element:<AddWelcomOfferLayout/>
+              },
+              {
+                path:'edit/:offerId',
+                element:<EditWelcomOfferLayout/>
+              },
+            ]
+          },
         ],
       },
     ],
