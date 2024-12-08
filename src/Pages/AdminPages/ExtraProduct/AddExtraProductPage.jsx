@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef,useEffect } from 'react';
 import axios from 'axios';
 import InputCustom from '../../../Components/InputCustom';
 import { Button } from '../../../Components/Button';
@@ -6,6 +6,7 @@ import { useAuth } from '../../../Context/Auth';
 import { useNavigate } from 'react-router-dom';
 import CheckBox from '../../../Components/CheckBox';
 import DropDownMenu from '../../../Components/DropDownMenu';
+import MultipleChoiceMenu from '../../../Components/MultipleChoiceMenu';
 
 const AddExtraProductPage = () => {
     const auth = useAuth();
@@ -15,7 +16,7 @@ const AddExtraProductPage = () => {
     const [fee, setFee] = useState('');
     // const [monthlyPrice, setMonthlyPrice] = useState(''); // For one-time price or monthly price
     // const [yearlyPrice, setYearlyPrice] = useState(''); // For yearly price in case of Recurring
-    const [included, setIncluded] = useState(0); // Default status to 0
+    const [included, setIncluded] = useState(''); // Default status to 0
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
@@ -40,15 +41,48 @@ const AddExtraProductPage = () => {
     const [showSemiAnnualPriceInput, setShowSemiAnnualPriceInput] = useState(false);
     const [showYearlyPriceInput, setShowYearlyPriceInput] = useState(false);
 
-
     const [extraTypeData, setExtraTypeData] = useState([{ name: 'One Time' }, { name: 'Recurring' }]);
     const [extraType, setExtraType] = useState('Select Type');
     const [extraTypeName, setExtraTypeName] = useState();
     const [openExtraType, setOpenExtraType] = useState(false);
     const dropdownExtraType = useRef();
 
+    const [plans, setPlans] = useState([]);
+    const [selectPlan, setSelectPlan] = useState('');
+    const [selectPlanId, setSelectPlanId] = useState('');
+    const [openSelectPlan, setOpenSelectPlan] = useState(false);
+    const dropdownPlanRef =useRef();
+
+    const fetchData = async () => {
+        setIsLoading(true);
+        try {
+               const response = await axios.get('https://login.wegostores.com/admin/v1/plan/show', {
+                      headers: {
+                             Authorization: `Bearer ${auth.user.token}`,
+                      },
+               });
+               if (response.status === 200) {
+                      console.log(response.data)
+                      setPlans(response.data.plan)
+               }
+        } catch (error) {
+               console.error('Error fetching data:', error);
+        } finally {
+               setIsLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchData(); 
+    }, []);
+
     const handleOpenExtraType = () => {
         setOpenExtraType(!openExtraType);
+        setOpenSelectPlan(false)
+    };
+    const handleOpenSelectPlan = () => {
+        setOpenSelectPlan(prev => !prev)
+        setOpenExtraType(false)
     };
 
     const handleExtraType = (e) => {
@@ -60,6 +94,45 @@ const AddExtraProductPage = () => {
         setOpenExtraType(false);
         console.log(selectedOptionName)
     };
+    const handleSelectPlan = (e) => {
+        const inputElement = e.currentTarget.querySelector('.inputVal');
+        const selectedOptionName = e.currentTarget.textContent.trim();
+        const selectedOptionValue = inputElement ? inputElement.value : null;
+        setSelectPlan(prev =>
+            prev.includes(selectedOptionName)
+              ? prev.filter(name => name !== selectedOptionName)
+              : [...prev, selectedOptionName]
+          );
+      
+          setSelectPlanId(prev =>
+            prev.includes(selectedOptionValue)
+              ? prev.filter(id => id !== selectedOptionValue)
+              : [...prev, selectedOptionValue]
+          );
+          setOpenSelectPlan(false)
+      
+        console.log('Selected Plan:', selectedOptionName);
+        console.log('Plan ID:', selectedOptionValue);
+    };
+    const handleRemoveSubject = (PlanName) => {
+        setSelectPlan(selectPlan.filter(plan => plan !== PlanName));
+    };
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+          document.removeEventListener('mousedown', handleClickOutside);
+        };
+      }, []);
+    
+      const handleClickOutside = (event) => {
+        if (dropdownPlanRef.current && !dropdownPlanRef.current.contains(event.target)&&
+            dropdownExtraType.current && !dropdownExtraType.current.contains(event.target)
+        ) {
+            setOpenSelectPlan(false); 
+            setOpenExtraType(false); 
+        }
+      };
 
     const handleGoBack = () => {
         navigate(-1, { replace: true });
@@ -149,6 +222,10 @@ const AddExtraProductPage = () => {
                 // formData.append('setupFees_yearly', yearlySetUpFeesPrice);
             }
             }
+
+            selectPlanId.forEach((planId, index) => {
+                formData.append(`plans[${index}]`, planId);
+              });
     
             // Logging formData for debugging
             for (let pair of formData.entries()) {
@@ -234,7 +311,7 @@ const AddExtraProductPage = () => {
                         options={extraTypeData}
                     />
                 </div>
-                
+    
                 {/* Conditionally render price inputs based on extraType */}
                 {extraType === 'One Time' && (
                     <div className="lg:w-[30%] sm:w-full">
@@ -469,12 +546,29 @@ const AddExtraProductPage = () => {
                     </>
                 )}
 
+                {
+                    included ===1 && (
+                    <div className="lg:w-[30%] sm:w-full">
+                    <MultipleChoiceMenu
+                      ref={dropdownPlanRef}
+                      handleOpen={handleOpenSelectPlan}
+                      selectedOptions={selectPlan}
+                      openMenu={openSelectPlan}
+                      handleSelectOption={handleSelectPlan}
+                      handleRemoveOption={handleRemoveSubject}
+                      options={plans}
+                      name="Select Plans"
+                    />
+                  </div>
+                    )
+                }
+
                 <div className="lg:w-[30%] sm:w-full flex items-center gap-x-4 w-full">
                             <span className="text-2xl text-mainColor font-medium">Included:</span>
                             <div>
                                 <CheckBox handleClick={handleClick} checked={included}/>
                             </div>
-                        </div>
+                        </div>  
                 </div>
 
             <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">

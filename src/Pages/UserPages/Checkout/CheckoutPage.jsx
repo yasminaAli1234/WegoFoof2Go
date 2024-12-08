@@ -160,7 +160,7 @@ const CheckoutPage = () => {
       // Prepare Request Data
       const requestData = {
         payment_method_id: selectedMethod.id,
-        plan: planItems.length > 0 ? extraItems : null,
+        plan: planItems.length > 0 ? planItems : null,
         extra: extraItems.length > 0 ? extraItems : null,
         domain: domainItems.length > 0 ? domainItems : null,
         invoice_image: thumbnailFile,
