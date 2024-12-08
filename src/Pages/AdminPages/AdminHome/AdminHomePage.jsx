@@ -17,6 +17,13 @@ const AdminHomePage = () => {
     monthly_subscriptions: 10,
   });
 
+  const [date, setDate] = useState("");
+  const [payments, setPayments] = useState('');
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [minAmount, setMinAmount] = useState("");
+  const [maxAmount, setMaxAmount] = useState("");
+
   const auth = useAuth();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -33,6 +40,7 @@ const AdminHomePage = () => {
              if (response.status === 200) {
                     console.log(response.data)
                     setData2(response.data)
+                    setPayments(response.data.payments)
              }
       } catch (error) {
              console.error('Error fetching data:', error);
@@ -45,9 +53,43 @@ const AdminHomePage = () => {
       fetchData(); 
   }, []);
 
+  if (isLoading) {
+    return (
+        <div className="w-1/4 h-full flex items-start mt-[10%] justify-center m-auto">
+            <Loading />
+        </div>
+    );
+}
+
+if (!data2) {
+    return (
+        <div className="text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center">
+            No data available
+        </div>
+    );
+}
+
   const calculateProgress = (current, total) => {
     return total === 0 ? 0 : Math.round((current / total) * 100);
   };
+
+  // Filter function
+  const filteredPayments = payments.filter((payment) => {
+    const paymentDate = new Date(payment.created_at);
+    const start = startDate ? new Date(startDate) : null;
+    const end = endDate ? new Date(endDate) : null;
+
+    return (!start || paymentDate >= start) && (!end || paymentDate <= end);
+  });
+
+  // Calculate total count and amount
+  const totalPayments = filteredPayments.length;
+  const totalAmount = filteredPayments.reduce(
+    (sum, payment) => sum + (payment.amount || 0),
+    0
+  );
+
+
 
   return (
     <div className="bg-gray-50 min-h-screen p-6">
@@ -212,6 +254,72 @@ const AdminHomePage = () => {
           </div>
         </div>
       </div>
+
+     
+      <div className="p-6 bg-gray-100">
+      <h1 className="text-2xl font-bold mb-4">Payment Filter</h1>
+
+      <div className="grid grid-cols-2 gap-4 mb-6">
+        {/* Start Date */}
+        <div>
+          <label className="block text-gray-700">Start Date</label>
+          <input
+            type="date"
+            className="w-full p-2 border border-gray-300 rounded"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+          />
+        </div>
+
+        {/* End Date */}
+        <div>
+          <label className="block text-gray-700">End Date</label>
+          <input
+            type="date"
+            className="w-full p-2 border border-gray-300 rounded"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+          />
+        </div>
+      </div>
+
+      {/* Results */}
+      <div className="bg-white p-4 rounded shadow">
+        <h2 className="text-xl font-semibold mb-4">Filtered Payments</h2>
+        <p>
+          <strong>Total Payments:</strong> {totalPayments}
+        </p>
+        <p>
+          <strong>Total Amount:</strong> {totalAmount}
+        </p>
+
+        {filteredPayments.length > 0 ? (
+          <ul className="mt-4">
+            {filteredPayments.map((payment) => (
+              <li
+                key={payment.id}
+                className="p-2 border-b border-gray-300 flex justify-between"
+              >
+                <span>
+                  <strong>ID:</strong> {payment.id}
+                </span>
+                <span>
+                  <strong>Amount:</strong> {payment.amount || "N/A"}
+                </span>
+                <span>
+                  <strong>Date:</strong>{" "}
+                  {new Date(payment.created_at).toLocaleDateString()}
+                </span>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-gray-500 mt-4">
+            No payments match the filter criteria.
+          </p>
+        )}
+      </div>
+    </div>
     </div>
   );
 };
