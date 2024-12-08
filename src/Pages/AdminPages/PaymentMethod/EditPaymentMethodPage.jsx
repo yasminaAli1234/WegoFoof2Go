@@ -26,7 +26,7 @@ const EditPaymentMethodPage =()=>{
         if (paymentContent) {
             setTitle(paymentContent.name || '');
             setDescription(paymentContent.description|| '');
-            setThumbnailFile(paymentContent.thumbnailUrl || '');
+            // setThumbnailFile(paymentContent.thumbnailUrl || '');
             setThumbnails(paymentContent.thumbnailUrl || '');
         }
     }, [paymentContent]);
@@ -76,7 +76,16 @@ const EditPaymentMethodPage =()=>{
             formData.append('paymentMethod_id', paymentId);
             formData.append('name', title);
             formData.append('description', description);
-            formData.append('thumbnail', thumbnailFile); // Append the file
+
+            if(thumbnailFile === null){
+            formData.append('thumbnail', thumbnails); // Append the file
+            }else{
+                formData.append('thumbnail', thumbnailFile); // Append the file
+            }
+
+            for (let pair of formData.entries()) {
+                console.log(pair[0] + ', ' + pair[1]);
+            } 
 
             const response = await axios.post(
                 'https://login.wegostores.com/admin/v1/payment/method/update',
@@ -92,7 +101,7 @@ const EditPaymentMethodPage =()=>{
             if (response.status === 200) {
                 console.log('Payment Method Updated successfully');
                 auth.toastSuccess('Payment Method Updated successfully!');
-                handleGoBack();
+                // handleGoBack();
             } else {
                 console.error('Failed to Updated Payment Method:', response.status, response.statusText);
                 auth.toastError('Failed to Updated Payment Method.');

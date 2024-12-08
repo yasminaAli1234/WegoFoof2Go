@@ -68,11 +68,23 @@ const ExtraPage = () => {
               annually: product.discount_yearly,
           };
 
-          const currentPrice = discountOptions[selectedPeriod]
-          ? discountOptions[selectedPeriod]
-          : priceOptions[selectedPeriod]
-          ? priceOptions[selectedPeriod]
-          : product.price ?? 0;
+       //    const currentPrice = discountOptions[selectedPeriod]
+       //    ? discountOptions[selectedPeriod]
+       //    : priceOptions[selectedPeriod]
+       //    ? priceOptions[selectedPeriod]
+       //    : product.price ?? 0;
+
+       let currentPrice;
+
+       if (product.status === "one_time") {
+       currentPrice = product.price;
+       } else {
+       currentPrice = discountOptions[selectedPeriod]
+       ? discountOptions[selectedPeriod]
+       : priceOptions[selectedPeriod]
+       ? priceOptions[selectedPeriod]
+       : product.price ?? 0;
+       }
       
        const productWithPeriodAndPrice = { 
            ...product, 

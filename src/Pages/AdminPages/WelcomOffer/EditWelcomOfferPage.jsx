@@ -59,7 +59,7 @@ const EditWelcomOfferPage = () => {
                 setSelectDuration("Quarterly");
                 setSelectDurationName("Quarterly");
             } 
-            else if (offerContent.duration === 'semi-annual') {
+            else if (offerContent.duration === 'semi_annual') {
                 setSelectDuration("SemiAnnual");
                 setSelectDurationName("SemiAnnual");
             }
@@ -193,7 +193,7 @@ const EditWelcomOfferPage = () => {
         const durationMap = {
             Monthly: 'monthly',
             Quarterly: 'quarterly',
-            SemiAnnual: 'semi-annual',
+            SemiAnnual: 'semi_annual',
             Yearly: 'yearly',
         };  
         const duration = durationMap[selectDuration] || selectDuration;

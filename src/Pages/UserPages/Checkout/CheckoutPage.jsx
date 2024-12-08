@@ -188,7 +188,7 @@ const CheckoutPage = () => {
 
            // Show success modal
         setShowSuccessModal(true);
-
+    
         // Remove cart from localStorage
         localStorage.removeItem('cart');
         localStorage.removeItem('selectedPlanId');

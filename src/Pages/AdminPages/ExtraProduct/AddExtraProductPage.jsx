@@ -15,7 +15,7 @@ const AddExtraProductPage = () => {
     const [fee, setFee] = useState('');
     // const [monthlyPrice, setMonthlyPrice] = useState(''); // For one-time price or monthly price
     // const [yearlyPrice, setYearlyPrice] = useState(''); // For yearly price in case of Recurring
-    const [appActive, setAppActive] = useState(0); // Default status to 0
+    const [included, setIncluded] = useState(0); // Default status to 0
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
@@ -67,7 +67,7 @@ const AddExtraProductPage = () => {
 
     const handleClick = (e) => {
         const isChecked = e.target.checked;
-        setAppActive(isChecked ? 1 : 0);
+        setIncluded(isChecked ? 1 : 0);
     };
 
     const handleSubmitAdd = async (event) => {
@@ -118,6 +118,7 @@ const AddExtraProductPage = () => {
             formData.append('name', name);
             formData.append('description', description);
             formData.append('setup_fees', fee);
+            formData.append('included', included || 0);
 
             // Set data fields based on selected type
             if (extraType === 'One Time') {
@@ -467,7 +468,14 @@ const AddExtraProductPage = () => {
                 </div>
                     </>
                 )}
-            </div>
+
+                <div className="lg:w-[30%] sm:w-full flex items-center gap-x-4 w-full">
+                            <span className="text-2xl text-mainColor font-medium">Included:</span>
+                            <div>
+                                <CheckBox handleClick={handleClick} checked={included}/>
+                            </div>
+                        </div>
+                </div>
 
             <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
                 <div className="flex items-center justify-center w-72">

@@ -50,6 +50,9 @@ import { UserLayout,UserHomeLayout ,
     WelcomOfferLayout,
     AddWelcomOfferLayout,
     EditWelcomOfferLayout,
+    AdminInformationLayout,
+    AddAdminInformationLayout,
+    EditAdminInformationLayout,
 } from "./Layouts/AllLayouts";
 import Login from "./Pages/RegisterPages/Login.jsx";
 import SignUpPage from "./Pages/RegisterPages/SignUpPage.jsx";
@@ -125,6 +128,11 @@ const AppLayoutTutorial = () =>(
  </>
 )
 const AppLayoutWelcomOffer = () =>(
+  <>
+  <Outlet/>
+ </>
+)
+const AppLayoutContact  = () =>(
   <>
   <Outlet/>
  </>
@@ -359,6 +367,24 @@ export const router = createBrowserRouter([
               {
                 path:'edit/:welcomeOfferId',
                 element:<EditWelcomOfferLayout/>
+              },
+            ]
+          },
+          {
+            path: 'contact_info',
+            element:<AppLayoutContact/>,
+            children: [
+              {
+                path:'',
+                element:<AdminInformationLayout/>
+              },
+              {
+                path:'add',
+                element:<AddAdminInformationLayout/>
+              },
+              {
+                path:'edit/:contactId',
+                element:<EditAdminInformationLayout/>
               },
             ]
           },

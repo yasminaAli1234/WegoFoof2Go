@@ -35,6 +35,10 @@ export { default as PaymentLayout } from "./AdminLayouts/PaymentLayout";
 export { default as WelcomOfferLayout } from "./AdminLayouts/WelcomOfferLayout";
 export { default as AddWelcomOfferLayout } from "./AdminLayouts/AddWelcomOfferLayout";
 export { default as EditWelcomOfferLayout } from "./AdminLayouts/EditWelcomOfferLayout";
+//AdminInformation Layout
+export { default as AdminInformationLayout } from "./AdminLayouts/AdminInformationLayout";
+export { default as AddAdminInformationLayout } from "./AdminLayouts/AddAdminInformationLayout";
+export { default as EditAdminInformationLayout } from "./AdminLayouts/EditAdminInformationLayout";
 //Setting 
 //PaymentMethod Layout
 export { default as PaymentMethodLayout } from "./AdminLayouts/PaymentMethodLayout";

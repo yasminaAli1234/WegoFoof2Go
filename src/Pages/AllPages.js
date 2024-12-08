@@ -34,6 +34,10 @@ export { default as PaymentPage } from "./AdminPages/Payment/PaymentPage";
 export { default as WelcomOfferPage } from "./AdminPages/WelcomOffer/WelcomOfferPage";
 export { default as AddWelcomOfferPage } from "./AdminPages/WelcomOffer/AddWelcomOfferPage";
 export { default as EditWelcomOfferPage } from "./AdminPages/WelcomOffer/EditWelcomOfferPage";
+//AdminInformation Page
+export { default as AdminInformationPage } from "./AdminPages/AdminInformation/AdminInformationPage";
+export { default as AddAdminInformationPage } from "./AdminPages/AdminInformation/AddAdminInformationPage";
+export { default as EditAdminInformationPage } from "./AdminPages/AdminInformation/EditAdminInformationPage";
 //Setting 
 //PaymentMethod Pages
 export { default as PaymentMethodPage } from "./AdminPages/PaymentMethod/PaymentMethodPage";
