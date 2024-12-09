@@ -153,7 +153,7 @@ const CheckoutPage = () => {
         .filter((item) => item.type === "domain")
         .map((item) => ({
           id: item.id,
-          package: durationMap[item.billingPeriod] || null,
+          // package: durationMap[item.billingPeriod] || null,
           price_item: item.price || item.finalprice
         }));
   

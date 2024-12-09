@@ -145,7 +145,7 @@ const WelcomeOfferPage = () => {
         <h3 className="text-xl font-semibold text-gray-900 mb-3">Plan Details</h3>
         <ul className="text-xl text-gray-800 space-y-2">
           <li>
-            <span className="font-medium">Plan Name:</span> {offer.plan_id}
+            <span className="font-medium">Plan Name:</span> {offer.plan?.name}
           </li>
           <li>
             <span className="font-medium">Duration:</span> {offer.duration}

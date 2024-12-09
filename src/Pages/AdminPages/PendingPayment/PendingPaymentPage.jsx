@@ -22,6 +22,8 @@ const [selectedPaymentId, setSelectedPaymentId] = useState(null);
 const [rejectReason, setRejectReason] = useState("");
 const [paymentStatuses, setPaymentStatuses] = useState({});
 
+const [isModalOpen, setIsModalOpen] = useState(false);
+const [selectedOrders, setSelectedOrders] = useState([]);
 
     const handleCloseViewPhoto = () => {
         setOpenViewPhoto(null);
@@ -48,6 +50,16 @@ const [paymentStatuses, setPaymentStatuses] = useState({});
         setSelectedOption("");
         setSelectedPaymentId(null);
         setRejectReason(""); // Clear the reason input
+      };
+
+      const openModal = (orders) => {
+        setSelectedOrders(orders);
+        setIsModalOpen(true);
+      };
+    
+      const closeModal = () => {
+        setIsModalOpen(false);
+        setSelectedOrders([]);
       };
     
       const handleDone = async () => {
@@ -140,6 +152,7 @@ const [paymentStatuses, setPaymentStatuses] = useState({});
                         <th className="min-w-[200px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Phone</th>
                         <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">PaymentMethod</th>
                         <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Amount</th>
+                        <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Orders</th>
                         <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Receipt</th>
                         <th className="min-w-[100px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Action</th>
                     </tr>
@@ -178,6 +191,16 @@ const [paymentStatuses, setPaymentStatuses] = useState({});
                                     >
                                             {payment?.amount || '_'}
                                     </td>
+                                    <td
+                                                className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
+                                                >
+                                                <button
+                                                onClick={() => openModal(payment.orders)}
+                                                className="text-mainColor underline"
+                                                >
+                                                View Services
+                                                </button>
+                                        </td>
                                     <td className="px-4 py-3 text-center">
                                         <span
                                                 className="cursor-pointer text-mainColor font-semibold underline"
@@ -226,7 +249,7 @@ const [paymentStatuses, setPaymentStatuses] = useState({});
                                                 {/* Image Container */}
                                                 <div className="w-full flex flex-wrap items-center justify-center gap-4 my-4 px-4 sm:p-6 sm:pb-4">
                                                 <img
-                                                        src={payment.invoice_image|| '-'}
+                                                        src={payment.invoice_image_link|| '-'}
                                                         className="w-[400px] h-[450px] object-contain object-center rounded-xl shadow-md transition-transform duration-300 hover:scale-105"
                                                         alt="Receipt"
                                                         loading="lazy"
@@ -308,7 +331,119 @@ const [paymentStatuses, setPaymentStatuses] = useState({});
                                                 </div>
                                                 </div>
                                                 </div>
-                                        )}                                  
+                                        )} 
+                                        {isModalOpen && (
+                                                <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+                                                <div className="bg-white p-6 rounded shadow-lg max-w-xl w-full overflow-y-auto max-h-96">
+                                                <h2 className="text-3xl font-bold mb-4 text-gray-800">Service Details</h2>
+                                                <ul className="space-y-6">
+                                                {selectedOrders.map((order, idx) => (
+                                                        <li key={idx} className="border-b pb-4">
+                                                        <h3 className="text-2xl font-semibold text-gray-800 mb-2">Service</h3>
+                                                        
+                                                        {/* Plan Section */}
+                                                        {order.plans && (
+                                                        <div className="mb-4">
+                                                        <h4 className="text-xl font-semibold text-blue-600">Plan Details</h4>
+                                                        <div className="text-gray-700 pl-4 text-xl">
+                                                        <p><span className="font-semibold">Name:</span> {order.plans?.name || '-'}</p>
+                                                        <p><span className="font-semibold">SetUp Fees: </span>{order.plans?.setup_fees || '0.00'} LE</p>
+                                                        {
+                                                        order.price_cycle === "monthly" ? (
+                                                                <p>
+                                                                <span className="font-semibold">Price: </span>
+                                                                {order.plans?.discount_monthly || order.plans?.monthly || '0.00'} LE
+                                                                </p>
+                                                        ) : order.price_cycle === "quarterly" ? (
+                                                                <p>
+                                                                <span className="font-semibold">Price: </span>
+                                                                {order.plans?.discount_quarterly || order.plans?.quarterly || '0.00'} LE
+                                                                </p>
+                                                        ) : order.price_cycle === "semi_annual" ? (
+                                                                <p>
+                                                                <span className="font-semibold">Price: </span>
+                                                                {order.plans?.discount_semi_annual || order.plans?.semi_annual || '0.00'} LE
+                                                                </p>
+                                                        ) : order.price_cycle === "yearly" ? (
+                                                                <p>
+                                                                <span className="font-semibold">Price: </span>
+                                                                {order.plans?.discount_yearly || order.plans?.yearly || '0.00'} LE
+                                                                </p>
+                                                        ) : null
+                                                        }
+                                                        <p><span className="font-semibold">Total: </span>{order.price_item || '0.00'} LE</p>
+                                                        {/* <p><span className="font-semibold">Price Per Year: </span>{order.plans?.price_per_year || '0.00'} LE</p> */}
+                                                        {/* <p><span className="font-semibold">Limit Store:</span> {order.plans?.limet_store || 'N/A'}</p> */}
+                                                        {/* <p><span className="font-semibold">Included App:</span> {order.plans?.app === "1" ?"True" : "False" || 'N/A'}</p> */}
+                                                        </div>
+                                                        </div>
+                                                        )}
+
+                                                        {/* Domain Section */}
+                                                        {order.domain && (
+                                                        <div className="mb-4">
+                                                        <h4 className="text-lg font-semibold text-green-600">Domain Details</h4>
+                                                        <div className="text-gray-700 pl-4 text-xl">
+                                                                <p><span className="font-semibold">Domain Name:</span> {order.domain.name || '-'}</p>
+                                                                <p><span className="font-semibold">Price:</span> {order.domain.price || '-'}</p>
+                                                                <p><span className="font-semibold">Store Name:</span> {order.domain.status || '-'}</p>
+                                                        </div>
+                                                        </div>
+                                                        )}
+
+                                                        {order.extra && order.extra !== null && (
+                                                                <div className="mb-4">
+                                                                <h4 className="text-xl font-semibold text-blue-600">Plan Details</h4>
+                                                                <div className="text-gray-700 pl-4 text-xl">
+                                                                <p><span className="font-semibold">Name:</span> {order.extra?.name || '-'}</p>
+                                                                <p><span className="font-semibold">SetUp Fees: </span>{order.extra?.setup_fees || '0.00'} LE</p>
+                                                                {order.extra?.status === "one_time" ?
+                                                                (
+                                                                        <p>
+                                                                        <span className="font-semibold">Price: </span>
+                                                                        {order.extra?.discount_monthly || order.extra?.price || '0.00'} LE
+                                                                        </p>      
+                                                                ):(
+                                                                order.price_cycle === "monthly" ? (
+                                                                        <p>
+                                                                        <span className="font-semibold">Price: </span>
+                                                                        {order.extra?.discount_monthly || order.extra?.monthly || '0.00'} LE
+                                                                        </p>
+                                                                ) : order.price_cycle === "quarterly" ? (
+                                                                        <p>
+                                                                        <span className="font-semibold">Price: </span>
+                                                                        {order.extra?.discount_quarterly || order.extra?.quarterly || '0.00'} LE
+                                                                        </p>
+                                                                ) : order.price_cycle === "semi_annual" ? (
+                                                                        <p>
+                                                                        <span className="font-semibold">Price: </span>
+                                                                        {order.extra?.discount_semi_annual || order.plans?.semi_annual || '0.00'} LE
+                                                                        </p>
+                                                                ) : order.price_cycle === "yearly" ? (
+                                                                        <p>
+                                                                        <span className="font-semibold">Price: </span>
+                                                                        {order.extra?.discount_yearly || order.extra?.yearly || '0.00'} LE
+                                                                        </p>
+                                                                ) : null)
+                                                                }
+                                                                <p><span className="font-semibold">Total: </span>{order.price_item || '0.00'} LE</p>
+                                                                </div>
+                                                                </div>
+                                                        )}
+                                                        </li>
+                                                ))}
+                                                </ul>
+                                                <div className='flex items-center justify-center'>
+                                                <button
+                                                onClick={closeModal}
+                                                className="mt-6 bg-mainColor text-center text-xl text-white py-2 px-6 rounded hover:bg-blue-600"
+                                                >
+                                                Close
+                                                </button>
+                                                </div>
+                                                </div>
+                                                </div>
+                                        )}                                 
                             </tr>
                         ))}
                 </tbody>
