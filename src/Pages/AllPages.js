@@ -58,7 +58,9 @@ export { default as AddAdminTutorialPage } from "./AdminPages/AdminTutorial/AddA
 export { default as EditAdminTutorialPage } from "./AdminPages/AdminTutorial/EditAdminTutorialPage";
 export { default as AddTutorialPage } from "./AdminPages/AdminTutorial/AddTutorialPage";
 export { default as EditTutorialPage } from "./AdminPages/AdminTutorial/EditTutorialPage";
-
+//Store Page
+export { default as StoresPage } from "./AdminPages/Stores/StoresPage";
+export { default as EditStoresPage } from "./AdminPages/Stores/EditStoresPage";
 
 /* User Pages*/
 // User Home Page
@@ -87,3 +89,5 @@ export { default as CartPage } from "./UserPages/Cart/CartPage";
 //User Tutorial
 export { default as TutorialPage } from "./UserPages/Tutorial/TutorialPage";
 export {default as VideoTutorialPage} from "./UserPages/Tutorial/VideoTutorialPage"
+//Contact Us
+export {default as ContactUsPage} from "./UserPages/ContactUs/ContactUsPage"

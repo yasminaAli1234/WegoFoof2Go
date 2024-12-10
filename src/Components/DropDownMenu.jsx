@@ -8,6 +8,7 @@ const DropDownMenu = forwardRef(({
        stateoption,
        openMenu,
        handleOpenOption,
+       borderWidth=2,
        options = [], // Default to an empty array
 }, ref) => {
     const [searchInput, setSearchInput] = useState('');
@@ -23,7 +24,7 @@ const DropDownMenu = forwardRef(({
             <div className="w-full mx-auto relative" ref={ref}>
                 <button
                     type='button'
-                    className={`flex ${iconDirection ? 'flex-row-reverse' : 'flex-row'} text-2xl focus:outline-none focus:ring-2 focus:ring-mainColor items-center justify-between w-full h-full px-2 py-4 border-2 rounded-2xl outline-none font-medium text-thirdColor text-center bg-secoundColor border-mainColor`}
+                    className={`flex ${iconDirection ? 'flex-row-reverse' : 'flex-row'} text-2xl focus:outline-none focus:ring-2 focus:ring-mainColor items-center justify-between w-full h-full px-2 py-4 border-${borderWidth} rounded-2xl outline-none font-medium text-thirdColor text-center bg-secoundColor border-mainColor`}
                     onClick={handleOpen}
                 >
                     <div className="text-mainColor text-2xl">{iconMenu}</div>
