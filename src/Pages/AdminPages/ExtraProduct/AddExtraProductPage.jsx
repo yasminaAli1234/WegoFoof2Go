@@ -288,315 +288,625 @@ const AddExtraProductPage = () => {
 />
 <form onSubmit={handleSubmitAdd} className="w-full flex flex-col items-center justify-center gap-y-10 m-5">
            
+            {language==='en'?
             <div className="w-full flex flex-wrap items-center justify-start gap-10">
-                <div className="lg:w-[30%] sm:w-full">
-                    <InputCustom
-                        type="text"
-                        borderColor="mainColor"
-                        placeholder="Product Name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        width="w-full"
-                    />
-                </div>
-                {/* <div className="lg:w-[30%] sm:w-full">
-                    <InputCustom
-                        type="text"
-                        borderColor="mainColor"
-                        placeholder="Description"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        width="w-full"
-                    />
-                </div> */}
-                <div className="lg:w-[30%] sm:w-full">
-                <textarea
-                    className="w-full px-2 py-4 border-2 font-normal eleValueInput rounded-xl border-mainColor text-2xl focus:outline-none focus:ring-2 focus:ring-mainColor"
+            <div className="lg:w-[30%] sm:w-full">
+                <InputCustom
+                    type="text"
+                    borderColor="mainColor"
+                    placeholder="Product Name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    width="w-full"
+                />
+            </div>
+            {/* <div className="lg:w-[30%] sm:w-full">
+                <InputCustom
+                    type="text"
+                    borderColor="mainColor"
                     placeholder="Description"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    rows={1}
-                ></textarea>
-                </div>
+                    width="w-full"
+                />
+            </div> */}
+            <div className="lg:w-[30%] sm:w-full">
+            <textarea
+                className="w-full px-2 py-4 border-2 font-normal eleValueInput rounded-xl border-mainColor text-2xl focus:outline-none focus:ring-2 focus:ring-mainColor"
+                placeholder="Description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                rows={1}
+            ></textarea>
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+                <InputCustom
+                    type="number"
+                    borderColor="mainColor"
+                    placeholder="Setup Fees"
+                    value={fee}
+                    onChange={(e) => setFee(e.target.value)}
+                    width="w-full"
+                />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+                <DropDownMenu
+                    ref={dropdownExtraType}
+                    handleOpen={handleOpenExtraType}
+                    handleOpenOption={handleExtraType}
+                    stateoption={extraType}
+                    openMenu={openExtraType}
+                    options={extraTypeData}
+                />
+            </div>
+
+            {/* Conditionally render price inputs based on extraType */}
+            {extraType === 'One Time' && (
                 <div className="lg:w-[30%] sm:w-full">
                     <InputCustom
                         type="number"
                         borderColor="mainColor"
-                        placeholder="Setup Fees"
-                        value={fee}
-                        onChange={(e) => setFee(e.target.value)}
+                        placeholder="Price"
+                        value={price}
+                        onChange={(e) => setPrice(e.target.value)}
                         width="w-full"
                     />
                 </div>
-                <div className="lg:w-[30%] sm:w-full">
-                    <DropDownMenu
-                        ref={dropdownExtraType}
-                        handleOpen={handleOpenExtraType}
-                        handleOpenOption={handleExtraType}
-                        stateoption={extraType}
-                        openMenu={openExtraType}
-                        options={extraTypeData}
-                    />
-                </div>
-    
-                {/* Conditionally render price inputs based on extraType */}
-                {extraType === 'One Time' && (
+            )}
+
+            {extraType === 'Recurring' && (
+                <>
+                    {/* <div className="lg:w-[30%] sm:w-full">
+                        <InputCustom
+                            type="number"
+                            borderColor="mainColor"
+                            placeholder="Price (Monthly)"
+                            value={monthlyPrice}
+                            onChange={(e) => setMonthlyPrice(e.target.value)}
+                            width="w-full"
+                        />
+                    </div>
                     <div className="lg:w-[30%] sm:w-full">
                         <InputCustom
                             type="number"
                             borderColor="mainColor"
-                            placeholder="Price"
-                            value={price}
-                            onChange={(e) => setPrice(e.target.value)}
+                            placeholder="Price (Yearly)"
+                            value={yearlyPrice}
+                            onChange={(e) => setYearlyPrice(e.target.value)}
                             width="w-full"
                         />
-                    </div>
-                )}
+                    </div> */}
 
-                {extraType === 'Recurring' && (
-                    <>
-                        {/* <div className="lg:w-[30%] sm:w-full">
-                            <InputCustom
-                                type="number"
-                                borderColor="mainColor"
-                                placeholder="Price (Monthly)"
-                                value={monthlyPrice}
-                                onChange={(e) => setMonthlyPrice(e.target.value)}
-                                width="w-full"
-                            />
-                        </div>
-                        <div className="lg:w-[30%] sm:w-full">
-                            <InputCustom
-                                type="number"
-                                borderColor="mainColor"
-                                placeholder="Price (Yearly)"
-                                value={yearlyPrice}
-                                onChange={(e) => setYearlyPrice(e.target.value)}
-                                width="w-full"
-                            />
-                        </div> */}
-
-                <div className="flex w-full flex-col gap-5">
-                    {/* Monthly Price Checkbox */}
-                    <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
-                    <div className=" flex items-center gap-3 w-full lg:w-1/3">
-                        <input 
-                            type="checkbox" 
-                            checked={showMonthlyPriceInput}
-                            onChange={() => setShowMonthlyPriceInput(prev => !prev)}
-                            className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
-                        />
-                        <label  className="text-2xl text-mainColor font-medium">Monthly</label>
-                    </div>
-                        {/* Conditional Price Inputs */}
-                        {showMonthlyPriceInput && (
-                        <>
-                        <div className="lg:w-1/2 sm:w-full">
-                            <InputCustom
-                                type="number"
-                                borderColor="mainColor"
-                                placeholder="Enter Price"
-                                value={monthlyPrice}
-                                onChange={(e) => setMonthlyPrice(e.target.value)}
-                                width="w-full"
-                            />
-                        </div>
-                        <div className="lg:w-1/2 sm:w-full">
-                         <InputCustom
-                             type="number"
-                             borderColor="mainColor"
-                             placeholder="Enter Discount Price"
-                             value={monthlyDiscountPrice}
-                             onChange={(e) => setMonthlyDiscountPrice(e.target.value)}
-                             width="w-full"
-                             required={false}
-                         />
-                        </div>
-                        {/* <div className="lg:w-1/2 sm:w-full">
-                        <InputCustom
-                            type="number"
-                            borderColor="mainColor"
-                            placeholder="Enter SetUp Fees"
-                            value={MonthlySetUpFeesPrice}
-                            onChange={(e) => setMonthlySetUpFeesPrice(e.target.value)}
-                            width="w-full"
-                        />
-                        </div> */}
-                        </>
-                        )}
-                    </div>
-
-                    {/* 3 Months Price Checkbox */}
-                    <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
-                    <div className="flex items-center gap-3 w-full lg:w-1/3 ">
-                        <input 
-                            type="checkbox" 
-                            checked={showQuarterlyPriceInput}
-                            onChange={() => setShowQuarterlyPriceInput(prev => !prev)}
-                            className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
-                        />
-                        <label  className="text-2xl text-mainColor font-medium">Quarterly</label>
-                    </div>
-                    {showQuarterlyPriceInput && (
-                        <>
-                        <div className="lg:w-1/2 sm:w-full">
-                            <InputCustom
-                                type="number"
-                                borderColor="mainColor"
-                                placeholder="Enter Price"
-                                value={quarterlyPrice}
-                                onChange={(e) => setQuarterlyPrice(e.target.value)}
-                                width="w-full"
-                            />
-                        </div>
-                        <div className="lg:w-1/2 sm:w-full">
-                        <InputCustom
-                            type="number"
-                            borderColor="mainColor"
-                            placeholder="Enter Discount Price"
-                            value={quarterlyDiscountPrice}
-                            onChange={(e) => setQuarterlyDiscountPrice(e.target.value)}
-                            width="w-full"
-                            required={false}
-                        />
-                        </div>
-                        {/* <div className="lg:w-1/2 sm:w-full">
-                        <InputCustom
-                            type="number"
-                            borderColor="mainColor"
-                            placeholder="Enter SetUp Fees"
-                            value={quarterlySetUpFeesPrice}
-                            onChange={(e) => setQuarterlySetUpFeesPrice(e.target.value)}
-                            width="w-full"
-                        />
-                        </div> */}
-                        </>
-                    )}
-                    </div>
-
-                    {/* 6 Months Price Checkbox */}
-                    <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
-                    <div className="flex items-center gap-3 w-full lg:w-1/3 ">
-                        <input 
-                            type="checkbox" 
-                            checked={showSemiAnnualPriceInput}
-                            onChange={() => setShowSemiAnnualPriceInput(prev => !prev)}
-                            className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
-                        />
-                        <label  className="text-2xl text-mainColor font-medium">Semi-Annual</label>
-                    </div>
-                    {showSemiAnnualPriceInput && (
-                        <>
-                        <div className="lg:w-1/2 sm:w-full">
-                            <InputCustom
-                                type="number"
-                                borderColor="mainColor"
-                                placeholder="Enter Price"
-                                value={semiAnnualPrice}
-                                onChange={(e) => setSemiAnnualPrice(e.target.value)}
-                                width="w-full"
-                            />
-                        </div>
-                        <div className="lg:w-1/2 sm:w-full">
-                        <InputCustom
-                            type="number"
-                            borderColor="mainColor"
-                            placeholder="Enter Discount Price"
-                            value={semiAnnualDiscountPrice}
-                            onChange={(e) => setSemiAnnualDiscountPrice(e.target.value)}
-                            width="w-full"
-                            required={false}
-                        />
-                        </div>
-                        {/* <div className="lg:w-1/2 sm:w-full">
-                        <InputCustom
-                            type="number"
-                            borderColor="mainColor"
-                            placeholder="Enter SetUp Fees"
-                            value={semiAnnualSetUpFeesPrice}
-                            onChange={(e) => setSemiAnnualSetUpFeesPrice(e.target.value)}
-                            width="w-full"
-                        />
-                        </div> */}
-                        </>
-                    )}
-                    </div>
-
-                    {/* yearly Price Checkbox */}
-                    <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
-                    <div className="flex items-center gap-3 w-full lg:w-1/3 ">
-                        <input 
-                            type="checkbox" 
-                            checked={showYearlyPriceInput}
-                            onChange={() => setShowYearlyPriceInput(prev => !prev)}
-                            className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
-                        />
-                        <label  className="text-2xl text-mainColor font-medium">Yearly</label>
-                    </div>
-                    {showYearlyPriceInput && (
-                        <>
-                        <div className="lg:w-1/2 sm:w-full">
-                            <InputCustom
-                                type="number"
-                                borderColor="mainColor"
-                                placeholder="Enter Price"
-                                value={yearlyPrice}
-                                onChange={(e) => setYearlyPrice(e.target.value)}
-                                width="w-full"
-                            />
-                        </div>
-                        <div className="lg:w-1/2 sm:w-full">
-                        <InputCustom
-                            type="number"
-                            borderColor="mainColor"
-                            placeholder="Enter Discount Price"
-                            value={yearlyDiscountPrice}
-                            onChange={(e) => setYearlyDiscountPrice(e.target.value)}
-                            width="w-full"
-                            required={false}
-                        />
-                        </div>
-                        {/* <div className="lg:w-1/2 sm:w-full">
-                        <InputCustom
-                            type="number"
-                            borderColor="mainColor"
-                            placeholder="Enter SetUp Fees"
-                            value={yearlySetUpFeesPrice}
-                            onChange={(e) => setYearlySetUpFeesPrice(e.target.value)}
-                            width="w-full"
-                        />
-                        </div> */}
-                        </>
-                    )}
-                    </div>
+            <div className="flex w-full flex-col gap-5">
+                {/* Monthly Price Checkbox */}
+                <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
+                <div className=" flex items-center gap-3 w-full lg:w-1/3">
+                    <input 
+                        type="checkbox" 
+                        checked={showMonthlyPriceInput}
+                        onChange={() => setShowMonthlyPriceInput(prev => !prev)}
+                        className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
+                    />
+                    <label  className="text-2xl text-mainColor font-medium">Monthly</label>
                 </div>
+                    {/* Conditional Price Inputs */}
+                    {showMonthlyPriceInput && (
+                    <>
+                    <div className="lg:w-1/2 sm:w-full">
+                        <InputCustom
+                            type="number"
+                            borderColor="mainColor"
+                            placeholder="Enter Price"
+                            value={monthlyPrice}
+                            onChange={(e) => setMonthlyPrice(e.target.value)}
+                            width="w-full"
+                        />
+                    </div>
+                    <div className="lg:w-1/2 sm:w-full">
+                     <InputCustom
+                         type="number"
+                         borderColor="mainColor"
+                         placeholder="Enter Discount Price"
+                         value={monthlyDiscountPrice}
+                         onChange={(e) => setMonthlyDiscountPrice(e.target.value)}
+                         width="w-full"
+                         required={false}
+                     />
+                    </div>
+                    {/* <div className="lg:w-1/2 sm:w-full">
+                    <InputCustom
+                        type="number"
+                        borderColor="mainColor"
+                        placeholder="Enter SetUp Fees"
+                        value={MonthlySetUpFeesPrice}
+                        onChange={(e) => setMonthlySetUpFeesPrice(e.target.value)}
+                        width="w-full"
+                    />
+                    </div> */}
+                    </>
+                    )}
+                </div>
+
+                {/* 3 Months Price Checkbox */}
+                <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
+                <div className="flex items-center gap-3 w-full lg:w-1/3 ">
+                    <input 
+                        type="checkbox" 
+                        checked={showQuarterlyPriceInput}
+                        onChange={() => setShowQuarterlyPriceInput(prev => !prev)}
+                        className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
+                    />
+                    <label  className="text-2xl text-mainColor font-medium">Quarterly</label>
+                </div>
+                {showQuarterlyPriceInput && (
+                    <>
+                    <div className="lg:w-1/2 sm:w-full">
+                        <InputCustom
+                            type="number"
+                            borderColor="mainColor"
+                            placeholder="Enter Price"
+                            value={quarterlyPrice}
+                            onChange={(e) => setQuarterlyPrice(e.target.value)}
+                            width="w-full"
+                        />
+                    </div>
+                    <div className="lg:w-1/2 sm:w-full">
+                    <InputCustom
+                        type="number"
+                        borderColor="mainColor"
+                        placeholder="Enter Discount Price"
+                        value={quarterlyDiscountPrice}
+                        onChange={(e) => setQuarterlyDiscountPrice(e.target.value)}
+                        width="w-full"
+                        required={false}
+                    />
+                    </div>
+                    {/* <div className="lg:w-1/2 sm:w-full">
+                    <InputCustom
+                        type="number"
+                        borderColor="mainColor"
+                        placeholder="Enter SetUp Fees"
+                        value={quarterlySetUpFeesPrice}
+                        onChange={(e) => setQuarterlySetUpFeesPrice(e.target.value)}
+                        width="w-full"
+                    />
+                    </div> */}
                     </>
                 )}
-
-                {
-                    included ===1 && (
-                    <div className="lg:w-[30%] sm:w-full">
-                    <MultipleChoiceMenu
-                      ref={dropdownPlanRef}
-                      handleOpen={handleOpenSelectPlan}
-                      selectedOptions={selectPlan}
-                      openMenu={openSelectPlan}
-                      handleSelectOption={handleSelectPlan}
-                      handleRemoveOption={handleRemoveSubject}
-                      options={plans}
-                      name="Select Plans"
-                    />
-                  </div>
-                    )
-                }
-
-                <div className="lg:w-[30%] sm:w-full flex items-center gap-x-4 w-full">
-                            <span className="text-2xl text-mainColor font-medium">Included:</span>
-                            <div>
-                                <CheckBox handleClick={handleClick} checked={included}/>
-                            </div>
-                        </div>  
                 </div>
+
+                {/* 6 Months Price Checkbox */}
+                <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
+                <div className="flex items-center gap-3 w-full lg:w-1/3 ">
+                    <input 
+                        type="checkbox" 
+                        checked={showSemiAnnualPriceInput}
+                        onChange={() => setShowSemiAnnualPriceInput(prev => !prev)}
+                        className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
+                    />
+                    <label  className="text-2xl text-mainColor font-medium">Semi-Annual</label>
+                </div>
+                {showSemiAnnualPriceInput && (
+                    <>
+                    <div className="lg:w-1/2 sm:w-full">
+                        <InputCustom
+                            type="number"
+                            borderColor="mainColor"
+                            placeholder="Enter Price"
+                            value={semiAnnualPrice}
+                            onChange={(e) => setSemiAnnualPrice(e.target.value)}
+                            width="w-full"
+                        />
+                    </div>
+                    <div className="lg:w-1/2 sm:w-full">
+                    <InputCustom
+                        type="number"
+                        borderColor="mainColor"
+                        placeholder="Enter Discount Price"
+                        value={semiAnnualDiscountPrice}
+                        onChange={(e) => setSemiAnnualDiscountPrice(e.target.value)}
+                        width="w-full"
+                        required={false}
+                    />
+                    </div>
+                    {/* <div className="lg:w-1/2 sm:w-full">
+                    <InputCustom
+                        type="number"
+                        borderColor="mainColor"
+                        placeholder="Enter SetUp Fees"
+                        value={semiAnnualSetUpFeesPrice}
+                        onChange={(e) => setSemiAnnualSetUpFeesPrice(e.target.value)}
+                        width="w-full"
+                    />
+                    </div> */}
+                    </>
+                )}
+                </div>
+
+                {/* yearly Price Checkbox */}
+                <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
+                <div className="flex items-center gap-3 w-full lg:w-1/3 ">
+                    <input 
+                        type="checkbox" 
+                        checked={showYearlyPriceInput}
+                        onChange={() => setShowYearlyPriceInput(prev => !prev)}
+                        className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
+                    />
+                    <label  className="text-2xl text-mainColor font-medium">Yearly</label>
+                </div>
+                {showYearlyPriceInput && (
+                    <>
+                    <div className="lg:w-1/2 sm:w-full">
+                        <InputCustom
+                            type="number"
+                            borderColor="mainColor"
+                            placeholder="Enter Price"
+                            value={yearlyPrice}
+                            onChange={(e) => setYearlyPrice(e.target.value)}
+                            width="w-full"
+                        />
+                    </div>
+                    <div className="lg:w-1/2 sm:w-full">
+                    <InputCustom
+                        type="number"
+                        borderColor="mainColor"
+                        placeholder="Enter Discount Price"
+                        value={yearlyDiscountPrice}
+                        onChange={(e) => setYearlyDiscountPrice(e.target.value)}
+                        width="w-full"
+                        required={false}
+                    />
+                    </div>
+                    {/* <div className="lg:w-1/2 sm:w-full">
+                    <InputCustom
+                        type="number"
+                        borderColor="mainColor"
+                        placeholder="Enter SetUp Fees"
+                        value={yearlySetUpFeesPrice}
+                        onChange={(e) => setYearlySetUpFeesPrice(e.target.value)}
+                        width="w-full"
+                    />
+                    </div> */}
+                    </>
+                )}
+                </div>
+            </div>
+                </>
+            )}
+
+            {
+                included ===1 && (
+                <div className="lg:w-[30%] sm:w-full">
+                <MultipleChoiceMenu
+                  ref={dropdownPlanRef}
+                  handleOpen={handleOpenSelectPlan}
+                  selectedOptions={selectPlan}
+                  openMenu={openSelectPlan}
+                  handleSelectOption={handleSelectPlan}
+                  handleRemoveOption={handleRemoveSubject}
+                  options={plans}
+                  name="Select Plans"
+                />
+              </div>
+                )
+            }
+
+            <div className="lg:w-[30%] sm:w-full flex items-center gap-x-4 w-full">
+                        <span className="text-2xl text-mainColor font-medium">Included:</span>
+                        <div>
+                            <CheckBox handleClick={handleClick} checked={included}/>
+                        </div>
+                    </div>  
+            </div>:
+            <div className="w-full flex flex-wrap items-center justify-start gap-10">
+            <div className="lg:w-[30%] sm:w-full">
+                <InputCustom
+                    type="text"
+                    borderColor="mainColor"
+                    placeholder="اسم المنتج"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    width="w-full"
+                />
+            </div>
+            {/* <div className="lg:w-[30%] sm:w-full">
+                <InputCustom
+                    type="text"
+                    borderColor="mainColor"
+                    placeholder="Description"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    width="w-full"
+                />
+            </div> */}
+            <div className="lg:w-[30%] sm:w-full">
+            <textarea
+                className="w-full px-2 py-4 border-2 font-normal eleValueInput rounded-xl border-mainColor text-2xl focus:outline-none focus:ring-2 focus:ring-mainColor"
+                placeholder="الوصف"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                rows={1}
+            ></textarea>
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+                <InputCustom
+                    type="number"
+                    borderColor="mainColor"
+                    placeholder="رسوم الإعداد"
+                    value={fee}
+                    onChange={(e) => setFee(e.target.value)}
+                    width="w-full"
+                />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+                <DropDownMenu
+                    ref={dropdownExtraType}
+                    handleOpen={handleOpenExtraType}
+                    handleOpenOption={handleExtraType}
+                    stateoption={extraType}
+                    openMenu={openExtraType}
+                    options={extraTypeData}
+                />
+            </div>
+
+            {/* Conditionally render price inputs based on extraType */}
+            {extraType === 'One Time' && (
+                <div className="lg:w-[30%] sm:w-full">
+                    <InputCustom
+                        type="number"
+                        borderColor="mainColor"
+                        placeholder="السعر"
+                        value={price}
+                        onChange={(e) => setPrice(e.target.value)}
+                        width="w-full"
+                    />
+                </div>
+            )}
+
+            {extraType === 'Recurring' && (
+                <>
+                    {/* <div className="lg:w-[30%] sm:w-full">
+                        <InputCustom
+                            type="number"
+                            borderColor="mainColor"
+                            placeholder="Price (Monthly)"
+                            value={monthlyPrice}
+                            onChange={(e) => setMonthlyPrice(e.target.value)}
+                            width="w-full"
+                        />
+                    </div>
+                    <div className="lg:w-[30%] sm:w-full">
+                        <InputCustom
+                            type="number"
+                            borderColor="mainColor"
+                            placeholder="Price (Yearly)"
+                            value={yearlyPrice}
+                            onChange={(e) => setYearlyPrice(e.target.value)}
+                            width="w-full"
+                        />
+                    </div> */}
+
+            <div className="flex w-full flex-col gap-5">
+                {/* Monthly Price Checkbox */}
+                <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
+                <div className=" flex items-center gap-3 w-full lg:w-1/3">
+                    <input 
+                        type="checkbox" 
+                        checked={showMonthlyPriceInput}
+                        onChange={() => setShowMonthlyPriceInput(prev => !prev)}
+                        className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
+                    />
+                    <label  className="text-2xl text-mainColor font-medium">شهري</label>
+                </div>
+                    {/* Conditional Price Inputs */}
+                    {showMonthlyPriceInput && (
+                    <>
+                    <div className="lg:w-1/2 sm:w-full">
+                        <InputCustom
+                            type="number"
+                            borderColor="mainColor"
+                            placeholder="أدخل السعر"
+                            value={monthlyPrice}
+                            onChange={(e) => setMonthlyPrice(e.target.value)}
+                            width="w-full"
+                        />
+                    </div>
+                    <div className="lg:w-1/2 sm:w-full">
+                     <InputCustom
+                         type="number"
+                         borderColor="mainColor"
+                         placeholder="أدخل سعر الخصم"
+                         value={monthlyDiscountPrice}
+                         onChange={(e) => setMonthlyDiscountPrice(e.target.value)}
+                         width="w-full"
+                         required={false}
+                     />
+                    </div>
+                    {/* <div className="lg:w-1/2 sm:w-full">
+                    <InputCustom
+                        type="number"
+                        borderColor="mainColor"
+                        placeholder="Enter SetUp Fees"
+                        value={MonthlySetUpFeesPrice}
+                        onChange={(e) => setMonthlySetUpFeesPrice(e.target.value)}
+                        width="w-full"
+                    />
+                    </div> */}
+                    </>
+                    )}
+                </div>
+
+                {/* 3 Months Price Checkbox */}
+                <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
+                <div className="flex items-center gap-3 w-full lg:w-1/3 ">
+                    <input 
+                        type="checkbox" 
+                        checked={showQuarterlyPriceInput}
+                        onChange={() => setShowQuarterlyPriceInput(prev => !prev)}
+                        className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
+                    />
+                    <label  className="text-2xl text-mainColor font-medium">ربع سنوي</label>
+                </div>
+                {showQuarterlyPriceInput && (
+                    <>
+                    <div className="lg:w-1/2 sm:w-full">
+                        <InputCustom
+                            type="number"
+                            borderColor="mainColor"
+                            placeholder="أدخل السعر"
+                            value={quarterlyPrice}
+                            onChange={(e) => setQuarterlyPrice(e.target.value)}
+                            width="w-full"
+                        />
+                    </div>
+                    <div className="lg:w-1/2 sm:w-full">
+                    <InputCustom
+                        type="number"
+                        borderColor="mainColor"
+                        placeholder="أدخل سعر الخصم"
+                        value={quarterlyDiscountPrice}
+                        onChange={(e) => setQuarterlyDiscountPrice(e.target.value)}
+                        width="w-full"
+                        required={false}
+                    />
+                    </div>
+                    {/* <div className="lg:w-1/2 sm:w-full">
+                    <InputCustom
+                        type="number"
+                        borderColor="mainColor"
+                        placeholder="Enter SetUp Fees"
+                        value={quarterlySetUpFeesPrice}
+                        onChange={(e) => setQuarterlySetUpFeesPrice(e.target.value)}
+                        width="w-full"
+                    />
+                    </div> */}
+                    </>
+                )}
+                </div>
+
+                {/* 6 Months Price Checkbox */}
+                <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
+                <div className="flex items-center gap-3 w-full lg:w-1/3 ">
+                    <input 
+                        type="checkbox" 
+                        checked={showSemiAnnualPriceInput}
+                        onChange={() => setShowSemiAnnualPriceInput(prev => !prev)}
+                        className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
+                    />
+                    <label  className="text-2xl text-mainColor font-medium">نصف سنوي</label>
+                </div>
+                {showSemiAnnualPriceInput && (
+                    <>
+                    <div className="lg:w-1/2 sm:w-full">
+                        <InputCustom
+                            type="number"
+                            borderColor="mainColor"
+                            placeholder="أدخل السعر"
+                            value={semiAnnualPrice}
+                            onChange={(e) => setSemiAnnualPrice(e.target.value)}
+                            width="w-full"
+                        />
+                    </div>
+                    <div className="lg:w-1/2 sm:w-full">
+                    <InputCustom
+                        type="number"
+                        borderColor="mainColor"
+                        placeholder="أدخل سعر الخصم"
+                        value={semiAnnualDiscountPrice}
+                        onChange={(e) => setSemiAnnualDiscountPrice(e.target.value)}
+                        width="w-full"
+                        required={false}
+                    />
+                    </div>
+                    {/* <div className="lg:w-1/2 sm:w-full">
+                    <InputCustom
+                        type="number"
+                        borderColor="mainColor"
+                        placeholder="Enter SetUp Fees"
+                        value={semiAnnualSetUpFeesPrice}
+                        onChange={(e) => setSemiAnnualSetUpFeesPrice(e.target.value)}
+                        width="w-full"
+                    />
+                    </div> */}
+                    </>
+                )}
+                </div>
+
+                {/* yearly Price Checkbox */}
+                <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
+                <div className="flex items-center gap-3 w-full lg:w-1/3 ">
+                    <input 
+                        type="checkbox" 
+                        checked={showYearlyPriceInput}
+                        onChange={() => setShowYearlyPriceInput(prev => !prev)}
+                        className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
+                    />
+                    <label  className="text-2xl text-mainColor font-medium">سنوي</label>
+                </div>
+                {showYearlyPriceInput && (
+                    <>
+                    <div className="lg:w-1/2 sm:w-full">
+                        <InputCustom
+                            type="number"
+                            borderColor="mainColor"
+                           placeholder="أدخل السعر"
+                            value={yearlyPrice}
+                            onChange={(e) => setYearlyPrice(e.target.value)}
+                            width="w-full"
+                        />
+                    </div>
+                    <div className="lg:w-1/2 sm:w-full">
+                    <InputCustom
+                        type="number"
+                        borderColor="mainColor"
+                        placeholder="أدخل سعر الخصم"
+                        value={yearlyDiscountPrice}
+                        onChange={(e) => setYearlyDiscountPrice(e.target.value)}
+                        width="w-full"
+                        required={false}
+                    />
+                    </div>
+                    {/* <div className="lg:w-1/2 sm:w-full">
+                    <InputCustom
+                        type="number"
+                        borderColor="mainColor"
+                        placeholder="Enter SetUp Fees"
+                        value={yearlySetUpFeesPrice}
+                        onChange={(e) => setYearlySetUpFeesPrice(e.target.value)}
+                        width="w-full"
+                    />
+                    </div> */}
+                    </>
+                )}
+                </div>
+            </div>
+                </>
+            )}
+
+            {
+                included ===1 && (
+                <div className="lg:w-[30%] sm:w-full">
+                <MultipleChoiceMenu
+                  ref={dropdownPlanRef}
+                  handleOpen={handleOpenSelectPlan}
+                  selectedOptions={selectPlan}
+                  openMenu={openSelectPlan}
+                  handleSelectOption={handleSelectPlan}
+                  handleRemoveOption={handleRemoveSubject}
+                  options={plans}
+                  name="Select Plans"
+                />
+              </div>
+                )
+            }
+
+            <div className="lg:w-[30%] sm:w-full flex items-center gap-x-4 w-full">
+                        <span className="text-2xl text-mainColor font-medium">Included:</span>
+                        <div>
+                            <CheckBox handleClick={handleClick} checked={included}/>
+                        </div>
+                    </div>  
+            </div>}
                 
 
             <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">

@@ -76,7 +76,7 @@ const [showQuarterlyPriceInput_ar, setShowQuarterlyPriceInput_ar] = useState(fal
 const [showSemiAnnualPriceInput_ar, setShowSemiAnnualPriceInput_ar] = useState(false);
 const [showYearlyPriceInput_ar, setShowYearlyPriceInput_ar] = useState(false);
 
-const [extraTypeData_ar, setExtraTypeData_ar] = useState([{ name: 'مرة واحدة' }, { name: 'متكرر' }]);
+
 const [extraType_ar, setExtraType_ar] = useState('اختار النوع');
 const [extraTypeName_ar, setExtraTypeName_ar] = useState();
 const [openExtraType_ar, setOpenExtraType_ar] = useState(false);
@@ -101,67 +101,95 @@ const handleChangeLanguage = () => {
                     setExtraType('One Time')
                     setExtraTypeName('One Time')
                     setPrice(productContent.price)
+
+                    setExtraType_ar('One Time')
+                    setExtraTypeName_ar('One Time')
+                    setPrice_ar(productContent.price)
+
+
                 }
 
-                // set arabic
-                if (productContent.status ==='مرة واحدة') {
-                    setExtraType_ar('مرة واحدة')
-                    setExtraTypeName_ar('مرة واحدة')
-                    setPrice_ar(productContent.price)
-                }
+                // // set arabic
+                // if (productContent.status ==='مرة واحدة') {
+                //     setExtraType_ar('مرة واحدة')
+                //     setExtraTypeName_ar('مرة واحدة')
+                //     setPrice_ar(productContent.price)
+                // }
 
 
                  else if (productContent.status === 'recurring') {
                     setExtraType('Recurring')
                     setExtraTypeName('Recurring')
 
+                    // -------
+                    setExtraType_ar('Recurring')
+                    setExtraTypeName_ar('Recurring')
+
+
                     if(productContent.monthly){
                         setShowMonthlyPriceInput(true)
                         setMonthlyPrice(productContent.monthly)
                         setMonthlyDiscountPrice(productContent.discount_monthly)
-                    }
-                    if(productContent.quarterly){
-                        setShowQuarterlyPriceInput(true)
-                        setQuarterlyPrice(productContent.quarterly)
-                        setQuarterlyDiscountPrice(productContent.discount_quarterly)
-                    }
-                    if(productContent["semi_annual"]){
-                        setShowSemiAnnualPriceInput(true)
-                        setSemiAnnualPrice(productContent["semi_annual"])
-                        setSemiAnnualDiscountPrice(productContent.discount_semi_annual)
-                    }
-                    if(productContent.yearly){
-                        setShowYearlyPriceInput(true)
-                        setYearlyPrice(productContent.yearly)
-                        setYearlyDiscountPrice(productContent.discount_yearly)
-                    }
-                } 
-                // set arabic
-                else if (productContent.status === 'متكرر') {
-                    setExtraType_ar('متكرر')
-                    setExtraTypeName_ar('متكرر')
-
-                    if(productContent.monthly){
+                        // -----
                         setShowMonthlyPriceInput_ar(true)
                         setMonthlyPrice_ar(productContent.monthly)
                         setMonthlyDiscountPrice_ar(productContent.discount_monthly)
                     }
                     if(productContent.quarterly){
+                        setShowQuarterlyPriceInput(true)
+                        setQuarterlyPrice(productContent.quarterly)
+                        setQuarterlyDiscountPrice(productContent.discount_quarterly)
+                        // ---------------
                         setShowQuarterlyPriceInput_ar(true)
                         setQuarterlyPrice_ar(productContent.quarterly)
                         setQuarterlyDiscountPrice_ar(productContent.discount_quarterly)
                     }
                     if(productContent["semi_annual"]){
+                        setShowSemiAnnualPriceInput(true)
+                        setSemiAnnualPrice(productContent["semi_annual"])
+                        setSemiAnnualDiscountPrice(productContent.discount_semi_annual)
+
+                        // ----------
                         setShowSemiAnnualPriceInput_ar(true)
                         setSemiAnnualPrice_ar(productContent["semi_annual"])
                         setSemiAnnualDiscountPrice_ar(productContent.discount_semi_annual)
                     }
                     if(productContent.yearly){
+                        setShowYearlyPriceInput(true)
+                        setYearlyPrice(productContent.yearly)
+                        setYearlyDiscountPrice(productContent.discount_yearly)
+                        // --------
                         setShowYearlyPriceInput_ar(true)
                         setYearlyPrice_ar(productContent.yearly)
                         setYearlyDiscountPrice_ar(productContent.discount_yearly)
                     }
                 } 
+                // set arabic
+                // else if (productContent.status === 'متكرر') {
+                //     setExtraType_ar('متكرر')
+                //     setExtraTypeName_ar('متكرر')
+
+                //     if(productContent.monthly){
+                //         setShowMonthlyPriceInput_ar(true)
+                //         setMonthlyPrice_ar(productContent.monthly)
+                //         setMonthlyDiscountPrice_ar(productContent.discount_monthly)
+                //     }
+                //     if(productContent.quarterly){
+                //         setShowQuarterlyPriceInput_ar(true)
+                //         setQuarterlyPrice_ar(productContent.quarterly)
+                //         setQuarterlyDiscountPrice_ar(productContent.discount_quarterly)
+                //     }
+                //     if(productContent["semi_annual"]){
+                //         setShowSemiAnnualPriceInput_ar(true)
+                //         setSemiAnnualPrice_ar(productContent["semi_annual"])
+                //         setSemiAnnualDiscountPrice_ar(productContent.discount_semi_annual)
+                //     }
+                //     if(productContent.yearly){
+                //         setShowYearlyPriceInput_ar(true)
+                //         setYearlyPrice_ar(productContent.yearly)
+                //         setYearlyDiscountPrice_ar(productContent.discount_yearly)
+                //     }
+                // } 
             }
 
         }
@@ -187,20 +215,26 @@ const handleChangeLanguage = () => {
         const inputElement = e.currentTarget.querySelector('.inputVal');
         const selectedOptionName = e.currentTarget.textContent.trim();
         const selectedOptionValue = inputElement ? inputElement.value.toLowerCase() : '';
-
+       
+        setExtraType(selectedOptionName);
+        setExtraTypeName(selectedOptionValue);
+        // --------
+        setExtraType_ar(selectedOptionName);
+        setExtraTypeName_ar(selectedOptionValue);
+        setOpenExtraType(false);
         console.log(selectedOptionValue)
         console.log(selectedOptionName)
 
     
         // Handle changes based on the selected option name in either language
-        if (selectedOptionName === 'مرة واحدة' || selectedOptionName === 'One Time') {
-            setExtraType('One Time');
-            setExtraTypeName_ar('One Time');
-            setExtraTypeName_ar('مرة واحدة');
-        } else if (selectedOptionName === 'متكرر' || selectedOptionName === 'Recurring') {
-            setExtraType('Recurring');
-            setExtraType_ar('متكرر');
-        }
+        // if (selectedOptionName === 'مرة واحدة' || selectedOptionName === 'One Time') {
+        //     setExtraType('One Time');
+        //     setExtraTypeName_ar('One Time');
+        //     setExtraTypeName_ar('مرة واحدة');
+        // } else if (selectedOptionName === 'متكرر' || selectedOptionName === 'Recurring') {
+        //     setExtraType('Recurring');
+        //     setExtraType_ar('متكرر');
+        // }
     
         // Handle extra type value from the input field
         
@@ -277,7 +311,7 @@ const handleChangeLanguage = () => {
             }
             
             // Conditional validation for pricing fields based on type
-            if (extraTypeName_ar ==='مرة واحدة' && !price_ar) {
+            if ( !price_ar) {
                 auth.toastError('الرجاء إدخال السعر.');
                 return;
             }
@@ -734,7 +768,7 @@ const handleChangeLanguage = () => {
                         handleOpenOption={handleExtraType}
                         stateoption={extraType_ar}
                         openMenu={openExtraType_ar}
-                        options={extraTypeData_ar}
+                        options={extraTypeData}
                     />
                 </div>
                 
