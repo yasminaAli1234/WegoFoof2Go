@@ -151,6 +151,7 @@ const [selectedOrders, setSelectedOrders] = useState([]);
                         <th className="min-w-[200px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Email</th>
                         <th className="min-w-[200px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Phone</th>
                         <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">PaymentMethod</th>
+                        <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Date</th>
                         <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Amount</th>
                         <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Orders</th>
                         <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Receipt</th>
@@ -186,6 +187,11 @@ const [selectedOrders, setSelectedOrders] = useState([]);
                                     >
                                             {payment?.payment_method?.name || '_'}
                                     </td>
+                                    <td
+                                            className="min-w-[150px] sm:min-w-[120px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
+                                    >
+{payment?.updated_at ? payment.updated_at.split("T")[0] : '_'}
+</td>
                                     <td
                                             className="min-w-[150px] sm:min-w-[120px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                     >
@@ -333,7 +339,7 @@ const [selectedOrders, setSelectedOrders] = useState([]);
                                                 </div>
                                         )} 
                                         {isModalOpen && (
-                                                <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+                                                <div className="fixed inset-0  bg-opacity-30 flex items-center justify-center">
                                                 <div className="bg-white p-6 rounded shadow-lg max-w-xl w-full overflow-y-auto max-h-96">
                                                 <h2 className="text-3xl font-bold mb-4 text-gray-800">Service Details</h2>
                                                 <ul className="space-y-6">

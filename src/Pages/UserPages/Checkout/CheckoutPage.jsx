@@ -6,6 +6,8 @@ import InputCustom from "../../../Components/InputCustom";
 import { Button } from "../../../Components/Button";
 import { useLocation ,useNavigate} from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useDispatch } from 'react-redux';
+import { clearCart} from '../../../Redux/CartSlice.js';
 
 const CheckoutPage = () => {
   const auth = useAuth();
@@ -25,6 +27,11 @@ const CheckoutPage = () => {
   const uploadRef = useRef(null);
   const navigate = useNavigate();
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const dispatch = useDispatch();
+
+  const handleGoBack = () => {
+    navigate(-1, { replace: true });
+  };
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -225,20 +232,21 @@ const CheckoutPage = () => {
         if (response.status === 200) {
           console.log(response.data);
           // auth.toastSuccess('Order Send successfully!');
-
            // Remove cart from localStorage
-          localStorage.removeItem('cart');
-          localStorage.removeItem('selectedPlanId');
-          localStorage.removeItem('selectedDomainId');
-          localStorage.removeItem('selectedProductIds');
+          // localStorage.removeItem('cart');
+          // localStorage.removeItem('selectedPlanId');
+          // localStorage.removeItem('selectedDomainId');
+          // localStorage.removeItem('selectedProductIds');
 
            // Show success modal
-        setShowSuccessModal(true);
-  
-        // Navigate to the cart page
-        // setTimeout(() => {
-        //   navigate("/dashboard_user/cart");
-        // }, 3000); // Allow time for modal before navigating
+          setShowSuccessModal(true);
+          dispatch(clearCart());
+
+          // Set timeout to ensure modal shows before navigation
+          setTimeout(() => {
+            handleGoBack(); // Optional, if you need to go back
+            navigate("/dashboard_user/cart"); // Navigate to the cart page
+          }, 3000); // Allow time for modal before navigating
       
         } 
         // else {
@@ -507,7 +515,7 @@ const CheckoutPage = () => {
                 {t("Thank you for your order! We’ll be in touch with you shortly to confirm the details.")}
               </p>
               <button
-                onClick={() => setShowSuccessModal(false)}
+                // onClick={() => setShowSuccessModal(false)}
                 className="bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white px-8 py-3 rounded-lg shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none"
               >
                 Close

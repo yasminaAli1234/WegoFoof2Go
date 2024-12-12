@@ -229,7 +229,7 @@ const NavbarUser = () => {
   }, [i18n.language]);
 
   return (
-    <div className="flex lg:mr-0 sm:ml-12 lg:ml-0 items-center justify-between py-2 px-4 bg-white mb-10">
+    <div className="flex lg:mr-0 sm:ml-10 lg:ml-0 items-center justify-between py-2 px-2 bg-white mb-10">
       <div className="w-full flex items-center justify-start gap-5">
         <div className="w-full xl:w-4/12">
           <span className="text-3xl mt-0 lg:m-5 text-mainColor font-[500] flex">
@@ -239,7 +239,7 @@ const NavbarUser = () => {
         <div className="w-8/12 hidden lg:flex">
           <SearchBar bg={"thirdBgColor"} />
         </div>
-        <div className="hidden lg:flex w-4/12 items-center py-1 gap-5 justify-center text-xl font-medium text-mainColor hover:cursor-pointer transition-all duration-300">
+        <div className="flex w-4/12 items-center py-1 gap-1 md:gap-5 justify-center text-xl font-medium text-mainColor hover:cursor-pointer transition-all duration-300">
           <div className="flex items-center justify-around">
             <div className="relative" ref={dropdownRef}>
               <button

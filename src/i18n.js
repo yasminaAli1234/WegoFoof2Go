@@ -107,7 +107,7 @@ const resources = {
       "annually": "Annually",
 
 
-      "Welcome Back!": "Welcome Back!",
+      "Welcome !": "Welcome !",
       "Here’s an overview of your dashboard": "Here’s an overview of your dashboard",
       "Create Store": "Create Store",
       "Request Demo": "Request Demo",
@@ -276,7 +276,7 @@ const resources = {
       "semiAnnually": "نصف سنوي",
       "annually": "سنويًا",
 
-      "Welcome Back!": "مرحبًا بعودتك!",
+      "Welcome !": "مرحبًا !",
       "Here’s an overview of your dashboard": "إليك نظرة عامة على لوحتك",
       "Create Store": "إنشاء متجر",
       "Request Demo": "طلب عرض تجريبي",

@@ -100,29 +100,35 @@ if (!data2) {
       {/* Statistics Section */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Bending Payment Card */}
+
+        <Link to="pending_payment">
         <div className="bg-gradient-to-r from-purple-500 to-purple-700 text-white p-6 rounded-lg shadow-lg hover:scale-105 transition transform duration-300">
           <div className="flex justify-between items-center">
             <FaMoneyBill className="text-3xl" />
-            <span className="text-sm bg-white text-purple-700 py-1 px-3 rounded-full">
+            {/* <span className="text-sm bg-white text-purple-700 py-1 px-3 rounded-full">
               +10%
-            </span>
+            </span> */}
           </div>
           <h2 className="mt-4 text-lg font-semibold">Pending Payment</h2>
           <p className="text-3xl font-bold mt-2">{data2.pending_payments}</p>
         </div>
+        </Link>
 
+      <Link to="subscription">
         {/* Revenue Card */}
         <div className="bg-gradient-to-r from-blue-500 to-blue-700 text-white p-6 rounded-lg shadow-lg hover:scale-105 transition transform duration-300">
           <div className="flex justify-between items-center">
             <FaChartLine className="text-3xl" />
-            <span className="text-sm bg-white text-blue-700 py-1 px-3 rounded-full">
+            {/* <span className="text-sm bg-white text-blue-700 py-1 px-3 rounded-full">
               +25%
-            </span>
+            </span> */}
           </div>
           <h2 className="mt-4 text-lg font-semibold">Revenue</h2>
           <p className="text-3xl font-bold mt-2">{data2.payment_year} EGP</p>
         </div>
+      </Link>
 
+      <Link to="order">
         {/* Order Pending Card */}
         <div className="bg-gradient-to-r from-green-500 to-green-700 text-white p-6 rounded-lg shadow-lg hover:scale-105 transition transform duration-300">
           <div className="flex justify-between items-center">
@@ -134,8 +140,10 @@ if (!data2) {
           <h2 className="mt-4 text-lg font-semibold">Order Pending</h2>
           <p className="text-3xl font-bold mt-2">{data2.pending_orders}</p>
         </div>
-
+      </Link>
+      
         {/* Order In Progress Card */}
+        <Link to="order">
         <div className="bg-gradient-to-r from-red-500 to-red-700 text-white p-6 rounded-lg shadow-lg hover:scale-105 transition transform duration-300">
           <div className="flex justify-between items-center">
             <FaShoppingCart className="text-3xl" />
@@ -146,6 +154,8 @@ if (!data2) {
           <h2 className="mt-4 text-lg font-semibold">Order In Progress</h2>
           <p className="text-3xl font-bold mt-2">{data2.in_progress_orders}</p>
         </div>
+        </Link>
+
       </div>
 
       {/* Signups and Subscriptions */}
