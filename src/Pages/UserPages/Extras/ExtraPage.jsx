@@ -52,66 +52,105 @@ const ExtraPage = () => {
        fetchData(); 
    }, []);
 
-    const handleAddToCart = (product) => {
-       const selectedPeriod = billingPeriod[product.id] || 'monthly';
-       const priceOptions = {
-           monthly: product.monthly,
-           quarterly: product.quarterly || product.monthly * 3,
-           semiAnnually: product["semi_annual"] || product.monthly * 6,
-           annually: product.yearly,
-       };
+    const handleAddToCart = async(product,event) => {
 
-       const discountOptions = {
-              monthly: product.discount_monthly,
-              quarterly: product.discount_quarterly,
-              semiAnnually: product.discount_semi_annual,
-              annually: product.discount_yearly,
-          };
-
-       //    const currentPrice = discountOptions[selectedPeriod]
-       //    ? discountOptions[selectedPeriod]
-       //    : priceOptions[selectedPeriod]
-       //    ? priceOptions[selectedPeriod]
-       //    : product.price ?? 0;
-
-       let currentPrice;
-
-       if (product.status === "one_time") {
-       currentPrice = product.price;
-       } else {
-       currentPrice = discountOptions[selectedPeriod]
-       ? discountOptions[selectedPeriod]
-       : priceOptions[selectedPeriod]
-       ? priceOptions[selectedPeriod]
-       : product.price ?? 0;
-       }
-      
-       const productWithPeriodAndPrice = { 
-           ...product, 
-           billingPeriod: selectedPeriod, 
-           finalprice: currentPrice + product.setup_fees
-       // finalPrice: product.price !== null 
-       //        ? product.price + product.setup_fees 
-       //        : currentPrice + product.setup_fees
-
-       };
+       if (event) event.preventDefault();
    
-       if (selectedProductIds.includes(product.id)) {
-           // If already selected, remove it from cart
-           setSelectedProductIds((prev) => prev.filter((id) => id !== product.id));
-           dispatch(removeFromCart(productWithPeriodAndPrice));
-           localStorage.setItem(
-               'selectedProductIds',
-               JSON.stringify(selectedProductIds.filter((id) => id !== product.id))
+       setIsLoading(true);
+   
+       try {
+           const response = await axios.post(
+               'https://login.wegostores.com/user/v1/cart/pending',
+               {
+                   id: product.id, // Properly include plan.id as a key-value pair
+                   type: "extra",
+               },
+               {
+                   headers: {
+                       Authorization: `Bearer ${auth.user.token}`,
+                       'Content-Type': 'application/json', // Explicitly specify JSON content type
+                   },
+               }
            );
-       } else {
-           // Add new product to selection and cart
-           setSelectedProductIds((prev) => [...prev, product.id]);
-           dispatch(addToCart(productWithPeriodAndPrice));
-           localStorage.setItem(
-               'selectedProductIds',
-               JSON.stringify([...selectedProductIds, product.id])
-           );
+   
+           const data = response.data;
+           console.log(data)
+
+       if (data.included === false){
+              auth.toastError("This Extra Not Included to this plan")
+       }
+       else if (data.included === true){
+
+              const selectedPeriod = billingPeriod[product.id] || 'monthly';
+              const priceOptions = {
+                  monthly: product.monthly,
+                  quarterly: product.quarterly || product.monthly * 3,
+                  semiAnnually: product["semi_annual"] || product.monthly * 6,
+                  annually: product.yearly,
+              };
+       
+              const discountOptions = {
+                     monthly: product.discount_monthly,
+                     quarterly: product.discount_quarterly,
+                     semiAnnually: product.discount_semi_annual,
+                     annually: product.discount_yearly,
+                 };
+       
+              //    const currentPrice = discountOptions[selectedPeriod]
+              //    ? discountOptions[selectedPeriod]
+              //    : priceOptions[selectedPeriod]
+              //    ? priceOptions[selectedPeriod]
+              //    : product.price ?? 0;
+       
+              let currentPrice;
+       
+              if (product.status === "one_time") {
+              currentPrice = product.price;
+              } else {
+              currentPrice = discountOptions[selectedPeriod]
+              ? discountOptions[selectedPeriod]
+              : priceOptions[selectedPeriod]
+              ? priceOptions[selectedPeriod]
+              : product.price ?? 0;
+              }
+             
+              const productWithPeriodAndPrice = { 
+                  ...product, 
+                  billingPeriod: selectedPeriod, 
+                  finalprice: currentPrice + product.setup_fees
+              // finalPrice: product.price !== null 
+              //        ? product.price + product.setup_fees 
+              //        : currentPrice + product.setup_fees
+       
+              };
+          
+              if (selectedProductIds.includes(product.id)) {
+                  // If already selected, remove it from cart
+                  setSelectedProductIds((prev) => prev.filter((id) => id !== product.id));
+                  dispatch(removeFromCart(productWithPeriodAndPrice));
+                  localStorage.setItem(
+                      'selectedProductIds',
+                      JSON.stringify(selectedProductIds.filter((id) => id !== product.id))
+                  );
+              } else {
+                  // Add new product to selection and cart
+                  setSelectedProductIds((prev) => [...prev, product.id]);
+                  dispatch(addToCart(productWithPeriodAndPrice));
+                  localStorage.setItem(
+                      'selectedProductIds',
+                      JSON.stringify([...selectedProductIds, product.id])
+                  );
+              }
+       }
+       else {
+              // Toast error if success message is not "you can buy it"
+              auth.toastError('Error', data?.message || 'Failed to add to cart.');
+       }
+       } catch (error) {
+       console.error(error);
+       auth.toastError(error.response.data.faild)
+       } finally {
+       setIsLoading(false);
        }
    };
 
@@ -223,7 +262,7 @@ const ExtraPage = () => {
                                           {/* Upgrade Button */}
                                           {!selectedProductIds.includes(product.id) && (
                                                  <button
-                                                 onClick={() => handleAddToCart(product)}
+                                                 onClick={() => handleAddToCart(product,event)}
                                                  className="w-full py-3 mt-4 font-semibold rounded-lg transition-all duration-300 transform bg-blue-800 text-white hover:bg-blue-700 hover:scale-105 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                                                  >
                                                  Upgrade Now
@@ -234,7 +273,7 @@ const ExtraPage = () => {
                                           {selectedProductIds.includes(product.id)&& (
                                                  <div className="flex space-x-3 mt-4">
                                                  <button
-                                                        onClick={() => handleAddToCart(product)}
+                                                        onClick={() => handleAddToCart(product,event)}
                                                         className="w-full text-xl py-3 font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-md"
                                                  >
                                                         Remove from Cart
@@ -256,7 +295,7 @@ const ExtraPage = () => {
                                    {/* Add to Cart Button */}
                                    {!selectedProductIds.includes(product.id) && (
                                           <button
-                                          onClick={() => handleAddToCart(product)}
+                                          onClick={() => handleAddToCart(product,event)}
                                           className={`w-full py-3 font-semibold rounded-lg transition-all duration-300 transform 
                                           ${selectedProductIds.includes(product.id) ? 'bg-red-600 text-white hover:bg-red-700' : 'bg-mainColor text-white hover:bg-blue-700'} 
                                           hover:scale-105 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mainColor`}
@@ -269,7 +308,7 @@ const ExtraPage = () => {
                                    {selectedProductIds.includes(product.id)&& (
                                           <div className="flex space-x-3 mt-3">
                                           <button
-                                          onClick={() => handleAddToCart(product)}
+                                          onClick={() => handleAddToCart(product,event)}
                                           className="w-full text-xl py-3 font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-md"
                                           >
                                           Remove from Cart
@@ -460,7 +499,7 @@ const ExtraPage = () => {
                                           {/* Upgrade Button */}
                                           {!selectedProductIds.includes(product.id) && (
                                                  <button
-                                                 onClick={() => handleAddToCart(product)}
+                                                 onClick={() => handleAddToCart(product,event)}
                                                  className="w-full py-3 mt-4 font-semibold rounded-lg transition-all duration-300 transform bg-blue-800 text-white hover:bg-blue-700 hover:scale-105 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                                                  >
                                                  Upgrade Now
@@ -471,7 +510,7 @@ const ExtraPage = () => {
                                           {selectedProductIds.includes(product.id)&& (
                                                  <div className="flex space-x-3 mt-4">
                                                  <button
-                                                        onClick={() => handleAddToCart(product)}
+                                                        onClick={() => handleAddToCart(product,event)}
                                                         className="w-full text-xl py-3 font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-md"
                                                  >
                                                         Remove from Cart
@@ -493,7 +532,7 @@ const ExtraPage = () => {
                                    {/* Add to Cart Button */}
                                    {!selectedProductIds.includes(product.id) && (
                                           <button
-                                          onClick={() => handleAddToCart(product)}
+                                          onClick={() => handleAddToCart(product,event)}
                                           className={`w-full py-3 font-semibold rounded-lg transition-all duration-300 transform 
                                           ${selectedProductIds.includes(product.id) ? 'bg-red-600 text-white hover:bg-red-700' : 'bg-mainColor text-white hover:bg-blue-700'} 
                                           hover:scale-105 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mainColor`}
@@ -506,7 +545,7 @@ const ExtraPage = () => {
                                    {selectedProductIds.includes(product.id)&& (
                                           <div className="flex space-x-3 mt-3">
                                           <button
-                                          onClick={() => handleAddToCart(product)}
+                                          onClick={() => handleAddToCart(product,event)}
                                           className="w-full text-xl py-3 font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-md"
                                           >
                                           Remove from Cart
