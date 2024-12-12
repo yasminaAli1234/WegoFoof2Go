@@ -35,6 +35,10 @@ export { default as PaymentLayout } from "./AdminLayouts/PaymentLayout";
 export { default as WelcomOfferLayout } from "./AdminLayouts/WelcomOfferLayout";
 export { default as AddWelcomOfferLayout } from "./AdminLayouts/AddWelcomOfferLayout";
 export { default as EditWelcomOfferLayout } from "./AdminLayouts/EditWelcomOfferLayout";
+//AdminInformation Layout
+export { default as AdminInformationLayout } from "./AdminLayouts/AdminInformationLayout";
+export { default as AddAdminInformationLayout } from "./AdminLayouts/AddAdminInformationLayout";
+export { default as EditAdminInformationLayout } from "./AdminLayouts/EditAdminInformationLayout";
 //Setting 
 //PaymentMethod Layout
 export { default as PaymentMethodLayout } from "./AdminLayouts/PaymentMethodLayout";
@@ -55,7 +59,9 @@ export { default as AddAdminTutorialLayout } from "./AdminLayouts/AddAdminTutori
 export { default as EditAdminTutorialLayout } from "./AdminLayouts/EditAdminTutorialLayout";
 export { default as AddTutorialLayout } from "./AdminLayouts/AddTutorialLayout";
 export { default as EditTutorialLayout } from "./AdminLayouts/EditTutorialLayout";
-
+//Stores Layout
+export { default as StoresLayout } from "./AdminLayouts/StoresLayout";
+export { default as EditStoresLayout } from "./AdminLayouts/EditStoresLayout";
 
 /* User Layout */
 export { default as UserDashboardLayout } from "./UserLayouts/UserDashboardLayout";
@@ -82,3 +88,5 @@ export { default as PaymentHistoryLayout } from "./UserLayouts/PaymentHistoryLay
 //User Tutorial Layout
 export { default as TutorialLayout } from "./UserLayouts/TutorialLayout";
 export { default as VideoTutorialLayout } from "./UserLayouts/VideoTutorialLayout";
+//Contact Us
+export { default as ContactUsLayout } from "./UserLayouts/ContactUsLayout";

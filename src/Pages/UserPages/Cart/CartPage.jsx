@@ -453,7 +453,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { clearCart, updateCartItem } from '../../../Redux/CartSlice.js';
+import { clearCart, updateCartItem ,removeFromCart} from '../../../Redux/CartSlice.js';
 import axios from 'axios';
 import { useAuth } from "../../../Context/Auth";
 
@@ -467,6 +467,8 @@ const CartPage = () => {
   const [discount, setDiscount] = useState(0);
   const [discountedPrice, setDiscountedPrice] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+  const capitalizeFirstLetter = (str) => str.charAt(0).toUpperCase() + str.slice(1);
   const {t} = useTranslation()
 
   const calculateTotal = () => {
@@ -564,6 +566,31 @@ const CartPage = () => {
     dispatch(updateCartItem({ id: itemId, type: item.type, updatedItem }));
   };
 
+  const handleRemoveItem = (item) => {
+    dispatch(removeFromCart(item));
+  
+    if (item.type === "plan") {
+      localStorage.removeItem('selectedPlanId');
+    } else if (item.type === "domain") {
+      localStorage.removeItem('selectedDomainId');
+    } else if (item.type === "extra") {
+      // Retrieve the array from localStorage
+      const selectedProductIds = JSON.parse(localStorage.getItem('selectedProductIds')) || [];
+      
+      // Remove the specific id from the array
+      const updatedProductIds = selectedProductIds.filter(id => id !== item.id);
+  
+      // Update the array in localStorage
+      if (updatedProductIds.length > 0) {
+        localStorage.setItem('selectedProductIds', JSON.stringify(updatedProductIds));
+      } else {
+        localStorage.removeItem('selectedProductIds'); // Remove key if the array is empty
+      }
+    }
+  };
+  
+  
+
   const handleClearCart = () => {
     dispatch(clearCart());
   };
@@ -586,11 +613,22 @@ const CartPage = () => {
                 key={index}
                 className="flex flex-col border-b border-gray-200 py-4 last:border-none"
               >
-                <div className="flex justify-between items-center">
-                  <h3 className="text-base sm:text-lg font-semibold text-gray-800">{item.name}</h3>
+                <div className="flex md:flex-row sm:flex-col gap-5 justify-between items-center">
+                  <div className='flex flex-col'>
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-800">Product Type : {capitalizeFirstLetter(item.type)}</h3>
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-800">Product Name : {item.name}</h3>
+                  </div>
+                  {/* <p className="text-base sm:text-lg font-semibold text-gray-800">
+                    {(item.finalprice || item.price || 0).toFixed(2)} EGP
+                  </p> */}
+                  <div className='flex flex-col'>
                   <p className="text-base sm:text-lg font-semibold text-gray-800">
-                    {(item.finalprice || item.price || 0).toFixed(2)} {t("EGP")}
+                  One time setup fees : {(item.setup_fees || 0).toFixed(2)} EGP
                   </p>
+                  <p className="text-base sm:text-lg font-semibold text-gray-800">
+                  {item.billingPeriod } subscription : {(item.finalprice - item.setup_fees || item.price || 0).toFixed(2)} {t("EGP")}
+                  </p>
+                  </div>
                 </div>
                 {item.type === "plan" && (
                   <div className="flex flex-wrap items-center mt-3 sm:mt-4">
@@ -610,6 +648,8 @@ const CartPage = () => {
                       <option value="annually">Yearly</option>
                     </select>
                   </div>
+
+                  
                 )}
                  {item.type === "extra" && item.status === "recurring" &&(
                   <div className="flex flex-wrap items-center mt-3 sm:mt-4">
@@ -630,6 +670,14 @@ const CartPage = () => {
                     </select>
                   </div>
                 )}
+<div className="flex justify-between items-center mt-3">
+  <button
+    onClick={() => handleRemoveItem(item)}
+    className="text-red-500 font-semibold hover:underline"
+  >
+    Remove
+  </button>
+</div>
               </div>
             ))
           ) : (

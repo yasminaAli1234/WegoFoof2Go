@@ -155,7 +155,7 @@ const EditPromoCodePage =()=>{
 
         setValueMonthly(promoCodeContent.monthly)
         setValueQuarterly(promoCodeContent.quarterly)
-        setValueSemiAnnual(promoCodeContent["semi-annual"])
+        setValueSemiAnnual(promoCodeContent["semi_annual"])
         setValueYearly(promoCodeContent.yearly)
 
         if (promoCodeContent.promo_status === "fixed") {
@@ -430,7 +430,7 @@ const EditPromoCodePage =()=>{
 
         formData.append('monthly',valueMonthly);
         formData.append('quarterly',valueQuarterly);
-        formData.append('semi-annual', valueSemiAnnual);
+        formData.append('semi_annual', valueSemiAnnual);
         formData.append('yearly', valueYearly);
 
         if(selectStatus=== 'UnLimited'){

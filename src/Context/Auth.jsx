@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+// import { Toaster } from "react-hot-toast";
 import axios from 'axios';
 // Create a context
 const AuthContext = createContext();

@@ -266,6 +266,7 @@ const BuyDomainPage =()=>{
                         stateoption={selectStore}
                         openMenu={openSelectStore}
                         options={storeData}
+                        borderWidth={0}
                     />
                     </div>
 

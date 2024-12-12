@@ -50,6 +50,12 @@ import { UserLayout,UserHomeLayout ,
     WelcomOfferLayout,
     AddWelcomOfferLayout,
     EditWelcomOfferLayout,
+    AdminInformationLayout,
+    AddAdminInformationLayout,
+    EditAdminInformationLayout,
+    ContactUsLayout,
+    StoresLayout,
+    EditStoresLayout,
 } from "./Layouts/AllLayouts";
 import Login from "./Pages/RegisterPages/Login.jsx";
 import SignUpPage from "./Pages/RegisterPages/SignUpPage.jsx";
@@ -125,6 +131,16 @@ const AppLayoutTutorial = () =>(
  </>
 )
 const AppLayoutWelcomOffer = () =>(
+  <>
+  <Outlet/>
+ </>
+)
+const AppLayoutContact  = () =>(
+  <>
+  <Outlet/>
+ </>
+)
+const AppLayoutStores = () =>(
   <>
   <Outlet/>
  </>
@@ -362,6 +378,38 @@ export const router = createBrowserRouter([
               },
             ]
           },
+          {
+            path: 'contact_info',
+            element:<AppLayoutContact/>,
+            children: [
+              {
+                path:'',
+                element:<AdminInformationLayout/>
+              },
+              {
+                path:'add',
+                element:<AddAdminInformationLayout/>
+              },
+              {
+                path:'edit/:contactId',
+                element:<EditAdminInformationLayout/>
+              },
+            ]
+          },
+          {
+            path: 'stores',
+            element:<AppLayoutStores/>,
+            children: [
+              {
+                path:'',
+                element:<StoresLayout/>
+              },
+              {
+                path:'edit/:storesId',
+                element:<EditStoresLayout/>
+              },
+            ]
+          },
         ],
       },
     ],
@@ -466,6 +514,10 @@ export const router = createBrowserRouter([
               {
                 path: "cart",
                 element: <CartPage />, // Use Cart component for the cart route
+              },
+              {
+                path: "contact_us",
+                element: <ContactUsLayout />, // Use Cart component for the cart route
               }
             ],
           },

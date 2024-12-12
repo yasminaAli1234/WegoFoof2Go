@@ -61,6 +61,7 @@ const CheckoutPage = () => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
+    console.log(file)
     if (file) {
       setThumbnailFile(file);
       setThumbnails(file.name);
@@ -155,28 +156,65 @@ const CheckoutPage = () => {
         .filter((item) => item.type === "domain")
         .map((item) => ({
           id: item.id,
-          package: durationMap[item.billingPeriod] || null,
+          // package: durationMap[item.billingPeriod] || null,
           price_item: item.price || item.finalprice
         }));
   
       // Prepare Request Data
-      const requestData = {
-        payment_method_id: selectedMethod.id,
-        plan: planItems.length > 0 ? extraItems : null,
-        extra: extraItems.length > 0 ? extraItems : null,
-        domain: domainItems.length > 0 ? domainItems : null,
-        invoice_image: thumbnailFile,
-        amount: discountedPrice || totalPrice,
-      };
+      // const requestData = {
+      //   payment_method_id: selectedMethod.id,
+      //   plan: planItems.length > 0 ? planItems : null,
+      //   extra: extraItems.length > 0 ? extraItems : null,
+      //   domain: domainItems.length > 0 ? domainItems : null,
+      //   invoice_image: thumbnailFile,
+      //   amount: discountedPrice || totalPrice,
+      // };
   
-      console.log("Request Data:", requestData);
-  
-      try {
+      // console.log("Request Data:", requestData);
+
+      const formData = new FormData();
+
+      // Append basic data (payment method, amount)
+      formData.append("payment_method_id", selectedMethod.id);
+      formData.append("amount", discountedPrice || totalPrice);
+
+      // Append plan items (flatten the object structure into individual parameters)
+      if (planItems.length > 0) {
+        planItems.forEach((item, index) => {
+          formData.append(`plan[${index}][id]`, item.id);
+          formData.append(`plan[${index}][package]`, item.package);
+          formData.append(`plan[${index}][price_item]`, item.price_item);
+        });
+      }
+
+      // Append extra items (flatten the object structure into individual parameters)
+      if (extraItems.length > 0) {
+        extraItems.forEach((item, index) => {
+          formData.append(`extra[${index}][id]`, item.id);
+          formData.append(`extra[${index}][package]`, item.package);
+          formData.append(`extra[${index}][price_item]`, item.price_item);
+        });
+      }
+
+      // Append domain items (flatten the object structure into individual parameters)
+      if (domainItems.length > 0) {
+        domainItems.forEach((item, index) => {
+          formData.append(`domain[${index}][id]`, item.id);
+          formData.append(`domain[${index}][price_item]`, item.price_item);
+        });
+      }
+
+      // Append invoice image (file)
+      if (thumbnailFile) {
+        formData.append("invoice_image", thumbnailFile);
+      }
+            try {
         setIsLoading(true); // Set loading state
   
         const response = await axios.post(
           "https://login.wegostores.com/user/v1/cart",
-          requestData,
+          // requestData, 
+          formData,
           {
             headers: {
               Authorization: `Bearer ${auth.user.token}`,
@@ -188,18 +226,19 @@ const CheckoutPage = () => {
           console.log(response.data);
           // auth.toastSuccess('Order Send successfully!');
 
+           // Remove cart from localStorage
+          localStorage.removeItem('cart');
+          localStorage.removeItem('selectedPlanId');
+          localStorage.removeItem('selectedDomainId');
+          localStorage.removeItem('selectedProductIds');
+
            // Show success modal
         setShowSuccessModal(true);
-
-        // Remove cart from localStorage
-        localStorage.removeItem('cart');
-        localStorage.removeItem('selectedPlanId');
-        localStorage.removeItem('selectedDomainId');
-        localStorage.removeItem('selectedProductIds');
+  
         // Navigate to the cart page
-        setTimeout(() => {
-          navigate("/dashboard_user/cart");
-        }, 3000); // Allow time for modal before navigating
+        // setTimeout(() => {
+        //   navigate("/dashboard_user/cart");
+        // }, 3000); // Allow time for modal before navigating
       
         } 
         // else {
@@ -427,7 +466,7 @@ const CheckoutPage = () => {
                   value={thumbnails}
                   readOnly={true}
                   onClick={handleInputClick}
-                  upload="true"
+                  upload={true}
                 />
                 <input
                   type="file"

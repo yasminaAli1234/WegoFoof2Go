@@ -287,91 +287,174 @@ const UserSubscriptionsPage = () => {
     };
 
     // Add to cart logic
-    const handleAddToCart = (plan) => {
-        const selectedPeriod = billingPeriod[plan.id] || 'monthly';
-        const priceOptions = {
-            monthly: plan.monthly,
-            quarterly: plan.quarterly || plan.monthly * 3,
-            semiAnnually: plan["semi_annual"] || plan.monthly * 6,
-            annually: plan.yearly,
-        };
-        const discountOptions = {
-            monthly: plan.discount_monthly,
-            quarterly: plan.discount_quarterly,
-            semiAnnually: plan.discount_semi_annual,
-            annually: plan.discount_yearly,
-        };
+    // const handleAddToCart =async (plan ,event) => {
 
-        const currentPrice = discountOptions[selectedPeriod] 
-        ? discountOptions[selectedPeriod] 
-        : priceOptions[selectedPeriod];
+    //     event.preventDefault();
 
-        const planWithPeriodAndPrice = { 
-            ...plan, 
-            billingPeriod: selectedPeriod, 
-            finalprice: currentPrice + plan.setup_fees
-        };
+    //     setIsLoading(true);
+    //     try {
+    //         const response = await axios.post(
+    //             'https://login.wegostores.com/user/v1/cart/pending',
+    //             {
+    //                 id: plan.id, // Properly include plan.id as a key-value pair
+    //                 type: "plan"
+    //             },
+    //             {
+    //                 headers: {
+    //                     Authorization: `Bearer ${auth.user.token}`,
+    //                     'Content-Type': 'application/json', // Explicitly specify JSON content type
+    //                 },
+    //             }
+    //         );            
+    //         console.log(response)
+    
+    //         if (response.status === 200) {
+    //             // console.log(response)
+    //             // handleGoBack();
+    //         } 
+    //         // else {
+    //         //     auth.toastError('Failed to add Store.');
+    //         // }
+    //     } catch (error) {
+            // console.log(error.response.data.faild)
+    //         const errorMessages = error?.response?.data.errors;
+    //         let errorMessageString = 'Error occurred';
+    
+    //         if (errorMessages) {
+    //             errorMessageString = Object.values(errorMessages).flat().join(' ');
+    //         }
+    //         // auth.toastError('Error', errorMessageString);
+    //     } finally {
+    //         setIsLoading(false);
+    //     }
+    //     // const selectedPeriod = billingPeriod[plan.id] || 'monthly';
+    //     // const priceOptions = {
+    //     //     monthly: plan.monthly,
+    //     //     quarterly: plan.quarterly || plan.monthly * 3,
+    //     //     semiAnnually: plan["semi_annual"] || plan.monthly * 6,
+    //     //     annually: plan.yearly,
+    //     // };
+    //     // const discountOptions = {
+    //     //     monthly: plan.discount_monthly,
+    //     //     quarterly: plan.discount_quarterly,
+    //     //     semiAnnually: plan.discount_semi_annual,
+    //     //     annually: plan.discount_yearly,
+    //     // };
 
-        if (selectedPlanId == plan.id) {
-            setSelectedPlanId(null);
-            dispatch(removeFromCart(planWithPeriodAndPrice));
-            localStorage.removeItem('selectedPlanId');
-        } else {
-            if (selectedPlanId !== null) {
-                const previousPlan = plans.find((p) => p.id == selectedPlanId);
-                const previousPrice = priceOptions[billingPeriod[previousPlan.id] || 'monthly'];
-                const previousPlanWithPeriodAndPrice = {
-                    ...previousPlan,
-                    billingPeriod: billingPeriod[previousPlan.id] || 'monthly',
-                    finalprice: previousPrice + plan.setup_fees,
+    //     // const currentPrice = discountOptions[selectedPeriod] 
+    //     // ? discountOptions[selectedPeriod] 
+    //     // : priceOptions[selectedPeriod];
+
+    //     // const planWithPeriodAndPrice = { 
+    //     //     ...plan, 
+    //     //     billingPeriod: selectedPeriod, 
+    //     //     finalprice: currentPrice + plan.setup_fees
+    //     // };
+
+    //     // if (selectedPlanId == plan.id) {
+    //     //     setSelectedPlanId(null);
+    //     //     dispatch(removeFromCart(planWithPeriodAndPrice));
+    //     //     localStorage.removeItem('selectedPlanId');
+    //     // } else {
+    //     //     if (selectedPlanId !== null) {
+    //     //         const previousPlan = plans.find((p) => p.id == selectedPlanId);
+    //     //         const previousPrice = priceOptions[billingPeriod[previousPlan.id] || 'monthly'];
+    //     //         const previousPlanWithPeriodAndPrice = {
+    //     //             ...previousPlan,
+    //     //             billingPeriod: billingPeriod[previousPlan.id] || 'monthly',
+    //     //             finalprice: previousPrice + plan.setup_fees,
+    //     //         };
+    //     //         dispatch(removeFromCart(previousPlanWithPeriodAndPrice));
+    //     //         localStorage.removeItem('selectedPlanId');
+    //     //     }
+    //     //     dispatch(addToCart(planWithPeriodAndPrice));
+    //     //     setSelectedPlanId(plan.id);
+    //     //     localStorage.setItem('selectedPlanId', plan.id);
+    //     // }
+    // };
+
+    const handleAddToCart = async (plan, event) => {
+        if (event) event.preventDefault();
+    
+        setIsLoading(true);
+    
+        try {
+            const response = await axios.post(
+                'https://login.wegostores.com/user/v1/cart/pending',
+                {
+                    id: plan.id, // Properly include plan.id as a key-value pair
+                    type: "plan",
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${auth.user.token}`,
+                        'Content-Type': 'application/json', // Explicitly specify JSON content type
+                    },
+                }
+            );
+    
+            const data = response.data;
+    
+            if (response.status === 200 && data.success === "You can buy it") {
+                // Calculate price options
+                const selectedPeriod = billingPeriod[plan.id] || 'monthly';
+                const priceOptions = {
+                    monthly: plan.monthly,
+                    quarterly: plan.quarterly || plan.monthly * 3,
+                    semiAnnually: plan["semi_annual"] || plan.monthly * 6,
+                    annually: plan.yearly,
                 };
-                dispatch(removeFromCart(previousPlanWithPeriodAndPrice));
-                localStorage.removeItem('selectedPlanId');
+    
+                const discountOptions = {
+                    monthly: plan.discount_monthly,
+                    quarterly: plan.discount_quarterly,
+                    semiAnnually: plan.discount_semi_annual,
+                    annually: plan.discount_yearly,
+                };
+    
+                const currentPrice = discountOptions[selectedPeriod]
+                    ? discountOptions[selectedPeriod]
+                    : priceOptions[selectedPeriod];
+    
+                const planWithPeriodAndPrice = {
+                    ...plan,
+                    billingPeriod: selectedPeriod,
+                    finalprice: currentPrice + plan.setup_fees,
+                };
+    
+                // Update cart based on the selected plan
+                if (selectedPlanId === plan.id) {
+                    setSelectedPlanId(null);
+                    dispatch(removeFromCart(planWithPeriodAndPrice));
+                    localStorage.removeItem('selectedPlanId');
+                } else {
+                    if (selectedPlanId !== null) {
+                        const previousPlan = plans.find((p) => p.id === selectedPlanId);
+                        const previousPrice = priceOptions[billingPeriod[previousPlan.id] || 'monthly'];
+                        const previousPlanWithPeriodAndPrice = {
+                            ...previousPlan,
+                            billingPeriod: billingPeriod[previousPlan.id] || 'monthly',
+                            finalprice: previousPrice + plan.setup_fees,
+                        };
+                        dispatch(removeFromCart(previousPlanWithPeriodAndPrice));
+                        localStorage.removeItem('selectedPlanId');
+                    }
+                    dispatch(addToCart(planWithPeriodAndPrice));
+                    setSelectedPlanId(plan.id);
+                    localStorage.setItem('selectedPlanId', plan.id);
+                }
+            } else {
+                // Toast error if success message is not "you can buy it"
+                auth.toastError('Error', data?.message || 'Failed to add to cart.');
             }
-            dispatch(addToCart(planWithPeriodAndPrice));
-            setSelectedPlanId(plan.id);
-            localStorage.setItem('selectedPlanId', plan.id);
+        } catch (error) {
+            console.error(error);
+            auth.toastError(error.response.data.faild)
+        } finally {
+            setIsLoading(false);
         }
     };
-
-    // const handleAddToCart = (plan) => {
-    //     const selectedPeriod = billingPeriod[plan.id] || 'monthly';
-    //     const priceOptions = {
-    //         monthly: plan.monthly,
-    //         quarterly: plan.quarterly || plan.monthly * 3,
-    //         semiAnnually: plan["semi-annual"] || plan.monthly * 6,
-    //         annually: plan.yearly,
-    //     };
-    //     const currentPrice = priceOptions[selectedPeriod];
     
-    //     const planWithPeriodAndPrice = { 
-    //         ...plan, 
-    //         billingPeriod: selectedPeriod, 
-    //         finalprice: currentPrice + plan.setup_fees
-    //     };
-    
-    //     if (selectedPlanId == plan.id) {
-    //         // Deselect plan and remove from cart
-    //         setSelectedPlanId(null);
-    //         dispatch(removeFromCart(planWithPeriodAndPrice));
-    //         localStorage.removeItem('selectedPlanId');
-    //     } else {
-    //         // Deselect previous plan and add new plan
-    //         if (selectedPlanId !== null) {
-    //             const previousPlan = plans.find((p) => p.id == selectedPlanId);
-    //             const previousPlanWithPeriodAndPrice = {
-    //                 ...previousPlan,
-    //                 billingPeriod: billingPeriod[previousPlan.id] || 'monthly',
-    //                 finalprice: priceOptions[billingPeriod[previousPlan.id] || 'monthly']+ plan.setup_fees
-    //             };
-    //             dispatch(removeFromCart(previousPlanWithPeriodAndPrice));
-    //             localStorage.removeItem('selectedPlanId');
-    //         }
-    //         dispatch(addToCart(planWithPeriodAndPrice));
-    //         setSelectedPlanId(plan.id);
-    //         localStorage.setItem('selectedPlanId', plan.id);  // Save selected plan to localStorage
-    //     }
-    // };
 
     // Handle billing period change
    
@@ -521,20 +604,10 @@ const UserSubscriptionsPage = () => {
                                             <FaCrown  className="fas fa-crown text-yellow-400 mr-1"/> {t("My Plan")}
                                         </div>
                             
-                                        {/* Plan Details and Upgrade Options */}
-                                        {/* <div className="text-center mb-2">
-                                            <p className="text-xl font-semibold text-gray-800">
-                                                This is your current plan!
-                                            </p>
-                                            <p className="text-sm text-gray-600 mt-1">
-                                                Enjoy exclusive benefits with your plan, or upgrade to a higher one.
-                                            </p>
-                                        </div> */}
-                            
                                         {/* Upgrade Button */}
                                         {selectedPlanId != plan.id && (
                                             <button
-                                                onClick={() => handleAddToCart(plan)}
+                                                onClick={() => handleAddToCart(plan,event)}
                                                 className="w-full py-3 mt-4 font-semibold rounded-lg transition-all duration-300 transform bg-blue-800 text-white hover:bg-blue-700 hover:scale-105 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                                             >
                                                 {t("Upgrade Now")}
@@ -545,7 +618,7 @@ const UserSubscriptionsPage = () => {
                                         {selectedPlanId == plan.id && (
                                             <div className="flex space-x-3 mt-4">
                                                 <button
-                                                    onClick={() => handleAddToCart(plan)}
+                                                    onClick={() => handleAddToCart(plan,event)}
                                                     className="w-full text-xl py-3 font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-md"
                                                 >
                                                     {t("Remove from Cart")}
@@ -567,7 +640,7 @@ const UserSubscriptionsPage = () => {
                                 {/* Add to Cart Button */}
                                 {selectedPlanId != plan.id && (
                                     <button
-                                    onClick={() => handleAddToCart(plan)}
+                                    onClick={() => handleAddToCart(plan,event)}
                                     className={`w-full py-3 font-semibold rounded-lg transition-all duration-300 transform 
                                     ${selectedPlanId === plan.id ? 'bg-red-600 text-white hover:bg-red-700' : 'bg-mainColor text-white hover:bg-blue-700'} 
                                     hover:scale-105 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mainColor`}
@@ -580,7 +653,7 @@ const UserSubscriptionsPage = () => {
                                 {selectedPlanId == plan.id && (
                                     <div className="flex space-x-3 mt-3">
                                     <button
-                                        onClick={() => handleAddToCart(plan)}
+                                        onClick={() => handleAddToCart(plan,event)}
                                         className="w-full text-xl py-3 font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-md"
                                     >
                                         {t("Remove from Cart")}

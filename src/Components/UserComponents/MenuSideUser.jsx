@@ -25,9 +25,14 @@ const MenuSideUser =  ({setIsSidebarOpen }) => {
        const [isActiveDomainList, setIsActiveDomainList] =  useState(savedState.isActiveDomainList ?? false);
               const [isActiveMyDomain, setIsActiveMyDomain] =  useState(savedState.isActiveMyDomain ?? false);
               const [isActiveBuyDomain, setIsActiveBuyDomain] =  useState(savedState.isActiveBuyDomain ?? false);
+       const [isActiveSupport, setIsActiveSupport] =  useState(savedState.isActiveSupport ?? false);
+       const [isActiveSupportList, setIsActiveSupportList] =  useState(savedState.isActiveSupportList ?? false);
+              const [isActiveContactUs, setIsActiveContactUs] =  useState(savedState.isActiveContactUs ?? false);
+              const [isActiveTutorial, setIsActiveTutorial] =  useState(savedState.isActiveTutorial ?? false);
+
        const [isActiveExtra, setIsActiveExtra] =  useState(savedState.isActiveExtra ?? false);
        const [isActivePayment, setIsActivePayment] =  useState(savedState.isActivePayment ?? false);
-       const [isActiveTutorial, setIsActiveTutorial] =  useState(savedState.isActiveTutorial ?? false);
+       // const [isActiveTutorial, setIsActiveTutorial] =  useState(savedState.isActiveTutorial ?? false);
    
        const handleLogout = () => {
               auth.logout();
@@ -36,12 +41,14 @@ const MenuSideUser =  ({setIsSidebarOpen }) => {
 
        useEffect(() => {
               const sidebarUserState = {
-                     isActiveHome,isActiveProfile,isActiveStore,isActiveSubscription,isActiveDomain,
-                     isActiveDomainList,isActiveMyDomain,isActiveBuyDomain,isActiveExtra,isActivePayment,isActiveTutorial
+                     isActiveHome,isActiveProfile,isActiveStore,isActiveSubscription,isActiveDomain,isActiveSupportList,
+                     isActiveContactUs,isActiveTutorial,isActiveSupport,
+                     isActiveDomainList,isActiveMyDomain,isActiveBuyDomain,isActiveExtra,isActivePayment
               };
               localStorage.setItem('sidebarUserState', JSON.stringify(sidebarUserState));
-       }, [isActiveHome,isActiveProfile,isActiveStore,isActiveSubscription,isActiveDomain,
-              isActiveDomainList,isActiveMyDomain,isActiveBuyDomain,isActiveExtra,isActivePayment,isActiveTutorial
+       }, [isActiveHome,isActiveProfile,isActiveStore,isActiveSubscription,isActiveDomain,isActiveSupportList,
+              isActiveContactUs,isActiveTutorial,isActiveSupport,
+              isActiveDomainList,isActiveMyDomain,isActiveBuyDomain,isActiveExtra,isActivePayment
        ]);
 
        useEffect(() => {
@@ -63,6 +70,9 @@ const MenuSideUser =  ({setIsSidebarOpen }) => {
               setIsActiveBuyDomain(false)
               setIsActiveExtra(false)
               setIsActivePayment(false)
+              setIsActiveSupport(false)
+              setIsActiveSupportList(false)
+              setIsActiveContactUs(false)
               setIsActiveTutorial(false)
 
        };
@@ -77,6 +87,9 @@ const MenuSideUser =  ({setIsSidebarOpen }) => {
               setIsActiveBuyDomain(false)
               setIsActiveExtra(false)
               setIsActivePayment(false)
+              setIsActiveSupport(false)
+              setIsActiveSupportList(false)
+              setIsActiveContactUs(false)
               setIsActiveTutorial(false)
        };
        const handleClickStore =() =>{
@@ -90,6 +103,9 @@ const MenuSideUser =  ({setIsSidebarOpen }) => {
               setIsActiveBuyDomain(false)              
               setIsActiveExtra(false)
               setIsActivePayment(false)
+              setIsActiveSupport(false)
+              setIsActiveSupportList(false)
+              setIsActiveContactUs(false)
               setIsActiveTutorial(false)
        }
        const handleClickSubscription =() =>{
@@ -103,6 +119,9 @@ const MenuSideUser =  ({setIsSidebarOpen }) => {
               setIsActiveBuyDomain(false)              
               setIsActiveExtra(false)
               setIsActivePayment(false)
+              setIsActiveSupport(false)
+              setIsActiveSupportList(false)
+              setIsActiveContactUs(false)
               setIsActiveTutorial(false)
        }
        const handleClickDomain =() =>{
@@ -116,7 +135,10 @@ const MenuSideUser =  ({setIsSidebarOpen }) => {
               setIsActiveBuyDomain(false)              
               setIsActiveExtra(false)
               setIsActivePayment(false)
-              setIsActiveTutorial(false)
+              setIsActiveSupport(false)
+              setIsActiveSupportList(false)
+              setIsActiveContactUs(false)
+              setIsActiveTutorial(false)              
        }
        const handleClickMyDomain =() =>{
               setIsActiveHome(false);
@@ -129,6 +151,9 @@ const MenuSideUser =  ({setIsSidebarOpen }) => {
               setIsActiveBuyDomain(false)              
               setIsActiveExtra(false)
               setIsActivePayment(false)
+              setIsActiveSupport(false)
+              setIsActiveSupportList(false)
+              setIsActiveContactUs(false)
               setIsActiveTutorial(false)
        }
        const handleClickBuyDomain =() =>{
@@ -142,6 +167,9 @@ const MenuSideUser =  ({setIsSidebarOpen }) => {
               setIsActiveBuyDomain(true)              
               setIsActiveExtra(false)
               setIsActivePayment(false)
+              setIsActiveSupport(false)
+              setIsActiveSupportList(false)
+              setIsActiveContactUs(false)
               setIsActiveTutorial(false)
        }
        const handleClickExtra =() =>{
@@ -155,6 +183,9 @@ const MenuSideUser =  ({setIsSidebarOpen }) => {
               setIsActiveBuyDomain(false)               
               setIsActiveExtra(true)
               setIsActivePayment(false)
+              setIsActiveSupport(false)
+              setIsActiveSupportList(false)
+              setIsActiveContactUs(false)
               setIsActiveTutorial(false)
        }
        const handleClickPayment =() =>{
@@ -168,6 +199,41 @@ const MenuSideUser =  ({setIsSidebarOpen }) => {
               setIsActiveBuyDomain(false)              
               setIsActiveExtra(false)
               setIsActivePayment(true)
+              setIsActiveSupport(false)
+              setIsActiveSupportList(false)
+              setIsActiveContactUs(false)
+              setIsActiveTutorial(false)
+       }
+       const handleClickSupport =() =>{
+              setIsActiveHome(false);
+              setIsActiveProfile(false)
+              setIsActiveStore(false)
+              setIsActiveSubscription(false)
+              setIsActiveDomain(false)
+              setIsActiveDomainList(false)
+              setIsActiveMyDomain(false)
+              setIsActiveBuyDomain(false)              
+              setIsActiveExtra(false)
+              setIsActivePayment(false)
+              setIsActiveSupport(true)
+              setIsActiveSupportList(true)
+              setIsActiveContactUs(true)
+              setIsActiveTutorial(false)
+       }
+       const handleClickContactUs =() =>{
+              setIsActiveHome(false);
+              setIsActiveProfile(false)
+              setIsActiveStore(false)
+              setIsActiveSubscription(false)
+              setIsActiveDomain(false)
+              setIsActiveDomainList(false)
+              setIsActiveMyDomain(false)
+              setIsActiveBuyDomain(false)              
+              setIsActiveExtra(false)
+              setIsActivePayment(false)
+              setIsActiveSupport(true)
+              setIsActiveSupportList(true)
+              setIsActiveContactUs(true)
               setIsActiveTutorial(false)
        }
        const handleClickTutorial =() =>{
@@ -181,6 +247,9 @@ const MenuSideUser =  ({setIsSidebarOpen }) => {
               setIsActiveBuyDomain(false)              
               setIsActiveExtra(false)
               setIsActivePayment(false)
+              setIsActiveSupport(true)
+              setIsActiveSupportList(true)
+              setIsActiveContactUs(false)
               setIsActiveTutorial(true)
        }
        return (
@@ -202,12 +271,12 @@ const MenuSideUser =  ({setIsSidebarOpen }) => {
                                    <Link to="subscription" onClick={() =>{handleClickSubscription();handleLinkClick();}} className={`${isActiveSubscription ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <SubscriptionIcon isActive={isActiveSubscription} />
                                           <span className={`${isActiveSubscription ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>{t('subscriptions')}</span>
-                                   </Link>                      
+                                   </Link>                     
                                    {/* <Link to="domain" onClick={() =>{handleClickDomain();handleLinkClick();}} className={`${isActiveDomain ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <DomainIcon isActive={isActiveDomain} />
                                           <span className={`${isActiveDomain ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Domain</span>
                                    </Link> */}
-                                    <>
+                                   <>
                                    <Link
                                           to="my_domain"
                                           onClick={() =>{handleClickDomain();handleLinkClick();}}
@@ -240,6 +309,42 @@ const MenuSideUser =  ({setIsSidebarOpen }) => {
                                           </div>
                                    )}
                                    </>
+
+                                   <>
+                                   <Link
+                                          to="contact_us"
+                                          onClick={() =>{handleClickSupport();handleLinkClick();}}
+                                          className={`${isActiveSupport ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}
+                                   >
+                                          <TutorialIcon isActive={isActiveSupport} />
+                                          <span className={`${isActiveSupport ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>{t('Support')}</span>
+                                   </Link>
+                                   {isActiveSupportList && (
+                                          <div className="h-22 w-full transition-all duration-500">
+                                          <ul className={`h-full listUser ${i18n.language === 'ar' ? 'mr-10' : 'ml-10'} bg-blacks transition-all duration-700 flex flex-col gap-y-2`}>
+                                                 <Link
+                                                 to="contact_us"
+                                                 onClick={() =>{handleClickContactUs();handleLinkClick();}}
+                                                 className={`${isActiveContactUs ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}
+                                                 >
+                                                 <span className={`${isActiveContactUs ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>
+                                                        {t('contact_us')}
+                                                 </span>
+                                                 </Link>
+                                                 <Link
+                                                 to="tutorial"
+                                                 onClick={() =>{handleClickTutorial();handleLinkClick();}}
+                                                 className={`${isActiveTutorial ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}
+                                                 >
+                                                 <span className={`${isActiveTutorial ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>
+                                                        {t('tutorial')}                                                 
+                                                 </span>
+                                                 </Link>
+                                          </ul>
+                                          </div>
+                                   )}
+                                   </>
+
                                    <Link to="extra" onClick={() =>{handleClickExtra();handleLinkClick();}} className={`${isActiveExtra ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <ExtraIcon isActive={isActiveExtra} />
                                           <span className={`${isActiveExtra ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>{t('extras')}</span>
@@ -248,10 +353,10 @@ const MenuSideUser =  ({setIsSidebarOpen }) => {
                                           <PaymentIcon isActive={isActivePayment} />
                                           <span className={`${isActivePayment ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>{t('payment_history')}</span>
                                    </Link>
-                                   <Link to="tutorial" onClick={() =>{handleClickTutorial();handleLinkClick();}} className={`${isActiveTutorial ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
+                                   {/* <Link to="tutorial" onClick={() =>{handleClickTutorial();handleLinkClick();}} className={`${isActiveTutorial ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <TutorialIcon isActive={isActiveTutorial} />
                                           <span className={`${isActiveTutorial ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>{t('tutorial')}</span>
-                                   </Link>
+                                   </Link> */}
                                    <Link to="/" onClick={() =>{handleLogout();handleLinkClick();}} className="w-full flex items-center justify-start px-0 py-2 gap-x-5">
                                           <IoIosLogOut size={23} style={{ strokeWidth: 2 }} color="#ffff"/>
                                           <span className="text-secoundColor text-xl font-medium">{t('log_out')}</span>

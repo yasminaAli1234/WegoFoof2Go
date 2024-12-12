@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef,useEffect } from 'react';
 import axios from 'axios';
 import InputCustom from '../../../Components/InputCustom';
 import { Button } from '../../../Components/Button';
@@ -6,8 +6,7 @@ import { useAuth } from '../../../Context/Auth';
 import { useNavigate } from 'react-router-dom';
 import CheckBox from '../../../Components/CheckBox';
 import DropDownMenu from '../../../Components/DropDownMenu';
-import { Translation } from 'react-i18next';
-import { BsTranslate } from 'react-icons/bs';
+import MultipleChoiceMenu from '../../../Components/MultipleChoiceMenu';
 
 const AddExtraProductPage = () => {
     const auth = useAuth();
@@ -20,7 +19,7 @@ const AddExtraProductPage = () => {
     const [fee, setFee] = useState('');
     // const [monthlyPrice, setMonthlyPrice] = useState(''); // For one-time price or monthly price
     // const [yearlyPrice, setYearlyPrice] = useState(''); // For yearly price in case of Recurring
-    const [appActive, setAppActive] = useState(0); // Default status to 0
+    const [included, setIncluded] = useState(''); // Default status to 0
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
@@ -45,70 +44,48 @@ const AddExtraProductPage = () => {
     const [showSemiAnnualPriceInput, setShowSemiAnnualPriceInput] = useState(false);
     const [showYearlyPriceInput, setShowYearlyPriceInput] = useState(false);
 
-
     const [extraTypeData, setExtraTypeData] = useState([{ name: 'One Time' }, { name: 'Recurring' }]);
     const [extraType, setExtraType] = useState('Select Type');
     const [extraTypeName, setExtraTypeName] = useState();
     const [openExtraType, setOpenExtraType] = useState(false);
     const dropdownExtraType = useRef();
 
+    const [plans, setPlans] = useState([]);
+    const [selectPlan, setSelectPlan] = useState('');
+    const [selectPlanId, setSelectPlanId] = useState('');
+    const [openSelectPlan, setOpenSelectPlan] = useState(false);
+    const dropdownPlanRef =useRef();
 
-    // set arabic
-    const [name_ar, setName_ar] = useState('');
-    const [description_ar, setDescription_ar] = useState('');
-    const [price_ar, setPrice_ar] = useState(''); // For one-time price or monthly price
-    const [fee_ar, setFee_ar] = useState('');
-    const [appActive_ar, setAppActive_ar] = useState(0);
+    const fetchData = async () => {
+        setIsLoading(true);
+        try {
+               const response = await axios.get('https://login.wegostores.com/admin/v1/plan/show', {
+                      headers: {
+                             Authorization: `Bearer ${auth.user.token}`,
+                      },
+               });
+               if (response.status === 200) {
+                      console.log(response.data)
+                      setPlans(response.data.plan)
+               }
+        } catch (error) {
+               console.error('Error fetching data:', error);
+        } finally {
+               setIsLoading(false);
+        }
+    };
 
-    const [monthlyPrice_ar, setMonthlyPrice_ar] = useState('');
-    const [monthlyDiscountPrice_ar, setMonthlyDiscountPrice_ar] = useState('');
-    const [MonthlySetUpFeesPrice_ar, setMonthlySetUpFeesPrice_ar] = useState('');
-
-    const [quarterlyPrice_ar, setQuarterlyPrice_ar] = useState('');
-    const [quarterlyDiscountPrice_ar, setQuarterlyDiscountPrice_ar] = useState('');
-    const [quarterlySetUpFeesPrice_ar, setQuarterlySetUpFeesPrice_ar] = useState('');
-
-    const [semiAnnualPrice_ar, setSemiAnnualPrice_ar] = useState('');
-    const [semiAnnualDiscountPrice_ar, setSemiAnnualDiscountPrice_ar] = useState('');
-    const [semiAnnualSetUpFeesPrice_ar, setSemiAnnualSetUpFeesPrice_ar] = useState('');
-
-    const [yearlyPrice_ar, setYearlyPrice_ar] = useState(''); 
-    const [yearlyDiscountPrice_ar, setYearlyDiscountPrice_ar] = useState(''); 
-    const [yearlySetUpFeesPrice_ar, setYearlySetUpFeesPrice_ar] = useState(''); 
-
-    const [showMonthlyPriceInput_ar, setShowMonthlyPriceInput_ar] = useState(false);
-    const [showQuarterlyPriceInput_ar, setShowQuarterlyPriceInput_ar] = useState(false);
-    const [showSemiAnnualPriceInput_ar, setShowSemiAnnualPriceInput_ar] = useState(false);
-    const [showYearlyPriceInput_ar, setShowYearlyPriceInput_ar] = useState(false);
-
-
-    const [extraTypeData_ar, setExtraTypeData_ar] = useState([{ name: 'مرة واحدة' }, { name: 'متكرر' }]);
-    const [extraType_ar, setExtraType_ar] = useState('اختار النوع');
-    const [extraTypeName_ar, setExtraTypeName_ar] = useState();
-    const [openExtraType_ar, setOpenExtraType_ar] = useState(false);
-    const dropdownExtraType_ar = useRef();
-
+    useEffect(() => {
+        fetchData(); 
+    }, []);
 
     const handleOpenExtraType = () => {
         setOpenExtraType(!openExtraType);
-        setOpenExtraType_ar(!openExtraType_ar);
+        setOpenSelectPlan(false)
     };
-    const handleExtraType_ar = (e) => {
-        const inputElement = e.currentTarget.querySelector('.inputVal');
-        const selectedOptionName = e.currentTarget.textContent.trim();
-        const selectedOptionValue = inputElement ? inputElement.value.toLowerCase() : '';
-        
-        // Set values for Arabic
-        setExtraType_ar(selectedOptionName);
-        setExtraTypeName_ar(selectedOptionValue);
-        setOpenExtraType_ar(false);
-    
-        // Handle translation or any other logic for Arabic here
-        if (language === 'ar') {
-            console.log("Arabic Option Selected:", selectedOptionName);
-        } else {
-            console.log("English Option Selected:", selectedOptionName);
-        }
+    const handleOpenSelectPlan = () => {
+        setOpenSelectPlan(prev => !prev)
+        setOpenExtraType(false)
     };
     
     const handleExtraType = (e) => {
@@ -120,15 +97,47 @@ const AddExtraProductPage = () => {
         setExtraType(selectedOptionName);
         setExtraTypeName(selectedOptionValue);
         setOpenExtraType(false);
-    
-        // Handle translation or any other logic for English here
-        if (language === 'en') {
-            console.log("English Option Selected:", selectedOptionName);
-        } else {
-            console.log("Arabic Option Selected:", selectedOptionName);
-        }
+        console.log(selectedOptionName)
     };
+    const handleSelectPlan = (e) => {
+        const inputElement = e.currentTarget.querySelector('.inputVal');
+        const selectedOptionName = e.currentTarget.textContent.trim();
+        const selectedOptionValue = inputElement ? inputElement.value : null;
+        setSelectPlan(prev =>
+            prev.includes(selectedOptionName)
+              ? prev.filter(name => name !== selectedOptionName)
+              : [...prev, selectedOptionName]
+          );
+      
+          setSelectPlanId(prev =>
+            prev.includes(selectedOptionValue)
+              ? prev.filter(id => id !== selectedOptionValue)
+              : [...prev, selectedOptionValue]
+          );
+          setOpenSelectPlan(false)
+      
+        console.log('Selected Plan:', selectedOptionName);
+        console.log('Plan ID:', selectedOptionValue);
+    };
+    const handleRemoveSubject = (PlanName) => {
+        setSelectPlan(selectPlan.filter(plan => plan !== PlanName));
+    };
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+          document.removeEventListener('mousedown', handleClickOutside);
+        };
+      }, []);
     
+      const handleClickOutside = (event) => {
+        if (dropdownPlanRef.current && !dropdownPlanRef.current.contains(event.target)&&
+            dropdownExtraType.current && !dropdownExtraType.current.contains(event.target)
+        ) {
+            setOpenSelectPlan(false); 
+            setOpenExtraType(false); 
+        }
+      };
 
     const handleGoBack = () => {
         navigate(-1, { replace: true });
@@ -136,13 +145,7 @@ const AddExtraProductPage = () => {
 
     const handleClick = (e) => {
         const isChecked = e.target.checked;
-        setAppActive(isChecked ? 1 : 0);
-        setAppActive_ar(isChecked ? 1 : 0);
-    };
-    // handle language 
-    const handleChangeLanguage = () => {
-        const newLanguage = language === 'en' ? 'ar' : 'en'; 
-        setLanguage(newLanguage); 
+        setIncluded(isChecked ? 1 : 0);
     };
 
     const handleSubmitAdd = async (event) => {
@@ -185,45 +188,6 @@ const AddExtraProductPage = () => {
                 return;
             }
         }
-        //  set transalte 
-        if (!name_ar) {
-            auth.toastError('الرجاء إدخال اسم المنتج.');
-            return;
-        }
-        if (!description_ar) {
-            auth.toastError('الرجاء إدخال الوصف.');
-            return;
-        }
-        if (!extraTypeName_ar) {
-            auth.toastError('الرجاء اختيار النوع.');
-            return;
-        }
-        
-        // Conditional validation for pricing fields based on type
-        if (extraTypeName_ar ==='مرة واحدة' && !price_ar) {
-            auth.toastError('الرجاء إدخال السعر.');
-            return;
-        }
-        if (extraTypeName_ar === 'متكرر') {
-            if (!monthlyPrice_ar) {
-                auth.toastError('الرجاء إدخال السعر الشهري.');
-                return;
-            }
-            if (!quarterlyPrice_ar) {
-                auth.toastError('الرجاء إدخال السعر ربع السنوي.');
-                return;
-            }
-            if (!semiAnnualPrice_ar) {
-                auth.toastError('الرجاء إدخال السعر نصف السنوي.');
-                return;
-            }
-            if (!yearlyPrice_ar) {
-                auth.toastError('الرجاء إدخال السعر السنوي.');
-                return;
-            }
-        }
-
-        
         
     
         setIsLoading(true);
@@ -232,6 +196,7 @@ const AddExtraProductPage = () => {
             formData.append('name', name);
             formData.append('description', description);
             formData.append('setup_fees', fee);
+            formData.append('included', included || 0);
 
             // Set data fields based on selected type
             if (extraType === 'One Time') {
@@ -262,46 +227,15 @@ const AddExtraProductPage = () => {
                 // formData.append('setupFees_yearly', yearlySetUpFeesPrice);
             }
             }
+
+            selectPlanId.forEach((planId, index) => {
+                formData.append(`plans[${index}]`, planId);
+              });
     
             // Logging formData for debugging
             for (let pair of formData.entries()) {
                 console.log(pair[0] + ', ' + pair[1]);
             }
-
-            // append to translate array
-            translate['name']= name_ar;
-            translate['description']= description_ar;
-            translate['setup_fees']= fee_ar;
-
-            if (extraType_ar === 'مرة واحدة') {
-                translation.append('status', 'one_time');
-                translation.append('price', price);
-            } else if (extraType_ar === 'متكرر') {
-                translate.append('status', 'recurring');
-
-                // Append selected prices if inputs are shown and filled
-            if (showMonthlyPriceInput_ar && monthlyPrice_ar) {
-                translate.append('monthly', monthlyPrice_ar);
-                translate.append('discount_monthly', monthlyDiscountPrice_ar);
-                // formData.append('setupFees_monthly', MonthlySetUpFeesPrice);
-            }
-            if (showQuarterlyPriceInput_ar && quarterlyPrice_ar) {
-                translate.append('quarterly', quarterlyPrice_ar);
-                translate.append('discount_quarterly', quarterlyDiscountPrice_ar);
-                // formData.append('setupFees_quarterly', quarterlyDiscountPrice);
-            }
-            if (showSemiAnnualPriceInput_ar && semiAnnualPrice_ar) {
-                translate.append('semi_annual', semiAnnualPrice_ar);
-                translate.append('discount_semi_annual', semiAnnualDiscountPrice_ar);
-                // formData.append('setupFees_semi_annual', semiAnnualSetUpFeesPrice);
-            }
-            if (showYearlyPriceInput_ar && yearlyPrice_ar) {
-                translate.append('yearly', yearlyPrice_ar);
-                translate.append('discount_yearly', yearlyDiscountPrice_ar);
-                // formData.append('setupFees_yearly', yearlySetUpFeesPrice);
-            }
-            }
-            formData.append('translation', translate)
     
             // Sending the form data via POST request
             const response = await axios.post(
@@ -399,7 +333,7 @@ const AddExtraProductPage = () => {
                         options={extraTypeData}
                     />
                 </div>
-                
+    
                 {/* Conditionally render price inputs based on extraType */}
                 {extraType === 'One Time' && (
                     <div className="lg:w-[30%] sm:w-full">
@@ -633,293 +567,31 @@ const AddExtraProductPage = () => {
                 </div>
                     </>
                 )}
-            </div>:
-              <div className="w-full flex flex-wrap items-center justify-start gap-10">
-              <div className="lg:w-[30%] sm:w-full">
-                  <InputCustom
-                      type="text"
-                      borderColor="mainColor"
-                      placeholder="اسم المنتج"
-                      value={name_ar}
-                      onChange={(e) => setName_ar(e.target.value)}
-                      width="w-full"
-                  />
-              </div>
-              {/* <div className="lg:w-[30%] sm:w-full">
-                  <InputCustom
-                      type="text"
-                      borderColor="mainColor"
-                      placeholder="Description"
-                      value={description}
-                      onChange={(e) => setDescription(e.target.value)}
-                      width="w-full"
-                  />
-              </div> */}
-              <div className="lg:w-[30%] sm:w-full">
-              <textarea
-                  className="w-full px-2 py-4 border-2 font-normal eleValueInput rounded-xl border-mainColor text-2xl focus:outline-none focus:ring-2 focus:ring-mainColor"
-                  placeholder="الوصف"
-                  value={description_ar}
-                  onChange={(e) => setDescription_ar(e.target.value)}
-                  rows={1}
-              ></textarea>
-              </div>
-              <div className="lg:w-[30%] sm:w-full">
-                  <InputCustom
-                      type="number"
-                      borderColor="mainColor"
-                      placeholder="رسوم الإعداد"
-                      value={fee_ar}
-                      onChange={(e) => setFee_ar(e.target.value)}
-                      width="w-full"
-                  />
-              </div>
-              <div className="lg:w-[30%] sm:w-full">
-                  <DropDownMenu
-                      ref={dropdownExtraType_ar}
-                      handleOpen={handleOpenExtraType}
-                      handleOpenOption={handleExtraType_ar}
-                      stateoption={extraType_ar}
-                      openMenu={openExtraType_ar}
-                      options={extraTypeData_ar}
-                  />
-              </div>
-              
-              {/* Conditionally render price inputs based on extraType */}
-              {extraType_ar === 'مرة واحدة' && (
-                  <div className="lg:w-[30%] sm:w-full">
-                      <InputCustom
-                          type="number"
-                          borderColor="mainColor"
-                          placeholder="السعر"
-                          value={price}
-                          onChange={(e) => setPrice(e.target.value)}
-                          width="w-full"
-                      />
-                  </div>
-              )}
 
-              {extraType_ar === 'متكرر' && (
-                  <>
-                      {/* <div className="lg:w-[30%] sm:w-full">
-                          <InputCustom
-                              type="number"
-                              borderColor="mainColor"
-                              placeholder="Price (Monthly)"
-                              value={monthlyPrice}
-                              onChange={(e) => setMonthlyPrice(e.target.value)}
-                              width="w-full"
-                          />
-                      </div>
-                      <div className="lg:w-[30%] sm:w-full">
-                          <InputCustom
-                              type="number"
-                              borderColor="mainColor"
-                              placeholder="Price (Yearly)"
-                              value={yearlyPrice}
-                              onChange={(e) => setYearlyPrice(e.target.value)}
-                              width="w-full"
-                          />
-                      </div> */}
+                {
+                    included ===1 && (
+                    <div className="lg:w-[30%] sm:w-full">
+                    <MultipleChoiceMenu
+                      ref={dropdownPlanRef}
+                      handleOpen={handleOpenSelectPlan}
+                      selectedOptions={selectPlan}
+                      openMenu={openSelectPlan}
+                      handleSelectOption={handleSelectPlan}
+                      handleRemoveOption={handleRemoveSubject}
+                      options={plans}
+                      name="Select Plans"
+                    />
+                  </div>
+                    )
+                }
 
-              <div className="flex w-full flex-col gap-5">
-                  {/* Monthly Price Checkbox */}
-                  <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
-                  <div className=" flex items-center gap-3 w-full lg:w-1/3">
-                      <input 
-                          type="checkbox" 
-                          checked={showMonthlyPriceInput_ar}
-                          onChange={() => setShowMonthlyPriceInput_ar(prev => !prev)}
-                          className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
-                      />
-                      <label  className="text-2xl text-mainColor font-medium">شهري</label>
-                  </div>
-                      {/* Conditional Price Inputs */}
-                      {showMonthlyPriceInput_ar && (
-                      <>
-                      <div className="lg:w-1/2 sm:w-full">
-                          <InputCustom
-                              type="number"
-                              borderColor="mainColor"
-                               placeholder="أدخل السعر"
-                              value={monthlyPrice_ar}
-                              onChange={(e) => setMonthlyPrice_ar(e.target.value)}
-                              width="w-full"
-                          />
-                      </div>
-                      <div className="lg:w-1/2 sm:w-full">
-                       <InputCustom
-                           type="number"
-                           borderColor="mainColor"
-                           placeholder="أدخل سعر الخصم"
-                           value={monthlyDiscountPrice_ar}
-                           onChange={(e) => setMonthlyDiscountPrice_ar(e.target.value)}
-                           width="w-full"
-                       />
-                      </div>
-                      {/* <div className="lg:w-1/2 sm:w-full">
-                      <InputCustom
-                          type="number"
-                          borderColor="mainColor"
-                          placeholder="Enter SetUp Fees"
-                          value={MonthlySetUpFeesPrice}
-                          onChange={(e) => setMonthlySetUpFeesPrice(e.target.value)}
-                          width="w-full"
-                      />
-                      </div> */}
-                      </>
-                      )}
-                  </div>
-
-                  {/* 3 Months Price Checkbox */}
-                  <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
-                  <div className="flex items-center gap-3 w-full lg:w-1/3 ">
-                      <input 
-                          type="checkbox" 
-                          checked={showQuarterlyPriceInput_ar}
-                          onChange={() => setShowQuarterlyPriceInput_ar(prev => !prev)}
-                          className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
-                      />
-                      <label  className="text-2xl text-mainColor font-medium">ربع سنوي</label>
-                  </div>
-                  {showQuarterlyPriceInput_ar && (
-                      <>
-                      <div className="lg:w-1/2 sm:w-full">
-                          <InputCustom
-                              type="number"
-                              borderColor="mainColor"
-                               placeholder="أدخل السعر"
-                              value={quarterlyPrice_ar}
-                              onChange={(e) => setQuarterlyPrice_ar(e.target.value)}
-                              width="w-full"
-                          />
-                      </div>
-                      <div className="lg:w-1/2 sm:w-full">
-                      <InputCustom
-                          type="number"
-                          borderColor="mainColor"
-                          placeholder="أدخل سعر الخصم"
-                          value={quarterlyDiscountPrice_ar}
-                          onChange={(e) => setQuarterlyDiscountPrice_ar(e.target.value)}
-                          width="w-full"
-                      />
-                      </div>
-                      {/* <div className="lg:w-1/2 sm:w-full">
-                      <InputCustom
-                          type="number"
-                          borderColor="mainColor"
-                          placeholder="Enter SetUp Fees"
-                          value={quarterlySetUpFeesPrice}
-                          onChange={(e) => setQuarterlySetUpFeesPrice(e.target.value)}
-                          width="w-full"
-                      />
-                      </div> */}
-                      </>
-                  )}
-                  </div>
-
-                  {/* 6 Months Price Checkbox */}
-                  <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
-                  <div className="flex items-center gap-3 w-full lg:w-1/3 ">
-                      <input 
-                          type="checkbox" 
-                          checked={showSemiAnnualPriceInput_ar}
-                          onChange={() => setShowSemiAnnualPriceInput_ar(prev => !prev)}
-                          className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
-                      />
-                      <label  className="text-2xl text-mainColor font-medium">نصف سنوي</label>
-                  </div>
-                  {showSemiAnnualPriceInput_ar && (
-                      <>
-                      <div className="lg:w-1/2 sm:w-full">
-                          <InputCustom
-                              type="number"
-                              borderColor="mainColor"
-                               placeholder="أدخل السعر"
-                              value={semiAnnualPrice_ar}
-                              onChange={(e) => setSemiAnnualPrice_ar(e.target.value)}
-                              width="w-full"
-                          />
-                      </div>
-                      <div className="lg:w-1/2 sm:w-full">
-                      <InputCustom
-                          type="number"
-                          borderColor="mainColor"
-                          placeholder="أدخل سعر الخصم"
-                          value={semiAnnualDiscountPrice_ar}
-                          onChange={(e) => setSemiAnnualDiscountPrice_ar(e.target.value)}
-                          width="w-full"
-                      />
-                      </div>
-                      {/* <div className="lg:w-1/2 sm:w-full">
-                      <InputCustom
-                          type="number"
-                          borderColor="mainColor"
-                          placeholder="Enter SetUp Fees"
-                          value={semiAnnualSetUpFeesPrice}
-                          onChange={(e) => setSemiAnnualSetUpFeesPrice(e.target.value)}
-                          width="w-full"
-                      />
-                      </div> */}
-                      </>
-                  )}
-                  </div>
-
-                  {/* yearly Price Checkbox */}
-                  <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
-                  <div className="flex items-center gap-3 w-full lg:w-1/3 ">
-                      <input 
-                          type="checkbox" 
-                          checked={showYearlyPriceInput_ar}
-                          onChange={() => setShowYearlyPriceInput_ar(prev => !prev)}
-                          className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
-                      />
-                      <label  className="text-2xl text-mainColor font-medium">سنوي</label>
-                  </div>
-                  {showYearlyPriceInput_ar && (
-                      <>
-                      <div className="lg:w-1/2 sm:w-full">
-                          <InputCustom
-                              type="number"
-                              borderColor="mainColor"
-                               placeholder="أدخل السعر"
-                              value={yearlyPrice_ar}
-                              onChange={(e) => setYearlyPrice_ar(e.target.value)}
-                              width="w-full"
-                          />
-                      </div>
-                      <div className="lg:w-1/2 sm:w-full">
-                      <InputCustom
-                          type="number"
-                          borderColor="mainColor"
-                          placeholder="أدخل سعر الخصم"
-                          value={yearlyDiscountPrice_ar}
-                          onChange={(e) => setYearlyDiscountPrice_ar(e.target.value)}
-                          width="w-full"
-                      />
-                      </div>
-                      {/* <div className="lg:w-1/2 sm:w-full">
-                      <InputCustom
-                          type="number"
-                          borderColor="mainColor"
-                          placeholder="Enter SetUp Fees"
-                          value={yearlySetUpFeesPrice}
-                          onChange={(e) => setYearlySetUpFeesPrice(e.target.value)}
-                          width="w-full"
-                      />
-                      </div> */}
-                      </>
-                  )}
-                  </div>
-              </div>
-                  </>
-              )}
-          </div>
-            }
-
-            {/* set arabic */}
-
-          
+                <div className="lg:w-[30%] sm:w-full flex items-center gap-x-4 w-full">
+                            <span className="text-2xl text-mainColor font-medium">Included:</span>
+                            <div>
+                                <CheckBox handleClick={handleClick} checked={included}/>
+                            </div>
+                        </div>  
+                </div>
 
             <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
                 <div className="flex items-center justify-center w-72">

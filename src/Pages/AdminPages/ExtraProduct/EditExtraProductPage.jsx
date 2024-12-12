@@ -16,6 +16,7 @@ const EditExtraProductPage =()=>{
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState(''); // For one-time price or monthly price
     const [fee, setFee] = useState('');
+    const [included, setIncluded] = useState(0); // Default status to 0
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 

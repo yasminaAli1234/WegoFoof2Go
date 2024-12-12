@@ -38,7 +38,7 @@ const EditPaymentMethodPage =()=>{
         if (paymentContent) {
             setTitle(paymentContent.name || '');
             setDescription(paymentContent.description|| '');
-            setThumbnailFile(paymentContent.thumbnailUrl || '');
+            // setThumbnailFile(paymentContent.thumbnailUrl || '');
             setThumbnails(paymentContent.thumbnailUrl || '');
             // set translate
             setTitle_ar(paymentContent.name || '');
@@ -107,7 +107,16 @@ const EditPaymentMethodPage =()=>{
             formData.append('paymentMethod_id', paymentId);
             formData.append('name', title);
             formData.append('description', description);
-            formData.append('thumbnail', thumbnailFile); // Append the file
+
+            if(thumbnailFile === null){
+            formData.append('thumbnail', thumbnails); // Append the file
+            }else{
+                formData.append('thumbnail', thumbnailFile); // Append the file
+            }
+
+            for (let pair of formData.entries()) {
+                console.log(pair[0] + ', ' + pair[1]);
+            } 
 
             translate["name"] = title_ar;
             translate["description"] = description_ar;
