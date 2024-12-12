@@ -294,25 +294,64 @@ if (!data2) {
         </p>
 
         {filteredPayments.length > 0 ? (
-          <ul className="mt-4">
-            {filteredPayments.map((payment) => (
-              <li
-                key={payment.id}
-                className="p-2 border-b border-gray-300 flex justify-between"
-              >
-                <span>
-                  <strong>ID:</strong> {payment.id}
-                </span>
-                <span>
-                  <strong>Amount:</strong> {payment.amount || "N/A"}
-                </span>
-                <span>
-                  <strong>Date:</strong>{" "}
-                  {new Date(payment.created_at).toLocaleDateString()}
-                </span>
-              </li>
-            ))}
-          </ul>
+          <ul className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+  {filteredPayments.map((payment) => {
+    const percentage = payment.amount
+      ? Math.min((payment.amount / totalAmount) * 100, 100)
+      : 0;
+
+    return (
+      <li
+        key={payment.id}
+        className="p-6 rounded-xl shadow-lg bg-gradient-to-r from-blue-100 to-white border border-gray-200 flex items-center justify-between transition-all duration-300 ease-in-out"
+
+      >
+        <div className="flex flex-col flex-1">
+          <div className="flex justify-between items-center space-x-4">
+            <span className="font-semibold text-lg text-gray-800">
+              <strong>Date:</strong> {new Date(payment.created_at).toLocaleDateString()}
+            </span>
+            {/* <span className="font-semibold text-lg text-gray-800">
+              <strong>Amount:</strong> <span className="text-gray-900">${payment.amount}</span>
+            </span> */}
+          </div>
+        </div>
+
+        <div className="circle-progress relative w-16 h-16 flex-shrink-0 ml-8">
+          <svg className="w-full h-full" viewBox="0 0 36 36">
+            <circle
+              cx="18"
+              cy="18"
+              r="15.9155"
+              fill="transparent"
+              stroke="#e0e0e0"
+              strokeWidth="3"
+            />
+            <circle
+              cx="18"
+              cy="18"
+              r="15.9155"
+              fill="transparent"
+              stroke="currentColor"
+              strokeWidth="3"
+              strokeDasharray={`${percentage}, 100`}
+              className="text-gradient"
+            />
+          </svg>
+          <div className="absolute inset-0 flex items-center justify-center text-blue-700 font-bold text-sm">
+
+            {percentage.toFixed(0)}%
+          </div>
+        </div>
+      </li>
+    );
+  })}
+</ul>
+
+
+
+
+
         ) : (
           <p className="text-gray-500 mt-4">
             No payments match the filter criteria.

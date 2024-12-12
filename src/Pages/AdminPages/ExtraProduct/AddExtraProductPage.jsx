@@ -11,7 +11,7 @@ import MultipleChoiceMenu from '../../../Components/MultipleChoiceMenu';
 const AddExtraProductPage = () => {
     const auth = useAuth();
     // first language en
-    const translate =new FormData();
+    const translation= new FormData();
     const [language,setLanguage]= useState('en')
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
@@ -21,7 +21,7 @@ const AddExtraProductPage = () => {
     // const [yearlyPrice, setYearlyPrice] = useState(''); // For yearly price in case of Recurring
     const [included, setIncluded] = useState(''); // Default status to 0
     const [isLoading, setIsLoading] = useState(false);
-    const navigate = useNavigate();
+    
 
     const [monthlyPrice, setMonthlyPrice] = useState('');
     const [monthlyDiscountPrice, setMonthlyDiscountPrice] = useState('');
@@ -48,6 +48,43 @@ const AddExtraProductPage = () => {
     const [extraType, setExtraType] = useState('Select Type');
     const [extraTypeName, setExtraTypeName] = useState();
     const [openExtraType, setOpenExtraType] = useState(false);
+
+    // set arabic
+    const [name_ar, setName_ar] = useState('');
+    const [description_ar, setDescription_ar] = useState('');
+    const [price_ar, setPrice_ar] = useState(''); // For one-time price or monthly price
+    const [fee_ar, setFee_ar] = useState('');
+    // const [monthlyPrice, setMonthlyPrice] = useState(''); // For one-time price or monthly price
+    // const [yearlyPrice, setYearlyPrice] = useState(''); // For yearly price in case of Recurring
+    const [included_ar, setIncluded_ar] = useState(''); // Default status to 0
+    const [isLoading_ar, setIsLoading_ar] = useState(false);
+    const navigate = useNavigate();
+
+    const [monthlyPrice_ar, setMonthlyPrice_ar] = useState('');
+    const [monthlyDiscountPrice_ar, setMonthlyDiscountPrice_ar] = useState('');
+    const [MonthlySetUpFeesPrice_ar, setMonthlySetUpFeesPrice_ar] = useState('');
+
+    const [quarterlyPrice_ar, setQuarterlyPrice_ar] = useState('');
+    const [quarterlyDiscountPrice_ar, setQuarterlyDiscountPrice_ar] = useState('');
+    const [quarterlySetUpFeesPrice_ar, setQuarterlySetUpFeesPrice_ar] = useState('');
+
+    const [semiAnnualPrice_ar, setSemiAnnualPrice_ar] = useState('');
+    const [semiAnnualDiscountPrice_ar, setSemiAnnualDiscountPrice_ar] = useState('');
+    const [semiAnnualSetUpFeesPrice_ar, setSemiAnnualSetUpFeesPrice_ar] = useState('');
+
+    const [yearlyPrice_ar, setYearlyPrice_ar] = useState(''); 
+    const [yearlyDiscountPrice_ar, setYearlyDiscountPrice_ar] = useState(''); 
+    const [yearlySetUpFeesPrice_ar, setYearlySetUpFeesPrice_ar] = useState(''); 
+
+    const [showMonthlyPriceInput_ar, setShowMonthlyPriceInput_ar] = useState(false);
+    const [showQuarterlyPriceInput_ar, setShowQuarterlyPriceInput_ar] = useState(false);
+    const [showSemiAnnualPriceInput_ar, setShowSemiAnnualPriceInput_ar] = useState(false);
+    const [showYearlyPriceInput_ar, setShowYearlyPriceInput_ar] = useState(false);
+
+    
+    const [extraType_ar, setExtraType_ar] = useState('اختار النوع');
+    const [extraTypeName_ar, setExtraTypeName_ar] = useState();
+    const [openExtraType_ar, setOpenExtraType_ar] = useState(false);
     const dropdownExtraType = useRef();
 
     const [plans, setPlans] = useState([]);
@@ -55,6 +92,11 @@ const AddExtraProductPage = () => {
     const [selectPlanId, setSelectPlanId] = useState('');
     const [openSelectPlan, setOpenSelectPlan] = useState(false);
     const dropdownPlanRef =useRef();
+
+    const handleChangeLanguage = () => {
+        const newLanguage = language === 'en' ? 'ar' : 'en'; 
+        setLanguage(newLanguage); 
+    };
 
     const fetchData = async () => {
         setIsLoading(true);
@@ -82,9 +124,13 @@ const AddExtraProductPage = () => {
     const handleOpenExtraType = () => {
         setOpenExtraType(!openExtraType);
         setOpenSelectPlan(false)
+        // ---
+        setOpenExtraType_ar(!openExtraType);
+        
     };
     const handleOpenSelectPlan = () => {
         setOpenSelectPlan(prev => !prev)
+        
         setOpenExtraType(false)
     };
     
@@ -97,6 +143,10 @@ const AddExtraProductPage = () => {
         setExtraType(selectedOptionName);
         setExtraTypeName(selectedOptionValue);
         setOpenExtraType(false);
+        // set value to arabic
+        setExtraType_ar(selectedOptionName);
+        setExtraTypeName_ar(selectedOptionValue);
+        setOpenExtraType_ar(false);
         console.log(selectedOptionName)
     };
     const handleSelectPlan = (e) => {
@@ -146,6 +196,7 @@ const AddExtraProductPage = () => {
     const handleClick = (e) => {
         const isChecked = e.target.checked;
         setIncluded(isChecked ? 1 : 0);
+        setIncluded_ar(isChecked ? 1 : 0);
     };
 
     const handleSubmitAdd = async (event) => {
@@ -162,6 +213,20 @@ const AddExtraProductPage = () => {
         }
         if (!extraTypeName) {
             auth.toastError('Please Select Type.');
+            return;
+        }
+    
+        // -----------
+        if (!name_ar) {
+            auth.toastError('الرجاء إدخال اسم المنتج.');
+            return;
+        }
+        if (!description_ar) {
+            auth.toastError('الرجاء إدخال الوصف.');
+            return;
+        }
+        if (!extraTypeName_ar) {
+            auth.toastError('الرجاء اختيار النوع.');
             return;
         }
     
@@ -185,6 +250,32 @@ const AddExtraProductPage = () => {
             }
             if (!yearlyPrice) {
                 auth.toastError('Please Enter the Yearly Price.');
+                return;
+            }
+        
+
+
+        }
+
+        if (extraTypeName_ar === 'one_time' && !price_ar) {
+            auth.toastError(':الرجاء إدخال السعر');
+            return;
+        }
+        if (extraTypeName_ar === 'recurring') {
+            if (!monthlyPrice_ar) {
+                auth.toastError('الرجاء إدخال السعر الشهري.');
+                return;
+            }
+            if (!quarterlyPrice_ar) {
+                auth.toastError('الرجاء إدخال السعر ربع السنوي.');
+                return;
+            }
+            if (!semiAnnualPrice_ar) {
+                auth.toastError('الرجاء إدخال السعر نصف السنوي.');
+                return;
+            }
+            if (!yearlyPrice_ar) {
+                auth.toastError('الرجاء إدخال السعر السنوي.');
                 return;
             }
         }
@@ -236,6 +327,41 @@ const AddExtraProductPage = () => {
             for (let pair of formData.entries()) {
                 console.log(pair[0] + ', ' + pair[1]);
             }
+            translation['name']= name_ar;
+            translation['description']= description_ar;
+            translation['setup_fees']= fee_ar
+
+                        // Set data fields based on selected type
+                        if (extraType_ar === 'One Time') {
+                            translation.append('status', 'one_time');
+                            translation.append('price', price);
+                        } else if (extraType_ar === 'Recurring') {
+                            translation.append('status', 'recurring');
+            
+                            // Append selected prices if inputs are shown and filled
+                        if (showMonthlyPriceInput_ar && monthlyPrice_ar) {
+                            translation.append('monthly', monthlyPrice_ar);
+                            translation.append('discount_monthly', monthlyDiscountPrice_ar);
+                            // formData.append('setupFees_monthly', MonthlySetUpFeesPrice);
+                        }
+                        if (showQuarterlyPriceInput_ar && quarterlyPrice_ar) {
+                            translation.append('quarterly', quarterlyPrice_ar);
+                            translation.append('discount_quarterly', quarterlyDiscountPrice_ar);
+                            // formData.append('setupFees_quarterly', quarterlyDiscountPrice);
+                        }
+                        if (showSemiAnnualPriceInput_ar && semiAnnualPrice_ar) {
+                            translation.append('semi_annual', semiAnnualPrice_ar);
+                            translation.append('discount_semi_annual', semiAnnualDiscountPrice_ar);
+                            // formData.append('setupFees_semi_annual', semiAnnualSetUpFeesPrice);
+                        }
+                        if (showYearlyPriceInput_ar && yearlyPrice_ar) {
+                            translation.append('yearly', yearlyPrice_ar);
+                            translation.append('discount_yearly', yearlyDiscountPrice_ar);
+                            // formData.append('setupFees_yearly', yearlySetUpFeesPrice);
+                        }
+                        }
+                        formData.append('translations', translation)
+
     
             // Sending the form data via POST request
             const response = await axios.post(
@@ -266,10 +392,7 @@ const AddExtraProductPage = () => {
             }
             
     };
-    const handleChangeLanguage = () => {
-        const newLanguage = language === "en" ? "ar" : "en";
-        setLanguage(newLanguage);
-      };
+
     
     return (
        <div className="">
@@ -604,8 +727,8 @@ const AddExtraProductPage = () => {
                     type="text"
                     borderColor="mainColor"
                     placeholder="اسم المنتج"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    value={name_ar}
+                    onChange={(e) => setName_ar(e.target.value)}
                     width="w-full"
                 />
             </div>
@@ -623,8 +746,8 @@ const AddExtraProductPage = () => {
             <textarea
                 className="w-full px-2 py-4 border-2 font-normal eleValueInput rounded-xl border-mainColor text-2xl focus:outline-none focus:ring-2 focus:ring-mainColor"
                 placeholder="الوصف"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                value={description_ar}
+                onChange={(e) => setDescription_ar(e.target.value)}
                 rows={1}
             ></textarea>
             </div>
@@ -633,8 +756,8 @@ const AddExtraProductPage = () => {
                     type="number"
                     borderColor="mainColor"
                     placeholder="رسوم الإعداد"
-                    value={fee}
-                    onChange={(e) => setFee(e.target.value)}
+                    value={fee_ar}
+                    onChange={(e) => setFee_ar(e.target.value)}
                     width="w-full"
                 />
             </div>
@@ -643,27 +766,27 @@ const AddExtraProductPage = () => {
                     ref={dropdownExtraType}
                     handleOpen={handleOpenExtraType}
                     handleOpenOption={handleExtraType}
-                    stateoption={extraType}
-                    openMenu={openExtraType}
+                    stateoption={extraType_ar}
+                    openMenu={openExtraType_ar}
                     options={extraTypeData}
                 />
             </div>
 
             {/* Conditionally render price inputs based on extraType */}
-            {extraType === 'One Time' && (
+            {extraType_ar === 'One Time' && (
                 <div className="lg:w-[30%] sm:w-full">
                     <InputCustom
                         type="number"
                         borderColor="mainColor"
                         placeholder="السعر"
-                        value={price}
-                        onChange={(e) => setPrice(e.target.value)}
+                        value={price_ar}
+                        onChange={(e) => setPrice_ar(e.target.value)}
                         width="w-full"
                     />
                 </div>
             )}
 
-            {extraType === 'Recurring' && (
+            {extraType_ar === 'Recurring' && (
                 <>
                     {/* <div className="lg:w-[30%] sm:w-full">
                         <InputCustom
@@ -692,22 +815,22 @@ const AddExtraProductPage = () => {
                 <div className=" flex items-center gap-3 w-full lg:w-1/3">
                     <input 
                         type="checkbox" 
-                        checked={showMonthlyPriceInput}
+                        checked={showMonthlyPriceInput_ar}
                         onChange={() => setShowMonthlyPriceInput(prev => !prev)}
                         className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
                     />
                     <label  className="text-2xl text-mainColor font-medium">شهري</label>
                 </div>
                     {/* Conditional Price Inputs */}
-                    {showMonthlyPriceInput && (
+                    {showMonthlyPriceInput_ar && (
                     <>
                     <div className="lg:w-1/2 sm:w-full">
                         <InputCustom
                             type="number"
                             borderColor="mainColor"
                             placeholder="أدخل السعر"
-                            value={monthlyPrice}
-                            onChange={(e) => setMonthlyPrice(e.target.value)}
+                            value={monthlyPrice_ar}
+                            onChange={(e) => setMonthlyPrice_ar(e.target.value)}
                             width="w-full"
                         />
                     </div>
@@ -716,8 +839,8 @@ const AddExtraProductPage = () => {
                          type="number"
                          borderColor="mainColor"
                          placeholder="أدخل سعر الخصم"
-                         value={monthlyDiscountPrice}
-                         onChange={(e) => setMonthlyDiscountPrice(e.target.value)}
+                         value={monthlyDiscountPrice_ar}
+                         onChange={(e) => setMonthlyDiscountPrice_ar(e.target.value)}
                          width="w-full"
                          required={false}
                      />
@@ -741,21 +864,21 @@ const AddExtraProductPage = () => {
                 <div className="flex items-center gap-3 w-full lg:w-1/3 ">
                     <input 
                         type="checkbox" 
-                        checked={showQuarterlyPriceInput}
-                        onChange={() => setShowQuarterlyPriceInput(prev => !prev)}
+                        checked={showQuarterlyPriceInput_ar}
+                        onChange={() => setShowQuarterlyPriceInput_ar(prev => !prev)}
                         className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
                     />
                     <label  className="text-2xl text-mainColor font-medium">ربع سنوي</label>
                 </div>
-                {showQuarterlyPriceInput && (
+                {showQuarterlyPriceInput_ar && (
                     <>
                     <div className="lg:w-1/2 sm:w-full">
                         <InputCustom
                             type="number"
                             borderColor="mainColor"
                             placeholder="أدخل السعر"
-                            value={quarterlyPrice}
-                            onChange={(e) => setQuarterlyPrice(e.target.value)}
+                            value={quarterlyPrice_ar}
+                            onChange={(e) => setQuarterlyPrice_ar(e.target.value)}
                             width="w-full"
                         />
                     </div>
@@ -764,8 +887,8 @@ const AddExtraProductPage = () => {
                         type="number"
                         borderColor="mainColor"
                         placeholder="أدخل سعر الخصم"
-                        value={quarterlyDiscountPrice}
-                        onChange={(e) => setQuarterlyDiscountPrice(e.target.value)}
+                        value={quarterlyDiscountPrice_ar}
+                        onChange={(e) => setQuarterlyDiscountPrice_ar(e.target.value)}
                         width="w-full"
                         required={false}
                     />
@@ -789,21 +912,21 @@ const AddExtraProductPage = () => {
                 <div className="flex items-center gap-3 w-full lg:w-1/3 ">
                     <input 
                         type="checkbox" 
-                        checked={showSemiAnnualPriceInput}
-                        onChange={() => setShowSemiAnnualPriceInput(prev => !prev)}
+                        checked={showSemiAnnualPriceInput_ar}
+                        onChange={() => setShowSemiAnnualPriceInput_ar(prev => !prev)}
                         className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
                     />
                     <label  className="text-2xl text-mainColor font-medium">نصف سنوي</label>
                 </div>
-                {showSemiAnnualPriceInput && (
+                {showSemiAnnualPriceInput_ar && (
                     <>
                     <div className="lg:w-1/2 sm:w-full">
                         <InputCustom
                             type="number"
                             borderColor="mainColor"
                             placeholder="أدخل السعر"
-                            value={semiAnnualPrice}
-                            onChange={(e) => setSemiAnnualPrice(e.target.value)}
+                            value={semiAnnualPrice_ar}
+                            onChange={(e) => setSemiAnnualPrice_ar(e.target.value)}
                             width="w-full"
                         />
                     </div>
@@ -812,8 +935,8 @@ const AddExtraProductPage = () => {
                         type="number"
                         borderColor="mainColor"
                         placeholder="أدخل سعر الخصم"
-                        value={semiAnnualDiscountPrice}
-                        onChange={(e) => setSemiAnnualDiscountPrice(e.target.value)}
+                        value={semiAnnualDiscountPrice_ar}
+                        onChange={(e) => setSemiAnnualDiscountPrice_ar(e.target.value)}
                         width="w-full"
                         required={false}
                     />
@@ -837,21 +960,21 @@ const AddExtraProductPage = () => {
                 <div className="flex items-center gap-3 w-full lg:w-1/3 ">
                     <input 
                         type="checkbox" 
-                        checked={showYearlyPriceInput}
-                        onChange={() => setShowYearlyPriceInput(prev => !prev)}
+                        checked={showYearlyPriceInput_ar}
+                        onChange={() => setShowYearlyPriceInput_ar(prev => !prev)}
                         className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
                     />
                     <label  className="text-2xl text-mainColor font-medium">سنوي</label>
                 </div>
-                {showYearlyPriceInput && (
+                {showYearlyPriceInput_ar && (
                     <>
                     <div className="lg:w-1/2 sm:w-full">
                         <InputCustom
                             type="number"
                             borderColor="mainColor"
                            placeholder="أدخل السعر"
-                            value={yearlyPrice}
-                            onChange={(e) => setYearlyPrice(e.target.value)}
+                            value={yearlyPrice_ar}
+                            onChange={(e) => setYearlyPrice_ar(e.target.value)}
                             width="w-full"
                         />
                     </div>
@@ -860,8 +983,8 @@ const AddExtraProductPage = () => {
                         type="number"
                         borderColor="mainColor"
                         placeholder="أدخل سعر الخصم"
-                        value={yearlyDiscountPrice}
-                        onChange={(e) => setYearlyDiscountPrice(e.target.value)}
+                        value={yearlyDiscountPrice_ar}
+                        onChange={(e) => setYearlyDiscountPrice_ar(e.target.value)}
                         width="w-full"
                         required={false}
                     />
@@ -894,14 +1017,14 @@ const AddExtraProductPage = () => {
                   handleSelectOption={handleSelectPlan}
                   handleRemoveOption={handleRemoveSubject}
                   options={plans}
-                  name="Select Plans"
+                  name="اختار الخطة"
                 />
               </div>
                 )
             }
 
             <div className="lg:w-[30%] sm:w-full flex items-center gap-x-4 w-full">
-                        <span className="text-2xl text-mainColor font-medium">Included:</span>
+                        <span className="text-2xl text-mainColor font-medium">مشمول</span>
                         <div>
                             <CheckBox handleClick={handleClick} checked={included}/>
                         </div>

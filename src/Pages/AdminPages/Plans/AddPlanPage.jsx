@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import CheckBox from '../../../Components/CheckBox';
 
 const AddPlanPage = () => {
-    const translation = new FormData();
+    // const translation = new FormData();
     const [language,setLanguage]= useState('en')
     const auth = useAuth();
     const [name, setName] = useState('');
@@ -42,7 +42,7 @@ const AddPlanPage = () => {
     const [showQuarterlyPriceInput, setShowQuarterlyPriceInput] = useState(false);
     const [showSemiAnnualPriceInput, setShowSemiAnnualPriceInput] = useState(false);
     const [showYearlyPriceInput, setShowYearlyPriceInput] = useState(false);
-
+    
     // use arabic 
     const [name_ar, setName_ar] = useState('');
     const [title_ar, setTitle_ar] = useState('');
@@ -102,6 +102,7 @@ const AddPlanPage = () => {
     const handleClick = (e) => {
         const isChecked = e.target.checked; // Checked status
         setAppActive(isChecked ? 1 : 0); // Set paymentActive as 1 (true) or 0 (false)
+        setAppActive_ar(isChecked ? 1 : 0); 
     };
 
     const handleSubmitAdd = async (event) => {
@@ -179,76 +180,77 @@ const AddPlanPage = () => {
 
         setIsLoading(true);
         try {
-            const formData = new FormData();
 
-            // Append main fields
+            const translations  = [
+                { key: 'name', "value": name_ar, locale: 'ar' },
+                { key: 'title', value: title_ar, locale: 'ar' },
+                { key: 'description', value: description_ar, locale: 'ar' },
+                { key: 'fee', value: fee_ar, locale: 'ar' },
+                { key: 'limitPlan', value: limitPlan_ar, locale: 'ar' },
+                { key: 'thumbnails', value: thumbnails_ar, locale: 'ar' },
+                { key: 'app', value: appActive_ar, locale: 'ar' },
+                // Include price fields in the translations
+                { key: 'monthly', value: monthlyPrice_ar, locale: 'ar' },
+                { key: 'quarterly', value: quarterlyPrice_ar, locale: 'ar' },
+                { key: 'semi_annual', value: semiAnnualPrice_ar, locale: 'ar' },
+                { key: 'yearly', value: yearlyPrice_ar, locale: 'ar' },
+                
+                // Include discount fields in the translations
+                { key: 'discount_monthly', value: monthlyDiscountPrice_ar, locale: 'ar' },
+                { key: 'discount_quarterly', value: quarterlyDiscountPrice_ar, locale: 'ar' },
+                { key: 'discount_semi_annual', value: semiAnnualDiscountPrice_ar, locale: 'ar' },
+                { key: 'discount_yearly', value: yearlyDiscountPrice_ar, locale: 'ar' },
+            ];
+            const formData = new FormData();
+            // formData.append('title', title);
             formData.append('name', name);
             formData.append('description', description);
             formData.append('setup_fees', fee);
             formData.append('limet_store', limitPlan);
             formData.append('image', thumbnailFile); // Append the file
-            formData.append('app', appActive);
+            formData.append('app', appActive); // Append the file
+            
+                 // Append selected prices if inputs are shown and filled
+                 if (showMonthlyPriceInput && monthlyPrice) {
+                    formData.append('monthly', monthlyPrice);
+                    formData.append('discount_monthly', monthlyDiscountPrice ||0);
+                    // formData.append('setupFees_monthly', MonthlySetUpFeesPrice);
+                }
+                if (showQuarterlyPriceInput && quarterlyPrice) {
+                    formData.append('quarterly', quarterlyPrice);
+                    formData.append('discount_quarterly', quarterlyDiscountPrice ||0);
+                    // formData.append('setupFees_quarterly', quarterlyDiscountPrice);
+                }
+                if (showSemiAnnualPriceInput && semiAnnualPrice) {
+                    formData.append('semi_annual', semiAnnualPrice);
+                    formData.append('discount_semi_annual', semiAnnualDiscountPrice||0);
+                    // formData.append('setupFees_semi_annual', semiAnnualSetUpFeesPrice);
+                }
+                if (showYearlyPriceInput && yearlyPrice) {
+                    formData.append('yearly', yearlyPrice);
+                    formData.append('discount_yearly', yearlyDiscountPrice||0);
+                    // formData.append('setupFees_yearly', yearlySetUpFeesPrice);
+                }
+                formData.append('translations', JSON.stringify(translations));
+
+                for (let pair of formData.entries()) {
+                    console.log(pair[0] + ', '+ pair[1]);
+                }
+
+            // append info to arabic
+            
+        // Create the translations array
+
+
+
+        formData.append('translations', JSON.stringify(translations));
         
-            // Append selected prices if inputs are shown and filled
-            if (showMonthlyPriceInput && monthlyPrice) {
-                formData.append('monthly', monthlyPrice);
-                formData.append('discount_monthly', monthlyDiscountPrice || 0);
-            }
-            if (showQuarterlyPriceInput && quarterlyPrice) {
-                formData.append('quarterly', quarterlyPrice);
-                formData.append('discount_quarterly', quarterlyDiscountPrice || 0);
-            }
-            if (showSemiAnnualPriceInput && semiAnnualPrice) {
-                formData.append('semi_annual', semiAnnualPrice);
-                formData.append('discount_semi_annual', semiAnnualDiscountPrice || 0);
-            }
-            if (showYearlyPriceInput && yearlyPrice) {
-                formData.append('yearly', yearlyPrice);
-                formData.append('discount_yearly', yearlyDiscountPrice || 0);
-            }
-        
-            // Create the translation object
-            const translation = {
-                name: name_ar,
-                description: description_ar,
-                setup_fees: fee_ar,
-                limet_store: limitPlan_ar,
-                image: thumbnailFile_ar,
-                app: appActive_ar,
-            };
-        
-            // Append selected Arabic prices to the translation object
-            if (showMonthlyPriceInput_ar && monthlyPrice_ar) {
-                translation.monthly = monthlyPrice_ar;
-                translation.discount_monthly = monthlyDiscountPrice_ar || 0;
-            }
-            if (showQuarterlyPriceInput_ar && quarterlyPrice_ar) {
-                translation.quarterly = quarterlyPrice_ar;
-                translation.discount_quarterly = quarterlyDiscountPrice_ar || 0;
-            }
-            if (showSemiAnnualPriceInput_ar && semiAnnualPrice_ar) {
-                translation.semi_annual = semiAnnualPrice_ar;
-                translation.discount_semi_annual = semiAnnualDiscountPrice_ar || 0;
-            }
-            if (showYearlyPriceInput_ar && yearlyPrice_ar) {
-                translation.yearly = yearlyPrice_ar;
-                translation.discount_yearly = yearlyDiscountPrice_ar || 0;
-            }
-        
-            // Debug translation object
-            console.log('Translation Object:', translation);
-        
-            // Convert translation object to JSON string and append to FormData
-            formData.append('translations', JSON.stringify(translation));
-        
-            // Debug all formData entries
-            for (let pair of formData.entries()) {
-                console.log(pair[0] + ':', pair[1]);
-            }
-        
-            // Proceed with your fetch or Axios request
-            // Example:
-            // axios.post('/your-endpoint', formData);
+        console.log(translations)
+                for (let pair of formData.entries()) {
+                    console.log(pair[0] + ', ' + pair[1]);
+                }
+
+                // formData.append('translations', translation)
 
             const response = await axios.post(
                 'https://login.wegostores.com/admin/v1/plan/create',
@@ -264,13 +266,14 @@ const AddPlanPage = () => {
             if (response.status === 200) {
                 auth.toastSuccess('Plan added successfully!');
                 handleGoBack();
+                console.log(`response error : ${response}`)
             } else {
                 auth.toastError('Failed to add Plan.');
             }
         } catch (error) {
             console.log(error)
-            const errorMessage = error?.response?.data?.errors || 'Network error';
-            auth.toastError(errorMessage);
+            // const errorMessage = error?.response?.data?.errors || 'Network error';
+            // auth.toastError(errorMessage);
         } finally {
             setIsLoading(false);
         }

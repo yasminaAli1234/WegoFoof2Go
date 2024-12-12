@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { FaPhoneAlt, FaWhatsapp, FaEnvelope, FaArrowRight } from "react-icons/fa";
 import { toast } from "react-toastify";
 
@@ -6,7 +7,7 @@ const ContactUsPage = () => {
   const phoneNumber = "+01018150150"; // Replace with your phone number
   const email = "Support@wegostores.com"; // Replace with your email
   const whatsappNumber = "+01018150150"; // Replace with your WhatsApp number
-
+  const {t} = useTranslation();
   // Handle Phone Call
   const handlePhoneCall = () => {
     window.open(`tel:${phoneNumber}`, "_self");
@@ -33,10 +34,10 @@ const ContactUsPage = () => {
     <div className="w-full bg-gray-50 flex items-center justify-center px-4 py-8">
       <div className="bg-white w-full shadow-xl rounded-lg p-8">
         <h1 className="text-4xl font-bold text-center text-gray-800 mb-6">
-          Get in Touch with Us
+          {t("Get in Touch with Us")}
         </h1>
         <p className="text-center text-xl text-gray-600 mb-8">
-          We’re here to help! Reach out via phone, WhatsApp, or email.
+          {t("We’re here to help! Reach out via phone, WhatsApp, or email.")}
         </p>
         <div className="space-y-6">
           {/* Phone */}
@@ -51,14 +52,14 @@ const ContactUsPage = () => {
                 className="bg-gray-100 px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-gray-200 transition"
               >
                 <FaArrowRight className="text-gray-600" />
-                Copy Number
+                {t("Copy Number")}
               </button>
               <button
                 onClick={handlePhoneCall}
                 className="bg-blue-600 px-4 py-2 text-white rounded-lg flex items-center gap-2 hover:bg-blue-700 transition"
               >
                 <FaPhoneAlt className="text-lg" />
-                Call Now
+                {t("Call Now")}
               </button>
             </div>
           </div>
@@ -70,11 +71,11 @@ const ContactUsPage = () => {
           >
             <div className="flex items-center space-x-4">
               <FaWhatsapp className="text-green-600 text-3xl" />
-              <span className="text-gray-800 font-medium text-xl">Chat on WhatsApp</span>
+              <span className="text-gray-800 font-medium text-xl">{t("Chat on WhatsApp")}</span>
             </div>
             <button className="bg-green-600 px-4 py-2 text-white rounded-lg flex items-center gap-2 hover:bg-green-700 transition">
               <FaArrowRight className="text-lg" />
-              Chat Now
+              {t("Chat Now")}
             </button>
           </div>
 
@@ -89,7 +90,7 @@ const ContactUsPage = () => {
             </div>
             <button className="bg-yellow-600 px-4 py-2 text-white rounded-lg flex items-center gap-2 hover:bg-yellow-700 transition">
               <FaArrowRight className="text-lg" />
-              Send Email
+              {t("Send Email")}
             </button>
           </div>
         </div>

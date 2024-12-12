@@ -253,13 +253,13 @@ const handleChangeLanguage = () => {
 
     const handleClick = (e) => {
         const isChecked = e.target.checked;
-        setAppActive(isChecked ? 1 : 0);
-        setAppActive_ar(isChecked ? 1 : 0);
+        setIncluded(isChecked ? 1 : 0);
+        
     };
 
     const handleSubmitEdit = async (productId,event) => {
         event.preventDefault();
-    
+        
         // Input validation based on the selected type
         if (!name) {
             auth.toastError('Please Enter the Product Name.');
@@ -273,6 +273,22 @@ const handleChangeLanguage = () => {
             auth.toastError('Please Select Type.');
             return;
         }
+        // ------
+        if (!name_ar) {
+            auth.toastError('الرجاء إدخال اسم المنتج.');
+            return;
+        }
+        if (!description_ar) {
+            auth.toastError('الرجاء إدخال الوصف.');
+            return;
+        }
+        if (!extraTypeName_ar) {
+            auth.toastError('الرجاء اختيار النوع.');
+            return;
+        }
+        
+        // Conditional validation for pricing fields based on type
+      
     
         // Conditional validation for pricing fields based on type
         if (extraTypeName === 'one_time' && !price) {
@@ -296,49 +312,31 @@ const handleChangeLanguage = () => {
                 auth.toastError('Please Enter the Yearly Price.');
                 return;
             }
-
-            if (!name_ar) {
-                auth.toastError('الرجاء إدخال اسم المنتج.');
+        }
+        // ----------------
+        if (extraTypeName_ar === 'one_time' && !price_ar) {
+            auth.toastError(':الرجاء إدخال السعر');
+            return;
+        }
+        if (extraTypeName_ar === 'recurring') {
+            if (!monthlyPrice_ar) {
+                auth.toastError('الرجاء إدخال السعر الشهري.');
                 return;
             }
-            if (!description_ar) {
-                auth.toastError('الرجاء إدخال الوصف.');
+            if (!quarterlyPrice_ar) {
+                auth.toastError('الرجاء إدخال السعر ربع السنوي.');
                 return;
             }
-            if (!extraTypeName_ar) {
-                auth.toastError('الرجاء اختيار النوع.');
+            if (!semiAnnualPrice_ar) {
+                auth.toastError('الرجاء إدخال السعر نصف السنوي.');
                 return;
             }
-            
-            // Conditional validation for pricing fields based on type
-            if ( !price_ar) {
-                auth.toastError('الرجاء إدخال السعر.');
+            if (!yearlyPrice_ar) {
+                auth.toastError('الرجاء إدخال السعر السنوي.');
                 return;
             }
-            if (extraTypeName_ar === 'متكرر') {
-                if (!monthlyPrice_ar) {
-                    auth.toastError('الرجاء إدخال السعر الشهري.');
-                    return;
-                }
-                if (!quarterlyPrice_ar) {
-                    auth.toastError('الرجاء إدخال السعر ربع السنوي.');
-                    return;
-                }
-                if (!semiAnnualPrice_ar) {
-                    auth.toastError('الرجاء إدخال السعر نصف السنوي.');
-                    return;
-                }
-                if (!yearlyPrice_ar) {
-                    auth.toastError('الرجاء إدخال السعر السنوي.');
-                    return;
-                }
-            }
-
-
-            
         }
         
-    
         setIsLoading(true);
         try {
             const formData = new FormData();
@@ -386,10 +384,10 @@ const handleChangeLanguage = () => {
             translation['setup_fees']= fee_ar
 
                         // Set data fields based on selected type
-                        if (extraType_ar === 'مرة واحدة') {
+                        if (extraType_ar === 'One Time') {
                             translation.append('status', 'one_time');
                             translation.append('price', price);
-                        } else if (extraType_ar === 'متكرر') {
+                        } else if (extraType_ar === 'Recurring') {
                             translation.append('status', 'recurring');
             
                             // Append selected prices if inputs are shown and filled
@@ -414,7 +412,7 @@ const handleChangeLanguage = () => {
                             // formData.append('setupFees_yearly', yearlySetUpFeesPrice);
                         }
                         }
-                        formData.append('translation', translation)
+                        formData.append('translations', translation)
             
 
     
@@ -773,20 +771,20 @@ const handleChangeLanguage = () => {
                 </div>
                 
                 {/* Conditionally render price inputs based on extraType */}
-                {extraType_ar === 'مرة واحدة' && (
+                {extraType_ar === 'One Time' && (
                     <div className="lg:w-[30%] sm:w-full">
                         <InputCustom
                             type="number"
                             borderColor="mainColor"
                             placeholder="السعر"
-                            value={price}
-                            onChange={(e) => setPrice(e.target.value)}
+                            value={price_ar}
+                            onChange={(e) => setPrice_ar(e.target.value)}
                             width="w-full"
                         />
                     </div>
                 )}
 
-                {extraType_ar === 'متكرر' && (
+                {extraType_ar === 'Recurring' && (
                     <>
                         {/* <div className="lg:w-[30%] sm:w-full">
                             <InputCustom
