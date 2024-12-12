@@ -266,6 +266,10 @@ const AddExtraProductPage = () => {
             }
             
     };
+    const handleChangeLanguage = () => {
+        const newLanguage = language === "en" ? "ar" : "en";
+        setLanguage(newLanguage);
+      };
     
     return (
        <div className="">
@@ -283,7 +287,8 @@ const AddExtraProductPage = () => {
     handleClick={() => handleChangeLanguage()}
 />
 <form onSubmit={handleSubmitAdd} className="w-full flex flex-col items-center justify-center gap-y-10 m-5">
-           {language==='en'?  <div className="w-full flex flex-wrap items-center justify-start gap-10">
+           
+            <div className="w-full flex flex-wrap items-center justify-start gap-10">
                 <div className="lg:w-[30%] sm:w-full">
                     <InputCustom
                         type="text"
@@ -592,6 +597,7 @@ const AddExtraProductPage = () => {
                             </div>
                         </div>  
                 </div>
+                
 
             <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
                 <div className="flex items-center justify-center w-72">
@@ -608,7 +614,9 @@ const AddExtraProductPage = () => {
                 </div>
                 <button onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>
             </div>
-        </form>
+</form>
+            
+          
        </div>
     );
 };

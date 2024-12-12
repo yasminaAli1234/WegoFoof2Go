@@ -148,6 +148,7 @@ const AddPaymentMethodPage = () => {
     const newLanguage = language === "en" ? "ar" : "en";
     setLanguage(newLanguage);
   };
+  
 
   return (
     <div className="">
