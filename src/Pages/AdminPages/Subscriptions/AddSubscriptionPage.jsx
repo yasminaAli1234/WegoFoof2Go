@@ -12,7 +12,8 @@ const AddSubscriptionPage = () => {
     const auth = useAuth();
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
-
+    const [language,setLanguage]= useState('en')
+    const translate= new FormData();
     const [userData, setrUserData] = useState([]);
     const [planData, setPlanData] = useState([]);
     const [packageData, setPackageData] = useState([{ name: 'Monthly' }, { name: '3 Months' },{ name: '6 Months' },{ name: 'Yearly' }]);
@@ -28,8 +29,26 @@ const AddSubscriptionPage = () => {
     const [selectPackage, setSelectPackage] = useState('Select Plan Package');
     const [selectPackageName, setSelectPackageName] = useState(null);
     const [openSelectPackage, setOpenSelectPackage] = useState(false);
+    // set arabic
 
+    const [userData_ar, setrUserData_ar] = useState([]);
+    const [planData_ar, setPlanData_ar] = useState([]);
 
+    
+
+    const [selectUser_ar, setSelectUser_ar] = useState('اختر مستخدم');
+    const [selectUserId_ar, setSelectUserId_ar] = useState([]);
+    const [openSelectUser_ar, setOpenSelectUser_ar] = useState(false);
+
+    const [selectPlan_ar, setSelectPlan_ar] = useState('اختر خطة');
+    const [selectPlanId_ar, setSelectPlanId_ar] = useState([]);
+    const [openSelectPlan_ar, setOpenSelectPlan_ar] = useState(false);
+
+    const [selectPackage_ar, setSelectPackage_ar] = useState('اختر باقة الخطة');
+    const [selectPackageName_ar, setSelectPackageName_ar] = useState(null);
+    const [openSelectPackage_ar, setOpenSelectPackage_ar] = useState(false);
+
+    
     const dropdownUserRef = useRef();
     const dropdownPlanRef = useRef();
     const dropdownPackageRef = useRef();
@@ -80,15 +99,22 @@ const AddSubscriptionPage = () => {
     const handleOpenSelectPlan = () => {
         setOpenSelectUser(false);
         setOpenSelectPlan(!openSelectPlan)
+        setOpenSelectUser_ar(false);
+        setOpenSelectPlan_ar(!openSelectPlan_ar)
     };
     const handleOpenSelectUser = () => {
         setOpenSelectUser(!openSelectUser);
         setOpenSelectPlan(false)
+        setOpenSelectUser_ar(!openSelectUser_ar);
+        setOpenSelectPlan_ar(false)
     };
     const handleOpenSelectPackage = () => {
         setOpenSelectPackage(!openSelectPackage);
         setOpenSelectPlan(false)
         setOpenSelectUser(false);
+        setOpenSelectPackage_ar(!openSelectPackage_ar);
+        setOpenSelectPlan_ar(false)
+        setOpenSelectUser_ar(false);
       };
  
     const handleSelectPlan = (e) => {
@@ -98,6 +124,12 @@ const AddSubscriptionPage = () => {
     setSelectPlan(selectedOptionName);
     setSelectPlanId(parseInt(selectedOptionValue));
     setOpenSelectPlan(false);
+
+    // set arabic
+
+    setSelectPlan_ar(selectedOptionName);
+    setSelectPlanId_ar(parseInt(selectedOptionValue));
+    setOpenSelectPlan_ar(false);
     console.log('Selected Plan:', selectedOptionName);
     console.log('Plan ID:', selectedOptionValue);
     };
@@ -108,6 +140,11 @@ const AddSubscriptionPage = () => {
     setSelectUser(selectedOptionName);
     setSelectUserId(parseInt(selectedOptionValue));
     setOpenSelectUser(false);
+
+    // set arabic
+    setSelectUser_ar(selectedOptionName);
+    setSelectUserId_ar(parseInt(selectedOptionValue));
+    setOpenSelectUser_ar(false);
     console.log('Selected User:', selectedOptionName);
     console.log('User ID:', selectedOptionValue);
     };
@@ -118,6 +155,10 @@ const AddSubscriptionPage = () => {
         setSelectPackage(selectedOptionName);
         setSelectPackageName(selectedOptionValue);
         setOpenSelectPackage(false);
+        // set arabic
+        setSelectPackage_ar(selectedOptionName);
+        setSelectPackageName_ar(selectedOptionValue);
+        setOpenSelectPackage_ar(false);
         console.log('Selected Package:', selectedOptionName);
         console.log('Package Name:', selectedOptionValue);
     };
@@ -137,6 +178,8 @@ const AddSubscriptionPage = () => {
          {
            setOpenSelectPlan(false);   
            setOpenSelectUser(false);   
+           setOpenSelectPlan_ar(false);   
+           setOpenSelectUser_ar(false);  
         }
       };
  
@@ -160,11 +203,27 @@ const AddSubscriptionPage = () => {
             return;
         }
 
+        if (!selectPlanId_ar) {
+            auth.toastError('يرجى اختيار خطة.');
+            return;
+        }
+        if (!selectUserId_ar) {
+            auth.toastError('يرجى اختيار مستخدم.');
+            return;
+        }
+        if (!selectPackageName_ar) {
+            auth.toastError('يرجى اختيار باقة الخطة.');
+            return;
+        }
+
         setIsLoading(true);
         try {
             const formData = new FormData();
             formData.append('plan_id', selectPlanId);
             formData.append('user_id', selectUserId);
+            // append into translate
+            translate['plan_id'] = selectPlanId_ar;
+            translate['user_id']= selectUserId_ar
 
             if (selectPackageName === 'Monthly') {
                 formData.append('package', "1"); 
@@ -176,9 +235,21 @@ const AddSubscriptionPage = () => {
                 formData.append('package', "yearly"); 
             }
 
+            if (selectPackageName_ar === 'شهري') {
+                translate.append('package', "1"); 
+            } else if (selectPackageName_ar === '3 شهور') {
+                translate.append('package', "3"); 
+            } else if (selectPackageName === '6 شهور') {
+                translate.append('package', "6"); 
+            } else if (selectPackageName === 'سنوي') {
+                translate.append('package', "'سنوي'"); 
+            }
+
             for (let pair of formData.entries()) {
                 console.log(pair[0] + ', ' + pair[1]);
             } 
+            console.log(`translate data : ${translate}`)
+            formData.append('translation', translate)
 
             const response = await axios.post(
                 'https://login.wegostores.com/admin/v1/subscripe/add',
@@ -191,20 +262,27 @@ const AddSubscriptionPage = () => {
                 }
             );
 
-            if (response.status === 200) {
-                auth.toastSuccess('Subscriper added successfully!');
-                handleGoBack();
-            } else {
-                console.error('Failed to add Subscriper:', response.status, response.statusText);
-                auth.toastError('Failed to add Subscriper.');
+            
+                if (response.status === 200) {
+                    // Show success message to the user based on language
+                    auth.toastSuccess(language === 'en' ? 'Subscriber added successfully!' : 'تمت إضافة المشترك بنجاح!');
+                    handleGoBack();
+                } else {
+                    // Log the error for debugging and show an error message to the user based on language
+                    console.error(language === 'en' ? 'Failed to add Subscriber:' : 'فشل في إضافة المشترك:', response.status, response.statusText);
+                    auth.toastError(language === 'en' ? 'Failed to add Subscriber.' : 'فشل في إضافة المشترك.');
+                }
+            } catch (error) {
+                // Capture and log detailed error information based on language
+                const errors = error.response?.data?.error;
+                console.log(language === 'en' ? 'Error details:' : 'تفاصيل الخطأ:', errors);
+            } finally {
+                // Stop the loading indicator regardless of success or error
+                setIsLoading(false);
             }
-        }  catch (error) {
-            const errors = error.response?.data?.error;
-            console.log('Error details:', errors);
-        } finally {
-            setIsLoading(false);
-        }
+            
     };
+    
 
     
     if (isLoading) {
@@ -214,10 +292,27 @@ const AddSubscriptionPage = () => {
           </div>
         );
     }    
+    const handleChangeLanguage = () => {
+        const newLanguage = language === 'en' ? 'ar' : 'en'; 
+        setLanguage(newLanguage); 
+    };
 
     return (
-        <form onSubmit={handleSubmitAdd} className="w-full flex flex-col items-center justify-center gap-y-10">
-                  <div className="w-full flex flex-wrap items-center justify-start gap-10">
+       <div className="">
+        <Button 
+    type="submit"
+    Text={`Change to ${language === 'en' ? 'Arabic' : 'English'}`}
+    BgColor="bg-mainColor"
+    Color="text-white"
+    Width="fit"
+    Size="text-2xl"
+    px="px-28"
+    rounded="rounded-2xl"
+     
+    handleClick={() => handleChangeLanguage()}
+/>
+<form onSubmit={handleSubmitAdd} className="w-full flex flex-col items-center justify-center gap-y-10 m-5">
+                  {language==='en'? <div className="w-full flex flex-wrap items-center justify-start gap-10">
                   <div className="lg:w-[30%] sm:w-full">
                             <DropDownMenu
                             ref={dropdownUserRef}
@@ -248,7 +343,42 @@ const AddSubscriptionPage = () => {
                             options={packageData}
                             />
                      </div>
-                  </div>
+                  </div>:
+                    <div className="w-full flex flex-wrap items-center justify-start gap-10">
+                    <div className="lg:w-[30%] sm:w-full">
+                              <DropDownMenu
+                              ref={dropdownUserRef}
+                              handleOpen={handleOpenSelectUser}
+                              handleOpenOption={handleSelectUser}
+                              stateoption={selectUser_ar}
+                              openMenu={openSelectUser_ar}
+                              options={userData}
+                              />
+                       </div>
+                       <div className="lg:w-[30%] sm:w-full">
+                              <DropDownMenu
+                              ref={dropdownPlanRef}
+                              handleOpen={handleOpenSelectPlan}
+                              handleOpenOption={handleSelectPlan}
+                              stateoption={selectPlan_ar}
+                              openMenu={openSelectPlan_ar}
+                              options={planData_ar}
+                              />
+                       </div>
+                       <div className="lg:w-[30%] sm:w-full">
+                              <DropDownMenu
+                              ref={dropdownPackageRef}
+                              handleOpen={handleOpenSelectPackage}
+                              handleOpenOption={handleSelectPackage}
+                              stateoption={selectPackage_ar}
+                              openMenu={openSelectPackage_ar}
+                              options={packageData}
+                              />
+                       </div>
+                    </div>
+                  }
+
+                
       
                   <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
                       <div className="flex items-center justify-center w-72">
@@ -265,7 +395,10 @@ const AddSubscriptionPage = () => {
                       </div>
                       <button onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>
                   </div>
-        </form>        
+        </form> 
+
+         
+       </div>       
     );
 };
 

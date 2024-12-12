@@ -5,9 +5,11 @@ import Loading from "../../../Components/Loading";
 import InputCustom from "../../../Components/InputCustom";
 import { Button } from "../../../Components/Button";
 import { useLocation ,useNavigate} from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const CheckoutPage = () => {
   const auth = useAuth();
+  const {t} = useTranslation()
   const location = useLocation();
   const { cartItems } = location.state || {};
   const { totalPrice } = location.state || {};
@@ -310,7 +312,7 @@ const CheckoutPage = () => {
   if (!paymentMethods) {
     return (
       <div className="text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center">
-        No payment methods data available
+       {t("No payment methods data available")}
       </div>
     );
   }
@@ -341,31 +343,31 @@ const CheckoutPage = () => {
           </div> */}
 
       <h3 className="text-2xl font-semibold text-gray-800 mt-6 mb-4">
-        Order Summary
+       {t("Order Summary")}
       </h3>
 
       {/* Display total price */}
       <div className="flex justify-between text-lg text-gray-700 mb-3">
-        <span className="font-medium">Total Price:</span>
-        <span className="font-semibold text-mainColor">{totalPrice} EGP</span>
+        <span className="font-medium">{t("Total Price:")}</span>
+        <span className="font-semibold text-mainColor">{totalPrice} {t("EGP")}</span>
       </div>
 
       {/* Display discount */}
       <div className="flex justify-between text-lg text-gray-700 mb-3">
-        <span className="font-medium">Discount:</span>
-        <span className="font-semibold text-red-600">{discount} EGP</span>
+        <span className="font-medium">{t("Discount:")}</span>
+        <span className="font-semibold text-red-600">{discount} {t("EGP")}</span>
       </div>
 
       {/* Display total after discount */}
       <div className="flex justify-between text-lg font-bold text-gray-900">
-        <span>Total Price After Discount:</span>
-        <span className="text-green-600">{discountedPrice} EGP</span>
+        <span>{t("Total Price After Discount:")}</span>
+        <span className="text-green-600">{discountedPrice} {t("EGP")}</span>
       </div>
         </div>
 
       <div className="flex flex-col gap-5 sm-w-full xl:w-1/2">
       <label className="font-semibold text-xl xl:text-3xl text-mainColor">
-        Select Payment Method:
+        {t("Select Payment Method:")}
       </label>
 
         {/* {paymentMethods.map((method) => (
@@ -449,7 +451,8 @@ const CheckoutPage = () => {
           className="px-6 py-3 mt-6 text-xl bg-green-500 text-white font-bold rounded-lg hover:bg-green-700 transition-all ease-in-out duration-300"
           disabled={!selectedMethod}
         >
-          Submit Order
+          {t("Submit Order")}
+          
         </button>
        </div>
 
@@ -459,10 +462,10 @@ const CheckoutPage = () => {
           <div className="bg-white rounded-lg p-8 shadow-xl max-w-md mx-auto transition-transform transform scale-95 hover:scale-100">
             <div className="text-center">
               <h2 className="text-4xl font-extrabold text-green-600 mb-4">
-                Order Request Successful!
+                {t("Order Request Successful!")}
               </h2>
               <p className="text-lg text-gray-600 mb-8">
-                Thank you for your order! We’ll be in touch with you shortly to confirm the details.
+                {t("Thank you for your order! We’ll be in touch with you shortly to confirm the details.")}
               </p>
               <button
                 onClick={() => setShowSuccessModal(false)}

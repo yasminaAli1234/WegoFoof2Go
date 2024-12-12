@@ -17,6 +17,7 @@ const LoginUser =()=>{
     const [type, setType] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
+    const [showpop,setShowPop]= useState(false)
 
     useEffect(() => {
         if (data) {
@@ -26,10 +27,12 @@ const LoginUser =()=>{
 
                if (type === "user") {
                       navigate("/dashboard_user", { replace: true });
+                      setShowPop(true)
                }
                else if (type === "admin") {
 
                 navigate("/dashboard_admin", { replace: true });
+                
          }
         }
     }, [data]);
@@ -44,6 +47,7 @@ const LoginUser =()=>{
             return;
         }
         setIsLoading(true);
+        
 
         try {
             const response = await axios.post('https://login.wegostores.com/api/v1/auth/login', {

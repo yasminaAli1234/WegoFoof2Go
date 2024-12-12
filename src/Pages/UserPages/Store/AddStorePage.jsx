@@ -23,8 +23,11 @@ const AddStorePage = () => {
     // const [selectActivity, setSelectActivity] = useState('Select Store Activity');
     const [selectActivity, setSelectActivity] = useState("");
 
+    // set arabic
+    
   useEffect(() => {
     setSelectActivity(t("Select Store Activity"));
+
   }, [t]); // Ensure it updates if the language changes
 
     const [selectActivityId, setSelectActivityId] = useState([]);

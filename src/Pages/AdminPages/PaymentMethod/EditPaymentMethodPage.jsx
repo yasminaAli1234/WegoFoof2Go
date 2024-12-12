@@ -13,6 +13,13 @@ const EditPaymentMethodPage =()=>{
     const [thumbnails, setThumbnails] = useState('');
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+    const [language, setLanguage] = useState("en");
+      // set arabic
+  const [thumbnails_ar, setThumbnails_ar] = useState("");
+  const [title_ar, setTitle_ar] = useState("");
+  const [description_ar, setDescription_ar] = useState("");
+  const translate = new FormData();
+
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const uploadRef = useRef();
@@ -22,15 +29,24 @@ const EditPaymentMethodPage =()=>{
 
     const paymentContent = useContext(PaymentMethodDataContext);
 
+    const handleChangeLanguage = () => {
+        const newLanguage = language === "en" ? "ar" : "en";
+        setLanguage(newLanguage);
+      };
+
     useEffect(() => {
         if (paymentContent) {
             setTitle(paymentContent.name || '');
             setDescription(paymentContent.description|| '');
             setThumbnailFile(paymentContent.thumbnailUrl || '');
             setThumbnails(paymentContent.thumbnailUrl || '');
+            // set translate
+            setTitle_ar(paymentContent.name || '');
+            setDescription_ar(paymentContent.description|| '');
+            setThumbnails_ar(paymentContent.thumbnailUrl || '');
         }
     }, [paymentContent]);
-
+    
     // const handleClick = (e) => {
     //     const isChecked = e.target.checked; // Checked status
     //     setPaymentActive(isChecked ? 1 : 0); // Set paymentActive as 1 (true) or 0 (false)
@@ -47,6 +63,7 @@ const EditPaymentMethodPage =()=>{
         if (file) {
             setThumbnailFile(file); // Set file object for upload
             setThumbnails(file.name); // Display file name in the text input
+            setThumbnails_ar(file.name); // mosh lazem
         }
     };
 
@@ -70,6 +87,20 @@ const EditPaymentMethodPage =()=>{
             return;
         }
 
+          // set info arabic
+    if (!thumbnails_ar) {
+        auth.toastError("يرجى تحميل صورة الصورة المصغرة.");
+        return;
+      }
+      if (!title_ar) {
+        auth.toastError("يرجى إدخال العنوان.");
+        return;
+      }
+      if (!description_ar) {
+        auth.toastError("يرجى إدخال الوصف.");
+        return;
+      }
+
         setIsLoading(true);
         try {
             const formData = new FormData();
@@ -77,6 +108,11 @@ const EditPaymentMethodPage =()=>{
             formData.append('name', title);
             formData.append('description', description);
             formData.append('thumbnail', thumbnailFile); // Append the file
+
+            translate["name"] = title_ar;
+            translate["description"] = description_ar;
+            translate["thumbnail"] = thumbnailFile;
+            translate['paymentMethod_id'] = paymentId;
 
             const response = await axios.post(
                 'https://login.wegostores.com/admin/v1/payment/method/update',
@@ -90,30 +126,43 @@ const EditPaymentMethodPage =()=>{
             );
 
             if (response.status === 200) {
-                console.log('Payment Method Updated successfully');
-                auth.toastSuccess('Payment Method Updated successfully!');
+                console.log('تم تحديث وسيلة الدفع بنجاح');
+                auth.toastSuccess(`${language === 'en' ? 'Payment Method Updated successfully!' : 'تم تحديث وسيلة الدفع بنجاح!'}`);
                 handleGoBack();
             } else {
-                console.error('Failed to Updated Payment Method:', response.status, response.statusText);
-                auth.toastError('Failed to Updated Payment Method.');
+                console.error('فشل في تحديث وسيلة الدفع:', response.status, response.statusText);
+                auth.toastError(`${language === 'en' ? 'Failed to update Payment Method.' : 'فشل في تحديث وسيلة الدفع.'}`);
             }
-        } catch (error) {
-            console.error('Error adding Payment Method:', error?.response?.data?.errors || 'Network error');
-            const errorMessages = error?.response?.data?.errors;
-            let errorMessageString = 'Error occurred';
-
-            if (errorMessages) {
-                errorMessageString = Object.values(errorMessages).flat().join(' ');
+            } catch (error) {
+                console.error('خطأ أثناء تحديث وسيلة الدفع:', error?.response?.data?.errors || 'خطأ في الشبكة');
+                const errorMessages = error?.response?.data?.errors;
+                let errorMessageString = `${language === 'en' ? 'Error occurred' : 'حدث خطأ'}`;
+            
+                if (errorMessages) {
+                    errorMessageString = Object.values(errorMessages).flat().join(' ');
+                }
+            
+                auth.toastError(errorMessageString);
+            } finally {
+                setIsLoading(false);
             }
-
-            auth.toastError(errorMessageString);
-        } finally {
-            setIsLoading(false);
-        }
+            
     };
     return(
-        <form onSubmit={(event) => handleSubmitEdit(paymentContent.id, event)} className="w-full flex flex-col items-center justify-center gap-y-10">
-        <div className="w-full flex flex-wrap items-center justify-start gap-10">
+       <div className="">
+              <Button
+        type="submit"
+        Text={`Change to ${language === "en" ? "Arabic" : "English"}`}
+        BgColor="bg-mainColor"
+        Color="text-white"
+        Width="fit"
+        Size="text-2xl"
+        px="px-28"
+        rounded="rounded-2xl"
+        handleClick={() => handleChangeLanguage()}
+      />
+       <form onSubmit={(event) => handleSubmitEdit(paymentContent.id, event)} className="w-full flex flex-col items-center justify-center gap-y-10 m-5">
+        {language==="en"?<div className="w-full flex flex-wrap items-center justify-start gap-10">
             <div className="lg:w-[30%] sm:w-full">
               <InputCustom
                       type="text"
@@ -151,7 +200,49 @@ const EditPaymentMethodPage =()=>{
                       ref={uploadRef}
                   />
               </div>
-        </div>
+        </div>:
+                <div className="w-full flex flex-wrap items-center justify-start gap-10">
+                <div className="lg:w-[30%] sm:w-full">
+                    <InputCustom
+                        type="text"
+                        borderColor="mainColor"
+                        placeholder="الاسم"
+                        value={title_ar}
+                        onChange={(e) => setTitle_ar(e.target.value)}
+                        width="w-full"
+                    />
+                </div>
+                <div className="lg:w-[30%] sm:w-full">
+                    <InputCustom
+                        type="text"
+                        borderColor="mainColor"
+                        placeholder="الوصف"
+                        value={description_ar}
+                        onChange={(e) => setDescription_ar(e.target.value)}
+                        width="w-full"
+                    />
+                </div>
+                <div className="lg:w-[30%] sm:w-full">
+                    <InputCustom
+                        type="text"
+                        borderColor="mainColor"
+                        placeholder="الصورة المصغرة"
+                        value={thumbnails_ar}
+                        readOnly={true} 
+                        onClick={handleInputClick}
+                        upload="true"
+                    />
+                    <input
+                        type="file"
+                        className="hidden"
+                        onChange={handleFileChange}
+                        ref={uploadRef}
+                    />
+                </div>
+            </div>
+        }
+
+
 
         <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
             <div className="flex items-center justify-center w-72">
@@ -170,6 +261,7 @@ const EditPaymentMethodPage =()=>{
             <button onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>
         </div>
         </form>
+       </div>
     )
 }
 

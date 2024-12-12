@@ -13,18 +13,27 @@ const EditActivityPage =()=>{
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const [name , setName]=useState('')
-
+    // set arabic
+    const [name_ar , setName_ar]=useState('')
     const activityContent = useContext(ActivityDataLayout);
+    const translate = new FormData();
+    const [language,setLanguage]= useState('ar')
 
+        const handleChangeLanguage = () => {
+        const newLanguage = language === 'en' ? 'ar' : 'en'; 
+        setLanguage(newLanguage); 
+    };
     useEffect(() => {
         if (activityContent) {
             setName(activityContent.name || '');
+            setName_ar(activityContent.name || '');
         }
     }, [activityContent]);
 
     const handleGoBack = () => {
             navigate(-1, { replace: true });
     };
+
 
     if (isLoading) {
         return (
@@ -38,12 +47,16 @@ const EditActivityPage =()=>{
         event.preventDefault();
 
         if (!name) {
-            auth.toastError('Please Enter Name.');
+            auth.toastError('Please enter a name');
             return;
         } 
-      
+        if (!name_ar) {
+            auth.toastError('يرجى إدخال الاسم');
+            return;
+        } 
         const formData = new FormData();
         formData.append('name', name);
+        translate['name']= name_ar;
 
         for (let pair of formData.entries()) {
                console.log(pair[0] + ', ' + pair[1]);
@@ -59,20 +72,21 @@ const EditActivityPage =()=>{
             });
  
             if (response.status === 200) {
-                auth.toastSuccess('Activity updated successfully!');
+                auth.toastSuccess(`${language === 'en' ? 'Activity updated successfully!' : 'تم تحديث النشاط بنجاح!'}`);
                 handleGoBack();
             } else {
-                auth.toastError('Failed to update Activity.');
+                auth.toastError(`${language === 'en' ? 'Failed to update Activity.' : 'فشل في تحديث النشاط.'}`);
             }
         } catch (error) {    
-            console.log(error)
-                const errorMessages = error?.response?.data.errors;
-                let errorMessageString = 'Error occurred';
-                if (errorMessages) {
-                    errorMessageString = Object.values(errorMessages).flat().join(' ');
-                }
-                auth.toastError('Error', errorMessageString);
-    
+            console.log(error);
+            const errorMessages = error?.response?.data?.errors;
+            let errorMessageString = `${language === 'en' ? 'Error occurred' : 'حدث خطأ'}`;
+            
+            if (errorMessages) {
+                errorMessageString = Object.values(errorMessages).flat().join(' ');
+            }
+            
+            auth.toastError(`${language === 'en' ? 'Error' : 'خطأ'}`, errorMessageString);
         } finally {
             setIsLoading(false);
         }
@@ -80,8 +94,21 @@ const EditActivityPage =()=>{
  
     return(
         <>
-        <form onSubmit={(event) => handleSubmitEdit(activityContent.id, event)} className="w-full flex flex-col items-center justify-center gap-y-10">
-                  <div className="w-full flex flex-wrap items-center justify-start gap-10">
+     <div className="">
+     <Button 
+    type="submit"
+    Text={`Change to ${language === 'en' ? 'Arabic' : 'English'}`}
+    BgColor="bg-mainColor"
+    Color="text-white"
+    Width="fit"
+    Size="text-2xl"
+    px="px-28"
+    rounded="rounded-2xl"
+     
+    handleClick={() => handleChangeLanguage()}
+/>
+<form onSubmit={(event) => handleSubmitEdit(activityContent.id, event)} className="w-full flex flex-col items-center justify-center gap-y-10 m-5">
+               {language==='en'?   <div className="w-full flex flex-wrap items-center justify-start gap-10">
                       <div className="lg:w-[30%] sm:w-full">
                           <InputCustom
                               type="text"
@@ -91,7 +118,19 @@ const EditActivityPage =()=>{
                               onChange={(e) => setName(e.target.value)}
                           />
                       </div>  
-                  </div>
+                  </div>:
+                    <div className="w-full flex flex-wrap items-center justify-start gap-10">
+                    <div className="lg:w-[30%] sm:w-full">
+                        <InputCustom
+                            type="text"
+                            placeholder="الاسم"
+                            borderColor="mainColor"
+                            value={name_ar}
+                            onChange={(e) => setName_ar(e.target.value)}
+                        />
+                    </div>  
+                </div>}
+                
       
                   <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
                       <div className="flex items-center justify-center w-72">
@@ -110,6 +149,7 @@ const EditActivityPage =()=>{
                       <button onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>
                   </div>
         </form>
+     </div>
         </>
     )
 }

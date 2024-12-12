@@ -11,7 +11,10 @@ const EditAdminTutorialPage =()=>{
 
     const tutorialGroupContent = useContext(TutorialGroupLayout);
     const auth = useAuth();
+    const translate = new FormData();
+    const [language, setLanguage] = useState("en");
     const [name, setName] = useState('');
+    const [name_ar, setName_ar] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
@@ -22,6 +25,7 @@ const EditAdminTutorialPage =()=>{
     useEffect(() => {
         if (tutorialGroupContent) {
             setName(tutorialGroupContent.name|| '')
+            setName_ar(tutorialGroupContent.name|| '')
         }
     }, [tutorialGroupContent]);
 
@@ -33,12 +37,20 @@ const EditAdminTutorialPage =()=>{
             return;
         }
 
+        if (!name_ar) {
+            auth.toastError("يرجى إدخال اسم المجموعة.");
+            return;
+          }
+
         const formData = new FormData();
         formData.append('name', name);
+        translate["name"] = name_ar;
+        formData.append("translation", translate);
+
 
         setIsLoading(true);
         try {
-
+        
          const response = await axios.post(
                 `https://login.wegostores.com/admin/v1/tutorial_group/update/${groupId}`,
                 formData,
@@ -51,30 +63,71 @@ const EditAdminTutorialPage =()=>{
             );
 
             if (response.status === 200) {
-                auth.toastSuccess('Tutorial Group updated successfully!');
+                auth.toastSuccess(
+                    language === 'ar' 
+                        ? 'تم تحديث المجموعة التعليمية بنجاح!' 
+                        : 'Tutorial Group updated successfully!'
+                );
                 handleGoBack();
             } else {
-                console.error('Failed to updated Tutorial Group:', response.status, response.statusText);
-                auth.toastError('Failed to updated Tutorial Group.');
+                console.error(
+                    language === 'ar' 
+                        ? 'فشل في تحديث المجموعة التعليمية:' 
+                        : 'Failed to update Tutorial Group:', 
+                    response.status, 
+                    response.statusText
+                );
+                auth.toastError(
+                    language === 'ar' 
+                        ? 'فشل في تحديث المجموعة التعليمية.' 
+                        : 'Failed to update Tutorial Group.'
+                );
             }
         } catch (error) {
-            console.error('Error updateing Tutorial Group:', error?.response?.data?.errors || 'Network error');
+            console.error(
+                language === 'ar' 
+                    ? 'خطأ أثناء تحديث المجموعة التعليمية:' 
+                    : 'Error updating Tutorial Group:', 
+                error?.response?.data?.errors || 'Network error'
+            );
+        
             const errorMessages = error?.response?.data?.errors;
-            let errorMessageString = 'Error occurred';
-
+            let errorMessageString = language === 'ar' ? 'حدث خطأ' : 'Error occurred';
+        
             if (errorMessages) {
                 errorMessageString = Object.values(errorMessages).flat().join(' ');
             }
-
-            auth.toastError(errorMessageString);
+        
+            auth.toastError(
+                language === 'ar' 
+                    ? `خطأ: ${errorMessageString}` 
+                    : `Error: ${errorMessageString}`
+            );
         } finally {
             setIsLoading(false);
         }
     };
-
+    const handleChangeLanguage = () => {
+        const newLanguage = language === 'en' ? 'ar' : 'en'; 
+        setLanguage(newLanguage); 
+    };
+    
     return(
-        <form onSubmit={(event) => handleSubmitEdit(tutorialGroupContent.id, event)} className="w-full flex flex-col items-center justify-center gap-y-10">
-        <div className="w-full flex flex-wrap items-center justify-start gap-10">
+       <div className="">
+                 <Button 
+    type="submit"
+    Text={`Change to ${language === 'en' ? 'Arabic' : 'English'}`}
+    BgColor="bg-mainColor"
+    Color="text-white"
+    Width="fit"
+    Size="text-2xl"
+    px="px-28"
+    rounded="rounded-2xl"
+     
+    handleClick={() => handleChangeLanguage()}
+/>
+         <form onSubmit={(event) => handleSubmitEdit(tutorialGroupContent.id, event)} className="w-full flex flex-col items-center justify-center gap-y-10 m-5">
+       {language==='en' ?  <div className="w-full flex flex-wrap items-center justify-start gap-10">
             <div className="lg:w-[30%] sm:w-full">
               <InputCustom
                       type="text"
@@ -85,7 +138,19 @@ const EditAdminTutorialPage =()=>{
                       width="w-full"
                   />
             </div>
-        </div>
+        </div>:
+         <div className="w-full flex flex-wrap items-center justify-start gap-10">
+         <div className="lg:w-[30%] sm:w-full">
+           <InputCustom
+                   type="text"
+                   borderColor="mainColor"
+                   placeholder="اسم الجروب"
+                   value={name_ar}
+                   onChange={(e) => setName_ar(e.target.value)}
+                   width="w-full"
+               />
+         </div>
+     </div>}
 
         <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
             <div className="flex items-center justify-center w-72">
@@ -103,6 +168,7 @@ const EditAdminTutorialPage =()=>{
             <button onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>
         </div>
         </form>
+       </div>
     )
 }
 

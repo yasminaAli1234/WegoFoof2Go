@@ -11,15 +11,28 @@ import { UserAddingLayout } from '../../../Layouts/AdminLayouts/EditUserLayout';
 const EditUserPage =()=>{
 
     const userContent = useContext(UserAddingLayout);
-
+    const translate= new FormData();
+    const [language,setLanguage]= useState('en')
     const auth = useAuth();
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [activeUser, setActiveUser] = useState('');
+    // set arabic
+    const [name_ar, setName_ar] = useState('');
+    const [phone_ar, setPhone_ar] = useState('');
+    const [email_ar, setEmail_ar] = useState('');
+    const [password_ar, setPassword_ar] = useState('');
+    const [activeUser_ar, setActiveUser_ar] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+
     const navigate = useNavigate();
+
+    const handleChangeLanguage = () => {
+        const newLanguage = language === 'en' ? 'ar' : 'en'; 
+        setLanguage(newLanguage); 
+    };
 
     useEffect(() => {
         if (userContent) {
@@ -28,12 +41,19 @@ const EditUserPage =()=>{
             setEmail(userContent.email|| '')
             setPassword(userContent.password|| '')
             setActiveUser(userContent.status|| '')
+            // set arabic
+            setName_ar(userContent.name|| '')
+            setPhone_ar(userContent.phone|| '')
+            setEmail_ar(userContent.email|| '')
+            setPassword_ar(userContent.password|| '')
+            setActiveUser_ar(userContent.status|| '')
         }
     }, [userContent]);
 
     const handleClick = (e) => {
         const isChecked = e.target.checked;
         setActiveUser(isChecked ? 1 : 0);
+        setActiveUser_ar(isChecked ? 1 : 0);
     };
 
     const handleGoBack = () => {
@@ -43,26 +63,23 @@ const EditUserPage =()=>{
     const handleSubmitEdit = async (userId , event) => {
         event.preventDefault();
 
-        if (!name) {
-            auth.toastError('Please Enter the Name.');
+        if (!name_ar) {
+            auth.toastError('يرجى إدخال الاسم.');
             return;
         }
-        if (!phone) {
-            auth.toastError('Please Enter the Phone.');
+        if (!phone_ar) {
+            auth.toastError('يرجى إدخال الهاتف.');
             return;
         }
-        if (!email) {
-            auth.toastError('Please Enter the Email.');
+        if (!email_ar) {
+            auth.toastError('يرجى إدخال البريد الإلكتروني.');
             return;
         }
-        // if (!password) {
-        //     auth.toastError('Please Enter the Password.');
-        //     return;
-        // }
-        if (!activeUser) {
-            auth.toastError('Please Enter the Status.');
+        if (!activeUser_ar) {
+            auth.toastError('يرجى إدخال الحالة.');
             return;
         }
+        
 
         setIsLoading(true);
         try {
@@ -72,6 +89,13 @@ const EditUserPage =()=>{
             formData.append('email', email); // Append the file
             formData.append('password', password); // Append the file
             formData.append('status', activeUser); // Append the file
+            // append info int array translate
+            translate['name']=name_ar;
+            translate['phone']= phone_ar;
+            translate['email']=email_ar;
+            translate['password']=password_ar;
+            translate['status']= activeUser;
+            
 
             const response = await axios.post(
                 `https://login.wegostores.com/admin/v1/users/update/${userId}`,
@@ -85,81 +109,146 @@ const EditUserPage =()=>{
             );
 
             if (response.status === 200) {
-                auth.toastSuccess('User updated successfully!');
+                auth.toastSuccess(`${language === 'en' ? 'User updated successfully!' : 'تم تحديث المستخدم بنجاح!'}`);
                 handleGoBack();
             } else {
-                console.error('Failed to updated User:', response.status, response.statusText);
-                auth.toastError('Failed to updated User.');
+                console.error('Failed to update User:', response.status, response.statusText);
+                auth.toastError(`${language === 'en' ? 'Failed to update User.' : 'فشل في تحديث المستخدم.'}`);
             }
-        }  catch (error) {
-            const errors = error.response?.data?.error;
-            if (errors) {
-                if (errors.email?.includes('The email has already been taken.')) {
-                    auth.toastError('The email has already been taken.');
-                } else if (errors.phone?.includes('The phone has already been taken.')) {
-                    auth.toastError('The phone has already been taken.');
+            } catch (error) {
+                const errors = error.response?.data?.error;
+                if (errors) {
+                    if (errors.email?.includes('The email has already been taken.')) {
+                        auth.toastError(`${language === 'en' ? 'The email has already been taken.' : 'تم أخذ البريد الإلكتروني بالفعل.'}`);
+                    } else if (errors.phone?.includes('The phone has already been taken.')) {
+                        auth.toastError(`${language === 'en' ? 'The phone has already been taken.' : 'تم أخذ رقم الهاتف بالفعل.'}`);
+                    } else {
+                        auth.toastError(`${language === 'en' ? 'Unexpected error occurred.' : 'حدث خطأ غير متوقع.'}`);
+                    }
                 } else {
-                    auth.toastError('Unexpected error occurred.');
+                    auth.toastError(`${language === 'en' ? 'Error posting data!' : 'خطأ في إرسال البيانات!'}`);
                 }
-            } else {
-                auth.toastError('Error posting data!');
+            } finally {
+                setIsLoading(false);
             }
-        } finally {
-            setIsLoading(false);
-        }
+            
     };
 
     return(
-        <form onSubmit={(event) => handleSubmitEdit(userContent.id, event)} className="w-full flex flex-col items-center justify-center gap-y-10">
+     <div className="">
+                          <Button 
+    type="submit"
+    Text={`Change to ${language === 'en' ? 'Arabic' : 'English'}`}
+    BgColor="bg-mainColor"
+    Color="text-white"
+    Width="fit"
+    Size="text-2xl"
+    px="px-28"
+    rounded="rounded-2xl"
+     
+    handleClick={() => handleChangeLanguage()}
+/>
+           <form onSubmit={(event) => handleSubmitEdit(userContent.id, event)} className="w-full flex flex-col items-center justify-center gap-y-10 m-5">
+        {language==='en'?
         <div className="w-full flex flex-wrap items-center justify-start gap-10">
-            <div className="lg:w-[30%] sm:w-full">
-              <InputCustom
-                      type="text"
-                      borderColor="mainColor"
-                      placeholder="Name"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      width="w-full"
-                  />
-            </div>
-            <div className="lg:w-[30%] sm:w-full">
-              <InputCustom
-                      type="text"
-                      borderColor="mainColor"
-                      placeholder="Phone"
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      width="w-full"
-                  />
-            </div>
-            <div className="lg:w-[30%] sm:w-full">
-              <InputCustom
-                      type="text"
-                      borderColor="mainColor"
-                      placeholder="Email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      width="w-full"
-                  />
-            </div>
-            <div className="lg:w-[30%] sm:w-full">
-              <InputCustom
-                      type="password"
-                      borderColor="mainColor"
-                      placeholder="Password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      width="w-full"
-                      required={false}
-                  />
-            </div>
-            <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
-                  <span className="text-2xl text-thirdColor font-medium">Active:</span>
-                  <div>
-                          <CheckBox checked={activeUser} handleClick={handleClick} />
-                  </div>
-              </div>
+        <div className="lg:w-[30%] sm:w-full">
+          <InputCustom
+                  type="text"
+                  borderColor="mainColor"
+                  placeholder="Name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  width="w-full"
+              />
         </div>
+        <div className="lg:w-[30%] sm:w-full">
+          <InputCustom
+                  type="text"
+                  borderColor="mainColor"
+                  placeholder="Phone"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  width="w-full"
+              />
+        </div>
+        <div className="lg:w-[30%] sm:w-full">
+          <InputCustom
+                  type="text"
+                  borderColor="mainColor"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  width="w-full"
+              />
+        </div>
+        <div className="lg:w-[30%] sm:w-full">
+          <InputCustom
+                  type="password"
+                  borderColor="mainColor"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  width="w-full"
+                  required={false}
+              />
+        </div>
+        <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
+              <span className="text-2xl text-thirdColor font-medium">Active:</span>
+              <div>
+                      <CheckBox checked={activeUser} handleClick={handleClick} />
+              </div>
+          </div>
+    </div>:
+     <div className="w-full flex flex-wrap items-center justify-start gap-10">
+     <div className="lg:w-[30%] sm:w-full">
+       <InputCustom
+               type="text"
+               borderColor="mainColor"
+               placeholder="الاسم"
+               value={name_ar}
+               onChange={(e) => setName_ar(e.target.value)}
+               width="w-full"
+           />
+     </div>
+     <div className="lg:w-[30%] sm:w-full">
+       <InputCustom
+               type="text"
+               borderColor="mainColor"
+               placeholder="رقم الهاتف"
+               value={phone_ar}
+               onChange={(e) => setPhone_ar(e.target.value)}
+               width="w-full"
+           />
+     </div>
+     <div className="lg:w-[30%] sm:w-full">
+       <InputCustom
+               type="text"
+               borderColor="mainColor"
+               placeholder="البريد الإلكتروني"
+               value={email_ar}
+               onChange={(e) => setEmail_ar(e.target.value)}
+               width="w-full"
+           />
+     </div>
+     <div className="lg:w-[30%] sm:w-full">
+       <InputCustom
+               type="password"
+               borderColor="mainColor"
+               placeholder="كلمة المرور"
+               value={password_ar}
+               onChange={(e) => setPassword_ar(e.target.value)}
+               width="w-full"
+               required={false}
+           />
+     </div>
+     <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
+           <span className="text-2xl text-thirdColor font-medium">نشط:</span>
+           <div>
+                   <CheckBox checked={activeUser} handleClick={handleClick} />
+           </div>
+       </div>
+ </div>}
+       
 
         <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
             <div className="flex items-center justify-center w-72">
@@ -177,6 +266,7 @@ const EditUserPage =()=>{
             <button onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>
         </div>
         </form>  
+     </div>
     )
 }
 

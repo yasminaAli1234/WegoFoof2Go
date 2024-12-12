@@ -15,6 +15,13 @@ const EditTutorialPage =()=>{
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [video, setVideo] = useState('');
+    const [language,setLanguage]= useState('en')
+        // set arabic
+    const translate = new FormData();
+    const [name_ar, setName_ar] = useState('');
+    const [description_ar, setDescription_ar] = useState('');
+    const [video_ar, setVideo_ar] = useState('');
+
     const [videoFile, setVideoFile] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
@@ -28,6 +35,10 @@ const EditTutorialPage =()=>{
             setName(tutorialContent.title|| '')
             setDescription(tutorialContent.description|| '')
             setVideo(tutorialContent.video_link|| '')
+            // set name 
+            setName_ar(tutorialContent.title|| '')
+            setDescription_ar(tutorialContent.description|| '')
+            setVideo_ar(tutorialContent.video_link|| '')
         }
     }, [tutorialContent]);
 
@@ -46,6 +57,7 @@ const EditTutorialPage =()=>{
             if (file) {
                 setVideoFile(file);
                 setVideo(file.name);
+                setVideo_ar(file.name);
             }
     };
 
@@ -58,6 +70,15 @@ const EditTutorialPage =()=>{
         }
         if (!description) {
             auth.toastError('Please Enter the Description.');
+            return;
+        }
+        if (!name_ar) {
+            auth.toastError('يرجى إدخال الاسم.');
+            return;
+        }
+        
+        if (!description_ar) {
+            auth.toastError('يرجى إدخال الوصف.');
             return;
         }
         // if (!videoFile) {
@@ -73,9 +94,14 @@ const EditTutorialPage =()=>{
             formData.append('video', videoFile);
             formData.append('tutorial_group_id', groupId);
 
+            translate['title']= name_ar;
+            translate['description']= description_ar;
+            translate['video']= videoFile;
+
             for (let pair of formData.entries()) {
                 console.log(pair[0] + ', ' + pair[1]);
             } 
+            formData.append("translation", translate);
 
             const response = await axios.post(
                 `https://login.wegostores.com/admin/v1/tutorial/update/${tutorialId}`,
@@ -89,30 +115,71 @@ const EditTutorialPage =()=>{
             );
 
             if (response.status === 200) {
-                auth.toastSuccess('Tutorial updated successfully!');
+                auth.toastSuccess(
+                    language === 'ar' 
+                        ? 'تم تحديث البرنامج التعليمي بنجاح!' 
+                        : 'Tutorial updated successfully!'
+                );
                 handleGoBack();
             } else {
-                console.error('Failed to updated Tutorial:', response.status, response.statusText);
-                auth.toastError('Failed to updated Tutorial.');
+                console.error(
+                    language === 'ar' 
+                        ? 'فشل في تحديث البرنامج التعليمي:' 
+                        : 'Failed to update Tutorial:', 
+                    response.status, 
+                    response.statusText
+                );
+                auth.toastError(
+                    language === 'ar' 
+                        ? 'فشل في تحديث البرنامج التعليمي.' 
+                        : 'Failed to update Tutorial.'
+                );
             }
         } catch (error) {
-            console.error('Error updateing Tutorial:', error?.response?.data?.errors || 'Network error');
+            console.error(
+                language === 'ar' 
+                    ? 'خطأ أثناء تحديث البرنامج التعليمي:' 
+                    : 'Error updating Tutorial:', 
+                error?.response?.data?.errors || 'Network error'
+            );
+        
             const errorMessages = error?.response?.data?.errors;
-            let errorMessageString = 'Error occurred';
-
+            let errorMessageString = language === 'ar' ? 'حدث خطأ' : 'Error occurred';
+        
             if (errorMessages) {
                 errorMessageString = Object.values(errorMessages).flat().join(' ');
             }
-
-            auth.toastError(errorMessageString);
+        
+            auth.toastError(
+                language === 'ar' 
+                    ? `خطأ: ${errorMessageString}` 
+                    : `Error: ${errorMessageString}`
+            );
         } finally {
             setIsLoading(false);
         }
     };
+    const handleChangeLanguage = () => {
+        const newLanguage = language === 'en' ? 'ar' : 'en'; 
+        setLanguage(newLanguage); 
+    };
 
     return(
-        <form  onSubmit={(event) => handleSubmitEdit(tutorialContent.id, event)} className="w-full flex flex-col items-center justify-center gap-y-10">
-        <div className="w-full flex flex-wrap items-center justify-start gap-10">
+       <div className="">
+                           <Button 
+    type="submit"
+    Text={`Change to ${language === 'en' ? 'Arabic' : 'English'}`}
+    BgColor="bg-mainColor"
+    Color="text-white"
+    Width="fit"
+    Size="text-2xl"
+    px="px-28"
+    rounded="rounded-2xl"
+     
+    handleClick={() => handleChangeLanguage()}
+/>
+         <form  onSubmit={(event) => handleSubmitEdit(tutorialContent.id, event)} className="w-full flex flex-col items-center justify-center gap-y-10 m-5">
+       {language==='en' ?  <div className="w-full flex flex-wrap items-center justify-start gap-10">
             <div className="lg:w-[30%] sm:w-full">
               <InputCustom
                       type="text"
@@ -151,7 +218,47 @@ const EditTutorialPage =()=>{
                   ref={videoRef}
               />
           </div>
-        </div>
+        </div>:
+         <div className="w-full flex flex-wrap items-center justify-start gap-10">
+            <div className="lg:w-[30%] sm:w-full">
+              <InputCustom
+                      type="text"
+                      borderColor="mainColor"
+                      placeholder="الاسم"
+                      value={name_ar}
+                      onChange={(e) => setName_ar(e.target.value)}
+                      width="w-full"
+                  />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+              <InputCustom
+                      type="text"
+                      borderColor="mainColor"
+                      placeholder="الوصف"
+                      value={description_ar}
+                      onChange={(e) => setDescription_ar(e.target.value)}
+                      width="w-full"
+                  />
+            </div>
+            <div className="lg:w-[30%] sm:w-full">
+              <InputCustom
+                  type="text"
+                  upload={true}
+                  borderColor="mainColor"
+                  paddinRight='pr-2'
+                  placeholder="الفيديو"
+                  value={video_ar}
+                  readonly={true}
+                  onClick={() => handleInputClick(videoRef)}
+              />
+              <input
+                  type="file"
+                  className="hidden"
+                  onChange={handleVideoFileChange}
+                  ref={videoRef}
+              />
+          </div>
+        </div>}
 
         <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
             <div className="flex items-center justify-center w-72">
@@ -169,6 +276,7 @@ const EditTutorialPage =()=>{
             <button onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>
         </div>
         </form> 
+       </div>
     )
 }
 

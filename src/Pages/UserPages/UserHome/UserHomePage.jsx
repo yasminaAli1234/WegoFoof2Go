@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuth } from '../../../Context/Auth';
 import Loading from '../../../Components/Loading';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { addToCart, removeFromCart } from '../../../Redux/CartSlice.js';
-import { PiStorefront } from "react-icons/pi";
-import { CiMoneyCheck1 } from "react-icons/ci";
+// import { addToCart, removeFromCart } from '../../../Redux/CartSlice.js';
+// import { PiStorefront } from "react-icons/pi";
+// import { CiMoneyCheck1 } from "react-icons/ci";
 import { useNavigate ,Link } from 'react-router-dom';  // Import useNavigate
 import { useTranslation } from 'react-i18next';
+import UserSelect from '../../../Components/userSelect/UserSelect';
 
 const UserHomePage = () => {
-
+  
   const auth = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
@@ -60,6 +61,7 @@ const UserHomePage = () => {
   useEffect(() => {
       fetchData();
       fetchTutorial();
+     
   }, []);
 
     useEffect(() => {
@@ -79,7 +81,12 @@ const UserHomePage = () => {
   }
 
   return (
-    <div className="p-2 xl:p-6 bg-gray-50 min-h-screen font-sans">
+    <div>
+          
+          <div className="p-2 xl:p-6 bg-gray-50 min-h-screen font-sans">
+          <div className="w-full">
+  <UserSelect />
+</div>
     {/* Header */}
     <header className="flex flex-col sm:flex-row sm:justify-between sm:items-center bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-6 rounded-xl shadow-lg mb-8">
       <div>
@@ -208,6 +215,8 @@ const UserHomePage = () => {
       </div>
     </div>
   </div>
+
+    </div>
   );
 };
 

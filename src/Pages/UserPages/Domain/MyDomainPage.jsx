@@ -9,9 +9,10 @@ import { TfiWorld } from "react-icons/tfi";
 import { PiScreencastDuotone } from "react-icons/pi";
 import { CiCalendarDate } from "react-icons/ci";
 import { MdAttachMoney } from "react-icons/md";
+import { useTranslation } from 'react-i18next';
 
 const MyDomainPage = () => {
-
+    const {t} = useTranslation()
     const auth = useAuth();
     const [isLoading, setIsLoading] = useState(false);
     const [myDomains, setMyDomains] = useState('');
@@ -59,7 +60,7 @@ const MyDomainPage = () => {
                         <>
                         <div className='w-3/6 lg:w-1/6'>
                             <Link to={'../buy_domain'}>
-                                    <ButtonAdd Text="Buy Domain" isWidth="true" BgColor ="mainColor" Color="white" iconColor="white"/>
+                                    <ButtonAdd Text={t("Buy Domain")} isWidth="true" BgColor ="mainColor" Color="white" iconColor="white"/>
                             </Link>
                         </div>
                         <div className="w-full flex flex-wrap items-center justify-start gap-10">
@@ -75,15 +76,15 @@ const MyDomainPage = () => {
                                         <div className='flex flex-col ml-2'>
                                             <div className='flex items-center gap-3 p-2 text-mainColor border-mainColor'>
                                                 <PiScreencastDuotone size={32}/>
-                                                <h1 className='text-xl font-semibold text-green-600'>Active</h1>
+                                                <h1 className='text-xl font-semibold text-green-600'>{t("Active")}</h1>
                                             </div>
                                             <div className='flex items-center gap-3 p-2 text-mainColor border-mainColor'>
                                                 <MdAttachMoney size={32}/>
-                                                <h1 className='text-xl font-semibold'>Price : <span>{domain.price}</span></h1>
+                                                <h1 className='text-xl font-semibold'>{t("Price :")} <span>{domain.price}</span></h1>
                                             </div>
                                             <div className='flex items-center gap-3 p-2 text-mainColor border-mainColor'>
                                                 <CiCalendarDate size={32}/>
-                                                <h1 className='text-xl font-semibold'>Renew Date : <span>{domain.renewdate}</span></h1>
+                                                <h1 className='text-xl font-semibold'>{t("Renew Date :")} <span>{domain.renewdate}</span></h1>
                                             </div>
 
                                         </div>
@@ -97,7 +98,7 @@ const MyDomainPage = () => {
                     (
                         <>
                         <div className='w-full flex flex-col gap-5 justify-center items-center'>
-                            <h1 className='text-center text-2xl lg:text-3xl text-mainColor font-semibold'>You do not have domains</h1>
+                            <h1 className='text-center text-2xl lg:text-3xl text-mainColor font-semibold'>{t("You do not have domains")}</h1>
                             <div className='lg:w-2/6'>
                                 <Link to={'../buy_domain'}>
                                         <ButtonAdd Text="Buy Domain" isWidth="true" BgColor ="mainColor" Color="white" iconColor="white"/>

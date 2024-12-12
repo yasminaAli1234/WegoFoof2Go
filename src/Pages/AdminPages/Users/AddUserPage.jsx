@@ -9,6 +9,8 @@ import CheckBox from '../../../Components/CheckBox';
 
 const AddUserPage = () => {
     const auth = useAuth();
+    const translate= new FormData();
+    const [language,setLanguage]= useState('en')
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
@@ -16,10 +18,19 @@ const AddUserPage = () => {
     const [activeUser, setActiveUser] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
+    // set arabic
+    const [name_ar, setName_ar] = useState('');
+    const [phone_ar, setPhone_ar] = useState('');
+    const [email_ar, setEmail_ar] = useState('');
+    const [password_ar, setPassword_ar] = useState('');
+    const [activeUser_ar, setActiveUser_ar] = useState('');
+
 
     const handleClick = (e) => {
         const isChecked = e.target.checked;
         setActiveUser(isChecked ? 1 : 0);
+        setActiveUser_ar(isChecked ? 1 : 0);
+
     };
 
     const handleGoBack = () => {
@@ -49,6 +60,29 @@ const AddUserPage = () => {
             auth.toastError('Please Enter the Status.');
             return;
         }
+        // translate to arabic
+
+        if (!name_ar) {
+            auth.toastError('يرجى إدخال الاسم.');
+            return;
+        }
+        if (!phone_ar) {
+            auth.toastError('يرجى إدخال رقم الهاتف.');
+            return;
+        }
+        if (!email_ar) {
+            auth.toastError('يرجى إدخال البريد الإلكتروني.');
+            return;
+        }
+        if (!password_ar) {
+            auth.toastError('يرجى إدخال كلمة المرور.');
+            return;
+        }
+        if (!activeUser_ar) {
+            auth.toastError('يرجى إدخال الحالة.');
+            return;
+        }
+      
 
         setIsLoading(true);
         try {
@@ -58,6 +92,18 @@ const AddUserPage = () => {
             formData.append('email', email); // Append the file
             formData.append('password', password); // Append the file
             formData.append('status', activeUser); // Append the file
+
+            // append into translate array
+
+            translate['name']= name_ar;
+            translate['phone'] = phone_ar;
+            translate['email']= email_ar;
+            translate['password']=password_ar;
+            translate['status']= activeUser_ar;
+            console.log(translate);
+
+           
+
 
             const response = await axios.post(
                 'https://login.wegostores.com/admin/v1/users/add',
@@ -71,34 +117,52 @@ const AddUserPage = () => {
             );
 
             if (response.status === 200) {
-                auth.toastSuccess('User added successfully!');
+                auth.toastSuccess(`${language === 'en' ? 'User added successfully!' : 'تم إضافة المستخدم بنجاح!'}`);
                 handleGoBack();
             } else {
                 console.error('Failed to add User:', response.status, response.statusText);
-                auth.toastError('Failed to add User.');
+                auth.toastError(`${language === 'en' ? 'Failed to add User.' : 'فشل في إضافة المستخدم.'}`);
             }
-        }  catch (error) {
-            const errors = error.response?.data?.error;
-            if (errors) {
-                if (errors.email?.includes('The email has already been taken.')) {
-                    auth.toastError('The email has already been taken.');
-                } else if (errors.phone?.includes('The phone has already been taken.')) {
-                    auth.toastError('The phone has already been taken.');
+            } catch (error) {
+                const errors = error.response?.data?.error;
+                if (errors) {
+                    if (errors.email?.includes('The email has already been taken.')) {
+                        auth.toastError(`${language === 'en' ? 'The email has already been taken.' : 'تم أخذ البريد الإلكتروني بالفعل.'}`);
+                    } else if (errors.phone?.includes('The phone has already been taken.')) {
+                        auth.toastError(`${language === 'en' ? 'The phone has already been taken.' : 'تم أخذ رقم الهاتف بالفعل.'}`);
+                    } else {
+                        auth.toastError(`${language === 'en' ? 'Unexpected error occurred.' : 'حدث خطأ غير متوقع.'}`);
+                    }
                 } else {
-                    auth.toastError('Unexpected error occurred.');
+                    auth.toastError(`${language === 'en' ? 'Error posting data!' : 'خطأ في إرسال البيانات!'}`);
                 }
-            } else {
-                auth.toastError('Error posting data!');
+                console.log('تفاصيل الخطأ:', errors);
+            } finally {
+                setIsLoading(false);
             }
-            console.log('Error details:', errors);
-        } finally {
-            setIsLoading(false);
-        }
+            
+    };
+    const handleChangeLanguage = () => {
+        const newLanguage = language === 'en' ? 'ar' : 'en'; 
+        setLanguage(newLanguage); 
     };
 
     return (
-        <form onSubmit={handleSubmitAdd} className="w-full flex flex-col items-center justify-center gap-y-10">
-                  <div className="w-full flex flex-wrap items-center justify-start gap-10">
+       <div className="">
+                    <Button 
+    type="submit"
+    Text={`Change to ${language === 'en' ? 'Arabic' : 'English'}`}
+    BgColor="bg-mainColor"
+    Color="text-white"
+    Width="fit"
+    Size="text-2xl"
+    px="px-28"
+    rounded="rounded-2xl"
+     
+    handleClick={() => handleChangeLanguage()}
+/>
+<form onSubmit={handleSubmitAdd} className="w-full flex flex-col items-center justify-center gap-y-10 m-5">
+             {language==='en'?     <div className="w-full flex flex-wrap items-center justify-start gap-10">
                       <div className="lg:w-[30%] sm:w-full">
                         <InputCustom
                                 type="text"
@@ -145,7 +209,57 @@ const AddUserPage = () => {
                                     <CheckBox handleClick={handleClick} />
                             </div>
                         </div>
-                  </div>
+                  </div>: <div className="w-full flex flex-wrap items-center justify-start gap-10">
+                      <div className="lg:w-[30%] sm:w-full">
+                        <InputCustom
+                                type="text"
+                                borderColor="mainColor"
+                                placeholder="الاسم"
+                                value={name_ar}
+                                onChange={(e) => setName_ar(e.target.value)}
+                                width="w-full"
+                            />
+                      </div>
+                      <div className="lg:w-[30%] sm:w-full">
+                        <InputCustom
+                                type="text"
+                                borderColor="mainColor"
+                                placeholder="رقم الهاتف"
+                                value={phone_ar}
+                                onChange={(e) => setPhone_ar(e.target.value)}
+                                width="w-full"
+                            />
+                      </div>
+                      <div className="lg:w-[30%] sm:w-full">
+                        <InputCustom
+                                type="text"
+                                borderColor="mainColor"
+                                placeholder="البريد الإلكتروني"
+                                value={email_ar}
+                                onChange={(e) => setEmail_ar(e.target.value)}
+                                width="w-full"
+                            />
+                      </div>
+                      <div className="lg:w-[30%] sm:w-full">
+                        <InputCustom
+                                type="password"
+                                borderColor="mainColor"
+                                placeholder="كلمة المرور"
+                                value={password_ar}
+                                onChange={(e) => setPassword_ar(e.target.value)}
+                                width="w-full"
+                            />
+                      </div>
+                      <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
+                      <span className="text-2xl text-thirdColor font-medium">نشط:</span>
+                            <div>
+                                    <CheckBox handleClick={handleClick} />
+                            </div>
+                        </div>
+                  </div>}
+
+                 
+
       
                   <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
                       <div className="flex items-center justify-center w-72">
@@ -162,7 +276,8 @@ const AddUserPage = () => {
                       </div>
                       <button onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>
                   </div>
-        </form>        
+        </form>   
+       </div>     
     );
 };
 

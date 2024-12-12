@@ -457,6 +457,8 @@ import { clearCart, updateCartItem } from '../../../Redux/CartSlice.js';
 import axios from 'axios';
 import { useAuth } from "../../../Context/Auth";
 
+import { useTranslation } from 'react-i18next';
+
 const CartPage = () => {
   const auth = useAuth();
   const cartItems = useSelector((state) => state.cart);
@@ -465,6 +467,7 @@ const CartPage = () => {
   const [discount, setDiscount] = useState(0);
   const [discountedPrice, setDiscountedPrice] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const {t} = useTranslation()
 
   const calculateTotal = () => {
     return cartItems
@@ -571,7 +574,7 @@ const CartPage = () => {
 
   <div className='flex flex-col bg-gray-50 w-full p-4 xl:p-6'>
     <div>
-    <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6 sm:mb-8">Shopping Cart</h1>
+    <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6 sm:mb-8">{t("Shopping Cart")}</h1>
     </div>
     <div className="xl:container w-full m-0 xl:mx-auto flex flex-wrap gap-6 lg:flex-nowrap">
       {/* Left Section */}
@@ -586,13 +589,13 @@ const CartPage = () => {
                 <div className="flex justify-between items-center">
                   <h3 className="text-base sm:text-lg font-semibold text-gray-800">{item.name}</h3>
                   <p className="text-base sm:text-lg font-semibold text-gray-800">
-                    {(item.finalprice || item.price || 0).toFixed(2)} EGP
+                    {(item.finalprice || item.price || 0).toFixed(2)} {t("EGP")}
                   </p>
                 </div>
                 {item.type === "plan" && (
                   <div className="flex flex-wrap items-center mt-3 sm:mt-4">
                     <label className="text-sm font-semibold text-gray-600 mr-3">
-                      Billing Period:
+                      {t("Billing Period:")}
                     </label>
                     <select
                       value={item.billingPeriod || "monthly"}
@@ -611,7 +614,7 @@ const CartPage = () => {
                  {item.type === "extra" && item.status === "recurring" &&(
                   <div className="flex flex-wrap items-center mt-3 sm:mt-4">
                     <label className="text-sm font-semibold text-gray-600 mr-3">
-                      Billing Period:
+                      {t("Billing Period:")}
                     </label>
                     <select
                       value={item.billingPeriod || "monthly"}
@@ -630,7 +633,7 @@ const CartPage = () => {
               </div>
             ))
           ) : (
-            <p className="text-center text-gray-500 py-6">Your cart is empty.</p>
+            <p className="text-center text-gray-500 py-6">{t("Your cart is empty.")}</p>
           )}
         </div>
     
@@ -640,7 +643,7 @@ const CartPage = () => {
               onClick={handleClearCart}
               className="flex-1 bg-red-500 hover:bg-red-600 text-white py-3 rounded-lg font-semibold text-base sm:text-lg transition"
             >
-              Clear Cart
+              {t("Clear Cart")}
             </button>
             <Link
               to="../checkout"
@@ -648,7 +651,7 @@ const CartPage = () => {
               className="flex-1"
             >
               <button className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg font-semibold text-base sm:text-lg transition">
-                Proceed to Checkout
+                {t("Proceed to Checkout")}
               </button>
             </Link>
           </div>
@@ -659,37 +662,37 @@ const CartPage = () => {
       <div className="w-full lg:w-1/3 space-y-6">
         {/* Order Summary */}
         <div className="bg-white p-2 xl:p-4 shadow-md rounded-lg">
-          <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-4">Order Summary</h3>
+          <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-4">{t("Order Summary")}</h3>
           <div className="flex justify-between text-base sm:text-lg mb-3">
-            <span>Total Price:</span>
-            <span>{totalPrice} EGP</span>
+            <span>{t("Total Price:")}</span>
+            <span>{totalPrice} {t("EGP")}</span>
           </div>
           <div className="flex justify-between text-base sm:text-lg text-red-500 mb-3">
-            <span>Discount:</span>
-            <span>-{discount} EGP</span>
+            <span>{t("Discount:")}</span>
+            <span>-{discount} {t("EGP")}</span>
           </div>
           <div className="flex justify-between text-base sm:text-lg font-bold text-green-600">
-            <span>Total After Discount:</span>
-            <span>{discountedPrice || totalPrice} EGP</span>
+            <span>{t("Total After Discount:")}</span>
+            <span>{discountedPrice || totalPrice} {t("EGP")}</span>
           </div>
         </div>
 
           {/* Promo Code */}
           <div className="bg-white p-2 xl:p-4 shadow-md rounded-lg">
-          <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-4">Have a Promo Code?</h3>
+          <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-4">{t("")}</h3>
           <div className="flex flex-wrap gap-4">
             <input
               type="text"
               value={promoCode}
               onChange={(e) => setPromoCode(e.target.value)}
-              placeholder="Enter promo code"
+              placeholder={t("Enter promo code")}
               className="flex-1 text-base sm:text-lg px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
             <button
               onClick={handleApplyPromo}
               className="px-6 py-2 text-base sm:text-lg bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition"
             >
-              {isLoading ? "Applying..." : "Apply"}
+             {isLoading ? t("Applying...") : t("Apply")}
             </button>
           </div>
         </div>
