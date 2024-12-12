@@ -40,48 +40,48 @@ const StoresPage = () => {
         fetchData(); 
     }, [storeChanged]);
 
-    const handleOpenDialog = (paymentId) => {
-       setOpenDialog(paymentId);
+    const handleOpenDialog = (storeId) => {
+       setOpenDialog(storeId);
        };
 
     const handleCloseDialog = () => {
             setOpenDialog(null);
     };
 
-       const handleDelete = async (paymentId) => {
+       const handleDelete = async (storeId) => {
               setIsDeleting(true);
-              const success = await deletePayment(paymentId, auth.user.token);
+              const success = await deleteStore(storeId, auth.user.token);
               setIsDeleting(false);
               handleCloseDialog();
 
               if (success) {
-                     setPaymentChanged(!paymentChanged)
-                     auth.toastSuccess('Payment Method deleted successfully!');
-                     setPayments((prevPayment) =>
-                        prevPayment.filter((payment) => payment.id !== paymentId)
+                     setStoreChanged(!storeChanged)
+                     auth.toastSuccess('Store deleted successfully!');
+                     setStores((prevStore) =>
+                        prevStore.filter((store) => store.id !== storeId)
                      );
               } else {
-                     auth.toastError('Failed to delete Payment Method.');
+                     auth.toastError('Failed to delete Store.');
               }
        };
 
-       const deletePayment = async (paymentId, authToken) => {
+       const deleteStore = async (storeId, authToken) => {
               try {
-                const response = await axios.delete(`https://login.wegostores.com/admin/v1/payment/method/delete/${paymentId}`, {
+                const response = await axios.delete(`https://login.wegostores.com/admin/v1/store/delete/${storeId}`, {
                         headers: {
                                    Authorization: `Bearer ${authToken}`,
                             },
                      });
 
                      if (response.status === 200) {
-                            console.log('payment method deleted successfully');
+                            console.log('Store deleted successfully');
                             return true;
                      } else {
-                            console.error('Failed to delete payment method:', response.status, response.statusText);
+                            console.error('Failed to delete Store:', response.status, response.statusText);
                             return false;
                      }
               } catch (error) {
-                     console.error('Error deleting payment method:', error);
+                     console.error('Error deleting Store:', error);
                      return false;
               }
        };
@@ -113,6 +113,8 @@ const StoresPage = () => {
                         <tr className="w-full border-b-2">
                             <th className="min-w-[80px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">#</th>
                             <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Store Name</th>
+                            <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Email</th>
+                            <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Password</th>
                             <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Cpanel Link</th>
                             <th className="min-w-[150px] sm:w-2/12 lg:w-2/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Store Link</th>
                             <th className="min-w-[100px] sm:w-1/12 lg:w-1/12 text-mainColor text-center font-medium text-sm sm:text-base lg:text-lg xl:text-xl pb-3">Action</th>
@@ -125,6 +127,16 @@ const StoresPage = () => {
                                                 className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                         >
                                                 {index + 1}
+                                        </td>
+                                        <td
+                                                className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
+                                        >
+                                                {store?.email || 'Null'}
+                                        </td>
+                                        <td
+                                                className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
+                                        >
+                                                {store?.password || 'Null'}
                                         </td>
                                         <td
                                                 className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
