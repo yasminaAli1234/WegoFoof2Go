@@ -190,8 +190,8 @@ const [selectedOrders, setSelectedOrders] = useState([]);
                                     <td
                                             className="min-w-[150px] sm:min-w-[120px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                     >
-                                        {payment?.updatedAt ? payment.updatedAt.split("T")[0] : '_'}
-                                 </td>
+{payment?.updated_at ? payment.updated_at.split("T")[0] : '_'}
+</td>
                                     <td
                                             className="min-w-[150px] sm:min-w-[120px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                     >
