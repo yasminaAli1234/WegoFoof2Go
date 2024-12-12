@@ -504,7 +504,7 @@ const [isDropdownVisible, setDropdownVisible] = useState(false);
                                         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                                                 <div className="bg-white rounded-lg shadow-2xl w-11/12 max-w-md p-6">
                                                         {
-                                                                selectedOrder?.store_id !== null ? (
+                                                                selectedOrder?.store_id !== null && selectedOrder?.status !=="delete"  ? (
                                                                         <div>
                                                                         <h2 className="text-2xl font-semibold text-gray-800 text-center mb-2">
                                                                         Please Enter Store Details
