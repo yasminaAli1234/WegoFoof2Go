@@ -111,13 +111,37 @@ const BuyDomainPage =()=>{
     //     dispatch(addToCart(productToCart));
     // };
 
-    const handleAddToCart = (domain) => {
-        if (selectedDomainId == domain.id) {
-            // Deselect plan and remove from cart
-            setSelectedDomainId(null);
-            dispatch(removeFromCart(domain));
-            localStorage.removeItem('selectedDomainId');
-        } else {
+    const handleAddToCart = async(domain,event) => {
+
+        if (event) event.preventDefault();
+        setIsLoading(true);
+    
+        try {
+            const response = await axios.post(
+                'https://login.wegostores.com/user/v1/cart/pending',
+                {
+                    id: domain.id, // Properly include plan.id as a key-value pair
+                    type: "domain",
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${auth.user.token}`,
+                        'Content-Type': 'application/json', // Explicitly specify JSON content type
+                    },
+                }
+            );
+
+            const data = response.data;
+    
+        if (response.status === 200 && data.success === "You can buy it") {
+
+                if (selectedDomainId == domain.id) {
+                    // Deselect plan and remove from cart
+                    setSelectedDomainId(null);
+                    dispatch(removeFromCart(domain));
+                    localStorage.removeItem('selectedDomainId');
+         
+                } else {
             // Deselect previous plan and add new plan
             if (selectedDomainId !== null) {
                 const previousDomain = domainApproved.find((p) => p.id == selectedDomainId);
@@ -127,7 +151,18 @@ const BuyDomainPage =()=>{
             dispatch(addToCart(domain));
             setSelectedDomainId(domain.id);
             localStorage.setItem('selectedDomainId', domain.id);  // Save selected plan to localStorage
+                }
         }
+        else {
+            // Toast error if success message is not "you can buy it"
+            auth.toastError('Error', data?.message || 'Failed to add to cart.');
+        }
+    } catch (error) {
+        console.error(error);
+        auth.toastError(error.response.data.faild)
+    } finally {
+        setIsLoading(false);
+    }
     };
     
     useEffect(() => {
@@ -213,6 +248,7 @@ const BuyDomainPage =()=>{
                 setSelectStore('Select Store'); // Or an empty string '' if that fits your requirements better
                 setSelectStoreId(''); // Or an empty string '' if that fits your requirements better
                 // handleGoBack();
+                setActiveTab("pending")
                 window.location.reload(true);
             } else {
                 auth.toastError('Failed to Send Domain.');
@@ -401,7 +437,7 @@ const BuyDomainPage =()=>{
                                     <div className={`text-center font-semibold border-t-2 ${selectedDomainId == domain.id ? 'border-green-500' : 'border-mainColor'}`}>
                                     {selectedDomainId != domain.id ? (
                                         <button
-                                        onClick={() => handleAddToCart(domain)}
+                                        onClick={() => handleAddToCart(domain,event)}
                                         className="w-full p-4 font-semibold text-xl bg-mainColor text-white hover:bg-mainColor"
                                         >
                                         {t("Add to Cart")}
@@ -409,7 +445,7 @@ const BuyDomainPage =()=>{
                                     ) : (
                                         <div className="flex">
                                         <button
-                                            onClick={() => handleAddToCart(domain)} // Remove from cart logic
+                                            onClick={() => handleAddToCart(domain,event)} // Remove from cart logic
                                             className="w-full py-3 text-xl font-semibold text-white bg-red-600 hover:bg-red-700 shadow-md"
                                         >
                                           {t("Remove from Cart")}

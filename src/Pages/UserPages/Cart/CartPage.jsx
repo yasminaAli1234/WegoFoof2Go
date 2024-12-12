@@ -5,7 +5,7 @@
 
 // const CartPage = () => {
 //   const cartItems = useSelector((state) => state.cart);
-//   const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
 //   useEffect(() => {
 //     console.log(cartItems); // Log cart items whenever they change

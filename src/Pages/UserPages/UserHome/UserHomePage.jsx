@@ -90,7 +90,7 @@ const UserHomePage = () => {
     {/* Header */}
     <header className="flex flex-col sm:flex-row sm:justify-between sm:items-center bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-6 rounded-xl shadow-lg mb-8">
       <div>
-        <h1 className="text-3xl font-bold mb-2">{t("Welcome Back!")}</h1>
+        <h1 className="text-3xl font-bold mb-2">{t("Welcome !")}</h1>
         <p className="text-gray-200 text-sm">
           {t("Here’s an overview of your dashboard")}
         </p>
