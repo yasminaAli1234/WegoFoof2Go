@@ -18,7 +18,7 @@ const AddPaymentMethodPage = () => {
   const [thumbnails_ar, setThumbnails_ar] = useState("");
   const [title_ar, setTitle_ar] = useState("");
   const [description_ar, setDescription_ar] = useState("");
-  const translate =new FormData();
+  
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const uploadRef = useRef();
@@ -81,14 +81,31 @@ const AddPaymentMethodPage = () => {
 
     setIsLoading(true);
     try {
-      const formData = new FormData();
-      formData.append("name", title);
-      formData.append("description", description);
-      formData.append("thumbnail", thumbnailFile); // Append the file
+    // Prepare form data
+    const formData = new FormData();
+    formData.append("name", title);
+    formData.append("description", description);
+    formData.append("thumbnail", thumbnailFile);
 
-      translate["name"] = title_ar;
-      translate["description"] = description_ar;
-      translate["thumbnail"] = thumbnailFile;
+    // Arabic translations
+    const translations = [
+      { key: "name", value: title_ar, locale: "ar" },
+      { key: "description", value: description_ar, locale: "ar" },
+      { key: "thumbnail", value: thumbnails_ar, locale: "ar" },
+    ];
+
+    formData.append("translations", JSON.stringify(translations));
+
+          // Debugging: log FormData entries
+          let formDataEntries = [];
+          for (let pair of formData.entries()) {
+              formDataEntries.push(`${pair[0]}: ${pair[1]}`);
+          }
+  
+          // Display the form data in a readable format (console log or alert)
+          console.log("Form Data:");
+          console.log(formDataEntries.join("\n"));
+  
 
       const response = await axios.post(
         "https://login.wegostores.com/admin/v1/payment/method/create",

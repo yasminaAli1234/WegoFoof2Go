@@ -245,18 +245,15 @@ const AddExtraProductPage = () => {
                 return;
             }
             if (!semiAnnualPrice) {
-                auth.toastError('Please Enter the semi-Annual Price.');
+                auth.toastError('Please Enter the Semi-Annual Price.');
                 return;
             }
             if (!yearlyPrice) {
                 auth.toastError('Please Enter the Yearly Price.');
                 return;
             }
-        
-
-
         }
-
+    
         if (extraTypeName_ar === 'one_time' && !price_ar) {
             auth.toastError(':الرجاء إدخال السعر');
             return;
@@ -279,7 +276,6 @@ const AddExtraProductPage = () => {
                 return;
             }
         }
-        
     
         setIsLoading(true);
         try {
@@ -288,80 +284,80 @@ const AddExtraProductPage = () => {
             formData.append('description', description);
             formData.append('setup_fees', fee);
             formData.append('included', included || 0);
-
+    
             // Set data fields based on selected type
             if (extraType === 'One Time') {
                 formData.append('status', 'one_time');
                 formData.append('price', price);
             } else if (extraType === 'Recurring') {
                 formData.append('status', 'recurring');
-
-                // Append selected prices if inputs are shown and filled
-            if (showMonthlyPriceInput && monthlyPrice) {
-                formData.append('monthly', monthlyPrice);
-                formData.append('discount_monthly', monthlyDiscountPrice);
-                // formData.append('setupFees_monthly', MonthlySetUpFeesPrice);
-            }
-            if (showQuarterlyPriceInput && quarterlyPrice) {
-                formData.append('quarterly', quarterlyPrice);
-                formData.append('discount_quarterly', quarterlyDiscountPrice);
-                // formData.append('setupFees_quarterly', quarterlyDiscountPrice);
-            }
-            if (showSemiAnnualPriceInput && semiAnnualPrice) {
-                formData.append('semi_annual', semiAnnualPrice);
-                formData.append('discount_semi_annual', semiAnnualDiscountPrice);
-                // formData.append('setupFees_semi_annual', semiAnnualSetUpFeesPrice);
-            }
-            if (showYearlyPriceInput && yearlyPrice) {
-                formData.append('yearly', yearlyPrice);
-                formData.append('discount_yearly', yearlyDiscountPrice);
-                // formData.append('setupFees_yearly', yearlySetUpFeesPrice);
-            }
-            }
-
-            selectPlanId.forEach((planId, index) => {
-                formData.append(`plans[${index}]`, planId);
-              });
     
-            // Logging formData for debugging
-            for (let pair of formData.entries()) {
-                console.log(pair[0] + ', ' + pair[1]);
+                // Append selected prices if inputs are shown and filled
+                if (showMonthlyPriceInput && monthlyPrice) {
+                    formData.append('monthly', monthlyPrice);
+                    formData.append('discount_monthly', monthlyDiscountPrice);
+                }
+                if (showQuarterlyPriceInput && quarterlyPrice) {
+                    formData.append('quarterly', quarterlyPrice);
+                    formData.append('discount_quarterly', quarterlyDiscountPrice);
+                }
+                if (showSemiAnnualPriceInput && semiAnnualPrice) {
+                    formData.append('semi_annual', semiAnnualPrice);
+                    formData.append('discount_semi_annual', semiAnnualDiscountPrice);
+                }
+                if (showYearlyPriceInput && yearlyPrice) {
+                    formData.append('yearly', yearlyPrice);
+                    formData.append('discount_yearly', yearlyDiscountPrice);
+                }
             }
-            translation['name']= name_ar;
-            translation['description']= description_ar;
-            translation['setup_fees']= fee_ar
+    
+            // selectPlanId.forEach((planId, index) => {
+            //     formData.append(`plans[${index}]`, planId);
+            // });
+    
+            // Create translation array
+            const translations = [
+                { key: 'name', value: name_ar, locale: 'ar' },
+                { key: 'description', value: description_ar, locale: 'ar' },
+                { key: 'setup_fees', value: fee_ar, locale: 'ar' },
+            ];
+    
+            // Handle the translation for recurring products
+            if (extraType_ar === 'One Time') {
+                translations.push({ key: 'status', value: 'one_time', locale: 'ar' });
+                translations.push({ key: 'price', value: price_ar, locale: 'ar' });
+            } else if (extraType_ar === 'Recurring') {
+                translations.push({ key: 'status', value: 'recurring', locale: 'ar' });
+    
+                if (showMonthlyPriceInput_ar && monthlyPrice_ar) {
+                    translations.push({ key: 'monthly', value: monthlyPrice_ar, locale: 'ar' });
+                    translations.push({ key: 'discount_monthly', value: monthlyDiscountPrice_ar, locale: 'ar' });
+                }
+                if (showQuarterlyPriceInput_ar && quarterlyPrice_ar) {
+                    translations.push({ key: 'quarterly', value: quarterlyPrice_ar, locale: 'ar' });
+                    translations.push({ key: 'discount_quarterly', value: quarterlyDiscountPrice_ar, locale: 'ar' });
+                }
+                if (showSemiAnnualPriceInput_ar && semiAnnualPrice_ar) {
+                    translations.push({ key: 'semi_annual', value: semiAnnualPrice_ar, locale: 'ar' });
+                    translations.push({ key: 'discount_semi_annual', value: semiAnnualDiscountPrice_ar, locale: 'ar' });
+                }
+                if (showYearlyPriceInput_ar && yearlyPrice_ar) {
+                    translations.push({ key: 'yearly', value: yearlyPrice_ar, locale: 'ar' });
+                    translations.push({ key: 'discount_yearly', value: yearlyDiscountPrice_ar, locale: 'ar' });
+                }
+            }
+    
+            formData.append('translations', JSON.stringify(translations));
 
-                        // Set data fields based on selected type
-                        if (extraType_ar === 'One Time') {
-                            translation.append('status', 'one_time');
-                            translation.append('price', price);
-                        } else if (extraType_ar === 'Recurring') {
-                            translation.append('status', 'recurring');
-            
-                            // Append selected prices if inputs are shown and filled
-                        if (showMonthlyPriceInput_ar && monthlyPrice_ar) {
-                            translation.append('monthly', monthlyPrice_ar);
-                            translation.append('discount_monthly', monthlyDiscountPrice_ar);
-                            // formData.append('setupFees_monthly', MonthlySetUpFeesPrice);
-                        }
-                        if (showQuarterlyPriceInput_ar && quarterlyPrice_ar) {
-                            translation.append('quarterly', quarterlyPrice_ar);
-                            translation.append('discount_quarterly', quarterlyDiscountPrice_ar);
-                            // formData.append('setupFees_quarterly', quarterlyDiscountPrice);
-                        }
-                        if (showSemiAnnualPriceInput_ar && semiAnnualPrice_ar) {
-                            translation.append('semi_annual', semiAnnualPrice_ar);
-                            translation.append('discount_semi_annual', semiAnnualDiscountPrice_ar);
-                            // formData.append('setupFees_semi_annual', semiAnnualSetUpFeesPrice);
-                        }
-                        if (showYearlyPriceInput_ar && yearlyPrice_ar) {
-                            translation.append('yearly', yearlyPrice_ar);
-                            translation.append('discount_yearly', yearlyDiscountPrice_ar);
-                            // formData.append('setupFees_yearly', yearlySetUpFeesPrice);
-                        }
-                        }
-                        formData.append('translations', translation)
-
+                // Debugging: log FormData entries
+                let formDataEntries = [];
+                for (let pair of formData.entries()) {
+                    formDataEntries.push(`${pair[0]}: ${pair[1]}`);
+                }
+        
+                // Display the form data in a readable format (console log or alert)
+                console.log("Form Data:");
+                console.log(formDataEntries.join("\n"));
     
             // Sending the form data via POST request
             const response = await axios.post(
@@ -375,24 +371,22 @@ const AddExtraProductPage = () => {
                 }
             );
     
-           
-                if (response.status === 200) {
-                    auth.toastSuccess(`${language === 'en' ? 'Extra Product added successfully!' : 'تم إضافة المنتج الإضافي بنجاح!'}`);
-                    handleGoBack();
-                } else {
-                    auth.toastError(`${language === 'en' ? 'Failed to add Extra Product.' : 'فشل في إضافة المنتج الإضافي.'}`);
-                }
-            } catch (error) {
-                console.log(error);
-                const errorMessage = error?.response?.data?.errors || 
-                                     (language === 'en' ? 'Network error' : 'خطأ في الشبكة');
-                auth.toastError(errorMessage);
-            } finally {
-                setIsLoading(false);
+            if (response.status === 200) {
+                auth.toastSuccess(`${language === 'en' ? 'Extra Product added successfully!' : 'تم إضافة المنتج الإضافي بنجاح!'}`);
+                handleGoBack();
+            } else {
+                auth.toastError(`${language === 'en' ? 'Failed to add Extra Product.' : 'فشل في إضافة المنتج الإضافي.'}`);
             }
-            
+        } catch (error) {
+            console.log(error);
+            const errorMessage = error?.response?.data?.errors ||
+                                 (language === 'en' ? 'Network error' : 'خطأ في الشبكة');
+            auth.toastError(errorMessage);
+        } finally {
+            setIsLoading(false);
+        }
     };
-
+    
     
     return (
        <div className="">
@@ -816,7 +810,7 @@ const AddExtraProductPage = () => {
                     <input 
                         type="checkbox" 
                         checked={showMonthlyPriceInput_ar}
-                        onChange={() => setShowMonthlyPriceInput(prev => !prev)}
+                        onChange={() => setShowMonthlyPriceInput_ar(prev => !prev)}
                         className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
                     />
                     <label  className="text-2xl text-mainColor font-medium">شهري</label>
@@ -1007,7 +1001,7 @@ const AddExtraProductPage = () => {
             )}
 
             {
-                included ===1 && (
+                included === 1 && (
                 <div className="lg:w-[30%] sm:w-full">
                 <MultipleChoiceMenu
                   ref={dropdownPlanRef}

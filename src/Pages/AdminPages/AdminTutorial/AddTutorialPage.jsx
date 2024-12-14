@@ -49,113 +49,125 @@ const AddTutorialPage = () => {
 
     const handleSubmitAdd = async (event) => {
         event.preventDefault();
-
+      
+        // Input validation
         if (!name) {
-            auth.toastError('Please Enter the Name.');
-            return;
+          auth.toastError('Please Enter the Name.');
+          return;
         }
         if (!description) {
-            auth.toastError('Please Enter the Description.');
-            return;
+          auth.toastError('Please Enter the Description.');
+          return;
         }
         if (!videoFile) {
-            auth.toastError('Please Enter the Video.');
-            return;
+          auth.toastError('Please Enter the Video.');
+          return;
         }
-        // ---------------
+      
+        // Validation for Arabic inputs
         if (!name_ar) {
-            auth.toastError('يرجى إدخال الاسم.');
-            return;
+          auth.toastError('يرجى إدخال الاسم.');
+          return;
         }
-        
         if (!description_ar) {
-            auth.toastError('يرجى إدخال الوصف.');
-            return;
+          auth.toastError('يرجى إدخال الوصف.');
+          return;
         }
-        
-        if (language==='ar' && !videoFile) {
-            auth.toastError('يرجى إدخال الفيديو.');
-            return;
+      
+        if (language === 'ar' && !videoFile) {
+          auth.toastError('يرجى إدخال الفيديو.');
+          return;
         }
-
+      
         setIsLoading(true);
         try {
-            const formData = new FormData();
-            formData.append('title', name);
-            formData.append('description', description);
-            formData.append('video', videoFile);
-            formData.append('tutorial_group_id', groupId);
-
-
-            translate['title']= name_ar;
-            translate['description']= description_ar;
-            translate['video']= videoFile;
-           
-
-
-            for (let pair of formData.entries()) {
-                console.log(pair[0] + ', ' + pair[1]);
-            } 
-            formData.append("translation", translate);
-
-
-
-            const response = await axios.post(
-                'https://login.wegostores.com/admin/v1/tutorial/add',
-                formData,
-                {
-                    headers: {
-                        Authorization: `Bearer ${auth.user.token}`,
-                        'Content-Type': 'multipart/form-data',
-                    },
-                }
-            );
-
-            if (response.status === 200) {
-                auth.toastSuccess(
-                    language === 'ar' 
-                        ? 'تمت إضافة البرنامج التعليمي بنجاح!' 
-                        : 'Tutorial added successfully!'
-                );
-                handleGoBack();
-            } else {
-                console.error(
-                    language === 'ar' 
-                        ? 'فشل في إضافة البرنامج التعليمي:' 
-                        : 'Failed to add Tutorial:', 
-                    response.status, 
-                    response.statusText
-                );
-                auth.toastError(
-                    language === 'ar' 
-                        ? 'فشل في إضافة البرنامج التعليمي.' 
-                        : 'Failed to add Tutorial.'
-                );
+          const formData = new FormData();
+          formData.append('title', name);
+          formData.append('description', description);
+          formData.append('video', videoFile);
+          formData.append('tutorial_group_id', groupId);
+      
+          // Create an array of translation objects
+          const translations = [
+            { key: 'title', value: name_ar, locale: 'ar' },
+            { key: 'description', value: description_ar, locale: 'ar' },
+            { key: 'video', value: videoFile, locale: 'ar' }, // Add this translation for video if needed
+          ];
+      
+          // Append the translations array to formData
+          formData.append("translations", JSON.stringify(translations));
+              // Debugging: log FormData entries
+              let formDataEntries = [];
+              for (let pair of formData.entries()) {
+                  formDataEntries.push(`${pair[0]}: ${pair[1]}`);
+              }
+      
+              // Display the form data in a readable format (console log or alert)
+              console.log("Form Data:");
+              console.log(formDataEntries.join("\n"));
+      
+          // Log form data for debugging purposes
+          for (let pair of formData.entries()) {
+            console.log(pair[0] + ', ' + pair[1]);
+          }
+      
+          const response = await axios.post(
+            'https://login.wegostores.com/admin/v1/tutorial/add',
+            formData,
+            {
+              headers: {
+                Authorization: `Bearer ${auth.user.token}`,
+                'Content-Type': 'multipart/form-data',
+              },
             }
-        } catch (error) {
+          );
+      
+          if (response.status === 200) {
+            auth.toastSuccess(
+              language === 'ar'
+                ? 'تمت إضافة البرنامج التعليمي بنجاح!'
+                : 'Tutorial added successfully!'
+            );
+            handleGoBack();
+          } else {
             console.error(
-                language === 'ar' 
-                    ? 'خطأ أثناء إضافة البرنامج التعليمي:' 
-                    : 'Error adding Tutorial:', 
-                error?.response?.data?.errors || 'Network error'
+              language === 'ar'
+                ? 'فشل في إضافة البرنامج التعليمي:'
+                : 'Failed to add Tutorial:',
+              response.status,
+              response.statusText
             );
-        
-            const errorMessages = error?.response?.data?.errors;
-            let errorMessageString = language === 'ar' ? 'حدث خطأ' : 'Error occurred';
-        
-            if (errorMessages) {
-                errorMessageString = Object.values(errorMessages).flat().join(' ');
-            }
-        
             auth.toastError(
-                language === 'ar' 
-                    ? `خطأ: ${errorMessageString}` 
-                    : `Error: ${errorMessageString}`
+              language === 'ar'
+                ? 'فشل في إضافة البرنامج التعليمي.'
+                : 'Failed to add Tutorial.'
             );
+          }
+        } catch (error) {
+          console.error(
+            language === 'ar'
+              ? 'خطأ أثناء إضافة البرنامج التعليمي:'
+              : 'Error adding Tutorial:',
+            error?.response?.data?.errors || 'Network error'
+          );
+      
+          const errorMessages = error?.response?.data?.errors;
+          let errorMessageString = language === 'ar' ? 'حدث خطأ' : 'Error occurred';
+      
+          if (errorMessages) {
+            errorMessageString = Object.values(errorMessages).flat().join(' ');
+          }
+      
+          auth.toastError(
+            language === 'ar'
+              ? `خطأ: ${errorMessageString}`
+              : `Error: ${errorMessageString}`
+          );
         } finally {
-            setIsLoading(false);
+          setIsLoading(false);
         }
-    };
+      };
+      
     const handleChangeLanguage = () => {
         const newLanguage = language === 'en' ? 'ar' : 'en'; 
         setLanguage(newLanguage); 

@@ -39,7 +39,8 @@ const AddUserPage = () => {
 
     const handleSubmitAdd = async (event) => {
         event.preventDefault();
-
+    
+        // Input validation
         if (!name) {
             auth.toastError('Please Enter the Name.');
             return;
@@ -60,8 +61,8 @@ const AddUserPage = () => {
             auth.toastError('Please Enter the Status.');
             return;
         }
-        // translate to arabic
-
+    
+        // Translate to Arabic
         if (!name_ar) {
             auth.toastError('يرجى إدخال الاسم.');
             return;
@@ -82,40 +83,53 @@ const AddUserPage = () => {
             auth.toastError('يرجى إدخال الحالة.');
             return;
         }
-      
-
+    
+        // Prepare FormData
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('phone', phone);
+        formData.append('email', email);
+        formData.append('password', password);
+        formData.append('status', activeUser);
+    
+        // Create translations array
+        const translations = [
+            { key: 'name', value: name_ar, locale: 'ar' },
+            { key: 'phone', value: phone_ar, locale: 'ar' },
+            { key: 'email', value: email_ar, locale: 'ar' },
+            { key: 'password', value: password_ar, locale: 'ar' },
+            { key: 'status', value: activeUser_ar, locale: 'ar' },
+        ];
+    
+        // Append translations to FormData as JSON string
+        formData.append("translations", JSON.stringify(translations));
+            // Debugging: log FormData entries
+            let formDataEntries = [];
+            for (let pair of formData.entries()) {
+                formDataEntries.push(`${pair[0]}: ${pair[1]}`);
+            }
+    
+            // Display the form data in a readable format (console log or alert)
+            console.log("Form Data:");
+            console.log(formDataEntries.join("\n"));
+    
+        // Set loading state
         setIsLoading(true);
+    
         try {
-            const formData = new FormData();
-            formData.append('name', name);
-            formData.append('phone', phone);
-            formData.append('email', email); // Append the file
-            formData.append('password', password); // Append the file
-            formData.append('status', activeUser); // Append the file
-
-            // append into translate array
-
-            translate['name']= name_ar;
-            translate['phone'] = phone_ar;
-            translate['email']= email_ar;
-            translate['password']=password_ar;
-            translate['status']= activeUser_ar;
-            console.log(translate);
-
-           
-
-
+            // Send data to the API
             const response = await axios.post(
                 'https://login.wegostores.com/admin/v1/users/add',
                 formData,
                 {
                     headers: {
                         Authorization: `Bearer ${auth.user.token}`,
-                        'Content-Type': 'multipart/form-data',
+                        'Content-Type': 'multipart/form-data', // Use multipart/form-data since we're sending FormData
                     },
                 }
             );
-
+    
+            // Handle response
             if (response.status === 200) {
                 auth.toastSuccess(`${language === 'en' ? 'User added successfully!' : 'تم إضافة المستخدم بنجاح!'}`);
                 handleGoBack();
@@ -123,25 +137,25 @@ const AddUserPage = () => {
                 console.error('Failed to add User:', response.status, response.statusText);
                 auth.toastError(`${language === 'en' ? 'Failed to add User.' : 'فشل في إضافة المستخدم.'}`);
             }
-            } catch (error) {
-                const errors = error.response?.data?.error;
-                if (errors) {
-                    if (errors.email?.includes('The email has already been taken.')) {
-                        auth.toastError(`${language === 'en' ? 'The email has already been taken.' : 'تم أخذ البريد الإلكتروني بالفعل.'}`);
-                    } else if (errors.phone?.includes('The phone has already been taken.')) {
-                        auth.toastError(`${language === 'en' ? 'The phone has already been taken.' : 'تم أخذ رقم الهاتف بالفعل.'}`);
-                    } else {
-                        auth.toastError(`${language === 'en' ? 'Unexpected error occurred.' : 'حدث خطأ غير متوقع.'}`);
-                    }
+        } catch (error) {
+            console.log(error);
+            const errors = error.response?.data?.error;
+            if (errors) {
+                if (errors.email?.includes('The email has already been taken.')) {
+                    auth.toastError(`${language === 'en' ? 'The email has already been taken.' : 'تم أخذ البريد الإلكتروني بالفعل.'}`);
+                } else if (errors.phone?.includes('The phone has already been taken.')) {
+                    auth.toastError(`${language === 'en' ? 'The phone has already been taken.' : 'تم أخذ رقم الهاتف بالفعل.'}`);
                 } else {
-                    auth.toastError(`${language === 'en' ? 'Error posting data!' : 'خطأ في إرسال البيانات!'}`);
+                    auth.toastError(`${language === 'en' ? 'Unexpected error occurred.' : 'حدث خطأ غير متوقع.'}`);
                 }
-                console.log('تفاصيل الخطأ:', errors);
-            } finally {
-                setIsLoading(false);
+            } else {
+                auth.toastError(`${language === 'en' ? 'Error posting data!' : 'خطأ في إرسال البيانات!'}`);
             }
-            
+        } finally {
+            setIsLoading(false);
+        }
     };
+    
     const handleChangeLanguage = () => {
         const newLanguage = language === 'en' ? 'ar' : 'en'; 
         setLanguage(newLanguage); 
@@ -162,7 +176,7 @@ const AddUserPage = () => {
     handleClick={() => handleChangeLanguage()}
 />
 <form onSubmit={handleSubmitAdd} className="w-full flex flex-col items-center justify-center gap-y-10 m-5">
-             {language==='en'?     <div className="w-full flex flex-wrap items-center justify-start gap-10">
+             {language==='en'? <div className="w-full flex flex-wrap items-center justify-start gap-10">
                       <div className="lg:w-[30%] sm:w-full">
                         <InputCustom
                                 type="text"

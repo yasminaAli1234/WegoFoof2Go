@@ -186,71 +186,63 @@ const AddSubscriptionPage = () => {
     const handleGoBack = () => {
         navigate(-1, { replace: true });
     };
-
     const handleSubmitAdd = async (event) => {
         event.preventDefault();
-
-        if (!selectPlanId) {
-            auth.toastError('Please Select Plan.');
+    
+        // Validation for English fields
+        if (!selectPlanId || !selectUserId || !selectPackageName) {
+            auth.toastError('Please select the required fields.');
             return;
         }
-        if (!selectUserId) {
-            auth.toastError('Please Select User.');
+    
+        // Validation for Arabic fields
+        if (!selectPlanId_ar || !selectUserId_ar || !selectPackageName_ar) {
+            auth.toastError('يرجى اختيار الحقول المطلوبة.');
             return;
         }
-        if (!selectPackageName) {
-            auth.toastError('Please Select Plan Package.');
-            return;
-        }
-
-        if (!selectPlanId_ar) {
-            auth.toastError('يرجى اختيار خطة.');
-            return;
-        }
-        if (!selectUserId_ar) {
-            auth.toastError('يرجى اختيار مستخدم.');
-            return;
-        }
-        if (!selectPackageName_ar) {
-            auth.toastError('يرجى اختيار باقة الخطة.');
-            return;
-        }
-
+    
         setIsLoading(true);
+    
         try {
+            // Prepare translations array
+            const translations = [
+                { key: 'plan_id', value: selectPlanId_ar, locale: 'ar' },
+                { key: 'user_id', value: selectUserId_ar, locale: 'ar' },
+                { key: 'package', value: selectPackageName_ar, locale: 'ar' }
+            ];
+    
+            // Create FormData object
             const formData = new FormData();
+    
+            // Append the main fields
             formData.append('plan_id', selectPlanId);
             formData.append('user_id', selectUserId);
-            // append into translate
-            translate['plan_id'] = selectPlanId_ar;
-            translate['user_id']= selectUserId_ar
-
+    
+            // Append package selection
             if (selectPackageName === 'Monthly') {
-                formData.append('package', "1"); 
+                formData.append('package', '1');
             } else if (selectPackageName === '3 Months') {
-                formData.append('package', "3"); 
+                formData.append('package', '3');
             } else if (selectPackageName === '6 Months') {
-                formData.append('package', "6"); 
+                formData.append('package', '6');
             } else if (selectPackageName === 'Yearly') {
-                formData.append('package', "yearly"); 
+                formData.append('package', 'yearly');
             }
-
-            if (selectPackageName_ar === 'شهري') {
-                translate.append('package', "1"); 
-            } else if (selectPackageName_ar === '3 شهور') {
-                translate.append('package', "3"); 
-            } else if (selectPackageName === '6 شهور') {
-                translate.append('package', "6"); 
-            } else if (selectPackageName === 'سنوي') {
-                translate.append('package', "'سنوي'"); 
-            }
-
+    
+            // Append translations array directly to FormData
+            formData.append('translations', JSON.stringify(translations));
+    
+            // Debugging: log FormData entries
+            let formDataEntries = [];
             for (let pair of formData.entries()) {
-                console.log(pair[0] + ', ' + pair[1]);
-            } 
-            console.log(`translate data : ${translate}`)
-            formData.append('translation', translate)
-
+                formDataEntries.push(`${pair[0]}: ${pair[1]}`);
+            }
+    
+            // Display the form data in a readable format (console log or alert)
+            console.log("Form Data:");
+            console.log(formDataEntries.join("\n"));
+    
+            // API request
             const response = await axios.post(
                 'https://login.wegostores.com/admin/v1/subscripe/add',
                 formData,
@@ -261,27 +253,26 @@ const AddSubscriptionPage = () => {
                     },
                 }
             );
-
-            
-                if (response.status === 200) {
-                    // Show success message to the user based on language
-                    auth.toastSuccess(language === 'en' ? 'Subscriber added successfully!' : 'تمت إضافة المشترك بنجاح!');
-                    handleGoBack();
-                } else {
-                    // Log the error for debugging and show an error message to the user based on language
-                    console.error(language === 'en' ? 'Failed to add Subscriber:' : 'فشل في إضافة المشترك:', response.status, response.statusText);
-                    auth.toastError(language === 'en' ? 'Failed to add Subscriber.' : 'فشل في إضافة المشترك.');
-                }
-            } catch (error) {
-                // Capture and log detailed error information based on language
-                const errors = error.response?.data?.error;
-                console.log(language === 'en' ? 'Error details:' : 'تفاصيل الخطأ:', errors);
-            } finally {
-                // Stop the loading indicator regardless of success or error
-                setIsLoading(false);
+    
+            if (response.status === 200) {
+                // Success message based on language
+                auth.toastSuccess(language === 'en' ? 'Subscriber added successfully!' : 'تمت إضافة المشترك بنجاح!');
+                handleGoBack();
+            } else {
+                // Error handling based on language
+                console.error(language === 'en' ? 'Failed to add Subscriber:' : 'فشل في إضافة المشترك:', response.status, response.statusText);
+                auth.toastError(language === 'en' ? 'Failed to add Subscriber.' : 'فشل في إضافة المشترك.');
             }
-            
+    
+        } catch (error) {
+            // Capture and log error information
+            console.log(language === 'en' ? 'Error details:' : 'تفاصيل الخطأ:', error?.response?.data?.error);
+            auth.toastError(language === 'en' ? 'An error occurred.' : 'حدث خطأ.');
+        } finally {
+            setIsLoading(false);
+        }
     };
+    
     
 
     

@@ -16,7 +16,8 @@ const AddWelcomOfferPage = () => {
     const [price, setPrice] = useState('');
     const [active, setActive] = useState(0); // Default status to 0
     const translate= new FormData();
-
+    const [price_ar, setPrice_ar] = useState('');
+    const [active_ar, setActive_ar] = useState(0); // Default status to 0
     const [arabicThumbnails, setArabicThumbnails] = useState('');
     const [arabicThumbnails_ar, setArabicThumbnails_ar] = useState('');
     const [arabicThumbnailFile, setArabicThumbnailFile] = useState(null); // Store the file object
@@ -29,12 +30,15 @@ const AddWelcomOfferPage = () => {
     const [selectPlan, setSelectPlan] = useState('Select Plan');
     const [selectPlan_ar, setSelectPlan_ar] = useState('اختر الخطة');
     const [selectPlanId, setSelectPlanId] = useState('');
+    const [selectPlanId_ar, setSelectPlanId_ar] = useState('');
     const [openSelectPlan, setOpenSelectPlan] = useState(false);
 
     const [durationData, setDurationData] = useState([{ name: 'Monthly' }, { name: 'Quarterly' } , { name: 'SemiAnnual' },  { name: 'Yearly' }]);
+    const [durationData_ar, setDurationData_ar] = useState([{ name: 'Monthly' }, { name: 'Quarterly' } , { name: 'SemiAnnual' },  { name: 'Yearly' }]);
     const [selectDuration, setSelectDuration] = useState('Select Duration');
     const [selectDuration_ar, setSelectDuration_ar] = useState('اختر المدة');
     const [selectDurationName, setSelectDurationName] = useState('');
+    const [selectDurationName_ar, setSelectDurationName_ar] = useState('');
     const [openSelectDuration, setOpenSelectDuration] = useState(false);
 
     const dropdownPlanRef =useRef();
@@ -101,11 +105,13 @@ const AddWelcomOfferPage = () => {
     const handleClick = (e) => {
         const isChecked = e.target.checked; // Checked status
         setActive(isChecked ? 1 : 0); // Set paymentActive as 1 (true) or 0 (false)
+        setActive_ar(isChecked ? 1 : 0); 
     };
 
     const handleOpenSelectPlan = () => {
         setOpenSelectPlan(!openSelectPlan)
         setOpenSelectDuration(false)
+      
     };
     const handleOpenSelectDuration = () => {
     setOpenSelectPlan(false)
@@ -119,6 +125,10 @@ const AddWelcomOfferPage = () => {
         setSelectPlan(selectedOptionName);
         setSelectPlanId(parseInt(selectedOptionValue));
         setOpenSelectPlan(false);
+        // ---
+        setSelectPlan_ar(selectedOptionName);
+        setSelectPlanId_ar(parseInt(selectedOptionValue));
+        
         console.log('Selected Plan:', selectedOptionName);
         console.log('Plan ID:', selectedOptionValue);
     };
@@ -129,6 +139,9 @@ const AddWelcomOfferPage = () => {
         setSelectDuration(selectedOptionName);
         setSelectDurationName(parseInt(selectedOptionValue));
         setOpenSelectDuration(false);
+        // ---
+        setSelectDuration_ar(selectedOptionName);
+        setSelectDurationName_ar(parseInt(selectedOptionValue));
         console.log('Selected Duration:', selectedOptionName);
         console.log('Duration Name:', selectedOptionValue);
     };
@@ -161,6 +174,7 @@ const AddWelcomOfferPage = () => {
             Yearly: 'yearly',
         };  
         const duration = durationMap[selectDuration] || selectDuration;
+        const duration_ar = durationMap[selectDuration_ar] || selectDuration_ar;
 
         if (!selectPlanId) {
             auth.toastError('Please Select the Plan.');
@@ -175,7 +189,7 @@ const AddWelcomOfferPage = () => {
             return;
         }
 
-        if (!selectPlanId &&language==='ar' ) {
+        if (!selectPlanId_ar ) {
             auth.toastError('يرجى اختيار الخطة.');
             return;
         }
@@ -184,6 +198,10 @@ const AddWelcomOfferPage = () => {
             auth.toastError('يرجى اختيار المدة.');
             return;
         }
+        if (!price_ar) {
+          auth.toastError('يرجى اختيار السعر.');
+          return;
+      }
         
      
         
@@ -191,12 +209,12 @@ const AddWelcomOfferPage = () => {
         //     auth.toastError('Please Enter the Status.');
         //     return;
         // }
-        if (!arabicThumbnails && language==='ar') {
+        if (!arabicThumbnails_ar) {
             auth.toastError('يرجى رفع صورة المعاينة العربية.');
             return;
         }
         
-        if (!englishThumbnails && language==='ar') {
+        if (!englishThumbnails_ar) {
             auth.toastError('يرجى رفع صورة المعاينة الإنجليزية.');
             return;
         }
@@ -211,18 +229,27 @@ const AddWelcomOfferPage = () => {
             formData.append('ar_image', arabicThumbnailFile);
             formData.append('en_image', englishThumbnailFile); // Append the file
 
-            translate.append('plan_id', selectPlanId);
-            translate.append('duration', duration);
-            
-            translate.append('status', active || 0);
-            translate.append('ar_image', arabicThumbnailFile);
-            translate.append('en_image', englishThumbnailFile); // Append the file
+               // Create translations array
+        const translations = [
+          { key: 'plan_id', value: selectPlanId_ar, locale: 'ar' },
+          { key: 'duration', value: duration_ar, locale: 'ar' },
+          { key: 'status', value: active || 0, locale: 'ar' },
+          { key: 'ar_image', value: arabicThumbnailFile || 0, locale: 'ar' },
+          { key: 'en_image', value: englishThumbnailFile || 0, locale: 'ar' },
+      ];
 
+            // Append the translations array to formData
+            formData.append("translations", JSON.stringify(translations));
+            // Debugging: log FormData entries
+            let formDataEntries = [];
             for (let pair of formData.entries()) {
-                console.log(pair[0] + ', ' + pair[1]);
-            } 
-            formData.append("translation", translate);
-
+                formDataEntries.push(`${pair[0]}: ${pair[1]}`);
+            }
+            
+            // Display the form data in a readable format (console log or alert)
+            console.log("Form Data:");
+            console.log(formDataEntries.join("\n"));
+            
             const response = await axios.post(
                 'https://login.wegostores.com/admin/v1/welcome_offer/add',
                 formData,

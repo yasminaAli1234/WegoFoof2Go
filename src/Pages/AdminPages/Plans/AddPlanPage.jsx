@@ -107,151 +107,87 @@ const AddPlanPage = () => {
 
     const handleSubmitAdd = async (event) => {
         event.preventDefault();
-        
-        if (!name) {
-            auth.toastError('Please Enter the Name.');
+    
+        // Validation for English fields
+        if (!name || !title || !description || !fee || !monthlyPrice || !quarterlyPrice || !semiAnnualPrice || !yearlyPrice) {
+            auth.toastError('All required fields must be filled out.');
             return;
         }
-        if (!title) {
-            auth.toastError('Please Enter the Title.');
+    
+        // Validation for Arabic fields
+        if (!name_ar || !title_ar || !description_ar || !fee_ar || !monthlyPrice_ar || !quarterlyPrice_ar || !semiAnnualPrice_ar || !yearlyPrice_ar) {
+            auth.toastError('Please fill out all Arabic fields.');
             return;
         }
-        if (!description) {
-            auth.toastError('Please Enter the Description.');
-            return;
-        }
-
-        if (!fee) {
-            auth.toastError('Please Enter the Setup Fees.');
-            return;
-        }
-        if (!monthlyPrice) {
-            auth.toastError('Please Enter the Monthly Price.');
-            return;
-        }
-        if (!quarterlyPrice) {
-            auth.toastError('Please Enter the Quarterly Price.');
-            return;
-        }
-        if (!semiAnnualPrice) {
-            auth.toastError('Please Enter the semi-Annual Price.');
-            return;
-        }
-        if (!yearlyPrice) {
-            auth.toastError('Please Enter the Yearly Price.');
-            return;
-        }
-        // check in arabic
-
-        if (!name_ar) {
-            auth.toastError('Please Enter the Name in Arabic.');
-            return;
-        }
-        if (!title_ar) {
-            auth.toastError('Please Enter the Title in Arabic.');
-            return;
-        }
-        if (!description_ar) {
-            auth.toastError('Please Enter the Description in Arabic.');
-            return;
-        }
-
-        if (!fee_ar) {
-            auth.toastError('Please Enter the Setup Fees in Arabic.');
-            return;
-        }
-        if (!monthlyPrice_ar) {
-            auth.toastError('Please Enter the Monthly Price in Arabic.');
-            return;
-        }
-        if (!quarterlyPrice_ar) {
-            auth.toastError('Please Enter the Quarterly Price in Arabic.');
-            return;
-        }
-        if (!semiAnnualPrice_ar) {
-            auth.toastError('Please Enter the semi-Annual Price in Arabic.');
-            return;
-        }
-        if (!yearlyPrice_ar) {
-            auth.toastError('Please Enter the Yearly Price in Arabic.');
-            return;
-        }
-        
-
+    
         setIsLoading(true);
+    
         try {
-
-            const translations  = [
-                { key: 'name', "value": name_ar, locale: 'ar' },
+            // Prepare translations array
+            const translations = [
+                { key: 'name', value: name_ar, locale: 'ar' },
                 { key: 'title', value: title_ar, locale: 'ar' },
                 { key: 'description', value: description_ar, locale: 'ar' },
                 { key: 'fee', value: fee_ar, locale: 'ar' },
                 { key: 'limitPlan', value: limitPlan_ar, locale: 'ar' },
                 { key: 'thumbnails', value: thumbnails_ar, locale: 'ar' },
                 { key: 'app', value: appActive_ar, locale: 'ar' },
-                // Include price fields in the translations
                 { key: 'monthly', value: monthlyPrice_ar, locale: 'ar' },
                 { key: 'quarterly', value: quarterlyPrice_ar, locale: 'ar' },
                 { key: 'semi_annual', value: semiAnnualPrice_ar, locale: 'ar' },
                 { key: 'yearly', value: yearlyPrice_ar, locale: 'ar' },
-                
-                // Include discount fields in the translations
                 { key: 'discount_monthly', value: monthlyDiscountPrice_ar, locale: 'ar' },
                 { key: 'discount_quarterly', value: quarterlyDiscountPrice_ar, locale: 'ar' },
                 { key: 'discount_semi_annual', value: semiAnnualDiscountPrice_ar, locale: 'ar' },
                 { key: 'discount_yearly', value: yearlyDiscountPrice_ar, locale: 'ar' },
             ];
+    
+            // Create FormData object
             const formData = new FormData();
-            // formData.append('title', title);
+    
+            // Append main fields
             formData.append('name', name);
             formData.append('description', description);
             formData.append('setup_fees', fee);
             formData.append('limet_store', limitPlan);
-            formData.append('image', thumbnailFile); // Append the file
-            formData.append('app', appActive); // Append the file
+            formData.append('image', thumbnailFile); // Image file
+            formData.append('app', appActive); // App Active field
             
-                 // Append selected prices if inputs are shown and filled
-                 if (showMonthlyPriceInput && monthlyPrice) {
-                    formData.append('monthly', monthlyPrice);
-                    formData.append('discount_monthly', monthlyDiscountPrice ||0);
-                    // formData.append('setupFees_monthly', MonthlySetUpFeesPrice);
-                }
-                if (showQuarterlyPriceInput && quarterlyPrice) {
-                    formData.append('quarterly', quarterlyPrice);
-                    formData.append('discount_quarterly', quarterlyDiscountPrice ||0);
-                    // formData.append('setupFees_quarterly', quarterlyDiscountPrice);
-                }
-                if (showSemiAnnualPriceInput && semiAnnualPrice) {
-                    formData.append('semi_annual', semiAnnualPrice);
-                    formData.append('discount_semi_annual', semiAnnualDiscountPrice||0);
-                    // formData.append('setupFees_semi_annual', semiAnnualSetUpFeesPrice);
-                }
-                if (showYearlyPriceInput && yearlyPrice) {
-                    formData.append('yearly', yearlyPrice);
-                    formData.append('discount_yearly', yearlyDiscountPrice||0);
-                    // formData.append('setupFees_yearly', yearlySetUpFeesPrice);
-                }
-                formData.append('translations', JSON.stringify(translations));
-
-                for (let pair of formData.entries()) {
-                    console.log(pair[0] + ', '+ pair[1]);
-                }
-
-            // append info to arabic
+            // Append price fields if shown and filled
+            if (showMonthlyPriceInput && monthlyPrice) {
+                formData.append('monthly', monthlyPrice);
+                formData.append('discount_monthly', monthlyDiscountPrice || 0);
+            }
+            if (showQuarterlyPriceInput && quarterlyPrice) {
+                formData.append('quarterly', quarterlyPrice);
+                formData.append('discount_quarterly', quarterlyDiscountPrice || 0);
+            }
+            if (showSemiAnnualPriceInput && semiAnnualPrice) {
+                formData.append('semi_annual', semiAnnualPrice);
+                formData.append('discount_semi_annual', semiAnnualDiscountPrice || 0);
+            }
+            if (showYearlyPriceInput && yearlyPrice) {
+                formData.append('yearly', yearlyPrice);
+                formData.append('discount_yearly', yearlyDiscountPrice || 0);
+            }
+    
+            // Append translations array directly to FormData
+            formData.append('translations', JSON.stringify(translations));
+    
+            // Debugging: log FormData entries
+            let formDataEntries = [];
+            for (let pair of formData.entries()) {
+                formDataEntries.push(`${pair[0]}: ${pair[1]}`);
+            }
+    
+            // Display the form data in a readable format (console log or alert)
+            console.log("Form Data:");
+            console.log(formDataEntries.join("\n"));
+    
+            // Optionally, you can show it in an alert (for quick inspection)
             
-        // Create the translations array
-
-
-
-        formData.append('translations', JSON.stringify(translations));
-        
-        console.log(translations)
-                for (let pair of formData.entries()) {
-                    console.log(pair[0] + ', ' + pair[1]);
-                }
-
-                // formData.append('translations', translation)
-
+    
+            // API request
             const response = await axios.post(
                 'https://login.wegostores.com/admin/v1/plan/create',
                 formData,
@@ -262,22 +198,22 @@ const AddPlanPage = () => {
                     },
                 }
             );
-             console.log(response)
+    
             if (response.status === 200) {
                 auth.toastSuccess('Plan added successfully!');
                 handleGoBack();
-                console.log(`response error : ${response}`)
             } else {
                 auth.toastError('Failed to add Plan.');
             }
+    
         } catch (error) {
-            console.log(error)
-            // const errorMessage = error?.response?.data?.errors || 'Network error';
-            // auth.toastError(errorMessage);
+            console.log(error);
+            auth.toastError(error?.response?.data?.errors || 'Network error');
         } finally {
             setIsLoading(false);
         }
     };
+    
     const handleChangeLanguage = () => {
         const newLanguage = language === 'en' ? 'ar' : 'en'; 
         setLanguage(newLanguage); 
@@ -574,280 +510,280 @@ const AddPlanPage = () => {
 
                    
             </div>:
-             <div className="w-full flex flex-wrap items-center justify-start gap-10">
-             <div className="lg:w-[30%] sm:w-full">
-                 <InputCustom
-                     type="text"
-                     borderColor="mainColor"
-                     placeholder="الأسم"
-                     value={name_ar}
-                     onChange={(e) => setName_ar(e.target.value)}
-                     width="w-full"
-                 />
-             </div>
-             <div className="lg:w-[30%] sm:w-full">
-                 <InputCustom
-                     type="text"
-                     borderColor="mainColor"
-                     placeholder="العنوان"
-                     value={title_ar}
-                     onChange={(e) => setTitle_ar(e.target.value)}
-                     width="w-full"
-                 />
-             </div>
-             <div className="lg:w-[30%] sm:w-full">
-             <textarea
-                 className="w-full px-2 py-4 border-2 font-normal eleValueInput rounded-xl border-mainColor text-2xl focus:outline-none focus:ring-2 focus:ring-mainColor"
-                 placeholder="الوصف"
-                 value={description_ar}
-                 onChange={(e) => setDescription_ar(e.target.value)}
-                 rows={1}
-             ></textarea>
-             </div>
+          <div className="w-full flex flex-wrap items-center justify-start gap-10">
+          <div className="lg:w-[30%] sm:w-full">
+              <InputCustom
+                  type="text"
+                  borderColor="mainColor"
+                  placeholder="الأسم"
+                  value={name_ar}
+                  onChange={(e) => setName_ar(e.target.value)}
+                  width="w-full"
+              />
+          </div>
+          <div className="lg:w-[30%] sm:w-full">
+              <InputCustom
+                  type="text"
+                  borderColor="mainColor"
+                  placeholder="العنوان"
+                  value={title_ar}
+                  onChange={(e) => setTitle_ar(e.target.value)}
+                  width="w-full"
+              />
+          </div>
+          <div className="lg:w-[30%] sm:w-full">
+          <textarea
+              className="w-full px-2 py-4 border-2 font-normal eleValueInput rounded-xl border-mainColor text-2xl focus:outline-none focus:ring-2 focus:ring-mainColor"
+              placeholder="الوصف"
+              value={description_ar}
+              onChange={(e) => setDescription_ar(e.target.value)}
+              rows={1}
+          ></textarea>
+          </div>
 
-             <div className="lg:w-[30%] sm:w-full">
-                 <InputCustom
-                     type="number"
-                     borderColor="mainColor"
-                     placeholder="رسوم الإعداد"
-                     value={fee_ar}
-                     onChange={(e) => setFee_ar(e.target.value)}
-                     width="w-full"
-                 />
-             </div>
-             <div className="lg:w-[30%] sm:w-full">
-                 <InputCustom
-                     type="number"
-                     borderColor="mainColor"
-                     placeholder="حد المتجر"
-                     value={limitPlan_ar}
-                     onChange={(e) => setLimitPlan_ar(e.target.value)}
-                     width="w-full"
-                 />
-             </div>
-             <div className="lg:w-[30%] sm:w-full">
-                 <InputCustom
-                         type="text"
-                         borderColor="mainColor"
-                         placeholder="الملف المصغر"
-                         value={thumbnails}
-                         readOnly={true} 
-                         onClick={handleInputClick}
-                         upload="true"
-                         required={false}
-                     />
-                     <input
-                         type="file"
-                         className="hidden"
-                         onChange={handleFileChange}
-                         ref={uploadRef}
-                     />
-             </div>
+          <div className="lg:w-[30%] sm:w-full">
+              <InputCustom
+                  type="number"
+                  borderColor="mainColor"
+                  placeholder="رسوم الإعداد"
+                  value={fee_ar}
+                  onChange={(e) => setFee_ar(e.target.value)}
+                  width="w-full"
+              />
+          </div>
+          <div className="lg:w-[30%] sm:w-full">
+              <InputCustom
+                  type="number"
+                  borderColor="mainColor"
+                  placeholder="حد المتجر"
+                  value={limitPlan_ar}
+                  onChange={(e) => setLimitPlan_ar(e.target.value)}
+                  width="w-full"
+              />
+          </div>
+          <div className="lg:w-[30%] sm:w-full">
+              <InputCustom
+                      type="text"
+                      borderColor="mainColor"
+                      placeholder="الملف المصغر"
+                      value={thumbnails}
+                      readOnly={true} 
+                      onClick={handleInputClick}
+                      upload="true"
+                      required={false}
+                  />
+                  <input
+                      type="file"
+                      className="hidden"
+                      onChange={handleFileChange}
+                      ref={uploadRef}
+                  />
+          </div>
 
-             <div className="flex items-center gap-x-4 w-full">
-                     <span className="text-2xl text-mainColor font-medium">التطبيق</span>
-                      <div>
-                          <CheckBox handleClick={handleClick} checked={appActive_ar}/>
-                      </div>
-             </div>
+          <div className="flex items-center gap-x-4 w-full">
+                  <span className="text-2xl text-mainColor font-medium">التطبيق</span>
+                   <div>
+                       <CheckBox handleClick={handleClick} checked={appActive_ar}/>
+                   </div>
+          </div>
 
-             {/* Price Option Checkboxes */}
-             {/* <div className="lg:w-[30%] sm:w-full flex flex-col gap-2"> */}
-             <div className="flex w-full flex-col gap-5">
-                 {/* Monthly Price Checkbox */}
-                 <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
-                 <div className=" flex items-center gap-3 w-full lg:w-1/3">
-                     <input 
-                         type="checkbox" 
-                         checked={showMonthlyPriceInput_ar}
-                         onChange={() => setShowMonthlyPriceInput_ar(prev => !prev)}
-                         className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
-                     />
-                     <label  className="text-2xl text-mainColor font-medium">شهري</label>
-                 </div>
-                     {/* Conditional Price Inputs */}
-                     {showMonthlyPriceInput_ar && (
-                     <>
-                     <div className="lg:w-1/2 sm:w-full">
-                         <InputCustom
-                             type="number"
-                             borderColor="mainColor"
-                             placeholder="أدخل السعر"
-                             value={monthlyPrice_ar}
-                             onChange={(e) => setMonthlyPrice_ar(e.target.value)}
-                             width="w-full"
-                         />
-                     </div>
-                     <div className="lg:w-1/2 sm:w-full">
+          {/* Price Option Checkboxes */}
+          {/* <div className="lg:w-[30%] sm:w-full flex flex-col gap-2"> */}
+          <div className="flex w-full flex-col gap-5">
+              {/* Monthly Price Checkbox */}
+              <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
+              <div className=" flex items-center gap-3 w-full lg:w-1/3">
+                  <input 
+                      type="checkbox" 
+                      checked={showMonthlyPriceInput_ar}
+                      onChange={() => setShowMonthlyPriceInput_ar(prev => !prev)}
+                      className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
+                  />
+                  <label  className="text-2xl text-mainColor font-medium">شهري</label>
+              </div>
+                  {/* Conditional Price Inputs */}
+                  {showMonthlyPriceInput_ar && (
+                  <>
+                  <div className="lg:w-1/2 sm:w-full">
                       <InputCustom
                           type="number"
                           borderColor="mainColor"
-                          placeholder="أدخل سعر الخصم"
-                          value={monthlyDiscountPrice_ar}
-                          onChange={(e) => setMonthlyDiscountPrice_ar(e.target.value)}
+                          placeholder="أدخل السعر"
+                          value={monthlyPrice_ar}
+                          onChange={(e) => setMonthlyPrice_ar(e.target.value)}
                           width="w-full"
-                          required={false}
                       />
-                     </div>
-                     {/* <div className="lg:w-1/2 sm:w-full">
-                     <InputCustom
-                         type="number"
-                         borderColor="mainColor"
-                         placeholder="أدخل رسوم الإعداد"
-                         value={MonthlySetUpFeesPrice_ar}
-                         onChange={(e) => setMonthlySetUpFeesPrice_ar(e.target.value)}
-                         width="w-full"
-                     />
-                     </div> */}
-                     </>
-                     )}
-                 </div>
+                  </div>
+                  <div className="lg:w-1/2 sm:w-full">
+                   <InputCustom
+                       type="number"
+                       borderColor="mainColor"
+                       placeholder="أدخل سعر الخصم"
+                       value={monthlyDiscountPrice_ar}
+                       onChange={(e) => setMonthlyDiscountPrice_ar(e.target.value)}
+                       width="w-full"
+                       required={false}
+                   />
+                  </div>
+                  {/* <div className="lg:w-1/2 sm:w-full">
+                  <InputCustom
+                      type="number"
+                      borderColor="mainColor"
+                      placeholder="أدخل رسوم الإعداد"
+                      value={MonthlySetUpFeesPrice_ar}
+                      onChange={(e) => setMonthlySetUpFeesPrice_ar(e.target.value)}
+                      width="w-full"
+                  />
+                  </div> */}
+                  </>
+                  )}
+              </div>
 
-                 {/* 3 Months Price Checkbox */}
-                 <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
-                 <div className="flex items-center gap-3 w-full lg:w-1/3 ">
-                     <input 
-                         type="checkbox" 
-                         checked={showQuarterlyPriceInput_ar}
-                         onChange={() => setShowQuarterlyPriceInput_ar(prev => !prev)}
-                         className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
-                     />
-                     <label  className="text-2xl text-mainColor font-medium">ربع سنوي</label>
-                 </div>
-                 {showQuarterlyPriceInput_ar && (
-                     <>
-                     <div className="lg:w-1/2 sm:w-full">
-                         <InputCustom
-                             type="number"
-                             borderColor="mainColor"
-                             placeholder="أدخل السعر"
-                             value={quarterlyPrice_ar}
-                             onChange={(e) => setQuarterlyPrice_ar(e.target.value)}
-                             width="w-full"
-                         />
-                     </div>
-                     <div className="lg:w-1/2 sm:w-full">
-                     <InputCustom
-                         type="number"
-                         borderColor="mainColor"
-                         placeholder="أدخل سعر الخصم"
-                         value={quarterlyDiscountPrice_ar}
-                         onChange={(e) => setQuarterlyDiscountPrice_ar(e.target.value)}
-                         width="w-full"
-                         required={false}
-                     />
-                     </div>
-                     {/* <div className="lg:w-1/2 sm:w-full">
-                     <InputCustom
-                         type="number"
-                         borderColor="mainColor"
-                         placeholder="Enter SetUp Fees"
-                         value={quarterlySetUpFeesPrice}
-                         onChange={(e) => setQuarterlySetUpFeesPrice(e.target.value)}
-                         width="w-full"
-                     />
-                     </div> */}
-                     </>
-                 )}
-                 </div>
+              {/* 3 Months Price Checkbox */}
+              <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
+              <div className="flex items-center gap-3 w-full lg:w-1/3 ">
+                  <input 
+                      type="checkbox" 
+                      checked={showQuarterlyPriceInput_ar}
+                      onChange={() => setShowQuarterlyPriceInput_ar(prev => !prev)}
+                      className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
+                  />
+                  <label  className="text-2xl text-mainColor font-medium">ربع سنوي</label>
+              </div>
+              {showQuarterlyPriceInput_ar && (
+                  <>
+                  <div className="lg:w-1/2 sm:w-full">
+                      <InputCustom
+                          type="number"
+                          borderColor="mainColor"
+                          placeholder="أدخل السعر"
+                          value={quarterlyPrice_ar}
+                          onChange={(e) => setQuarterlyPrice_ar(e.target.value)}
+                          width="w-full"
+                      />
+                  </div>
+                  <div className="lg:w-1/2 sm:w-full">
+                  <InputCustom
+                      type="number"
+                      borderColor="mainColor"
+                      placeholder="أدخل سعر الخصم"
+                      value={quarterlyDiscountPrice_ar}
+                      onChange={(e) => setQuarterlyDiscountPrice_ar(e.target.value)}
+                      width="w-full"
+                      required={false}
+                  />
+                  </div>
+                  {/* <div className="lg:w-1/2 sm:w-full">
+                  <InputCustom
+                      type="number"
+                      borderColor="mainColor"
+                      placeholder="Enter SetUp Fees"
+                      value={quarterlySetUpFeesPrice}
+                      onChange={(e) => setQuarterlySetUpFeesPrice(e.target.value)}
+                      width="w-full"
+                  />
+                  </div> */}
+                  </>
+              )}
+              </div>
 
-                 {/* 6 Months Price Checkbox */}
-                 <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
-                 <div className="flex items-center gap-3 w-full lg:w-1/3 ">
-                     <input 
-                         type="checkbox" 
-                         checked={showSemiAnnualPriceInput_ar}
-                         onChange={() => setShowSemiAnnualPriceInput_ar(prev => !prev)}
-                         className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
-                     />
-                     <label  className="text-2xl text-mainColor font-medium">نصف سنوي</label>
-                 </div>
-                 {showSemiAnnualPriceInput_ar && (
-                     <>
-                     <div className="lg:w-1/2 sm:w-full">
-                         <InputCustom
-                             type="number"
-                             borderColor="mainColor"
-                             placeholder="أدخل السعر"
-                             value={semiAnnualPrice_ar}
-                             onChange={(e) => setSemiAnnualPrice_ar(e.target.value)}
-                             width="w-full"
-                         />
-                     </div>
-                     <div className="lg:w-1/2 sm:w-full">
-                     <InputCustom
-                         type="number"
-                         borderColor="mainColor"
-                         placeholder="أدخل سعر الخصم"
-                         value={semiAnnualDiscountPrice_ar}
-                         onChange={(e) => setSemiAnnualDiscountPrice_ar(e.target.value)}
-                         width="w-full"
-                         required={false}
-                     />
-                     </div>
-                     {/* <div className="lg:w-1/2 sm:w-full">
-                     <InputCustom
-                         type="number"
-                         borderColor="mainColor"
-                         placeholder="Enter SetUp Fees"
-                         value={semiAnnualSetUpFeesPrice}
-                         onChange={(e) => setSemiAnnualSetUpFeesPrice(e.target.value)}
-                         width="w-full"
-                     />
-                     </div> */}
-                     </>
-                 )}
-                 </div>
-                 <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
-                 <div className="flex items-center gap-3 w-full lg:w-1/3 ">
-                     <input 
-                         type="checkbox" 
-                         checked={showYearlyPriceInput_ar}
-                         onChange={() => setShowYearlyPriceInput_ar(prev => !prev)}
-                         className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
-                     />
-                     <label  className="text-2xl text-mainColor font-medium">سنوي</label>
-                 </div>
-                 {showYearlyPriceInput_ar && (
-                     <>
-                     <div className="lg:w-1/2 sm:w-full">
-                         <InputCustom
-                             type="number"
-                             borderColor="mainColor"
-                             placeholder="أدخل السعر"
-                             value={yearlyPrice_ar}
-                             onChange={(e) => setYearlyPrice_ar(e.target.value)}
-                             width="w-full"
-                         />
-                     </div>
-                     <div className="lg:w-1/2 sm:w-full">
-                     <InputCustom
-                         type="number"
-                         borderColor="mainColor"
-                         placeholder="أدخل سعر الخصم"
-                         value={yearlyDiscountPrice_ar}
-                         onChange={(e) => setYearlyDiscountPrice_ar(e.target.value)}
-                         width="w-full"
-                         required={false}
-                     />
-                     </div>
-                     {/* <div className="lg:w-1/2 sm:w-full">
-                     <InputCustom
-                         type="number"
-                         borderColor="mainColor"
-                         placeholder="Enter SetUp Fees"
-                         value={yearlySetUpFeesPrice}
-                         onChange={(e) => setYearlySetUpFeesPrice(e.target.value)}
-                         width="w-full"
-                     />
-                     </div> */}
-                     </>
-                 )}
-                 </div>
-             </div>
+              {/* 6 Months Price Checkbox */}
+              <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
+              <div className="flex items-center gap-3 w-full lg:w-1/3 ">
+                  <input 
+                      type="checkbox" 
+                      checked={showSemiAnnualPriceInput_ar}
+                      onChange={() => setShowSemiAnnualPriceInput_ar(prev => !prev)}
+                      className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
+                  />
+                  <label  className="text-2xl text-mainColor font-medium">نصف سنوي</label>
+              </div>
+              {showSemiAnnualPriceInput_ar && (
+                  <>
+                  <div className="lg:w-1/2 sm:w-full">
+                      <InputCustom
+                          type="number"
+                          borderColor="mainColor"
+                          placeholder="أدخل السعر"
+                          value={semiAnnualPrice_ar}
+                          onChange={(e) => setSemiAnnualPrice_ar(e.target.value)}
+                          width="w-full"
+                      />
+                  </div>
+                  <div className="lg:w-1/2 sm:w-full">
+                  <InputCustom
+                      type="number"
+                      borderColor="mainColor"
+                      placeholder="أدخل سعر الخصم"
+                      value={semiAnnualDiscountPrice_ar}
+                      onChange={(e) => setSemiAnnualDiscountPrice_ar(e.target.value)}
+                      width="w-full"
+                      required={false}
+                  />
+                  </div>
+                  {/* <div className="lg:w-1/2 sm:w-full">
+                  <InputCustom
+                      type="number"
+                      borderColor="mainColor"
+                      placeholder="Enter SetUp Fees"
+                      value={semiAnnualSetUpFeesPrice}
+                      onChange={(e) => setSemiAnnualSetUpFeesPrice(e.target.value)}
+                      width="w-full"
+                  />
+                  </div> */}
+                  </>
+              )}
+              </div>
+              <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
+              <div className="flex items-center gap-3 w-full lg:w-1/3 ">
+                  <input 
+                      type="checkbox" 
+                      checked={showYearlyPriceInput_ar}
+                      onChange={() => setShowYearlyPriceInput_ar(prev => !prev)}
+                      className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
+                  />
+                  <label  className="text-2xl text-mainColor font-medium">سنوي</label>
+              </div>
+              {showYearlyPriceInput_ar && (
+                  <>
+                  <div className="lg:w-1/2 sm:w-full">
+                      <InputCustom
+                          type="number"
+                          borderColor="mainColor"
+                          placeholder="أدخل السعر"
+                          value={yearlyPrice_ar}
+                          onChange={(e) => setYearlyPrice_ar(e.target.value)}
+                          width="w-full"
+                      />
+                  </div>
+                  <div className="lg:w-1/2 sm:w-full">
+                  <InputCustom
+                      type="number"
+                      borderColor="mainColor"
+                      placeholder="أدخل سعر الخصم"
+                      value={yearlyDiscountPrice_ar}
+                      onChange={(e) => setYearlyDiscountPrice_ar(e.target.value)}
+                      width="w-full"
+                      required={false}
+                  />
+                  </div>
+                  {/* <div className="lg:w-1/2 sm:w-full">
+                  <InputCustom
+                      type="number"
+                      borderColor="mainColor"
+                      placeholder="Enter SetUp Fees"
+                      value={yearlySetUpFeesPrice}
+                      onChange={(e) => setYearlySetUpFeesPrice(e.target.value)}
+                      width="w-full"
+                  />
+                  </div> */}
+                  </>
+              )}
+              </div>
+          </div>
 
-                
-         </div>}
+             
+      </div>} 
             {/* div in arabic */}
            
 

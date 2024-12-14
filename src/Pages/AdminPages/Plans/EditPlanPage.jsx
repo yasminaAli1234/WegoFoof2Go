@@ -143,69 +143,39 @@ const EditPlanPage =()=>{
     const handleSubmitEdit = async (planId,event) => {
         event.preventDefault();
 
-        if (!title) {
-            auth.toastError('Please Enter the Title.');
-            return;
-        }
-        if (!description) {
-            auth.toastError('Please Enter the Description.');
-            return;
-        }
+    // Validation for English fields
+    if (!title || !description || !fee || !monthlyPrice || !quarterlyPrice || !semiAnnualPrice || !yearlyPrice) {
+        auth.toastError('All required fields must be filled out.');
+        return;
+    }
 
-        if (!fee) {
-            auth.toastError('Please Enter the Setup Fees.');
-            return;
-        }
-        if (!monthlyPrice) {
-            auth.toastError('Please Enter the Monthly Price.');
-            return;
-        }
-        if (!quarterlyPrice) {
-            auth.toastError('Please Enter the Quarterly Price.');
-            return;
-        }
-        if (!semiAnnualPrice) {
-            auth.toastError('Please Enter the semi-Annual Price.');
-            return;
-        }
-        if (!yearlyPrice) {
-            auth.toastError('Please Enter the Yearly Price.');
-            return;
-        }
-
-        // translate error in arbic
-        if (!title_ar) {
-            auth.toastError('Please Enter the Title In Arabic.');
-            return;
-        }
-        if (!description_ar) {
-            auth.toastError('Please Enter the Description In Arabic.');
-            return;
-        }
-
-        if (!fee_ar) {
-            auth.toastError('Please Enter the Setup Fees In Arabic.');
-            return;
-        }
-        if (!monthlyPrice_ar) {
-            auth.toastError('Please Enter the Monthly Price In Arabic.');
-            return;
-        }
-        if (!quarterlyPrice_ar) {
-            auth.toastError('Please Enter the Quarterly Price In Arabic.');
-            return;
-        }
-        if (!semiAnnualPrice_ar) {
-            auth.toastError('Please Enter the semi-Annual Price In Arabic.');
-            return;
-        }
-        if (!yearlyPrice_ar) {
-            auth.toastError('Please Enter the Yearly Price In Arabic.');
-            return;
-        }
+    // Validation for Arabic fields
+    if (!title_ar || !description_ar || !fee_ar || !monthlyPrice_ar || !quarterlyPrice_ar || !semiAnnualPrice_ar || !yearlyPrice_ar) {
+        auth.toastError('Please fill out all Arabic fields.');
+        return;
+    }
 
         setIsLoading(true);
         try {
+      // Prepare translations data
+      const translations = [
+        { key: 'name', value: title_ar, locale: 'ar' },
+        { key: 'plan_id', value: planId, locale: 'ar' },
+        { key: 'description', value: description_ar, locale: 'ar' },
+        { key: 'fee', value: fee_ar, locale: 'ar' },
+        { key: 'limitPlan', value: limitPlan_ar, locale: 'ar' },
+        { key: 'thumbnails', value: thumbnails_ar, locale: 'ar' },
+        { key: 'app', value: appActive_ar, locale: 'ar' },
+        { key: 'monthly', value: monthlyPrice_ar, locale: 'ar' },
+        { key: 'quarterly', value: quarterlyPrice_ar, locale: 'ar' },
+        { key: 'semi_annual', value: semiAnnualPrice_ar, locale: 'ar' },
+        { key: 'yearly', value: yearlyPrice_ar, locale: 'ar' },
+        { key: 'discount_monthly', value: monthlyDiscountPrice_ar, locale: 'ar' },
+        { key: 'discount_quarterly', value: quarterlyDiscountPrice_ar, locale: 'ar' },
+        { key: 'discount_semi_annual', value: semiAnnualDiscountPrice_ar, locale: 'ar' },
+        { key: 'discount_yearly', value: yearlyDiscountPrice_ar, locale: 'ar' }
+    ];
+
     const formData = new FormData();
     formData.append('plan_id', planId);
     formData.append('name', name);
@@ -232,42 +202,19 @@ const EditPlanPage =()=>{
         formData.append('yearly', yearlyPrice);
         formData.append('discount_yearly', yearlyDiscountPrice || 0);
     }
+      // Append translations array directly to FormData
+      formData.append('translations', JSON.stringify(translations));
+          // Debugging: log FormData entries
+          let formDataEntries = [];
+          for (let pair of formData.entries()) {
+              formDataEntries.push(`${pair[0]}: ${pair[1]}`);
+          }
+  
+          // Display the form data in a readable format (console log or alert)
+          console.log("Form Data:");
+          console.log(formDataEntries.join("\n"));
 
-    // Translation data as an object
-    const translation = {
-        name: name_ar,
-        description: description_ar,
-        setup_fees: fee_ar,
-        limet_store: limitPlan_ar,
-        image: thumbnailFile_ar,
-        app: appActive_ar,
-    };
 
-    // Append selected prices if inputs are shown and filled
-    if (showMonthlyPriceInput_ar && monthlyPrice_ar) {
-        translation.monthly = monthlyPrice_ar;
-        translation.discount_monthly = monthlyDiscountPrice_ar || 0;
-    }
-    if (showQuarterlyPriceInput_ar && quarterlyPrice_ar) {
-        translation.quarterly = quarterlyPrice_ar;
-        translation.discount_quarterly = quarterlyDiscountPrice_ar || 0;
-    }
-    if (showSemiAnnualPriceInput_ar && semiAnnualPrice_ar) {
-        translation.semi_annual = semiAnnualPrice_ar;
-        translation.discount_semi_annual = semiAnnualDiscountPrice_ar || 0;
-    }
-    if (showYearlyPriceInput_ar && yearlyPrice_ar) {
-        translation.yearly = yearlyPrice_ar;
-        translation.discount_yearly = yearlyDiscountPrice_ar || 0;
-    }
-
-    // Convert the translation object to JSON and append
-    formData.append('translations', JSON.stringify(translation));
-
-    // Debugging: Log the FormData entries
-    for (let pair of formData.entries()) {
-        console.log(pair[0] + ', ' + pair[1]);
-    }
             const response = await axios.post(
                 `https://login.wegostores.com/admin/v1/plan/update`,
                 formData,
@@ -645,7 +592,7 @@ const EditPlanPage =()=>{
                             type="text"
                             borderColor="mainColor"
                             placeholder="الملف المصغر"
-                            value={thumbnails_ar}
+                            value={thumbnails}
                             readOnly={true} 
                             onClick={handleInputClick}
                             upload="true"
@@ -825,7 +772,7 @@ const EditPlanPage =()=>{
                         />
                         <label  className="text-2xl text-mainColor font-medium">سنوي</label>
                     </div>
-                    {showYearlyPriceInput && (
+                    {showYearlyPriceInput_ar && (
                         <>
                         <div className="lg:w-1/2 sm:w-full">
                             <InputCustom

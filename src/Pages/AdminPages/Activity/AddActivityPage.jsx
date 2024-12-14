@@ -14,7 +14,7 @@ const AddActivityPage = () => {
     const [name , setName]=useState('')
     // set arabic
     const [name_ar , setName_ar]=useState('')
-    const translate = new FormData();
+ 
     const [language,setLanguage]= useState('ar')
     const handleGoBack = () => {
             navigate(-1, { replace: true });
@@ -34,52 +34,77 @@ const AddActivityPage = () => {
  
     const handleSubmitAdd = async (event) => {
         event.preventDefault();
-
+    
         if (!name) {
             auth.toastError('Please Enter Name.');
             return;
-        } 
+        }
         if (!name_ar) {
             auth.toastError('من فضلك أدخل الاسم');
             return;
-        } 
-      
+        }
+    
         const formData = new FormData();
         formData.append('name', name);
+    
+        // Create translations array
+        const translations = [
+            { key: 'name', value: name_ar, locale: 'ar' },
+        ];
+    
+        // Append the translations array to the FormData object
+        formData.append('translations', JSON.stringify(translations));
 
-        for (let pair of formData.entries()) {
-               console.log(pair[0] + ', ' + pair[1]);
-        }        
-        translate['name']= name_ar;
- 
+    
+          // Debugging: log FormData entries
+                let formDataEntries = [];
+                for (let pair of formData.entries()) {
+                    formDataEntries.push(`${pair[0]}: ${pair[1]}`);
+                }
+        
+                // Display the form data in a readable format (console log or alert)
+                console.log("Form Data:");
+                console.log(formDataEntries.join("\n"));
+    
         setIsLoading(true);
         try {
-            const response = await axios.post('https://login.wegostores.com/admin/v1/activity/add',formData, {
-                headers: {
-                    Authorization: `Bearer ${auth.user.token}`,
-                    'Content-Type': 'application/json', // Use JSON since we're sending a JSON object now
-                },
-            });
- 
+            const response = await axios.post(
+                'https://login.wegostores.com/admin/v1/activity/add',
+                formData,
+                {
+                    headers: {
+                        Authorization: `Bearer ${auth.user.token}`,
+                        'Content-Type': 'multipart/form-data', // Use multipart/form-data to handle FormData
+                    },
+                }
+            );
+    
             if (response.status === 200) {
-                auth.toastSuccess(`${language === 'en' ? 'Activity added successfully!' : 'تم إضافة النشاط بنجاح!'}`);
+                auth.toastSuccess(
+                    language === 'en' ? 'Activity added successfully!' : 'تم إضافة النشاط بنجاح!'
+                );
                 handleGoBack();
             } else {
-                auth.toastError(`${language === 'en' ? 'Failed to add Activity.' : 'فشل في إضافة النشاط.'}`);
+                auth.toastError(
+                    language === 'en' ? 'Failed to add Activity.' : 'فشل في إضافة النشاط.'
+                );
             }
-            } catch (error) {    
-                console.log(error);
-                const errorMessages = error?.response?.data.errors;
-                let errorMessageString = `${language === 'en' ? 'Error occurred' : 'حدث خطأ'}`;
-                if (errorMessages) {
-                    errorMessageString = Object.values(errorMessages).flat().join(' ');
-                }
-                auth.toastError(`${language === 'en' ? 'Error' : 'خطأ'}`, errorMessageString);
-            } finally {
-                setIsLoading(false);
+        } catch (error) {
+            console.log(error);
+            const errorMessages = error?.response?.data?.errors;
+            let errorMessageString = `${language === 'en' ? 'Error occurred' : 'حدث خطأ'}`;
+            if (errorMessages) {
+                errorMessageString = Object.values(errorMessages).flat().join(' ');
             }
-            
+            auth.toastError(
+                language === 'en' ? 'Error' : 'خطأ',
+                errorMessageString
+            );
+        } finally {
+            setIsLoading(false);
+        }
     };
+    
  
        return (
         <>

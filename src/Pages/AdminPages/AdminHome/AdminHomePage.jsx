@@ -342,7 +342,7 @@ if (!data2) {
               cy="18"
               r="15.9155"
               fill="transparent"
-              stroke="currentColor"
+              stroke="blue"
               strokeWidth="3"
               strokeDasharray={`${percentage}, 100`}
               className="text-gradient"

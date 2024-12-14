@@ -21,7 +21,8 @@ const AddAdminTutorialPage = () => {
 
   const handleSubmitAdd = async (event) => {
     event.preventDefault();
-
+  
+    // Input validation
     if (!name) {
       auth.toastError("Please Enter the Group Name.");
       return;
@@ -30,15 +31,30 @@ const AddAdminTutorialPage = () => {
       auth.toastError("يرجى إدخال اسم المجموعة.");
       return;
     }
-
+  
     setIsLoading(true);
     try {
       const formData = new FormData();
       formData.append("name", name);
+  
+      // Convert the translation object to an array of translations
+      const translations = [
+        { key: "name", value: name_ar, locale: "ar" },
+      ];
+  
+      // Append the translations array to the formData
+      formData.append("translations", JSON.stringify(translations));
 
-      translate["name"] = name_ar;
-      formData.append("translation", translate);
-
+          // Debugging: log FormData entries
+          let formDataEntries = [];
+          for (let pair of formData.entries()) {
+              formDataEntries.push(`${pair[0]}: ${pair[1]}`);
+          }
+  
+          // Display the form data in a readable format (console log or alert)
+          console.log("Form Data:");
+          console.log(formDataEntries.join("\n"));
+  
       const response = await axios.post(
         "https://login.wegostores.com/admin/v1/tutorial_group/add",
         formData,
@@ -49,7 +65,7 @@ const AddAdminTutorialPage = () => {
           },
         }
       );
-
+  
       if (response.status === 200) {
         auth.toastSuccess(
           language === "ar"
@@ -78,19 +94,20 @@ const AddAdminTutorialPage = () => {
           : "Error adding Tutorial Group:",
         error?.response?.data?.errors || "Network error"
       );
-
+  
       const errorMessages = error?.response?.data?.errors;
       let errorMessageString = language === "ar" ? "حدث خطأ" : "Error occurred";
-
+  
       if (errorMessages) {
         errorMessageString = Object.values(errorMessages).flat().join(" ");
       }
-
+  
       auth.toastError(errorMessageString);
     } finally {
       setIsLoading(false);
     }
   };
+  
   const handleChangeLanguage = () => {
     const newLanguage = language === 'en' ? 'ar' : 'en'; 
     setLanguage(newLanguage); 
