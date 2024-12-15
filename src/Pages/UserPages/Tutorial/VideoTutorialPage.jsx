@@ -40,11 +40,13 @@
 // export default VideoTutorialPage;
 
 
+import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 
 const VideoTutorialPage = () => {
     const location = useLocation();
     const { tutorial } = location.state || {}; // Retrieve the tutorial data
+    const {t} = useTranslation();
 
     if (!tutorial) {
         return <p className="text-center text-lg text-gray-600 mt-10">{t("No tutorial data available")}</p>;

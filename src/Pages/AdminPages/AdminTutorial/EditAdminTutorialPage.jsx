@@ -44,8 +44,16 @@ const EditAdminTutorialPage =()=>{
 
         const formData = new FormData();
         formData.append('name', name);
-        translate["name"] = name_ar;
-        formData.append("translation", translate);
+             // Convert the translation object to an array of translations
+      const translations = [
+        { key: "name", value: name_ar, locale: "ar" },
+      ];
+  
+      translations.forEach((translation, index) => {
+        Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
+            formData.append(`translations[${index}][${fieldKey}]`, fieldValue);
+        });
+    });
 
 
         setIsLoading(true);

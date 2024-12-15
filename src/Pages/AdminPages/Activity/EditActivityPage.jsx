@@ -16,7 +16,7 @@ const EditActivityPage =()=>{
     // set arabic
     const [name_ar , setName_ar]=useState('')
     const activityContent = useContext(ActivityDataLayout);
-    const translate = new FormData();
+   
     const [language,setLanguage]= useState('ar')
 
         const handleChangeLanguage = () => {
@@ -56,7 +56,17 @@ const EditActivityPage =()=>{
         } 
         const formData = new FormData();
         formData.append('name', name);
-        translate['name']= name_ar;
+          // Create translations array
+          const translations = [
+            { key: 'name', value: name_ar, locale: 'ar' },
+        ];
+        translations.forEach((translation, index) => {
+            Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
+                formData.append(`translations[${index}][${fieldKey}]`, fieldValue);
+            });
+        });
+
+
 
         for (let pair of formData.entries()) {
                console.log(pair[0] + ', ' + pair[1]);

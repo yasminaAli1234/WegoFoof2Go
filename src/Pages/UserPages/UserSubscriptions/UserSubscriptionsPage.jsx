@@ -499,189 +499,166 @@ const UserSubscriptionsPage = () => {
     }
 
     return (
-        <div className="w-full p-2 flex flex-col">
-            <div className="w-full grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-3">
-                {plans.map((plan) => {
-                    const selectedPeriod = billingPeriod[plan.id] || 'monthly';
-                    const priceOptions = {
-                        monthly: plan.monthly,
-                        quarterly: plan.quarterly || plan.monthly * 3,
-                        semiAnnually: plan["semi_annual"] || plan.monthly * 6,
-                        annually: plan.yearly || plan.monthly * 12,
-                    };
-                    const discountOptions = {
-                        monthly: plan.discount_monthly,
-                        quarterly: plan.discount_quarterly,
-                        semiAnnually: plan.discount_semi_annual,
-                        annually: plan.discount_yearly,
-                    };
-                    const currentPrice = priceOptions[selectedPeriod];
-                    const discountedPrice = discountOptions[selectedPeriod];
-                    const savings = discountedPrice ? currentPrice - discountedPrice : 0;
-
-                    // const savings = discountedPrice 
-                    // ? currentPrice - discountedPrice 
-                    // : selectedPeriod === 'monthly' 
-                    //     ? 0 
-                    //     : selectedPeriod === 'quarterly' 
-                    //         ? (plan.monthly * 3 - currentPrice) 
-                    //         : selectedPeriod === 'semiAnnually' 
-                    //             ? (plan.monthly * 6 - currentPrice) 
-                    //             : selectedPeriod === 'annually' 
-                    //                 ? (plan.monthly * 12 - currentPrice) 
-                    //                 : 0;                
-
-
-                    return (
-                        <div
-                            key={plan.id}
-                            className={`relative p-6 ${plan.my_plan === true && selectedPlanId != plan.id  ? 'bg-blue-800 text-white' : 'text-mainColor'}  shadow-md text-2xl rounded-lg border border-gray-200 hover:shadow-lg transition-all 
-                                ${selectedPlanId == plan.id ? 'border-green-500 bg-green-100' : ''}`}
-                            >
-                            {/* Header */}
-                            <h2 className="text-center font-semibold text-3xl mb-4">{plan.name}</h2>
-
-                            {/* Plan Details */}
-                            <div className="space-y-3 mb-6">
-                                <p>{plan.description}</p>
-                                <p className="flex items-center gap-2"><PiStorefront size={26} /><span className="font-semibold">{t("Number of stores:")}</span> {plan.limet_store || '0'}</p>
-
-                                {plan.my_plan !== true && (
-                                <>
-                                <p className="flex items-center gap-2"><CiMoneyCheck1 size={30} className='text-mainColor font-semibold' /><span className="font-semibold text-mainColor">{t("SetUp Fees:")}</span> {plan.setup_fees || '0'} {t("EGP")}</p>
-                                </>
-                                )}
-                            </div>
-
-                            {/* Billing Period */}
-                            <div className="flex justify-between items-center mb-4">
-                                <label htmlFor={`billing-${plan.id}`} className="text-xl md:text-2xl font-semibold">{t("Billing Period:")}</label>
-                                <select
+        <div className="w-full p-6 flex flex-col">
+        <div className="w-full grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {plans.map((plan) => {
+                const selectedPeriod = billingPeriod[plan.id] || 'monthly';
+                const priceOptions = {
+                    monthly: plan.monthly,
+                    quarterly: plan.quarterly || plan.monthly * 3,
+                    semiAnnually: plan["semi_annual"] || plan.monthly * 6,
+                    annually: plan.yearly || plan.monthly * 12,
+                };
+                const discountOptions = {
+                    monthly: plan.discount_monthly,
+                    quarterly: plan.discount_quarterly,
+                    semiAnnually: plan.discount_semi_annual,
+                    annually: plan.discount_yearly,
+                };
+                const currentPrice = priceOptions[selectedPeriod];
+                const discountedPrice = discountOptions[selectedPeriod];
+                const savings = discountedPrice ? currentPrice - discountedPrice : 0;
+    
+                return (
+                    <div
+                        key={plan.id}
+                        className={`relative p-6 transition-all duration-300 ease-in-out transform rounded-lg shadow-lg hover:shadow-xl border border-gray-200 hover:scale-105 
+                            ${selectedPlanId == plan.id ? 'border-green-500 bg-green-100' : 'bg-white text-mainColor'}`}
+                    >
+                        {/* Header */}
+                        <h2 className="text-center font-bold text-2xl mb-4">{plan.name}</h2>
+    
+                        {/* Plan Details */}
+                        <div className="space-y-4 mb-6">
+                            <p className="text-sm text-gray-600">{plan.description}</p>
+                            <p className="flex items-center gap-2"><PiStorefront size={26} /><span className="font-semibold">{t("Number of stores:")}</span> {plan.limet_store || '0'}</p>
+    
+                            {plan.my_plan !== true && (
+                                <p className="flex items-center gap-2"><CiMoneyCheck1 size={30} className='text-mainColor' /><span className="font-semibold text-mainColor">{t("SetUp Fees:")}</span> {plan.setup_fees || '0'} {t("EGP")}</p>
+                            )}
+                        </div>
+    
+                        {/* Billing Period */}
+                        <div className="flex justify-between items-center mb-4">
+                            <label htmlFor={`billing-${plan.id}`} className="text-lg font-medium">{t("Billing Period:")}</label>
+                            <select
                                 id={`billing-${plan.id}`}
                                 value={selectedPeriod}
                                 onChange={(e) => handleBillingPeriodChange(plan.id, e.target.value)}
-                                className="bg-gray-100 border border-gray-400 text-gray-700 rounded-lg p-2"
-                                >
-                                <option value="monthly">Monthly</option>
-                                <option value="quarterly">3 Months</option>
-                                <option value="semiAnnually">6 Months</option>
-                                <option value="annually">Yearly</option>
-                                </select>
-                            </div>
- 
-                            <div className="text-center mb-4">
-                                {discountedPrice ? (
-                                    <>
-                                        <p className="text-lg line-through">{currentPrice} {t("EGP")}</p>
-                                        <p className="text-3xl font-bold">{discountedPrice} {t("EGP")}</p>
-                                        <p className="text-green-500 font-semibold mt-2">{t("Save")} {savings} {t("EGP")} {t("per")} {selectedPeriod}</p>
-                                    </>
-                                ) : (
-                                    <>
-                                        <p className="text-lg text-gray-500 line-through">{priceOptions['monthly'] * (selectedPeriod === 'monthly' ? 1: selectedPeriod === 'quarterly' ? 3 : selectedPeriod === 'semiAnnually' ? 6 : 12)} {t("EGP")} / {t("month")} </p>
-                                        <p className="text-3xl font-bold text-mainColor">{currentPrice} {t("EGP")}</p>
-                                        {selectedPeriod !== 'monthly' ? (
-                                            <p className="text-green-500 font-semibold mt-2">
-                                                {t("Save")} {priceOptions['monthly'] * (selectedPeriod === 'quarterly' ? 3 : selectedPeriod === 'semiAnnually' ? 6 : 12) - currentPrice} {t("EGP")}
-                                            </p>
-                                        ):
-                                        (
-                                            <p className="text-green-500 font-semibold mt-2">
-                                                {t("Save")} 0 {t("EGP")}
-                                            </p>
-                                        )
-                                        }
-                                    </>
-                                )}
-                            </div>
-
-                            <div>
-                            {plan.my_plan === true ? (
-                                    <>
-                                    <div className="w-full relative border rounded-lg p-4 bg-gray-50 shadow-lg">
-                                        {/* Badge indicating "My Plan" */}
-                                        <div className="absolute flex items-center top-0 left-0 transform -translate-y-2 -translate-x-2 bg-mainColor text-white text-sm font-bold py-2 px-4 rounded-full shadow-lg">
-                                            <FaCrown  className="fas fa-crown text-yellow-400 mr-1"/> {t("My Plan")}
-                                        </div>
-                            
-                                        {/* Upgrade Button */}
-                                        {selectedPlanId != plan.id && (
-                                            <button
-                                                onClick={() => handleAddToCart(plan,event)}
-                                                className="w-full py-3 mt-4 font-semibold rounded-lg transition-all duration-300 transform bg-blue-800 text-white hover:bg-blue-700 hover:scale-105 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                                            >
-                                                {t("Upgrade Now")}
-                                            </button>
-                                        )}
-                            
-                                        {/* Remove from Cart and Go to Cart Buttons */}
-                                        {selectedPlanId == plan.id && (
-                                            <div className="flex space-x-3 mt-4">
-                                                <button
-                                                    onClick={() => handleAddToCart(plan,event)}
-                                                    className="w-full text-xl py-3 font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-md"
-                                                >
-                                                    {t("Remove from Cart")}
-                                                </button>
-                                                <button
-                                                    onClick={() => navigate('../cart')}
-                                                    className="w-full text-xl py-3 font-semibold text-white bg-green-600 hover:bg-green-700 rounded-lg shadow-md"
-                                                >
-                                                    {t("Go to Cart")}
-                                                </button>
-                                            </div>
-                                        )}
-                                    </div>
+                                className="bg-gray-100 border border-gray-300 text-gray-700 rounded-lg p-2 focus:ring-2 focus:ring-mainColor"
+                            >
+                                <option value="monthly">{t("Monthly")}</option>
+                                <option value="quarterly">3 {t("Months")}</option>
+                                <option value="semiAnnually">6 {t("Months")}</option>
+                                <option value="annually">{t("Yearly")}</option>
+                            </select>
+                        </div>
+    
+                        {/* Pricing and Savings */}
+                        <div className="text-center mb-4">
+                            {discountedPrice ? (
+                                <>
+                                    <p className="text-lg line-through">{currentPrice} {t("EGP")}</p>
+                                    <p className="text-3xl font-semibold text-mainColor">{discountedPrice} {t("EGP")}</p>
+                                    <p className="text-green-500 font-semibold mt-2">{t("Save")} {savings} {t("EGP")} {t("per")} {selectedPeriod}</p>
                                 </>
-                            )   
-                            : (
-                            <>
-                                <div className="w-full">
-                                {/* Add to Cart Button */}
-                                {selectedPlanId != plan.id && (
-                                    <button
-                                    onClick={() => handleAddToCart(plan,event)}
-                                    className={`w-full py-3 font-semibold rounded-lg transition-all duration-300 transform 
-                                    ${selectedPlanId === plan.id ? 'bg-red-600 text-white hover:bg-red-700' : 'bg-mainColor text-white hover:bg-blue-700'} 
-                                    hover:scale-105 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mainColor`}
-                                    >
-                                    {t("Add to Cart")}
-                                    </button>
-                                )}
-
-                                {/* Remove from Cart and Go to Cart Buttons */}
-                                {selectedPlanId == plan.id && (
-                                    <div className="flex space-x-3 mt-3">
-                                    <button
-                                        onClick={() => handleAddToCart(plan,event)}
-                                        className="w-full text-xl py-3 font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-md"
-                                    >
-                                        {t("Remove from Cart")}
-                                    </button>
-                                    <button
-                                        onClick={() => navigate('../cart')}
-                                        className="w-full text-xl py-3 font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-md"
-                                    >
-                                        {t("Go to Cart")}
-                                    </button>
-                                    </div>
-                                )}
-                                </div>
-                            </>
+                            ) : (
+                                <>
+                                    <p className="text-lg text-gray-500 line-through">{priceOptions['monthly'] * (selectedPeriod === 'monthly' ? 1 : selectedPeriod === 'quarterly' ? 3 : selectedPeriod === 'semiAnnually' ? 6 : 12)} {t("EGP")} / {t("month")}</p>
+                                    <p className="text-3xl font-semibold text-mainColor">{currentPrice} {t("EGP")}</p>
+                                    {selectedPeriod !== 'monthly' && (
+                                        <p className="text-green-500 font-semibold mt-2">
+                                            {t("Save")} {priceOptions['monthly'] * (selectedPeriod === 'quarterly' ? 3 : selectedPeriod === 'semiAnnually' ? 6 : 12) - currentPrice} {t("EGP")}
+                                        </p>
+                                    )}
+                                </>
                             )}
-
+                        </div>
+    
+                        {/* Plan Buttons */}
+                        <div>
+                            {plan.my_plan === true ? (
+                                <div className="w-full relative border rounded-lg p-4 bg-gray-50 shadow-lg">
+                                    {/* "My Plan" Badge */}
+                                    <div className="absolute flex items-center top-0 left-0 transform -translate-y-2 -translate-x-2 bg-mainColor text-white text-sm font-bold py-2 px-4 rounded-full shadow-lg">
+                                        <FaCrown className="text-yellow-400 mr-1" /> {t("My Plan")}
+                                    </div>
+    
+                                    {/* Upgrade Button */}
+                                    {selectedPlanId != plan.id && (
+                                        <button
+                                            onClick={() => handleAddToCart(plan, event)}
+                                            className="w-full py-3 mt-4 font-semibold rounded-lg transition-all duration-300 transform bg-blue-800 text-white hover:bg-blue-700 hover:scale-105 shadow-md hover:shadow-lg"
+                                        >
+                                            {t("Upgrade Now")}
+                                        </button>
+                                    )}
+    
+                                    {/* Remove from Cart and Go to Cart Buttons */}
+                                    {selectedPlanId == plan.id && (
+                                        <div className="flex space-x-3 mt-4">
+                                            <button
+                                                onClick={() => handleAddToCart(plan, event)}
+                                                className="w-full py-3 font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-md"
+                                            >
+                                                {t("Remove from Cart")}
+                                            </button>
+                                            <button
+                                                onClick={() => navigate('../cart')}
+                                                className="w-full py-3 font-semibold text-white bg-green-600 hover:bg-green-700 rounded-lg shadow-md"
+                                            >
+                                                {t("Go to Cart")}
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                            ) : (
+                                <div className="w-full">
+                                    {/* Add to Cart Button */}
+                                    {selectedPlanId != plan.id && (
+                                        <button
+                                            onClick={() => handleAddToCart(plan, event)}
+                                            className={`w-full py-3 font-semibold rounded-lg transition-all duration-300 transform 
+                                            ${selectedPlanId === plan.id ? 'bg-red-600 text-white hover:bg-red-700' : 'bg-mainColor text-white hover:bg-blue-700'} 
+                                            hover:scale-105 shadow-md hover:shadow-lg`}
+                                        >
+                                            {t("Add to Cart")}
+                                        </button>
+                                    )}
+    
+                                    {/* Remove from Cart and Go to Cart Buttons */}
+                                    {selectedPlanId == plan.id && (
+                                        <div className="flex space-x-3 mt-3">
+                                            <button
+                                                onClick={() => handleAddToCart(plan, event)}
+                                                className="w-full py-3 font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-md"
+                                            >
+                                                {t("Remove from Cart")}
+                                            </button>
+                                            <button
+                                                onClick={() => navigate('../cart')}
+                                                className="w-full py-3 font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-md"
+                                            >
+                                                {t("Go to Cart")}
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+    
                             {/* "Selected" Label */}
                             {selectedPlanId == plan.id && (
-                            <div className="absolute top-0 left-0 p-2 bg-green-500 text-white text-sm font-semibold rounded-tr-lg">
-                                {t("Selected")}
-                            </div>
+                                <div className="absolute top-0 left-0 p-2 bg-green-500 text-white text-sm font-semibold rounded-tr-lg">
+                                    {t("Selected")}
+                                </div>
                             )}
-                            </div>
                         </div>
-                    );
-                })}
-            </div>
+                    </div>
+                );
+            })}
         </div>
+    </div>
+    
     );
 };
 

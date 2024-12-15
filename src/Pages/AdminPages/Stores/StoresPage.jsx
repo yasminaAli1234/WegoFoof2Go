@@ -103,9 +103,7 @@ const StoresPage = () => {
               <>
               <div className='w-full flex flex-col gap-10'>
                      <div className='w-2/6 lg:w-1/6'>
-                     <Link to={'add'}>
-                            <ButtonAdd isWidth="true" BgColor ="mainColor" Color="white" iconColor="white"/>
-                     </Link>
+                    
                      </div>
                      <div className="w-full flex items-center justify-between mt-4 overflow-x-auto">
                 <table className="w-full sm:min-w-0">

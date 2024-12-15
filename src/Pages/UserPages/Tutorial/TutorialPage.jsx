@@ -65,61 +65,61 @@ const TutorialPage = () => {
       
     return (
         <div>
-            <h1 className='text-center font-semibold mb-5 text-2xl text-mainColor'>{t("Tutorial Groups")}</h1>
-            {/* Display all tutorial groups */}
-            {isLoading ? (
-                <Loading /> // Display loading component if fetching data
-            ) : (
-                tutorialGroups.map((group, index) => (
-                    <div key={index} className="relative mb-6">
-                        {/* Group Box */}
-                        <div
-                            className="bg-white border rounded-lg shadow-lg cursor-pointer"
-                            style={{ minHeight: '60px' }}
-                            onClick={() => handleGroupToggle(group)} // Toggle group selection
-                        >
-                            <div className="flex justify-between items-center p-4">
-                                <span className="text-2xl font-semibold whitespace-normal break-words text-mainColor">
-                                    {group.name}
-                                </span>
-                                <span>
-                                    {selectedGroup?.name === group.name ? (
-                                        <IoIosArrowUp className="text-xl text-mainColor" />
-                                    ) : (
-                                        <IoIosArrowDown className="text-xl text-mainColor" />
-                                    )}
-                                </span>
-                            </div>
-                        </div>
-
-                        {/* Tutorials List */}
-                        {selectedGroup?.name === group.name && (
-                            <div className="flex flex-col gap-5 bg-gray-100 border rounded-lg w-full p-4">
-                                {group.tutorials.length === 0 ? (
-                                    <p className="text-center text-mainColor text-xl font-semibold">{t("There are no tutorials")}</p>
+        <h1 className='text-center font-semibold mb-8 text-3xl text-mainColor'>{t("Tutorial Groups")}</h1>
+    
+        {isLoading ? (
+            <Loading /> // Display loading component if fetching data
+        ) : (
+            tutorialGroups.map((group, index) => (
+                <div key={index} className="relative mb-8">
+                    {/* Group Box */}
+                    <div
+                        className="bg-white border rounded-lg shadow-lg cursor-pointer hover:shadow-xl transition-all ease-in-out duration-300"
+                        style={{ minHeight: '70px' }}
+                        onClick={() => handleGroupToggle(group)} // Toggle group selection
+                    >
+                        <div className="flex justify-between items-center p-5">
+                            <span className="text-2xl font-semibold text-mainColor break-words">
+                                {group.name}
+                            </span>
+                            <span>
+                                {selectedGroup?.name === group.name ? (
+                                    <IoIosArrowUp className="text-2xl text-mainColor" />
                                 ) : (
-                                    group.tutorials.map((tutorial, index) => (
-                                            <button
-                                                // to={tutorial.path}
-                                                key={index}
-                                                className="flex items-center gap-3 text-mainColor text-xl font-bold hover:underline"
-                                                onClick={() => handleTutorialClick(tutorial)}
-                                            >
-                                                <div className="text-mainColor text-xl">
-                                                <PiVideoFill size={30}/>
-                                                </div>
-                                                <div className="text-mainColor text-xl mb-1">
-                                                {tutorial.title}
-                                                </div>
-                                            </button>
-                                    ))
+                                    <IoIosArrowDown className="text-2xl text-mainColor" />
                                 )}
-                            </div>
-                        )}
+                            </span>
+                        </div>
                     </div>
-                ))
-            )}
-        </div>
+    
+                    {/* Tutorials List */}
+                    {selectedGroup?.name === group.name && (
+                        <div className="flex flex-col gap-5 bg-gray-100 border rounded-lg w-full p-5 mt-3">
+                            {group.tutorials.length === 0 ? (
+                                <p className="text-center text-mainColor text-xl font-semibold">{t("There are no tutorials")}</p>
+                            ) : (
+                                group.tutorials.map((tutorial, index) => (
+                                    <button
+                                        key={index}
+                                        className="flex items-center gap-4 text-mainColor text-xl font-bold hover:bg-blue-100 p-3 rounded-lg transition duration-200 ease-in-out"
+                                        onClick={() => handleTutorialClick(tutorial)}
+                                    >
+                                        <div className="text-mainColor text-2xl">
+                                            <PiVideoFill size={30} />
+                                        </div>
+                                        <div className="text-mainColor text-xl">
+                                            {tutorial.title}
+                                        </div>
+                                    </button>
+                                ))
+                            )}
+                        </div>
+                    )}
+                </div>
+            ))
+        )}
+    </div>
+    
     );
 };
 

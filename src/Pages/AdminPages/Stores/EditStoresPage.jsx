@@ -20,8 +20,8 @@ const EditStoresPage = () => {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const [storeData, setStoreData] = useState([]);
-
-
+    
+    
     useEffect(() => {
         if(storeContent){
             setEmail(storeContent?.email); 

@@ -121,8 +121,7 @@ const AddPlanPage = () => {
         }
     
         setIsLoading(true);
-        const formData = new FormData();
-
+    
         try {
             // Prepare translations array
             const translations = [
@@ -142,14 +141,9 @@ const AddPlanPage = () => {
                 { key: 'discount_semi_annual', value: semiAnnualDiscountPrice_ar, locale: 'ar' },
                 { key: 'discount_yearly', value: yearlyDiscountPrice_ar, locale: 'ar' },
             ];
-
-            translations.forEach((translation, index) => {
-                Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
-                    formData.append(`translations[${index}][${fieldKey}]`, fieldValue);
-                });
-            });
     
             // Create FormData object
+            const formData = new FormData();
     
             // Append main fields
             formData.append('name', name);
@@ -176,35 +170,13 @@ const AddPlanPage = () => {
                 formData.append('yearly', yearlyPrice);
                 formData.append('discount_yearly', yearlyDiscountPrice || 0);
             }
-
-            //    Debug FormData (optional)
-        for (let pair of formData.entries()) {
-            console.log(`${pair[0]}: ${pair[1]}`);
-        }
-
-            // formData.append(`translations[0][key]`, 'name');
-            // formData.append(`translations[0][value]`, name_ar);
-            // formData.append(`translations[0][locale]`, 'ar');
-
-            // formData.append(`translations[0][key]`, 'description');
-            // formData.append(`translations[0][value]`, description_ar);
-            // formData.append(`translations[0][locale]`, 'ar');
-
-            // Append translations array directly to FormData
-            // formData.append('translations', JSON.stringify(translations));
     
-            // Debugging: log FormData entries
-            // let formDataEntries = [];
-            // for (let pair of formData.entries()) {
-            //     formDataEntries.push(`${pair[0]}: ${pair[1]}`);
-            // }
-    
-            // Display the form data in a readable format (console log or alert)
-            // console.log("Form Data:");
-            // console.log(formDataEntries.join("\n"));
-    
-            // Optionally, you can show it in an alert (for quick inspection)
-            
+            translations.forEach((translation, index) => {
+                Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
+                    formData.append(`translations[${index}][${fieldKey}]`, fieldValue);
+                });
+            });
+           
     
             // API request
             const response = await axios.post(
@@ -220,7 +192,7 @@ const AddPlanPage = () => {
     
             if (response.status === 200) {
                 auth.toastSuccess('Plan added successfully!');
-                // handleGoBack();
+                handleGoBack();
             } else {
                 auth.toastError('Failed to add Plan.');
             }

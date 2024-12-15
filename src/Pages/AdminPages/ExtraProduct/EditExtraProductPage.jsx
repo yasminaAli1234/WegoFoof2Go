@@ -378,41 +378,42 @@ const handleChangeLanguage = () => {
             for (let pair of formData.entries()) {
                 console.log(pair[0] + ', ' + pair[1]);
             }
-            // append to list in arabic
-            translation['name']= name_ar;
-            translation['description']= description_ar;
-            translation['setup_fees']= fee_ar
+            const translations = [
+                { key: 'name', value: name_ar, locale: 'ar' },
+                { key: 'description', value: description_ar, locale: 'ar' },
+                { key: 'setup_fees', value: fee_ar, locale: 'ar' },
+            ];
 
-                        // Set data fields based on selected type
-                        if (extraType_ar === 'One Time') {
-                            translation.append('status', 'one_time');
-                            translation.append('price', price);
-                        } else if (extraType_ar === 'Recurring') {
-                            translation.append('status', 'recurring');
-            
-                            // Append selected prices if inputs are shown and filled
-                        if (showMonthlyPriceInput_ar && monthlyPrice_ar) {
-                            translation.append('monthly', monthlyPrice_ar);
-                            translation.append('discount_monthly', monthlyDiscountPrice_ar);
-                            // formData.append('setupFees_monthly', MonthlySetUpFeesPrice);
-                        }
-                        if (showQuarterlyPriceInput_ar && quarterlyPrice_ar) {
-                            translation.append('quarterly', quarterlyPrice_ar);
-                            translation.append('discount_quarterly', quarterlyDiscountPrice_ar);
-                            // formData.append('setupFees_quarterly', quarterlyDiscountPrice);
-                        }
-                        if (showSemiAnnualPriceInput_ar && semiAnnualPrice_ar) {
-                            translation.append('semi_annual', semiAnnualPrice_ar);
-                            translation.append('discount_semi_annual', semiAnnualDiscountPrice_ar);
-                            // formData.append('setupFees_semi_annual', semiAnnualSetUpFeesPrice);
-                        }
-                        if (showYearlyPriceInput_ar && yearlyPrice_ar) {
-                            translation.append('yearly', yearlyPrice_ar);
-                            translation.append('discount_yearly', yearlyDiscountPrice_ar);
-                            // formData.append('setupFees_yearly', yearlySetUpFeesPrice);
-                        }
-                        }
-                        formData.append('translations', translation)
+          // Handle the translation for recurring products
+          if (extraType_ar === 'One Time') {
+            translations.push({ key: 'status', value: 'one_time', locale: 'ar' });
+            translations.push({ key: 'price', value: price_ar, locale: 'ar' });
+        } else if (extraType_ar === 'Recurring') {
+            translations.push({ key: 'status', value: 'recurring', locale: 'ar' });
+
+            if (showMonthlyPriceInput_ar && monthlyPrice_ar) {
+                translations.push({ key: 'monthly', value: monthlyPrice_ar, locale: 'ar' });
+                translations.push({ key: 'discount_monthly', value: monthlyDiscountPrice_ar, locale: 'ar' });
+            }
+            if (showQuarterlyPriceInput_ar && quarterlyPrice_ar) {
+                translations.push({ key: 'quarterly', value: quarterlyPrice_ar, locale: 'ar' });
+                translations.push({ key: 'discount_quarterly', value: quarterlyDiscountPrice_ar, locale: 'ar' });
+            }
+            if (showSemiAnnualPriceInput_ar && semiAnnualPrice_ar) {
+                translations.push({ key: 'semi_annual', value: semiAnnualPrice_ar, locale: 'ar' });
+                translations.push({ key: 'discount_semi_annual', value: semiAnnualDiscountPrice_ar, locale: 'ar' });
+            }
+            if (showYearlyPriceInput_ar && yearlyPrice_ar) {
+                translations.push({ key: 'yearly', value: yearlyPrice_ar, locale: 'ar' });
+                translations.push({ key: 'discount_yearly', value: yearlyDiscountPrice_ar, locale: 'ar' });
+            }
+        }
+
+        translations.forEach((translation, index) => {
+            Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
+                formData.append(`translations[${index}][${fieldKey}]`, fieldValue);
+            });
+        });
             
 
     

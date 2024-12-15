@@ -423,9 +423,11 @@ const EditPromoCodePage =()=>{
         formData.append('user_usage', limit);
 
         const calculationMethod = selectValueType === 'Percentage' ? 'percentage' : 'amount';
+        const calculationMethod_ar = selectValueType === 'Percentage' ? 'percentage' : 'amount';
         formData.append('calculation_method', calculationMethod);
          
         const userType = selectUsageType === 'First Usage' ? 'first_usage' : 'renueve';
+        const userType_ar = selectUsageType === 'First Usage' ? 'first_usage' : 'renueve';
         formData.append('user_type', userType);
 
         formData.append('monthly',valueMonthly);
@@ -456,12 +458,43 @@ const EditPromoCodePage =()=>{
         for (let pair of formData.entries()) {
                console.log(pair[0] + ', ' + pair[1]);
         }     
-        // ser arabic
-        translate['code'] = code_ar
-        translate['title']= title_ar;
-        translate['start_date'] = startDate_ar;
-        translate['end_date'] = endDate_ar
-        translate['user_usage']= limit_ar;
+       // Arabic Translations
+       const translations = [
+        { key: 'code', value: code_ar, locale: 'ar' },
+        { key: 'title', value: title_ar, locale: 'ar' },
+        { key: 'start_date', value: startDate_ar, locale: 'ar' },
+        { key: 'end_date', value: endDate_ar, locale: 'ar' },
+        { key: 'user_usage', value: limit_ar, locale: 'ar' },
+        { key: 'calculation_method', value: calculationMethod_ar, locale: 'ar' },
+        { key: 'user_type', value: userType_ar, locale: 'ar' },
+        { key: 'monthly', value: valueMonthly_ar, locale: 'ar' },
+        { key: 'quarterly', value: valueQuarterly_ar, locale: 'ar' },
+        { key: 'semi_annual', value: valueSemiAnnual_ar, locale: 'ar' },
+        { key: 'yearly', value: valueYearly_ar, locale: 'ar' }
+    ];
+
+    
+    if (selectStatus_ar === 'UnLimited') {
+        translations.push({ key: 'promo_status', value: 'unlimited', locale: 'ar' });
+    } else if (selectStatus_ar === 'Fixed') {
+        translations.push({ key: 'promo_status', value: 'fixed', locale: 'ar' });
+        translations.push({ key: 'usage', value: usageNumber_ar, locale: 'ar' });
+    }
+
+    if (selectType_ar === 'Plan') {
+        translations.push({ key: 'promo_type', value: 'plan', locale: 'ar' });
+    } else if (selectType_ar === 'Extra Product') {
+        translations.push({ key: 'promo_type', value: 'extra', locale: 'ar' });
+    } else if (selectType_ar === 'Domain') {
+        translations.push({ key: 'promo_type', value: 'domain', locale: 'ar' });
+        translations.push({ key: 'amount', value: amount, locale: 'ar' });
+    }
+
+    translations.forEach((translation, index) => {
+        Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
+            formData.append(`translations[${index}][${fieldKey}]`, fieldValue);
+        });
+    });
         
 
         // const calculationMethod = selectValueType === 'percentage' ? 'percentage' : 'amount';
@@ -469,34 +502,6 @@ const EditPromoCodePage =()=>{
 
         // const userType = selectUsageType === 'First Usage' ? 'first_usage' : 'renueve';
         // formData.append('user_type', userType);
-
-        translate.append('monthly',valueMonthly_ar);
-        translate.append('quarterly',valueQuarterly_ar);
-        translate.append('semi_annual', valueSemiAnnual_ar);
-        translate.append('yearly', valueYearly_ar);
-
-        if(selectStatus_ar=== 'UnLimited'){
-            translate.append('promo_status','unlimited');
-        }
-        else if (selectStatus_ar=== 'Fixed'){
-            translate.append('promo_status','fixed');
-            translate.append('usage', usageNumber_ar);
-        }
-
-        if(selectType_ar === 'Plan'){
-            translate.append('promo_type','plan');
-        }
-        else if (selectType_ar=== 'Extra Product'){
-            translate.append('promo_type','extra');
-        }
-        else if (selectType_ar=== 'Domain'){
-            translate.append('promo_type','domain');
-            translate.append('amount', amount);
-        }
-        formData.append('translation', translate)
-        
-
- 
         setIsLoading(true);
         try {
             const response = await axios.post(`https://login.wegostores.com/admin/v1/promoCode/update/${codeId}`,formData, {

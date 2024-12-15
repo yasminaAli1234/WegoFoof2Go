@@ -347,17 +347,11 @@ const AddExtraProductPage = () => {
                 }
             }
     
-            formData.append('translations', JSON.stringify(translations));
-
-                // Debugging: log FormData entries
-                let formDataEntries = [];
-                for (let pair of formData.entries()) {
-                    formDataEntries.push(`${pair[0]}: ${pair[1]}`);
-                }
-        
-                // Display the form data in a readable format (console log or alert)
-                console.log("Form Data:");
-                console.log(formDataEntries.join("\n"));
+            translations.forEach((translation, index) => {
+                Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
+                    formData.append(`translations[${index}][${fieldKey}]`, fieldValue);
+                });
+            });
     
             // Sending the form data via POST request
             const response = await axios.post(

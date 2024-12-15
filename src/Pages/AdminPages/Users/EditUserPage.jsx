@@ -90,11 +90,20 @@ const EditUserPage =()=>{
             formData.append('password', password); // Append the file
             formData.append('status', activeUser); // Append the file
             // append info int array translate
-            translate['name']=name_ar;
-            translate['phone']= phone_ar;
-            translate['email']=email_ar;
-            translate['password']=password_ar;
-            translate['status']= activeUser;
+            // Create translations array
+        const translations = [
+            { key: 'name', value: name_ar, locale: 'ar' },
+            { key: 'phone', value: phone_ar, locale: 'ar' },
+            { key: 'email', value: email_ar, locale: 'ar' },
+            { key: 'password', value: password_ar, locale: 'ar' },
+            { key: 'status', value: activeUser_ar, locale: 'ar' },
+        ];
+    
+        translations.forEach((translation, index) => {
+            Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
+                formData.append(`translations[${index}][${fieldKey}]`, fieldValue);
+            });
+        });
             
 
             const response = await axios.post(

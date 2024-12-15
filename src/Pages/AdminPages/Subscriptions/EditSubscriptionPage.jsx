@@ -312,20 +312,21 @@ const EditSubscriptionPage =()=>{
 
             // -------------------------------
 
-            if (selectPackageName_ar === 'شهري') {
-                translate.append('package', "1"); 
-            } else if (selectPackageName_ar === '3 شهور') {
-                translate.append('package', "3"); 
-            } else if (selectPackageName === '6 شهور') {
-                translate.append('package', "6"); 
-            } else if (selectPackageName === 'سنوي') {
-                translate.append('package', "'سنوي'"); 
-            }
+            const translations = [
+                { key: 'plan_id', value: selectPlanId_ar, locale: 'ar' },
+                { key: 'user_id', value: selectUserId_ar, locale: 'ar' },
+                { key: 'package', value: selectPackageName_ar, locale: 'ar' }
+            ];
+    
 
             for (let pair of formData.entries()) {
                 console.log(pair[0] + ', ' + pair[1]);
             } 
-            formData.append('translation', translate)
+            translations.forEach((translation, index) => {
+                Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
+                    formData.append(`translations[${index}][${fieldKey}]`, fieldValue);
+                });
+            });
 
             const response = await axios.post(
                 `https://login.wegostores.com/admin/v1/subscripe/update`,

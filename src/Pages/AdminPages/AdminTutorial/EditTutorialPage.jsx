@@ -94,14 +94,23 @@ const EditTutorialPage =()=>{
             formData.append('video', videoFile);
             formData.append('tutorial_group_id', groupId);
 
-            translate['title']= name_ar;
-            translate['description']= description_ar;
-            translate['video']= videoFile;
+                   // Create an array of translation objects
+          const translations = [
+            { key: 'title', value: name_ar, locale: 'ar' },
+            { key: 'description', value: description_ar, locale: 'ar' },
+            // { key: 'video', value: videoFile, locale: 'ar' }, // Add this translation for video if needed
+          ];
+      
+          translations.forEach((translation, index) => {
+            Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
+                formData.append(`translations[${index}][${fieldKey}]`, fieldValue);
+            });
+        });
 
             for (let pair of formData.entries()) {
                 console.log(pair[0] + ', ' + pair[1]);
             } 
-            formData.append("translation", translate);
+           
 
             const response = await axios.post(
                 `https://login.wegostores.com/admin/v1/tutorial/update/${tutorialId}`,

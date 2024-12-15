@@ -15,7 +15,7 @@ const EditPaymentMethodPage =()=>{
     const [description, setDescription] = useState('');
     const [language, setLanguage] = useState("en");
       // set arabic
-  const [thumbnails_ar, setThumbnails_ar] = useState("");
+  
   const [title_ar, setTitle_ar] = useState("");
   const [description_ar, setDescription_ar] = useState("");
   const translate = new FormData();
@@ -43,7 +43,7 @@ const EditPaymentMethodPage =()=>{
             // set translate
             setTitle_ar(paymentContent.name || '');
             setDescription_ar(paymentContent.description|| '');
-            setThumbnails_ar(paymentContent.thumbnailUrl || '');
+            
         }
     }, [paymentContent]);
     
@@ -63,7 +63,7 @@ const EditPaymentMethodPage =()=>{
         if (file) {
             setThumbnailFile(file); // Set file object for upload
             setThumbnails(file.name); // Display file name in the text input
-            setThumbnails_ar(file.name); // mosh lazem
+            
         }
     };
 
@@ -88,10 +88,7 @@ const EditPaymentMethodPage =()=>{
         }
 
           // set info arabic
-    if (!thumbnails_ar) {
-        auth.toastError("يرجى تحميل صورة الصورة المصغرة.");
-        return;
-      }
+   
       if (!title_ar) {
         auth.toastError("يرجى إدخال العنوان.");
         return;
@@ -118,10 +115,18 @@ const EditPaymentMethodPage =()=>{
                 console.log(pair[0] + ', ' + pair[1]);
             } 
 
-            translate["name"] = title_ar;
-            translate["description"] = description_ar;
-            translate["thumbnail"] = thumbnailFile;
-            translate['paymentMethod_id'] = paymentId;
+            // Arabic translations
+    const translations = [
+        { key: "name", value: title_ar, locale: "ar" },
+        { key: "description", value: description_ar, locale: "ar" },
+        // { key: "thumbnail", value: thumbnails_ar, locale: "ar" },
+      ];
+  
+      translations.forEach((translation, index) => {
+        Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
+            formData.append(`translations[${index}][${fieldKey}]`, fieldValue);
+        });
+    });
 
             const response = await axios.post(
                 'https://login.wegostores.com/admin/v1/payment/method/update',
@@ -236,7 +241,7 @@ const EditPaymentMethodPage =()=>{
                         type="text"
                         borderColor="mainColor"
                         placeholder="الصورة المصغرة"
-                        value={thumbnails_ar}
+                        value={thumbnails}
                         readOnly={true} 
                         onClick={handleInputClick}
                         upload="true"
