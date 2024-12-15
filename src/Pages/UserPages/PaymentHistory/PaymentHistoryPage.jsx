@@ -10,6 +10,7 @@ import { MdCheck } from "react-icons/md";
 import CheckBox from '../../../Components/CheckBox';
 import PaymentModel from '../../../Components/PaymentModel';
 import { useTranslation } from 'react-i18next';
+import i18n from '../../../i18n';
 
 const PaymentHistoryPage = () => {
         const { t } = useTranslation();
@@ -49,7 +50,7 @@ const PaymentHistoryPage = () => {
     const fetchData = async () => {
         setIsLoading(true);
         try {
-               const response = await axios.get('https://login.wegostores.com/user/v1/payment/history', {
+               const response = await axios.get(i18n.language==="ar" ? 'https://login.wegostores.com/user/v1/payment/history?locale=ar' :'https://login.wegostores.com/user/v1/payment/history', {
                       headers: {
                              Authorization: `Bearer ${auth.user.token}`,
                       },
@@ -67,7 +68,7 @@ const PaymentHistoryPage = () => {
 
     useEffect(() => {
         fetchData(); 
-    }, []);
+    }, [i18n.language]);
 
     if (isLoading) {
         return (

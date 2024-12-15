@@ -44,7 +44,7 @@ const EditPlanPage =()=>{
     const [showQuarterlyPriceInput, setShowQuarterlyPriceInput] = useState(false);
     const [showSemiAnnualPriceInput, setShowSemiAnnualPriceInput] = useState(false);
     const [showYearlyPriceInput, setShowYearlyPriceInput] = useState(false);
-
+    
     // arabic translation
     const [name_ar, setName_ar] = useState('');
     const [title_ar, setTitle_ar] = useState('');
@@ -71,18 +71,16 @@ const EditPlanPage =()=>{
     const [yearlyPrice_ar, setYearlyPrice_ar] = useState(''); 
     const [yearlyDiscountPrice_ar, setYearlyDiscountPrice_ar] = useState(''); 
     const [yearlySetUpFeesPrice_ar, setYearlySetUpFeesPrice_ar] = useState(''); 
-
+    
     const [showMonthlyPriceInput_ar, setShowMonthlyPriceInput_ar] = useState(false);
     const [showQuarterlyPriceInput_ar, setShowQuarterlyPriceInput_ar] = useState(false);
     const [showSemiAnnualPriceInput_ar, setShowSemiAnnualPriceInput_ar] = useState(false);
     const [showYearlyPriceInput_ar, setShowYearlyPriceInput_ar] = useState(false);
-    
-
     const navigate = useNavigate();
     const uploadRef = useRef();
 
     const planContent = useContext(PlanDataContext);
-    
+
 
     useEffect(() => {
         if (planContent) {

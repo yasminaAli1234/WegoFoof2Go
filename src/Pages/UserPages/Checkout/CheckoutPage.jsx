@@ -38,7 +38,7 @@ const CheckoutPage = () => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        i18n.language==='en'?"https://login.wegostores.com/user/v1/subscription/payment_methods":"https://login.wegostores.com/user/v1/subscription/payment_methods?locale=ar",
+        i18n.language==='ar'?"https://login.wegostores.com/user/v1/subscription/payment_methods?locale=ar":"https://login.wegostores.com/user/v1/subscription/payment_methods",
         {
           headers: {
             Authorization: `Bearer ${auth.user.token}`,
@@ -59,7 +59,7 @@ const CheckoutPage = () => {
     fetchData();
     console.log("cartItems", cartItems);
     console.log("totalPrice", totalPrice);
-  }, []);
+  }, [i18n.language]);
 
   const handleInputClick = () => {
     if (uploadRef.current) {

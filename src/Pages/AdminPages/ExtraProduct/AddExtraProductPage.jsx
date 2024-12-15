@@ -744,7 +744,7 @@ const AddExtraProductPage = () => {
                     type="number"
                     borderColor="mainColor"
                     placeholder="رسوم الإعداد"
-                    value={fee_ar}
+                    value={fee}
                     onChange={(e) => setFee_ar(e.target.value)}
                     width="w-full"
                 />
@@ -767,7 +767,7 @@ const AddExtraProductPage = () => {
                         type="number"
                         borderColor="mainColor"
                         placeholder="السعر"
-                        value={price_ar}
+                        value={price}
                         onChange={(e) => setPrice_ar(e.target.value)}
                         width="w-full"
                     />
@@ -802,7 +802,7 @@ const AddExtraProductPage = () => {
                 <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
                 <div className=" flex items-center gap-3 w-full lg:w-1/3">
                     <input 
-                        type="checkbox" 
+                        type="checkbox"
                         checked={showMonthlyPriceInput_ar}
                         onChange={() => setShowMonthlyPriceInput_ar(prev => !prev)}
                         className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
@@ -817,7 +817,7 @@ const AddExtraProductPage = () => {
                             type="number"
                             borderColor="mainColor"
                             placeholder="أدخل السعر"
-                            value={monthlyPrice_ar}
+                            value={monthlyPrice}
                             onChange={(e) => setMonthlyPrice_ar(e.target.value)}
                             width="w-full"
                         />
@@ -827,7 +827,7 @@ const AddExtraProductPage = () => {
                          type="number"
                          borderColor="mainColor"
                          placeholder="أدخل سعر الخصم"
-                         value={monthlyDiscountPrice_ar}
+                         value={monthlyDiscountPrice}
                          onChange={(e) => setMonthlyDiscountPrice_ar(e.target.value)}
                          width="w-full"
                          required={false}
@@ -865,7 +865,7 @@ const AddExtraProductPage = () => {
                             type="number"
                             borderColor="mainColor"
                             placeholder="أدخل السعر"
-                            value={quarterlyPrice_ar}
+                            value={quarterlyPrice}
                             onChange={(e) => setQuarterlyPrice_ar(e.target.value)}
                             width="w-full"
                         />
@@ -875,7 +875,7 @@ const AddExtraProductPage = () => {
                         type="number"
                         borderColor="mainColor"
                         placeholder="أدخل سعر الخصم"
-                        value={quarterlyDiscountPrice_ar}
+                        value={quarterlyDiscountPrice}
                         onChange={(e) => setQuarterlyDiscountPrice_ar(e.target.value)}
                         width="w-full"
                         required={false}
@@ -913,7 +913,7 @@ const AddExtraProductPage = () => {
                             type="number"
                             borderColor="mainColor"
                             placeholder="أدخل السعر"
-                            value={semiAnnualPrice_ar}
+                            value={semiAnnualPrice}
                             onChange={(e) => setSemiAnnualPrice_ar(e.target.value)}
                             width="w-full"
                         />
@@ -923,7 +923,7 @@ const AddExtraProductPage = () => {
                         type="number"
                         borderColor="mainColor"
                         placeholder="أدخل سعر الخصم"
-                        value={semiAnnualDiscountPrice_ar}
+                        value={semiAnnualDiscountPrice}
                         onChange={(e) => setSemiAnnualDiscountPrice_ar(e.target.value)}
                         width="w-full"
                         required={false}
@@ -961,7 +961,7 @@ const AddExtraProductPage = () => {
                             type="number"
                             borderColor="mainColor"
                            placeholder="أدخل السعر"
-                            value={yearlyPrice_ar}
+                            value={yearlyPrice}
                             onChange={(e) => setYearlyPrice_ar(e.target.value)}
                             width="w-full"
                         />
@@ -971,7 +971,7 @@ const AddExtraProductPage = () => {
                         type="number"
                         borderColor="mainColor"
                         placeholder="أدخل سعر الخصم"
-                        value={yearlyDiscountPrice_ar}
+                        value={yearlyDiscountPrice}
                         onChange={(e) => setYearlyDiscountPrice_ar(e.target.value)}
                         width="w-full"
                         required={false}
