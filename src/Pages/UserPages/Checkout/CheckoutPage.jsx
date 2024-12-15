@@ -11,7 +11,7 @@ import { clearCart} from '../../../Redux/CartSlice.js';
 
 const CheckoutPage = () => {
   const auth = useAuth();
-  const {t} = useTranslation()
+  const {t,i18n} = useTranslation()
   const location = useLocation();
   const { cartItems } = location.state || {};
   const { totalPrice } = location.state || {};
@@ -29,6 +29,7 @@ const CheckoutPage = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const dispatch = useDispatch();
 
+
   const handleGoBack = () => {
     navigate(-1, { replace: true });
   };
@@ -37,7 +38,7 @@ const CheckoutPage = () => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        "https://login.wegostores.com/user/v1/subscription/payment_methods",
+        i18n.language==='en'?"https://login.wegostores.com/user/v1/subscription/payment_methods":"https://login.wegostores.com/user/v1/subscription/payment_methods?locale=ar",
         {
           headers: {
             Authorization: `Bearer ${auth.user.token}`,
