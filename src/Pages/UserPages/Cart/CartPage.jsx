@@ -615,7 +615,7 @@ const CartPage = () => {
               >
                 <div className="flex md:flex-row sm:flex-col gap-5 justify-between items-center">
                   <div className='flex flex-col'>
-                  <h3 className="text-base sm:text-lg font-semibold text-gray-800">Product Type : {capitalizeFirstLetter(item.type)}</h3>
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-800">Product Type : {item.type}</h3>
                   <h3 className="text-base sm:text-lg font-semibold text-gray-800">Product Name : {item.name}</h3>
                   </div>
                   {/* <p className="text-base sm:text-lg font-semibold text-gray-800">
