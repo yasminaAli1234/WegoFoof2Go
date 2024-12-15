@@ -264,19 +264,27 @@ const UserSubscriptionsPage = () => {
     const [billingPeriod, setBillingPeriod] = useState({});
     const [selectedPlanId, setSelectedPlanId] = useState(null);
     const navigate = useNavigate();
-    const {t} = useTranslation();
+    const {t,i18n} = useTranslation();
 
     // Fetch plans from API
     const fetchData = async () => {
         setIsLoading(true);
         try {
-            const response = await axios.get('https://login.wegostores.com/user/v1/subscription', {
+            let url;
+            if (i18n.language === 'ar') {
+                url = 'https://login.wegostores.com/user/v1/subscription?locale=ar'; // Arabic URL
+            } else {
+                url = 'https://login.wegostores.com/user/v1/subscription'; // Non-Arabic URL (assuming English or other)
+            }
+    
+            const response = await axios.get(url, {
                 headers: {
                     Authorization: `Bearer ${auth.user.token}`,
                 },
             });
+    
             if (response.status === 200) {
-                console.log(response.data.plans)
+                console.log(response.data.plans);
                 setPlans(response.data.plans);
             }
         } catch (error) {
@@ -285,6 +293,7 @@ const UserSubscriptionsPage = () => {
             setIsLoading(false);
         }
     };
+    
 
     // Add to cart logic
     // const handleAddToCart =async (plan ,event) => {
@@ -466,7 +475,7 @@ const UserSubscriptionsPage = () => {
     useEffect(() => {
         fetchData();
         console.log(auth.user.package)
-    }, []);
+    }, [i18n.language]);
 
     useEffect(() => {
         const savedPlanId = localStorage.getItem('selectedPlanId');

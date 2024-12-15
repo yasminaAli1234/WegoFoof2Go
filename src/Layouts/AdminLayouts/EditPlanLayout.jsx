@@ -13,7 +13,9 @@ const EditPlanLayout =()=>{
        const auth = useAuth();
        const [isLoading, setIsLoading] = useState(false);
        const [allPlanData, setAllPlanData] = useState([]);
+       const [allPlanData_ar, setAllPlanData_ar] = useState([]);
        const [planEdit, setPlanEdit] = useState(null);
+       const [planEdit_ar, setPlanEdit_ar] = useState(null);
        const { planId } = useParams();
 
        useEffect(() => {
@@ -38,6 +40,27 @@ const EditPlanLayout =()=>{
     fetchData(); }, []);
 
     useEffect(() => {
+       const fetchData_ar = async () => {
+        setIsLoading(true);
+        try {
+               const response = await axios.get('https://login.wegostores.com/admin/v1/plan/show/locale=ar', {
+                      headers: {
+                             Authorization: `Bearer ${auth.user.token}`,
+                      },
+               });
+               if (response.status === 200) {
+                      console.log(response.data)
+                      setAllPlanData_ar(response.data.plan)
+               }
+        } catch (error) {
+               console.error('Error fetching data:', error);
+        } finally {
+               setIsLoading(false);
+        }
+    };
+    fetchData_ar(); }, []);
+
+    useEffect(() => {
       if (allPlanData.length > 0 && planId) {
              const filteredPlan = allPlanData.find(
              (plan) => plan.id === parseInt(planId)
@@ -45,10 +68,18 @@ const EditPlanLayout =()=>{
              setPlanEdit(filteredPlan);
       }
     }, [allPlanData, planId]);
+    useEffect(() => {
+       if (allPlanData_ar.length > 0 && planId) {
+              const filteredPlan = allPlanData.find(
+              (plan) => plan.id === parseInt(planId)
+              );
+              setPlanEdit_ar(filteredPlan);
+       }
+     }, [allPlanData_ar, planId]);
 
     console.log('allPlanData', allPlanData); // Logging the whole array
     console.log('PlanEditData', planEdit);
-
+    console.log('PlanEditData', planEdit_ar);
     const navigate = useNavigate();
     const handleGoBack = () => {
       navigate(-1, { replace: true });
@@ -64,7 +95,7 @@ const EditPlanLayout =()=>{
     return(
         <>
         <HeaderPageSection handleClick={handleGoBack} name="Edit Plan" />
-        <PlanDataContext.Provider value={planEdit}>
+        <PlanDataContext.Provider value={planEdit} vlaue_ar= {planEdit_ar}>
            <EditPlanPage/>
         </PlanDataContext.Provider>
         </>

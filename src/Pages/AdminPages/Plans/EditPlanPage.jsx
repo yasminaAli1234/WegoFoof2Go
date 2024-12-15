@@ -82,6 +82,7 @@ const EditPlanPage =()=>{
     const uploadRef = useRef();
 
     const planContent = useContext(PlanDataContext);
+    
 
     useEffect(() => {
         if (planContent) {
@@ -202,7 +203,7 @@ const EditPlanPage =()=>{
         formData.append('yearly', yearlyPrice);
         formData.append('discount_yearly', yearlyDiscountPrice || 0);
     }
-    
+
     // append into form data
     translations.forEach((translation, index) => {
         Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
