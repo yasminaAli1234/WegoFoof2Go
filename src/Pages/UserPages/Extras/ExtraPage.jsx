@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next';
 import { FaCrown } from "react-icons/fa";
 
 const ExtraPage = () => {
-       const { t } = useTranslation();
+       const { t,i18n } = useTranslation();
 
     const auth = useAuth();
     const [isLoading, setIsLoading] = useState(false);

@@ -307,6 +307,8 @@ const AddWelcomOfferPage = () => {
 
 <form onSubmit={handleSubmitAdd} className="w-full flex flex-col items-center justify-center gap-y-10 m-5">
   {language === 'en' ? (
+
+    
     <div className="w-full flex flex-wrap items-center justify-start gap-10">
       <div className="lg:w-[30%] sm:w-full">
         <DropDownMenu
