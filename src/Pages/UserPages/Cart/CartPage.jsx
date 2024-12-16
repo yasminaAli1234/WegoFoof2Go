@@ -615,18 +615,18 @@ const CartPage = () => {
               >
                 <div className="flex md:flex-row sm:flex-col gap-5 justify-between items-center">
                   <div className='flex flex-col'>
-                  <h3 className="text-base sm:text-lg font-semibold text-gray-800">Product Type : {(item.type)}</h3>
-                  <h3 className="text-base sm:text-lg font-semibold text-gray-800">Product Name : {item.name}</h3>
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-800">{t("Product Type :")} {(item.type)}</h3>
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-800">{t("Product Name :")} {item.name}</h3>
                   </div>
                   {/* <p className="text-base sm:text-lg font-semibold text-gray-800">
                     {(item.finalprice || item.price || 0).toFixed(2)} EGP
                   </p> */}
                   <div className='flex flex-col'>
                   <p className="text-base sm:text-lg font-semibold text-gray-800">
-                  One time setup fees : {(item.setup_fees || 0).toFixed(2)} EGP
+                  {t("One time setup fees :")} {(item.setup_fees || 0).toFixed(2)} {t("EGP")}
                   </p>
                   <p className="text-base sm:text-lg font-semibold text-gray-800">
-                  {item.billingPeriod } subscription : {(item.finalprice - item.setup_fees || item.price || 0).toFixed(2)} {t("EGP")}
+                  {item.billingPeriod } {t("subscription")} : {(item.finalprice - item.setup_fees || item.price || 0).toFixed(2)} {t("EGP")}
                   </p>
                   </div>
                 </div>
@@ -675,7 +675,7 @@ const CartPage = () => {
     onClick={() => handleRemoveItem(item)}
     className="text-red-500 font-semibold hover:underline"
   >
-    Remove
+    {t("Remove")}
   </button>
 </div>
               </div>

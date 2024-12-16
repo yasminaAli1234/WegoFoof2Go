@@ -23,6 +23,7 @@ const resources = {
       "tutorial": "Tutorial",
       "log_out": "Log Out",
       "name": "Name",
+      "Product Type :" :"Product Type :",
       "email": "Email",
       "phone": "Phone",
       "password": "Password",
@@ -129,7 +130,11 @@ const resources = {
       "No Extra Products Available": "No Extra Products Available",
       "Request New Extra Product": "Request New Extra Product",
       "Learn and Grow": "Learn and Grow",
-      "Explore Tutorials": "Explore Tutorials"
+      "Explore Tutorials": "Explore Tutorials",
+      "Product Name :":"Product Name :",
+      "One time setup fees :" :"One time setup fees :",
+      "Remove": "Remove"
+      
       // Add more translations
     },
   },
@@ -145,7 +150,12 @@ const resources = {
       "domains": "النطاقات",
       "my_domain": "نطاقي",
       "buy_domain": "شراء نطاق",
+      "Product Type :" :" :نوع المنتج ",
+      "Product Name :":":اسم المنتج",
+      "One time setup fees :":" :رسوم الإعداد لمرة واحدة ",
+      "subscription" :" الاشتراك",
       "extras": "الإضافات",
+      "Remove" :"ازالة",
       "payment_history": "سجل المدفوعات",
       "tutorial": "الدليل",
       "log_out": "تسجيل الخروج",

@@ -15,6 +15,9 @@ const EditExtraProductLayout =()=>{
     const [isLoading, setIsLoading] = useState(false);
     const [allProductData, setAllProductData] = useState([]);
     const [productEdit, setProductEdit] = useState(null);
+    // -----------
+    const [allProductData_ar, setAllProductData_ar] = useState([]);
+    const [productEdit_ar, setProductEdit_ar] = useState(null);
     const { extraId } = useParams();
 
     const fetchData = async () => {
@@ -36,9 +39,32 @@ const EditExtraProductLayout =()=>{
         }
     };
 
+    const fetchData_ar = async () => {
+       setIsLoading(true);
+       try {
+              const response = await axios.get(' https://www.wegostores.com/admin/v1/extra/show?locale=ar', {
+                     headers: {
+                            Authorization: `Bearer ${auth.user.token}`,
+                     },
+              });
+              if (response.status === 200) {
+                     console.log(response.data)
+                     setAllProductData_ar(response.data.extra)
+              }
+       } catch (error) {
+              console.error('Error fetching data:', error);
+       } finally {
+              setIsLoading(false);
+       }
+   };
+
     useEffect(() => {
         fetchData(); 
     }, []);
+    useEffect(() => {
+       fetchData_ar(); 
+   }, []);
+
 
     useEffect(() => {
         if (allProductData.length > 0 && extraId) {
@@ -48,8 +74,18 @@ const EditExtraProductLayout =()=>{
                setProductEdit(filteredProduct);
         }
       }, [allProductData, extraId]);
+
+      useEffect(() => {
+       if (allProductData_ar.length > 0 && extraId) {
+              const filteredProduct = allProductData_ar.find(
+              (extra) => extra.id === parseInt(extraId)
+              );
+              setProductEdit_ar(filteredProduct);
+       }
+     }, [allProductData_ar, extraId]);
   
       console.log('allProductData', allProductData); // Logging the whole array
+      console.log('allProductData_Ar', allProductData_ar);
       console.log('productEditData', productEdit);
   
       const navigate = useNavigate();
@@ -67,7 +103,7 @@ const EditExtraProductLayout =()=>{
     return(
         <>
         <HeaderPageSection handleClick={handleGoBack} name="Edit Extra Product" />
-        <productDataContext.Provider value={productEdit}>
+        <productDataContext.Provider value={{productEdit,productEdit_ar}}>
            <EditExtraProductPage/>
         </productDataContext.Provider>
         </>

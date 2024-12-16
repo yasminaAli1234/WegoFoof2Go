@@ -590,7 +590,7 @@ const EditPlanPage =()=>{
                 <textarea
                     className="w-full px-2 py-4 border-2 font-normal eleValueInput rounded-xl border-mainColor text-2xl focus:outline-none focus:ring-2 focus:ring-mainColor"
                     placeholder="الوصف"
-                    value={description}
+                    value={description_ar}
                     onChange={(e) => setDescription_ar(e.target.value)}
                     rows={1}
                 ></textarea>
@@ -600,7 +600,7 @@ const EditPlanPage =()=>{
                         type="number"
                         borderColor="mainColor"
                         placeholder="رسوم الإعداد"
-                        value={fee}
+                        value={fee_ar}
                         onChange={(e) => setFee_ar(e.target.value)}
                         width="w-full"
                     />
@@ -610,7 +610,7 @@ const EditPlanPage =()=>{
                         type="number"
                         borderColor="mainColor"
                         placeholder="حد المتجر"
-                        value={limitPlan}
+                        value={limitPlan_ar}
                         onChange={(e) => setLimitPlan_ar(e.target.value)}
                         width="w-full"
                     />
