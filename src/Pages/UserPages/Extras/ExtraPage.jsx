@@ -417,7 +417,7 @@ const ExtraPage = () => {
                                                  <>
                                                  <p className="text-lg line-through">{convertNumberToArabic(currentPrice,i18n.language)} {t('EGP')}</p>
                                                  <p className="text-3xl font-bold">{convertNumberToArabic(discountedPrice,i18n.language)} {t('EGP')}</p>
-                                                 <p className="text-green-500 font-semibold mt-2">{t("Save")} {convertNumberToArabic(savings,i18n.language)} {t('EGP')} {t("per")} {selectedPeriod}</p>
+                                                 <p className="text-green-500 font-semibold mt-2">{t("Save")} {convertNumberToArabic(savings,i18n.language)} {t('EGP')} {t("per")} {t(selectedPeriod)}</p>
                                                  </>
                                           ) : (
                                                  <>
