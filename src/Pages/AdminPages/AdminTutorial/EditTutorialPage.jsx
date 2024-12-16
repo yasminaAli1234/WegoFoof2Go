@@ -9,7 +9,7 @@ import { useParams } from 'react-router-dom';
 import { TutorialsLayout } from '../../../Layouts/AdminLayouts/EditTutorialLayout';
 
 const EditTutorialPage =()=>{
-    const tutorialContent = useContext(TutorialsLayout);
+    const {tutorialEdit,tutorialEdit_ar} = useContext(TutorialsLayout);
 
     const auth = useAuth();
     const [name, setName] = useState('');
@@ -31,17 +31,21 @@ const EditTutorialPage =()=>{
     const videoRef = useRef();
 
     useEffect(() => {
-        if (tutorialContent) {
-            setName(tutorialContent.title|| '')
-            setDescription(tutorialContent.description|| '')
-            setVideo(tutorialContent.video_link|| '')
-            // set name 
-            setName_ar(tutorialContent.title|| '')
-            setDescription_ar(tutorialContent.description|| '')
-            setVideo_ar(tutorialContent.video_link|| '')
+        if (tutorialEdit) {
+            setName(tutorialEdit.title|| '')
+            setDescription(tutorialEdit.description|| '')
+            setVideo(tutorialEdit.video_link|| '')
+            
         }
-    }, [tutorialContent]);
+    }, [tutorialEdit]);
 
+    useEffect(() => {
+        if (tutorialEdit_ar) {
+            setName_ar(tutorialEdit_ar.title|| '')
+            setDescription_ar(tutorialEdit_ar.description|| '')
+            // setVideo_ar(tutorialEdit_ar.video_link|| '')
+        }
+    }, [tutorialEdit_ar]);
     const handleGoBack = () => {
         navigate(-1, { replace: true });
     };
@@ -187,7 +191,7 @@ const EditTutorialPage =()=>{
      
     handleClick={() => handleChangeLanguage()}
 />
-         <form  onSubmit={(event) => handleSubmitEdit(tutorialContent.id, event)} className="w-full flex flex-col items-center justify-center gap-y-10 m-5">
+         <form  onSubmit={(event) => handleSubmitEdit(tutorialEdit.id, event)} className="w-full flex flex-col items-center justify-center gap-y-10 m-5">
        {language==='en' ?  <div className="w-full flex flex-wrap items-center justify-start gap-10">
             <div className="lg:w-[30%] sm:w-full">
               <InputCustom
@@ -256,7 +260,7 @@ const EditTutorialPage =()=>{
                   borderColor="mainColor"
                   paddinRight='pr-2'
                   placeholder="الفيديو"
-                  value={video_ar}
+                  value={video}
                   readonly={true}
                   onClick={() => handleInputClick(videoRef)}
               />

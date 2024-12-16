@@ -14,6 +14,9 @@ const EditAdminTutorialLayout = () => {
         const [isLoading, setIsLoading] = useState(false);
         const [allTutorialsData, setAllTutorialsData] = useState([]);
         const [tutorialEdit, setTutorialEdit] = useState(null);
+        const [allTutorialsData_ar, setAllTutorialsData_ar] = useState([]);
+        const [tutorialEdit_ar, setTutorialEdit_ar] = useState(null);
+
         const { tutorialId } = useParams();
         const location = useLocation();
         const { groupId } = location.state || {}; // Retrieve the tutorial data
@@ -39,6 +42,27 @@ const EditAdminTutorialLayout = () => {
                  };
        fetchData(); }, []);
 
+       useEffect(() => {
+        const fetchData_ar = async () => {
+               setIsLoading(true);
+               try {
+                      const response = await axios.get(' https://www.wegostores.com/admin/v1/tutorial_group?locale=ar', {
+                             headers: {
+                                    Authorization: `Bearer ${auth.user.token}`,
+                             },
+                      });
+                      if (response.status === 200) {
+                             console.log(response.data)
+                             setAllTutorialsData_ar(response.data.tutorial_group);
+                          }
+               } catch (error) {
+                      console.error('Error fetching data:', error);
+               } finally {
+                      setIsLoading(false);
+               }
+           };
+           fetchData_ar(); }, []);
+
         // Find the specific tutorial to edit
       useEffect(() => {
         if (allTutorialsData.length > 0 && groupId) {
@@ -49,8 +73,20 @@ const EditAdminTutorialLayout = () => {
           }
         }
       }, [allTutorialsData, groupId, tutorialId]);
+
+              // Find the specific tutorial to edit arabic
+              useEffect(() => {
+                if (allTutorialsData_ar.length > 0 && groupId) {
+                  const selectedGroup = allTutorialsData_ar.find((group) => group.id === parseInt(groupId));
+                  if (selectedGroup && tutorialId) {
+                    const selectedTutorial = selectedGroup.tutorials.find((tutorial) => tutorial.id === parseInt(tutorialId));
+                    setTutorialEdit_ar(selectedTutorial || null);
+                  }
+                }
+              }, [allTutorialsData_ar, groupId, tutorialId]);
               
       console.log('allTutorialsData', allTutorialsData); // Logging the whole array
+      console.log('allTutorialsData_ar', allTutorialsData_ar); 
       console.log('tutorialEdit', tutorialEdit);
       console.log('groupId', groupId);
 
@@ -71,7 +107,7 @@ const EditAdminTutorialLayout = () => {
        return (
               <>
               <HeaderPageSection handleClick={handleGoBack} name="Edit Tutorial" />
-              <TutorialsLayout.Provider value={tutorialEdit}>
+              <TutorialsLayout.Provider value={{tutorialEdit,tutorialEdit_ar}}>
                 <EditTutorialPage/>
               </TutorialsLayout.Provider>
               </>

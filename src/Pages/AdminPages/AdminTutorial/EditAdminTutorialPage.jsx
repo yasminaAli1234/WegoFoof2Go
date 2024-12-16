@@ -9,7 +9,7 @@ import { TutorialGroupLayout } from '../../../Layouts/AdminLayouts/EditAdminTuto
 
 const EditAdminTutorialPage =()=>{
 
-    const tutorialGroupContent = useContext(TutorialGroupLayout);
+    const {tutorialGroupEdit,tutorialGroupEdit_ar} = useContext(TutorialGroupLayout);
     const auth = useAuth();
     const translate = new FormData();
     const [language, setLanguage] = useState("en");
@@ -23,11 +23,17 @@ const EditAdminTutorialPage =()=>{
     };
 
     useEffect(() => {
-        if (tutorialGroupContent) {
-            setName(tutorialGroupContent.name|| '')
-            setName_ar(tutorialGroupContent.name|| '')
+        if (tutorialGroupEdit) {
+            setName(tutorialGroupEdit.name|| '')
+           
         }
-    }, [tutorialGroupContent]);
+    }, [tutorialGroupEdit]);
+
+    useEffect(() => {
+        if (tutorialGroupEdit_ar) {
+            setName_ar(tutorialGroupEdit_ar.name|| '')
+        }
+    }, [tutorialGroupEdit_ar]);
 
     const handleSubmitEdit = async (groupId ,event) => {
         event.preventDefault();
@@ -44,7 +50,7 @@ const EditAdminTutorialPage =()=>{
 
         const formData = new FormData();
         formData.append('name', name);
-             // Convert the translation object to an array of translations
+          // Convert the translation object to an array of translations
       const translations = [
         { key: "name", value: name_ar, locale: "ar" },
       ];
@@ -60,7 +66,7 @@ const EditAdminTutorialPage =()=>{
         try {
         
          const response = await axios.post(
-                ` https://www.wegostores.com/admin/v1/tutorial_group/update/${groupId}`,
+                `https://login.wegostores.com/admin/v1/tutorial_group/update/${groupId}`,
                 formData,
                 {
                     headers: {
@@ -134,7 +140,7 @@ const EditAdminTutorialPage =()=>{
      
     handleClick={() => handleChangeLanguage()}
 />
-         <form onSubmit={(event) => handleSubmitEdit(tutorialGroupContent.id, event)} className="w-full flex flex-col items-center justify-center gap-y-10 m-5">
+         <form onSubmit={(event) => handleSubmitEdit(tutorialGroupEdit.id, event)} className="w-full flex flex-col items-center justify-center gap-y-10 m-5">
        {language==='en' ?  <div className="w-full flex flex-wrap items-center justify-start gap-10">
             <div className="lg:w-[30%] sm:w-full">
               <InputCustom
