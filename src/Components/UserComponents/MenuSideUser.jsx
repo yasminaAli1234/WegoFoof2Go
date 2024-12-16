@@ -271,7 +271,7 @@ const MenuSideUser =  ({setIsSidebarOpen }) => {
        useEffect(() => {
               const part = pathName.split('/');
               const result = part.slice(0, 3).join('/');
-              if (result == "/dashboard_user/extra") {
+              if (result == "/dashboard_user/payment_history") {
                      handleClickPayment()
               }
        }, [location])
