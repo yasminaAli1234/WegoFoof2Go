@@ -31,7 +31,7 @@ const PlanPage = () => {
     const fetchData = async () => {
         setIsLoading(true);
         try {
-               const response = await axios.get(' https://www.wegostores.com/admin/v1/plan/show', {
+               const response = await axios.get(i18n.language==='en'?' https://www.wegostores.com/admin/v1/plan/show':' https://www.wegostores.com/admin/v1/plan/show?locale=ar', {
                       headers: {
                              Authorization: `Bearer ${auth.user.token}`,
                       },
@@ -49,7 +49,7 @@ const PlanPage = () => {
 
     useEffect(() => {
         fetchData(); 
-    }, [planChanged]);
+    }, [planChanged,i18n.language]);
 
     const handleBillingPeriodChange = (planId, newPeriod) => {
       setBillingPeriod((prev) => ({ ...prev, [planId]: newPeriod }));

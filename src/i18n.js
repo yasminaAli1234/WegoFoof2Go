@@ -133,7 +133,8 @@ const resources = {
       "Explore Tutorials": "Explore Tutorials",
       "Product Name :":"Product Name :",
       "One time setup fees :" :"One time setup fees :",
-      "Remove": "Remove"
+      "Remove": "Remove",
+      "plans" :"plans"
       
       // Add more translations
     },
@@ -152,6 +153,7 @@ const resources = {
       "buy_domain": "شراء نطاق",
       "Product Type :" :" :نوع المنتج ",
       "Product Name :":":اسم المنتج",
+      "plans":"خطط",
       "One time setup fees :":" :رسوم الإعداد لمرة واحدة ",
       "subscription" :" الاشتراك",
       "extras": "الإضافات",

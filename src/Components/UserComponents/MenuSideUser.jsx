@@ -270,7 +270,7 @@ const MenuSideUser =  ({setIsSidebarOpen }) => {
                                    </Link>
                                    <Link to="subscription" onClick={() =>{handleClickSubscription();handleLinkClick();}} className={`${isActiveSubscription ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <SubscriptionIcon isActive={isActiveSubscription} />
-                                          <span className={`${isActiveSubscription ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>{t('subscriptions')}</span>
+                                          <span className={`${isActiveSubscription ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>{t('plans')}</span>
                                    </Link>                     
                                    {/* <Link to="domain" onClick={() =>{handleClickDomain();handleLinkClick();}} className={`${isActiveDomain ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <DomainIcon isActive={isActiveDomain} />

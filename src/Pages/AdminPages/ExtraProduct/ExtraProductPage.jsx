@@ -8,9 +8,12 @@ import {Wroning,DeleteIcon,EditIcon} from '../../../Components/Icons/AllIcons';
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
 import { MdCheck } from "react-icons/md";
 
+import { useTranslation } from 'react-i18next';
+
 const ExtraProductPage = () => {
 
     const auth = useAuth();
+    const {i18n} = useTranslation();
     const [isLoading, setIsLoading] = useState(false);
     const [products, setProducts] = useState('');
     const [productChanged, setProductChanged] = useState(false);
@@ -20,7 +23,7 @@ const ExtraProductPage = () => {
     const fetchData = async () => {
         setIsLoading(true);
         try {
-               const response = await axios.get('https://www.wegostores.com/admin/v1/extra/show', {
+               const response = await axios.get(i18n.language==='en'? 'https://www.wegostores.com/admin/v1/extra/show':'https://www.wegostores.com/admin/v1/extra/show?locale=ar', {
                       headers: {
                              Authorization: `Bearer ${auth.user.token}`,
                       },
@@ -38,7 +41,7 @@ const ExtraProductPage = () => {
 
     useEffect(() => {
         fetchData(); 
-    }, [productChanged]);
+    }, [productChanged,i18n.language]);
 
     const handleOpenDialog = (productId) => {
        setOpenDialog(productId);
