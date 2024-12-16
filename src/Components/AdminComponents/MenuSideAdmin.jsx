@@ -4,13 +4,15 @@ import {DemorequestsIcon, DollerIcon, DomainIcon, ExtraIcon, HomeIcon, OrderIcon
 } from "../Icons/AllIcons";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../Context/Auth";
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate,useLocation } from 'react-router-dom'
 import { IoIosLogOut } from "react-icons/io";
 
 const MenuSideAdmin = ({setIsSidebarOpen }) => {
 
        const auth = useAuth();
        const navigate = useNavigate();
+       const location = useLocation();
+       const pathName = location.pathname;
        const savedState = JSON.parse(localStorage.getItem('sidebarAdminState')) || {};
 
        const handleLinkClick = () => {
@@ -77,6 +79,14 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
               setIsActiveContact(false)
               setIsActiveStores(false)
        };
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 2).join('/');
+              if (result == "/dashboard_admin/") {
+                     handleClickHome()
+              }
+       }, [location])
+
        const handleClickDemoRequest = () => {
               setIsActiveHome(false);
               setIsActiveDemoRequest(true)
@@ -98,6 +108,14 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
               setIsActiveContact(false)
               setIsActiveStores(false)
        };
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/demo_request") {
+                     handleClickDemoRequest()
+              }
+       }, [location])
+
        const handleClickDomainRequest = () => {
               setIsActiveHome(false);
               setIsActiveDemoRequest(false)
