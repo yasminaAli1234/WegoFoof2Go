@@ -4,10 +4,10 @@ import { initReactI18next } from 'react-i18next';
 const resources = {
   en: {
     translation: {
-      "monthly":"شهريا",
-      "quarterly":"رُبْع سَنوي",
-      "semiAnnually" :"نِصف سنوي",
-      "annually":"سَنَوِيًا",
+      "monthly":"monthly",
+      "quarterly":"quarterly",
+      "semiAnnually" :"semiAnnually",
+      "annually":"annually",
       "hello": "Hello",
       "dashboard": "Dashboard",
       "search": "Search",
@@ -267,8 +267,8 @@ const resources = {
       "No extra product data available": "لا توجد بيانات منتجات إضافية متاحة",
       "Billing Period": "فترة الفوترة",
       "Monthly": "شهري",
-      "3 Months": "3 أشهر",
-      "6 Months": "6 أشهر",
+      "3 Months": "٣ أشهر",
+      "6 Months": "٦ أشهر",
       "Yearly": "سنوي",
       "per month": "شهريًا",
       "per": "لكل",
@@ -307,7 +307,12 @@ const resources = {
       "Chat on WhatsApp" :"الدردشة على واتساب",
       "Chat Now" :"الدردشة الآن",
       "Send Email" :"إرسال بريد إلكتروني",
-      "Explore Tutorials": "استكشاف البرامج التعليمية"
+      "Explore Tutorials": "استكشاف البرامج التعليمية",
+
+      "monthly":"شهريا",
+      "quarterly":"رُبْع سَنوي",
+      "semiAnnually" :"نِصف سنوي",
+      "annually":"سَنَوِيًا",
       // Add more translations
     },
   },
