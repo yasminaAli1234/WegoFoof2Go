@@ -20,7 +20,7 @@ const ActivityPage = () => {
     const fetchData = async () => {
         setIsLoading(true);
         try {
-               const response = await axios.get('https://login.wegostores.com/admin/v1/activity', {
+               const response = await axios.get(' https://www.wegostores.com/admin/v1/activity', {
                       headers: {
                              Authorization: `Bearer ${auth.user.token}`,
                       },
@@ -67,7 +67,7 @@ const ActivityPage = () => {
 
        const deleteActivity = async (activityId, authToken) => {
               try {
-                     const response = await axios.delete(`https://login.wegostores.com/admin/v1/activity/delete/${activityId}`, {
+                     const response = await axios.delete(` https://www.wegostores.com/admin/v1/activity/delete/${activityId}`, {
                             headers: {
                                    Authorization: `Bearer ${authToken}`,
                             },

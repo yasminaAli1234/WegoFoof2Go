@@ -66,7 +66,7 @@ const AddActivityPage = () => {
         setIsLoading(true);
         try {
             const response = await axios.post(
-                'https://login.wegostores.com/admin/v1/activity/add',
+                ' https://www.wegostores.com/admin/v1/activity/add',
                 formData,
                 {
                     headers: {

@@ -20,7 +20,7 @@ const EditExtraProductLayout =()=>{
     const fetchData = async () => {
         setIsLoading(true);
         try {
-               const response = await axios.get('https://login.wegostores.com/admin/v1/extra/show', {
+               const response = await axios.get(' https://www.wegostores.com/admin/v1/extra/show', {
                       headers: {
                              Authorization: `Bearer ${auth.user.token}`,
                       },

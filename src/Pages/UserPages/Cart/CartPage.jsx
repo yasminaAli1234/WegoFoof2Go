@@ -257,7 +257,7 @@
 
 //     try {
 //       const response = await axios.post(
-//         "https://login.wegostores.com/user/v1/promocode",
+//         " https://www.wegostores.com/user/v1/promocode",
 //         formattedData,
 //         {
 //           headers: {
@@ -505,7 +505,7 @@ const CartPage = () => {
 
     try {
       const response = await axios.post(
-        "https://login.wegostores.com/user/v1/promocode",
+        " https://www.wegostores.com/user/v1/promocode",
         formattedData,
         {
           headers: {

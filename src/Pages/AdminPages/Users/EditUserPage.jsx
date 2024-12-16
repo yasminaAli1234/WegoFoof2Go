@@ -107,7 +107,7 @@ const EditUserPage =()=>{
             
 
             const response = await axios.post(
-                `https://login.wegostores.com/admin/v1/users/update/${userId}`,
+                ` https://www.wegostores.com/admin/v1/users/update/${userId}`,
                 formData,
                 {
                     headers: {

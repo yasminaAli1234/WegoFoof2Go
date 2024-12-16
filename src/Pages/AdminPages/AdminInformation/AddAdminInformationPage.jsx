@@ -69,9 +69,9 @@ const AddAdminInformationPage = () => {
             formData.append('watts_app', whatsApp); // Append the file
 
             const translations = [
-                { key: 'email', value: email_ar, locale: 'ar' },
-                { key: 'phone', value: phone_ar, locale: 'ar' },
-                { key: 'watts_app', value: whatsApp_ar, locale: 'ar' },
+                { key: 'email', value: email, locale: 'ar' },
+                { key: 'phone', value: phone, locale: 'ar' },
+                { key: 'watts_app', value: whatsApp, locale: 'ar' },
             ];
 
             translations.forEach((translation, index) => {
@@ -81,7 +81,7 @@ const AddAdminInformationPage = () => {
             });
 
             const response = await axios.post(
-                'https://login.wegostores.com/admin/v1/contact_us/add',
+                ' https://www.wegostores.com/admin/v1/contact_us/add',
                 formData,
                 {
                     headers: {
@@ -177,7 +177,7 @@ const AddAdminInformationPage = () => {
                                 type="email"
                                 borderColor="mainColor"
                                 placeholder="البريد الالكتروني"
-                                value={email_ar}
+                                value={email}
                                 onChange={(e) => setEmail_ar(e.target.value)}
                                 width="w-full"
                             />
@@ -187,7 +187,7 @@ const AddAdminInformationPage = () => {
                                 type="text"
                                 borderColor="mainColor"
                                 placeholder="رقم الهاتف"
-                                value={phone_ar}
+                                value={phone}
                                 onChange={(e) => setPhone_ar(e.target.value)}
                                 width="w-full"
                             />
@@ -197,7 +197,7 @@ const AddAdminInformationPage = () => {
                                 type="text"
                                 borderColor="mainColor"
                                 placeholder="رقم الواتساب"
-                                value={whatsApp_ar}
+                                value={whatsApp}
                                 onChange={(e) => setWhatsApp_ar(e.target.value)}
                                 width="w-full"
                             />

@@ -18,7 +18,7 @@ const WelcomeOfferPage = () => {
         const fetchData = async () => {
         setIsLoading(true);
         try {
-               const response = await axios.get('https://login.wegostores.com/admin/v1/welcome_offer', {
+               const response = await axios.get(' https://www.wegostores.com/admin/v1/welcome_offer', {
                       headers: {
                              Authorization: `Bearer ${auth.user.token}`,
                       },
@@ -61,7 +61,7 @@ const WelcomeOfferPage = () => {
  
         const deleteOffer = async (offerId, authToken) => {
                try {
-                      const response = await axios.delete(`https://login.wegostores.com/admin/v1/welcome_offer/delete/${offerId}`, {
+                      const response = await axios.delete(` https://www.wegostores.com/admin/v1/welcome_offer/delete/${offerId}`, {
                              headers: {
                                     Authorization: `Bearer ${authToken}`,
                              },

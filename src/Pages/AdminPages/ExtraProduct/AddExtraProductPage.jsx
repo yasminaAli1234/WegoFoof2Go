@@ -101,7 +101,7 @@ const AddExtraProductPage = () => {
     const fetchData = async () => {
         setIsLoading(true);
         try {
-               const response = await axios.get('https://login.wegostores.com/admin/v1/plan/show', {
+               const response = await axios.get(' https://www.wegostores.com/admin/v1/plan/show', {
                       headers: {
                              Authorization: `Bearer ${auth.user.token}`,
                       },
@@ -254,28 +254,28 @@ const AddExtraProductPage = () => {
             }
         }
     
-        if (extraTypeName_ar === 'one_time' && !price_ar) {
-            auth.toastError(':الرجاء إدخال السعر');
-            return;
-        }
-        if (extraTypeName_ar === 'recurring') {
-            if (!monthlyPrice_ar) {
-                auth.toastError('الرجاء إدخال السعر الشهري.');
-                return;
-            }
-            if (!quarterlyPrice_ar) {
-                auth.toastError('الرجاء إدخال السعر ربع السنوي.');
-                return;
-            }
-            if (!semiAnnualPrice_ar) {
-                auth.toastError('الرجاء إدخال السعر نصف السنوي.');
-                return;
-            }
-            if (!yearlyPrice_ar) {
-                auth.toastError('الرجاء إدخال السعر السنوي.');
-                return;
-            }
-        }
+        // if (extraTypeName_ar === 'one_time' && !price_ar) {
+        //     auth.toastError(':الرجاء إدخال السعر');
+        //     return;
+        // }
+        // if (extraTypeName_ar === 'recurring') {
+        //     if (!monthlyPrice_ar) {
+        //         auth.toastError('الرجاء إدخال السعر الشهري.');
+        //         return;
+        //     }
+        //     if (!quarterlyPrice_ar) {
+        //         auth.toastError('الرجاء إدخال السعر ربع السنوي.');
+        //         return;
+        //     }
+        //     if (!semiAnnualPrice_ar) {
+        //         auth.toastError('الرجاء إدخال السعر نصف السنوي.');
+        //         return;
+        //     }
+        //     if (!yearlyPrice_ar) {
+        //         auth.toastError('الرجاء إدخال السعر السنوي.');
+        //         return;
+        //     }
+        // }
     
         setIsLoading(true);
         try {
@@ -319,43 +319,43 @@ const AddExtraProductPage = () => {
             const translations = [
                 { key: 'name', value: name_ar, locale: 'ar' },
                 { key: 'description', value: description_ar, locale: 'ar' },
-                { key: 'setup_fees', value: fee_ar, locale: 'ar' },
+                { key: 'setup_fees', value: fee, locale: 'ar' },
             ];
     
             // Handle the translation for recurring products
-            if (extraType_ar === 'One Time') {
+            if (extraType === 'One Time') {
                 translations.push({ key: 'status', value: 'one_time', locale: 'ar' });
-                translations.push({ key: 'price', value: price_ar, locale: 'ar' });
-            } else if (extraType_ar === 'Recurring') {
+                translations.push({ key: 'price', value: price, locale: 'ar' });
+            } else if (extraType === 'Recurring') {
                 translations.push({ key: 'status', value: 'recurring', locale: 'ar' });
     
-                if (showMonthlyPriceInput_ar && monthlyPrice_ar) {
-                    translations.push({ key: 'monthly', value: monthlyPrice_ar, locale: 'ar' });
-                    translations.push({ key: 'discount_monthly', value: monthlyDiscountPrice_ar, locale: 'ar' });
+                if (showMonthlyPriceInput && monthlyPrice) {
+                    translations.push({ key: 'monthly', value: monthlyPrice, locale: 'ar' });
+                    translations.push({ key: 'discount_monthly', value: monthlyDiscountPrice, locale: 'ar' });
                 }
-                if (showQuarterlyPriceInput_ar && quarterlyPrice_ar) {
-                    translations.push({ key: 'quarterly', value: quarterlyPrice_ar, locale: 'ar' });
-                    translations.push({ key: 'discount_quarterly', value: quarterlyDiscountPrice_ar, locale: 'ar' });
+                if (showQuarterlyPriceInput && quarterlyPrice) {
+                    translations.push({ key: 'quarterly', value: quarterlyPrice, locale: 'ar' });
+                    translations.push({ key: 'discount_quarterly', value: quarterlyDiscountPrice, locale: 'ar' });
                 }
-                if (showSemiAnnualPriceInput_ar && semiAnnualPrice_ar) {
-                    translations.push({ key: 'semi_annual', value: semiAnnualPrice_ar, locale: 'ar' });
-                    translations.push({ key: 'discount_semi_annual', value: semiAnnualDiscountPrice_ar, locale: 'ar' });
+                if (showSemiAnnualPriceInput && semiAnnualPrice) {
+                    translations.push({ key: 'semi_annual', value: semiAnnualPrice, locale: 'ar' });
+                    translations.push({ key: 'discount_semi_annual', value: semiAnnualDiscountPrice, locale: 'ar' });
                 }
-                if (showYearlyPriceInput_ar && yearlyPrice_ar) {
-                    translations.push({ key: 'yearly', value: yearlyPrice_ar, locale: 'ar' });
-                    translations.push({ key: 'discount_yearly', value: yearlyDiscountPrice_ar, locale: 'ar' });
+                if (showYearlyPriceInput && yearlyPrice) {
+                    translations.push({ key: 'yearly', value: yearlyPrice, locale: 'ar' });
+                    translations.push({ key: 'discount_yearly', value: yearlyDiscountPrice, locale: 'ar' });
                 }
             }
     
-            translations.forEach((translation, index) => {
-                Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
-                    formData.append(`translations[${index}][${fieldKey}]`, fieldValue);
-                });
+          translations.forEach((translation, index) => {
+            Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
+                formData.append(`translations[${index}][${fieldKey}]`, fieldValue);
             });
+        });
     
             // Sending the form data via POST request
             const response = await axios.post(
-                'https://login.wegostores.com/admin/v1/extra/create',
+                ' https://www.wegostores.com/admin/v1/extra/create',
                 formData,
                 {
                     headers: {
@@ -754,14 +754,14 @@ const AddExtraProductPage = () => {
                     ref={dropdownExtraType}
                     handleOpen={handleOpenExtraType}
                     handleOpenOption={handleExtraType}
-                    stateoption={extraType_ar}
-                    openMenu={openExtraType_ar}
+                    stateoption={extraType}
+                    openMenu={openExtraType}
                     options={extraTypeData}
                 />
             </div>
 
             {/* Conditionally render price inputs based on extraType */}
-            {extraType_ar === 'One Time' && (
+            {extraType === 'One Time' && (
                 <div className="lg:w-[30%] sm:w-full">
                     <InputCustom
                         type="number"
@@ -774,7 +774,7 @@ const AddExtraProductPage = () => {
                 </div>
             )}
 
-            {extraType_ar === 'Recurring' && (
+            {extraType === 'Recurring' && (
                 <>
                     {/* <div className="lg:w-[30%] sm:w-full">
                         <InputCustom
@@ -802,15 +802,15 @@ const AddExtraProductPage = () => {
                 <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
                 <div className=" flex items-center gap-3 w-full lg:w-1/3">
                     <input 
-                        type="checkbox"
-                        checked={showMonthlyPriceInput_ar}
-                        onChange={() => setShowMonthlyPriceInput_ar(prev => !prev)}
+                        type="checkbox" 
+                        checked={showMonthlyPriceInput}
+                        onChange={() => setShowMonthlyPriceInput(prev => !prev)}
                         className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
                     />
                     <label  className="text-2xl text-mainColor font-medium">شهري</label>
                 </div>
                     {/* Conditional Price Inputs */}
-                    {showMonthlyPriceInput_ar && (
+                    {showMonthlyPriceInput && (
                     <>
                     <div className="lg:w-1/2 sm:w-full">
                         <InputCustom
@@ -852,13 +852,13 @@ const AddExtraProductPage = () => {
                 <div className="flex items-center gap-3 w-full lg:w-1/3 ">
                     <input 
                         type="checkbox" 
-                        checked={showQuarterlyPriceInput_ar}
-                        onChange={() => setShowQuarterlyPriceInput_ar(prev => !prev)}
+                        checked={showQuarterlyPriceInput}
+                        onChange={() => setShowQuarterlyPriceInput(prev => !prev)}
                         className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
                     />
                     <label  className="text-2xl text-mainColor font-medium">ربع سنوي</label>
                 </div>
-                {showQuarterlyPriceInput_ar && (
+                {showQuarterlyPriceInput && (
                     <>
                     <div className="lg:w-1/2 sm:w-full">
                         <InputCustom
@@ -900,13 +900,13 @@ const AddExtraProductPage = () => {
                 <div className="flex items-center gap-3 w-full lg:w-1/3 ">
                     <input 
                         type="checkbox" 
-                        checked={showSemiAnnualPriceInput_ar}
-                        onChange={() => setShowSemiAnnualPriceInput_ar(prev => !prev)}
+                        checked={showSemiAnnualPriceInput}
+                        onChange={() => setShowSemiAnnualPriceInput(prev => !prev)}
                         className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
                     />
                     <label  className="text-2xl text-mainColor font-medium">نصف سنوي</label>
                 </div>
-                {showSemiAnnualPriceInput_ar && (
+                {showSemiAnnualPriceInput && (
                     <>
                     <div className="lg:w-1/2 sm:w-full">
                         <InputCustom
@@ -948,13 +948,13 @@ const AddExtraProductPage = () => {
                 <div className="flex items-center gap-3 w-full lg:w-1/3 ">
                     <input 
                         type="checkbox" 
-                        checked={showYearlyPriceInput_ar}
-                        onChange={() => setShowYearlyPriceInput_ar(prev => !prev)}
+                        checked={showYearlyPriceInput}
+                        onChange={() => setShowYearlyPriceInput(prev => !prev)}
                         className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
                     />
                     <label  className="text-2xl text-mainColor font-medium">سنوي</label>
                 </div>
-                {showYearlyPriceInput_ar && (
+                {showYearlyPriceInput && (
                     <>
                     <div className="lg:w-1/2 sm:w-full">
                         <InputCustom

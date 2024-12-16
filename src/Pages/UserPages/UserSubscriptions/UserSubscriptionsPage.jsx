@@ -21,7 +21,7 @@
 //     const fetchData = async () => {
 //         setIsLoading(true);
 //         try {
-//             const response = await axios.get('https://login.wegostores.com/user/v1/subscription', {
+//             const response = await axios.get(' https://www.wegostores.com/user/v1/subscription', {
 //                 headers: {
 //                     Authorization: `Bearer ${auth.user.token}`,
 //                 },
@@ -255,6 +255,7 @@ import { CiMoneyCheck1 } from "react-icons/ci";
 import { useNavigate } from 'react-router-dom';  // Import useNavigate
 import { FaCrown } from "react-icons/fa";
 import { useTranslation } from 'react-i18next';
+import { convertNumberToArabic } from '../../../Components/convert_number';
 
 const UserSubscriptionsPage = () => {
     const auth = useAuth();
@@ -272,11 +273,11 @@ const UserSubscriptionsPage = () => {
         try {
             let url;
             if (i18n.language === 'ar') {
-                url = 'https://login.wegostores.com/user/v1/subscription?locale=ar'; // Arabic URL
+                url = ' https://www.wegostores.com/user/v1/subscription?locale=ar'; // Arabic URL
             } else {
-                url = 'https://login.wegostores.com/user/v1/subscription'; // Non-Arabic URL (assuming English or other)
+                url = ' https://www.wegostores.com/user/v1/subscription'; // Non-Arabic URL (assuming English or other)
             }
-    
+           
             const response = await axios.get(url, {
                 headers: {
                     Authorization: `Bearer ${auth.user.token}`,
@@ -303,7 +304,7 @@ const UserSubscriptionsPage = () => {
     //     setIsLoading(true);
     //     try {
     //         const response = await axios.post(
-    //             'https://login.wegostores.com/user/v1/cart/pending',
+    //             ' https://www.wegostores.com/user/v1/cart/pending',
     //             {
     //                 id: plan.id, // Properly include plan.id as a key-value pair
     //                 type: "plan"
@@ -389,7 +390,7 @@ const UserSubscriptionsPage = () => {
     
         try {
             const response = await axios.post(
-                'https://login.wegostores.com/user/v1/cart/pending',
+                ' https://www.wegostores.com/user/v1/cart/pending',
                 {
                     id: plan.id, // Properly include plan.id as a key-value pair
                     type: "plan",
@@ -540,10 +541,10 @@ const UserSubscriptionsPage = () => {
                         {/* Plan Details */}
                         <div className="space-y-4 mb-6">
                             <p className="text-sm text-gray-600">{plan.description}</p>
-                            <p className="flex items-center gap-2"><PiStorefront size={26} /><span className="font-semibold">{t("Number of stores:")}</span> {plan.limet_store || '0'}</p>
+                            <p className="flex items-center gap-2"><PiStorefront size={26} /><span className="font-semibold">{t("Number of stores:")}</span> {convertNumberToArabic(plan.limet_store ,i18n.language)|| '0'}</p>
     
                             {plan.my_plan !== true && (
-                                <p className="flex items-center gap-2"><CiMoneyCheck1 size={30} className='text-mainColor' /><span className="font-semibold text-mainColor">{t("SetUp Fees:")}</span> {plan.setup_fees || '0'} {t("EGP")}</p>
+                                <p className="flex items-center gap-2"><CiMoneyCheck1 size={30} className='text-mainColor' /><span className="font-semibold text-mainColor">{t("SetUp Fees:")}</span> {convertNumberToArabic(plan.setup_fees,i18n.language) || '0'} {t("EGP")}</p>
                             )}
                         </div>
     
@@ -567,9 +568,9 @@ const UserSubscriptionsPage = () => {
                         <div className="text-center mb-4">
                             {discountedPrice ? (
                                 <>
-                                    <p className="text-lg line-through">{currentPrice} {t("EGP")}</p>
-                                    <p className="text-3xl font-semibold text-mainColor">{discountedPrice} {t("EGP")}</p>
-                                    <p className="text-green-500 font-semibold mt-2">{t("Save")} {savings} {t("EGP")} {t("per")} {selectedPeriod}</p>
+                                    <p className="text-lg line-through">{convertNumberToArabic(currentPrice,i18n.language)} {t("EGP")}</p>
+                                    <p className="text-3xl font-semibold text-mainColor">{convertNumberToArabic(discountedPrice,i18n.language)} {t("EGP")}</p>
+                                    <p className="text-green-500 font-semibold mt-2">{t("Save")} {convertNumberToArabic(savings,i18n.language)} {t("EGP")} {t("per")} {selectedPeriod}</p>
                                 </>
                             ) : (
                                 <>

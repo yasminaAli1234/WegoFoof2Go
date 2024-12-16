@@ -70,7 +70,7 @@ const UserEditProfilePage = () => {
     setIsLoading(true);
     try {
       const response = await axios.post(
-        `https://login.wegostores.com/user/v1/profile/update`,
+        ` https://www.wegostores.com/user/v1/profile/update`,
         formData,
         {
           headers: {

@@ -4,6 +4,10 @@ import { initReactI18next } from 'react-i18next';
 const resources = {
   en: {
     translation: {
+      "monthly":"شهريا",
+      "quarterly":"رُبْع سَنوي",
+      "semiAnnually" :"نِصف سنوي",
+      "annually":"سَنَوِيًا",
       "hello": "Hello",
       "dashboard": "Dashboard",
       "search": "Search",

@@ -49,7 +49,7 @@ const AddWelcomOfferPage = () => {
     const fetchData = async () => {
         setIsLoading(true);
         try {
-               const response = await axios.get('https://login.wegostores.com/admin/v1/plan/show', {
+               const response = await axios.get(' https://www.wegostores.com/admin/v1/plan/show', {
                       headers: {
                              Authorization: `Bearer ${auth.user.token}`,
                       },
@@ -198,10 +198,10 @@ const AddWelcomOfferPage = () => {
             auth.toastError('يرجى اختيار المدة.');
             return;
         }
-        if (!price_ar) {
-          auth.toastError('يرجى اختيار السعر.');
-          return;
-      }
+      //   if (!price_ar) {
+      //     auth.toastError('يرجى اختيار السعر.');
+      //     return;
+      // }
         
      
         
@@ -233,7 +233,7 @@ const AddWelcomOfferPage = () => {
         const translations = [
           { key: 'plan_id', value: selectPlanId_ar, locale: 'ar' },
           { key: 'duration', value: duration_ar, locale: 'ar' },
-          { key: 'status', value: active || 0, locale: 'ar' },
+          // { key: 'status', value: active || 0, locale: 'ar' },
           { key: 'ar_image', value: arabicThumbnailFile || 0, locale: 'ar' },
           { key: 'en_image', value: englishThumbnailFile || 0, locale: 'ar' },
       ];
@@ -245,7 +245,7 @@ const AddWelcomOfferPage = () => {
     });
             
             const response = await axios.post(
-                'https://login.wegostores.com/admin/v1/welcome_offer/add',
+                ' https://www.wegostores.com/admin/v1/welcome_offer/add',
                 formData,
                 {
                     headers: {
@@ -298,6 +298,19 @@ const AddWelcomOfferPage = () => {
 
     return (
        <div className="">
+             
+                    <Button 
+    type="submit"
+    Text={`Change to ${language === 'en' ? 'Arabic' : 'English'}`}
+    BgColor="bg-mainColor"
+    Color="text-white"
+    Width="fit"
+    Size="text-2xl"
+    px="px-28"
+    rounded="rounded-2xl"
+     
+    handleClick={() => handleChangeLanguage()}
+/>
 
 <form onSubmit={handleSubmitAdd} className="w-full flex flex-col items-center justify-center gap-y-10 m-5">
   {language === 'en' ? (

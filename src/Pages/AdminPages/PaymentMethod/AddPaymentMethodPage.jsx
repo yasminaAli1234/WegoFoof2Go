@@ -66,10 +66,10 @@ const AddPaymentMethodPage = () => {
       return;
     }
     // set info arabic
-    if (!thumbnails_ar) {
-      auth.toastError("يرجى تحميل صورة الصورة المصغرة.");
-      return;
-    }
+    // if (!thumbnails_ar) {
+    //   auth.toastError("يرجى تحميل صورة الصورة المصغرة.");
+    //   return;
+    // }
     if (!title_ar) {
       auth.toastError("يرجى إدخال العنوان.");
       return;
@@ -91,7 +91,7 @@ const AddPaymentMethodPage = () => {
     const translations = [
       { key: "name", value: title_ar, locale: "ar" },
       { key: "description", value: description_ar, locale: "ar" },
-      { key: "thumbnail", value: thumbnails_ar, locale: "ar" },
+      { key: "thumbnail", value: thumbnails, locale: "ar" },
     ];
 
     translations.forEach((translation, index) => {
@@ -102,7 +102,7 @@ const AddPaymentMethodPage = () => {
   
 
       const response = await axios.post(
-        "https://login.wegostores.com/admin/v1/payment/method/create",
+        " https://www.wegostores.com/admin/v1/payment/method/create",
         formData,
         {
           headers: {
@@ -245,7 +245,7 @@ const AddPaymentMethodPage = () => {
                 type="text"
                 borderColor="mainColor"
                 placeholder="الصورة المصغرة"
-                value={thumbnails_ar}
+                value={thumbnails}
                 readOnly={true}
                 onClick={handleInputClick}
                 upload="true"

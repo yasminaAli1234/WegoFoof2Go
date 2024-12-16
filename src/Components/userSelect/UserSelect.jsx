@@ -29,7 +29,7 @@ const UserSelect = () => {
   const fetchData = async () => {
     setIsLoading(true);
         try {
-        const response = await axios.get('https://login.wegostores.com/user/v1/welcome_offer', {
+        const response = await axios.get(' https://www.wegostores.com/user/v1/welcome_offer', {
             headers: {
                 Authorization: `Bearer ${auth.user.token}`,
             },
@@ -61,7 +61,7 @@ const UserSelect = () => {
   const ProfilefetchData = async () => {
     setIsLoading(true);
     try {
-        const response = await axios.get('https://login.wegostores.com/user/v1/profile', {
+        const response = await axios.get(' https://www.wegostores.com/user/v1/profile', {
             headers: {
                 Authorization: `Bearer ${auth.user.token}`,
             },
@@ -104,7 +104,7 @@ const UserSelect = () => {
 
       try {
           const response = await axios.post(
-              'https://login.wegostores.com/user/v1/cart/pending',
+              ' https://www.wegostores.com/user/v1/cart/pending',
               {
                   id: plan.id, // Properly include plan.id as a key-value pair
                   type: "plan",

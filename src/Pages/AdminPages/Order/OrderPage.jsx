@@ -55,7 +55,7 @@ const [isDropdownVisible, setDropdownVisible] = useState(false);
     const fetchData = async () => {
         setIsLoading(true);
         try {
-               const response = await axios.get('https://login.wegostores.com/admin/v1/order/show', {
+               const response = await axios.get(' https://www.wegostores.com/admin/v1/order/show', {
                       headers: {
                              Authorization: `Bearer ${auth.user.token}`,
                       },
@@ -79,7 +79,7 @@ const [isDropdownVisible, setDropdownVisible] = useState(false);
         // if (!selectedOrder) return;
         setIsLoading(true);
         try {
-            const response = await axios.post(`https://login.wegostores.com/admin/v1/order/update/${orderId}`,{
+            const response = await axios.post(` https://www.wegostores.com/admin/v1/order/update/${orderId}`,{
              order_status:status
             }, {
                 headers: {
@@ -117,7 +117,7 @@ const [isDropdownVisible, setDropdownVisible] = useState(false);
         // if (!selectedOrder) return;
         setIsLoading(true);
         try {
-            const response = await axios.post(`https://login.wegostores.com/admin/v1/store/approve`,{
+            const response = await axios.post(` https://www.wegostores.com/admin/v1/store/approve`,{
                 store_id:orderId,status:status ,email:username ,password:password,link_store:storeLink,link_cbanal:storeCpanel
             }, {
                 headers: {

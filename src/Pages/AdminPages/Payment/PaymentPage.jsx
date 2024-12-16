@@ -23,7 +23,7 @@ const PaymentPage = () => {
     const fetchData = async () => {
         setIsLoading(true);
         try {
-               const response = await axios.get('https://login.wegostores.com/admin/v1/payment/show/history', {
+               const response = await axios.get(' https://www.wegostores.com/admin/v1/payment/show/history', {
                       headers: {
                              Authorization: `Bearer ${auth.user.token}`,
                       },

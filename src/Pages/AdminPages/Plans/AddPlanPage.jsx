@@ -102,7 +102,7 @@ const AddPlanPage = () => {
     const handleClick = (e) => {
         const isChecked = e.target.checked; // Checked status
         setAppActive(isChecked ? 1 : 0); // Set paymentActive as 1 (true) or 0 (false)
-        setAppActive_ar(isChecked ? 1 : 0); 
+        // setAppActive_ar(isChecked ? 1 : 0); 
     };
 
     const handleSubmitAdd = async (event) => {
@@ -115,7 +115,7 @@ const AddPlanPage = () => {
         }
     
         // Validation for Arabic fields
-        if (!name_ar || !title_ar || !description_ar || !fee_ar || !monthlyPrice_ar || !quarterlyPrice_ar || !semiAnnualPrice_ar || !yearlyPrice_ar) {
+        if (!name_ar || !title_ar || !description_ar || !fee || !monthlyPrice || !quarterlyPrice || !semiAnnualPrice || !yearlyPrice) {
             auth.toastError('Please fill out all Arabic fields.');
             return;
         }
@@ -128,18 +128,18 @@ const AddPlanPage = () => {
                 { key: 'name', value: name_ar, locale: 'ar' },
                 { key: 'title', value: title_ar, locale: 'ar' },
                 { key: 'description', value: description_ar, locale: 'ar' },
-                { key: 'fee', value: fee_ar, locale: 'ar' },
-                { key: 'limitPlan', value: limitPlan_ar, locale: 'ar' },
+                { key: 'fee', value: fee, locale: 'ar' },
+                { key: 'limitPlan', value: limitPlan, locale: 'ar' },
                 // { key: 'thumbnails', value: thumbnails_ar, locale: 'ar' },
                 { key: 'app', value: appActive_ar, locale: 'ar' },
-                { key: 'monthly', value: monthlyPrice_ar, locale: 'ar' },
-                { key: 'quarterly', value: quarterlyPrice_ar, locale: 'ar' },
-                { key: 'semi_annual', value: semiAnnualPrice_ar, locale: 'ar' },
-                { key: 'yearly', value: yearlyPrice_ar, locale: 'ar' },
-                { key: 'discount_monthly', value: monthlyDiscountPrice_ar, locale: 'ar' },
-                { key: 'discount_quarterly', value: quarterlyDiscountPrice_ar, locale: 'ar' },
-                { key: 'discount_semi_annual', value: semiAnnualDiscountPrice_ar, locale: 'ar' },
-                { key: 'discount_yearly', value: yearlyDiscountPrice_ar, locale: 'ar' },
+                { key: 'monthly', value: monthlyPrice, locale: 'ar' },
+                { key: 'quarterly', value: quarterlyPrice, locale: 'ar' },
+                { key: 'semi_annual', value: semiAnnualPrice, locale: 'ar' },
+                { key: 'yearly', value: yearlyPrice, locale: 'ar' },
+                { key: 'discount_monthly', value: monthlyDiscountPrice, locale: 'ar' },
+                { key: 'discount_quarterly', value: quarterlyDiscountPrice, locale: 'ar' },
+                { key: 'discount_semi_annual', value: semiAnnualDiscountPrice, locale: 'ar' },
+                { key: 'discount_yearly', value: yearlyDiscountPrice, locale: 'ar' },
             ];
     
             // Create FormData object
@@ -180,7 +180,7 @@ const AddPlanPage = () => {
     
             // API request
             const response = await axios.post(
-                'https://login.wegostores.com/admin/v1/plan/create',
+                ' https://www.wegostores.com/admin/v1/plan/create',
                 formData,
                 {
                     headers: {
@@ -537,7 +537,7 @@ const AddPlanPage = () => {
                   type="number"
                   borderColor="mainColor"
                   placeholder="رسوم الإعداد"
-                  value={fee_ar}
+                  value={fee}
                   onChange={(e) => setFee_ar(e.target.value)}
                   width="w-full"
               />
@@ -547,7 +547,7 @@ const AddPlanPage = () => {
                   type="number"
                   borderColor="mainColor"
                   placeholder="حد المتجر"
-                  value={limitPlan_ar}
+                  value={limitPlan}
                   onChange={(e) => setLimitPlan_ar(e.target.value)}
                   width="w-full"
               />
@@ -586,21 +586,21 @@ const AddPlanPage = () => {
               <div className=" flex items-center gap-3 w-full lg:w-1/3">
                   <input 
                       type="checkbox" 
-                      checked={showMonthlyPriceInput_ar}
-                      onChange={() => setShowMonthlyPriceInput_ar(prev => !prev)}
+                      checked={showMonthlyPriceInput}
+                      onChange={() => setShowMonthlyPriceInput(prev => !prev)}
                       className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
                   />
                   <label  className="text-2xl text-mainColor font-medium">شهري</label>
               </div>
                   {/* Conditional Price Inputs */}
-                  {showMonthlyPriceInput_ar && (
+                  {showMonthlyPriceInput && (
                   <>
                   <div className="lg:w-1/2 sm:w-full">
                       <InputCustom
                           type="number"
                           borderColor="mainColor"
                           placeholder="أدخل السعر"
-                          value={monthlyPrice_ar}
+                          value={monthlyPrice}
                           onChange={(e) => setMonthlyPrice_ar(e.target.value)}
                           width="w-full"
                       />
@@ -610,7 +610,7 @@ const AddPlanPage = () => {
                        type="number"
                        borderColor="mainColor"
                        placeholder="أدخل سعر الخصم"
-                       value={monthlyDiscountPrice_ar}
+                       value={monthlyDiscountPrice}
                        onChange={(e) => setMonthlyDiscountPrice_ar(e.target.value)}
                        width="w-full"
                        required={false}
@@ -635,20 +635,20 @@ const AddPlanPage = () => {
               <div className="flex items-center gap-3 w-full lg:w-1/3 ">
                   <input 
                       type="checkbox" 
-                      checked={showQuarterlyPriceInput_ar}
-                      onChange={() => setShowQuarterlyPriceInput_ar(prev => !prev)}
+                      checked={showQuarterlyPriceInput}
+                      onChange={() => setShowQuarterlyPriceInput(prev => !prev)}
                       className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
                   />
                   <label  className="text-2xl text-mainColor font-medium">ربع سنوي</label>
               </div>
-              {showQuarterlyPriceInput_ar && (
+              {showQuarterlyPriceInput && (
                   <>
                   <div className="lg:w-1/2 sm:w-full">
                       <InputCustom
                           type="number"
                           borderColor="mainColor"
                           placeholder="أدخل السعر"
-                          value={quarterlyPrice_ar}
+                          value={quarterlyPrice}
                           onChange={(e) => setQuarterlyPrice_ar(e.target.value)}
                           width="w-full"
                       />
@@ -658,7 +658,7 @@ const AddPlanPage = () => {
                       type="number"
                       borderColor="mainColor"
                       placeholder="أدخل سعر الخصم"
-                      value={quarterlyDiscountPrice_ar}
+                      value={quarterlyDiscountPrice}
                       onChange={(e) => setQuarterlyDiscountPrice_ar(e.target.value)}
                       width="w-full"
                       required={false}
@@ -683,20 +683,20 @@ const AddPlanPage = () => {
               <div className="flex items-center gap-3 w-full lg:w-1/3 ">
                   <input 
                       type="checkbox" 
-                      checked={showSemiAnnualPriceInput_ar}
-                      onChange={() => setShowSemiAnnualPriceInput_ar(prev => !prev)}
+                      checked={showSemiAnnualPriceInput}
+                      onChange={() => setShowSemiAnnualPriceInput(prev => !prev)}
                       className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
                   />
                   <label  className="text-2xl text-mainColor font-medium">نصف سنوي</label>
               </div>
-              {showSemiAnnualPriceInput_ar && (
+              {showSemiAnnualPriceInput && (
                   <>
                   <div className="lg:w-1/2 sm:w-full">
                       <InputCustom
                           type="number"
                           borderColor="mainColor"
                           placeholder="أدخل السعر"
-                          value={semiAnnualPrice_ar}
+                          value={semiAnnualPrice}
                           onChange={(e) => setSemiAnnualPrice_ar(e.target.value)}
                           width="w-full"
                       />
@@ -706,7 +706,7 @@ const AddPlanPage = () => {
                       type="number"
                       borderColor="mainColor"
                       placeholder="أدخل سعر الخصم"
-                      value={semiAnnualDiscountPrice_ar}
+                      value={semiAnnualDiscountPrice}
                       onChange={(e) => setSemiAnnualDiscountPrice_ar(e.target.value)}
                       width="w-full"
                       required={false}
@@ -729,20 +729,20 @@ const AddPlanPage = () => {
               <div className="flex items-center gap-3 w-full lg:w-1/3 ">
                   <input 
                       type="checkbox" 
-                      checked={showYearlyPriceInput_ar}
-                      onChange={() => setShowYearlyPriceInput_ar(prev => !prev)}
+                      checked={showYearlyPriceInput}
+                      onChange={() => setShowYearlyPriceInput(prev => !prev)}
                       className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
                   />
                   <label  className="text-2xl text-mainColor font-medium">سنوي</label>
               </div>
-              {showYearlyPriceInput_ar && (
+              {showYearlyPriceInput && (
                   <>
                   <div className="lg:w-1/2 sm:w-full">
                       <InputCustom
                           type="number"
                           borderColor="mainColor"
                           placeholder="أدخل السعر"
-                          value={yearlyPrice_ar}
+                          value={yearlyPrice}
                           onChange={(e) => setYearlyPrice_ar(e.target.value)}
                           width="w-full"
                       />
@@ -752,7 +752,7 @@ const AddPlanPage = () => {
                       type="number"
                       borderColor="mainColor"
                       placeholder="أدخل سعر الخصم"
-                      value={yearlyDiscountPrice_ar}
+                      value={yearlyDiscountPrice}
                       onChange={(e) => setYearlyDiscountPrice_ar(e.target.value)}
                       width="w-full"
                       required={false}

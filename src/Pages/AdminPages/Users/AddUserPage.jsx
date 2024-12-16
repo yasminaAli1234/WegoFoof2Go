@@ -71,18 +71,18 @@ const AddUserPage = () => {
             auth.toastError('يرجى إدخال رقم الهاتف.');
             return;
         }
-        if (!email_ar) {
-            auth.toastError('يرجى إدخال البريد الإلكتروني.');
-            return;
-        }
-        if (!password_ar) {
-            auth.toastError('يرجى إدخال كلمة المرور.');
-            return;
-        }
-        if (!activeUser_ar) {
-            auth.toastError('يرجى إدخال الحالة.');
-            return;
-        }
+        // if (!email_ar) {
+        //     auth.toastError('يرجى إدخال البريد الإلكتروني.');
+        //     return;
+        // }
+        // if (!password_ar) {
+        //     auth.toastError('يرجى إدخال كلمة المرور.');
+        //     return;
+        // }
+        // if (!activeUser_ar) {
+        //     auth.toastError('يرجى إدخال الحالة.');
+        //     return;
+        // }
     
         // Prepare FormData
         const formData = new FormData();
@@ -96,9 +96,9 @@ const AddUserPage = () => {
         const translations = [
             { key: 'name', value: name_ar, locale: 'ar' },
             { key: 'phone', value: phone_ar, locale: 'ar' },
-            { key: 'email', value: email_ar, locale: 'ar' },
-            { key: 'password', value: password_ar, locale: 'ar' },
-            { key: 'status', value: activeUser_ar, locale: 'ar' },
+            { key: 'email', value: email, locale: 'ar' },
+            { key: 'password', value: password, locale: 'ar' },
+            // { key: 'status', value: activeUser_ar, locale: 'ar' },
         ];
     
         translations.forEach((translation, index) => {
@@ -113,7 +113,7 @@ const AddUserPage = () => {
         try {
             // Send data to the API
             const response = await axios.post(
-                'https://login.wegostores.com/admin/v1/users/add',
+                ' https://www.wegostores.com/admin/v1/users/add',
                 formData,
                 {
                     headers: {
@@ -243,7 +243,7 @@ const AddUserPage = () => {
                                 type="text"
                                 borderColor="mainColor"
                                 placeholder="البريد الإلكتروني"
-                                value={email_ar}
+                                value={email}
                                 onChange={(e) => setEmail_ar(e.target.value)}
                                 width="w-full"
                             />
@@ -253,7 +253,7 @@ const AddUserPage = () => {
                                 type="password"
                                 borderColor="mainColor"
                                 placeholder="كلمة المرور"
-                                value={password_ar}
+                                value={password}
                                 onChange={(e) => setPassword_ar(e.target.value)}
                                 width="w-full"
                             />

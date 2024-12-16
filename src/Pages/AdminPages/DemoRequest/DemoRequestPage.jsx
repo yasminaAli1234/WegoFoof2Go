@@ -23,7 +23,7 @@ const DemoRequestPage = () => {
     const fetchData = async () => {
         setIsLoading(true);
         try {
-            const response = await axios.get('https://login.wegostores.com/admin/v1/demoRequest/show', {
+            const response = await axios.get(' https://www.wegostores.com/admin/v1/demoRequest/show', {
                 headers: {
                     Authorization: `Bearer ${auth.user.token}`,
                 },
@@ -68,7 +68,7 @@ const DemoRequestPage = () => {
             });
 
             const response = await axios.post(
-                `https://login.wegostores.com/admin/v1/demoRequest/approved/${selectedRequest.id}`,
+                ` https://www.wegostores.com/admin/v1/demoRequest/approved/${selectedRequest.id}`,
                 formData,
                 {
                     headers: {

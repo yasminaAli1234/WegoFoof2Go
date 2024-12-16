@@ -401,7 +401,7 @@ const AddPromoCodePage = () => {
     // Submit the form
     setIsLoading(true)
         try {
-            const response = await axios.post('https://login.wegostores.com/admin/v1/promoCode/create',formData, {
+            const response = await axios.post(' https://www.wegostores.com/admin/v1/promoCode/create',formData, {
                 headers: {
                     Authorization: `Bearer ${auth.user.token}`,
                     'Content-Type': 'application/json', // Use JSON since we're sending a JSON object now
@@ -674,7 +674,7 @@ const AddPromoCodePage = () => {
                            type="number"
                            placeholder="استخدام المستخدم"
                            borderColor="mainColor"
-                           value={limit_ar}
+                           value={limit}
                            onChange={(e) => setLimit_ar(e.target.value)}
                        />
                    </div>
@@ -683,8 +683,8 @@ const AddPromoCodePage = () => {
                      ref={dropdownUsageTypeRef}
                      handleOpen={handleOpenUsageType}
                      handleOpenOption={handleSelectUsageType}
-                     stateoption={selectUsageType_ar}
-                     openMenu={openSelectUsageType_ar}
+                     stateoption={selectUsageType}
+                     openMenu={openSelectUsageType}
                      options={usageTypeData}
                      />
                  </div> 
@@ -693,8 +693,8 @@ const AddPromoCodePage = () => {
                          ref={dropdownValueTypeRef}
                          handleOpen={handleOpenValueType}
                          handleOpenOption={handleSelectValueType}
-                         stateoption={selectValueType_ar}
-                         openMenu={openSelectValueType_ar}
+                         stateoption={selectValueType}
+                         openMenu={openSelectValueType}
                          options={valueType}
                          />
                      </div> 
@@ -704,7 +704,7 @@ const AddPromoCodePage = () => {
                          <InputCustom
                              placeholder='القيمة الشهرية'
                              borderColor="mainColor"
-                             value={valueMonthly_ar}
+                             value={valueMonthly}
                              onChange={(e) => setValueMonthly_ar(e.target.value)}
                          />
                          </div>
@@ -712,7 +712,7 @@ const AddPromoCodePage = () => {
                          <InputCustom
                              placeholder='القيمة ربع السنوية'
                              borderColor="mainColor"
-                             value={valueQuarterly_ar}
+                             value={valueQuarterly}
                              onChange={(e) => setValueQuarterly_ar(e.target.value)}
                          />
                          </div>
@@ -720,7 +720,7 @@ const AddPromoCodePage = () => {
                          <InputCustom
                              placeholder='القيمة نصف السنوية'
                              borderColor="mainColor"
-                             value={valueSemiAnnual_ar}
+                             value={valueSemiAnnual}
                              onChange={(e) => setValueSemiAnnual_ar(e.target.value)}
                          />
                          </div>
@@ -728,7 +728,7 @@ const AddPromoCodePage = () => {
                          <InputCustom
                              placeholder='القيمة السنوية'
                              borderColor="mainColor"
-                             value={valueYearly_ar}
+                             value={valueYearly}
                              onChange={(e) => setValueYearly_ar(e.target.value)}
                          />
                          </div>
@@ -740,7 +740,7 @@ const AddPromoCodePage = () => {
                         <InputCustom
                             placeholder='النسبة الشهرية'
                             borderColor="mainColor"
-                            value={valueMonthly_ar}
+                            value={valueMonthly}
                             onChange={(e) => setValueMonthly_ar(e.target.value)}
                         />
                         </div>
@@ -748,7 +748,7 @@ const AddPromoCodePage = () => {
                         <InputCustom
                             placeholder='النسبة ربع السنوية'
                             borderColor="mainColor"
-                            value={valueQuarterly_ar}
+                            value={valueQuarterly}
                             onChange={(e) => setValueQuarterly_ar(e.target.value)}
                         />
                         </div>
@@ -756,7 +756,7 @@ const AddPromoCodePage = () => {
                         <InputCustom
                             placeholder='النسبة نصف السنوية'
                             borderColor="mainColor"
-                            value={valueSemiAnnual_ar}
+                            value={valueSemiAnnual}
                             onChange={(e) => setValueSemiAnnual_ar(e.target.value)}
                         />
                         </div>
@@ -764,7 +764,7 @@ const AddPromoCodePage = () => {
                         <InputCustom
                             placeholder='النسبة السنوية'
                             borderColor="mainColor"
-                            value={valueYearly_ar}
+                            value={valueYearly}
                             onChange={(e) => setValueYearly_ar(e.target.value)}
                         />
                         </div>
@@ -776,8 +776,8 @@ const AddPromoCodePage = () => {
                          ref={dropdownStatusRef}
                          handleOpen={handleOpenStatus}
                          handleOpenOption={handleSelectStatus}
-                         stateoption={selectStatus_ar}
-                         openMenu={openSelectStatus_ar}
+                         stateoption={selectStatus}
+                         openMenu={openSelectStatus}
                          options={statusData}
                          />
                      </div> 
@@ -786,7 +786,7 @@ const AddPromoCodePage = () => {
                          <InputCustom
                              placeholder="القيمة"
                              borderColor="mainColor"
-                             value={usageNumber_ar}
+                             value={usageNumber}
                              onChange={(e) => setUsageNumber_ar(e.target.value)}
                          />
                          </div>
@@ -797,8 +797,8 @@ const AddPromoCodePage = () => {
                          ref={dropdownTypeRef}
                          handleOpen={handleOpenType}
                          handleOpenOption={handleSelectType}
-                         stateoption={selectType_ar}
-                         openMenu={openSelectType_ar}
+                         stateoption={selectType}
+                         openMenu={openSelectType}
                          options={typeData}
                          />
                      </div> 

@@ -42,7 +42,7 @@ const AddStorePage = () => {
     const fetchData = async () => {
         setIsLoading(true);
         try {
-               const response = await axios.get('https://login.wegostores.com/user/v1/store', {
+               const response = await axios.get(' https://www.wegostores.com/user/v1/store', {
                       headers: {
                              Authorization: `Bearer ${auth.user.token}`,
                       },
@@ -152,7 +152,7 @@ const AddStorePage = () => {
 
     setIsLoading(true);
     try {
-        const response = await axios.post('https://login.wegostores.com/user/v1/store/add',formData, {
+        const response = await axios.post(' https://www.wegostores.com/user/v1/store/add',formData, {
             headers: {
                 Authorization: `Bearer ${auth.user.token}`,
                 'Content-Type': 'application/json', // Use JSON since we're sending a JSON object now

@@ -29,7 +29,7 @@ const StorePage = () => {
     const fetchData = async () => {
         setIsLoading(true);
         try {
-               const response = await axios.get('https://login.wegostores.com/user/v1/store', {
+               const response = await axios.get(' https://www.wegostores.com/user/v1/store', {
                       headers: {
                              Authorization: `Bearer ${auth.user.token}`,
                       },
@@ -48,7 +48,7 @@ const StorePage = () => {
     const ProfilefetchData = async () => {
       setIsLoading(true);
       try {
-          const response = await axios.get('https://login.wegostores.com/user/v1/profile', {
+          const response = await axios.get(' https://www.wegostores.com/user/v1/profile', {
               headers: {
                   Authorization: `Bearer ${auth.user.token}`,
               },
@@ -101,7 +101,7 @@ const StorePage = () => {
        const deleteStore = async (storeId, authToken) => {
               try {
                      const response = await axios.put(
-                            `https://login.wegostores.com/user/v1/store/delete/${storeId}`,
+                            ` https://www.wegostores.com/user/v1/store/delete/${storeId}`,
                             {}, // Empty object as request data
                             {
                             headers: {

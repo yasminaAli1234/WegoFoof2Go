@@ -23,7 +23,7 @@ const MyDomainPage = () => {
     const fetchData = async () => {
         setIsLoading(true);
         try {
-               const response = await axios.get('https://login.wegostores.com/user/v1/domains/my_domains', {
+               const response = await axios.get(' https://www.wegostores.com/user/v1/domains/my_domains', {
                       headers: {
                              Authorization: `Bearer ${auth.user.token}`,
                       },

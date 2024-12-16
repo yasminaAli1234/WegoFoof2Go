@@ -14,6 +14,7 @@ import { CiMoneyCheck1 } from "react-icons/ci";
 import { MdAttachMoney } from "react-icons/md";
 import { useTranslation } from 'react-i18next';
 import { FaCrown } from "react-icons/fa";
+import { convertNumberToArabic } from '../../../Components/convert_number';
 
 const ExtraPage = () => {
        const { t,i18n } = useTranslation();
@@ -32,7 +33,7 @@ const ExtraPage = () => {
     const fetchData = async () => {
         setIsLoading(true);
         try {
-               const response = await axios.get(i18n.language==='ar'?'https://login.wegostores.com/user/v1/extra?locale=ar':'https://login.wegostores.com/user/v1/extra', {
+               const response = await axios.get(i18n.language==='ar'?' https://www.wegostores.com/user/v1/extra?locale=ar':' https://www.wegostores.com/user/v1/extra', {
                       headers: {
                              Authorization: `Bearer ${auth.user.token}`,
                       },
@@ -60,7 +61,7 @@ const ExtraPage = () => {
    
        try {
            const response = await axios.post(
-               'https://login.wegostores.com/user/v1/cart/pending',
+               ' https://www.wegostores.com/user/v1/cart/pending',
                {
                    id: product.id, // Properly include plan.id as a key-value pair
                    type: "extra",
@@ -381,7 +382,7 @@ const ExtraPage = () => {
                                           <div className="space-y-3 mb-6">
                                                  <p> {product.description}</p>
                                                  {product.my_extra !== true && (              
-                                                 <p className="flex items-center gap-2"><CiMoneyCheck1 size={30} className='font-semibold' /><span className="font-semibold">{t("SetUp Fees")}:</span> {product.setup_fees || '0'} {t("EGP")}</p>
+                                                 <p className="flex items-center gap-2"><CiMoneyCheck1 size={30} className='font-semibold' /><span className="font-semibold">{t("SetUp Fees")}:</span> {convertNumberToArabic(product.setup_fees,i18n.language) || '0'} {t("EGP")}</p>
                                                  )}
                                           </div>
 
@@ -414,9 +415,9 @@ const ExtraPage = () => {
                                           <div className="text-center mb-4">
                                           {discountedPrice ? (
                                                  <>
-                                                 <p className="text-lg line-through">{currentPrice} {t('EGP')}</p>
-                                                 <p className="text-3xl font-bold">{discountedPrice} {t('EGP')}</p>
-                                                 <p className="text-green-500 font-semibold mt-2">{t("Save")} {savings} {t('EGP')} {t("per")} {selectedPeriod}</p>
+                                                 <p className="text-lg line-through">{convertNumberToArabic(currentPrice,i18n.language)} {t('EGP')}</p>
+                                                 <p className="text-3xl font-bold">{convertNumberToArabic(discountedPrice,i18n.language)} {t('EGP')}</p>
+                                                 <p className="text-green-500 font-semibold mt-2">{t("Save")} {convertNumberToArabic(savings,i18n.language)} {t('EGP')} {t("per")} {selectedPeriod}</p>
                                                  </>
                                           ) : (
                                                  <>
@@ -424,7 +425,7 @@ const ExtraPage = () => {
                                                  <p className="text-3xl font-bold text-mainColor">{currentPrice} {t('EGP')}</p>
                                                  {selectedPeriod !== 'monthly' ? (
                                                         <p className="text-green-500 font-semibold mt-2">
-                                                        {t("Save")} {priceOptions['monthly'] * (selectedPeriod === 'quarterly' ? 3 : selectedPeriod === 'semiAnnually' ? 6 : 12) - currentPrice} {t('EGP')}
+                                                        {t("Save")} {convertNumberToArabic(priceOptions['monthly'] * (selectedPeriod === 'quarterly' ? 3 : selectedPeriod === 'semiAnnually' ? 6 : 12) - currentPrice,i18n.language)} {t('EGP')}
                                                         </p>
                                                  ):
                                                  (

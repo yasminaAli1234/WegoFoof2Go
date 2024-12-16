@@ -20,7 +20,7 @@ const ExtraProductPage = () => {
     const fetchData = async () => {
         setIsLoading(true);
         try {
-               const response = await axios.get('https://login.wegostores.com/admin/v1/extra/show', {
+               const response = await axios.get('https://www.wegostores.com/admin/v1/extra/show', {
                       headers: {
                              Authorization: `Bearer ${auth.user.token}`,
                       },
@@ -67,7 +67,7 @@ const ExtraProductPage = () => {
 
        const deleteProduct = async (productId, authToken) => {
               try {
-                     const response = await axios.delete(`https://login.wegostores.com/admin/v1/extra/delete/${productId}`, {
+                     const response = await axios.delete(` https://www.wegostores.com/admin/v1/extra/delete/${productId}`, {
                             headers: {
                                    Authorization: `Bearer ${authToken}`,
                             },
@@ -125,11 +125,11 @@ const ExtraProductPage = () => {
                              </div>
                              <div className='flex flex-wrap items-center gap-5'>
                                     <span className='text-maincolor text-xl xl:text-3xl font-semibold'>Price per year  : </span>
-                                    <p className='text-[#686868] text-lg xl:text-2xl'>{product.price_per_year} EGP</p>
+                                    <p className='text-[#686868] text-lg xl:text-2xl'>{product.yearly} EGP</p>
                              </div>
                              <div className='flex flex-wrap items-center gap-5'>
                                     <span className='text-maincolor text-xl xl:text-3xl font-semibold'>Price per Month  : </span>
-                                    <p className='text-[#686868] text-lg xl:text-2xl'>{product.price_per_month} EGP</p>
+                                    <p className='text-[#686868] text-lg xl:text-2xl'>{product.monthly} EGP</p>
                              </div>
                       </div>
                       <div className='p-4'>

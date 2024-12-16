@@ -27,7 +27,7 @@ const AdminTutorialPage = () => {
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get('https://login.wegostores.com/admin/v1/tutorial_group', {
+      const response = await axios.get(' https://www.wegostores.com/admin/v1/tutorial_group', {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
         },
@@ -82,7 +82,7 @@ const AdminTutorialPage = () => {
 
     const deleteGroup = async (groupId, authToken) => {
            try {
-                  const response = await axios.delete(`https://login.wegostores.com/admin/v1/tutorial_group/delete/${groupId}`, {
+                  const response = await axios.delete(` https://www.wegostores.com/admin/v1/tutorial_group/delete/${groupId}`, {
                          headers: {
                                 Authorization: `Bearer ${authToken}`,
                          },
@@ -120,7 +120,7 @@ const AdminTutorialPage = () => {
 
     const deleteTutorial = async (tutorialId, authToken) => {
           try {
-                  const response = await axios.delete(`https://login.wegostores.com/admin/v1/tutorial/delete/${tutorialId}`, {
+                  const response = await axios.delete(` https://www.wegostores.com/admin/v1/tutorial/delete/${tutorialId}`, {
                         headers: {
                                 Authorization: `Bearer ${authToken}`,
                         },

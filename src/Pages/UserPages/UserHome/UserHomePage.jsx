@@ -23,7 +23,7 @@ const UserHomePage = () => {
   const fetchData = async () => {
     setIsLoading(true);
     try {
-        const response = await axios.get('https://login.wegostores.com/user/v1/my_service', {
+        const response = await axios.get(' https://www.wegostores.com/user/v1/my_service', {
             headers: {
                 Authorization: `Bearer ${auth.user.token}`,
             },
@@ -42,7 +42,7 @@ const UserHomePage = () => {
   const fetchTutorial = async () => {
     setIsLoading(true);
     try {
-        const response = await axios.get('https://login.wegostores.com/user/v1/tutorial', {
+        const response = await axios.get(' https://www.wegostores.com/user/v1/tutorial', {
             headers: {
                 Authorization: `Bearer ${auth.user.token}`,
             },

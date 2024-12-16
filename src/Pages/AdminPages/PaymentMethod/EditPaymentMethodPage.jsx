@@ -129,7 +129,7 @@ const EditPaymentMethodPage =()=>{
     });
 
             const response = await axios.post(
-                'https://login.wegostores.com/admin/v1/payment/method/update',
+                ' https://www.wegostores.com/admin/v1/payment/method/update',
                 formData,
                 {
                     headers: {

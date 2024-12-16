@@ -49,7 +49,7 @@ const AddAdminTutorialPage = () => {
     });
   
       const response = await axios.post(
-        "https://login.wegostores.com/admin/v1/tutorial_group/add",
+        " https://www.wegostores.com/admin/v1/tutorial_group/add",
         formData,
         {
           headers: {
