@@ -1,6 +1,6 @@
 import React, { useState ,useEffect} from "react";
 import {HomeIcon,ProfileIcon,StoreIcon,SubscriptionIcon,DomainIcon,ExtraIcon,PaymentIcon,TutorialIcon} from "../Icons/AllIcons";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useAuth } from "../../Context/Auth";
 import { Link, useNavigate } from 'react-router-dom'
 import { IoIosLogOut } from "react-icons/io";
@@ -10,6 +10,8 @@ const MenuSideUser =  ({setIsSidebarOpen }) => {
 
        const auth = useAuth();
        const navigate = useNavigate();
+       const location = useLocation();
+       const pathName = location.pathname;
        const savedState = JSON.parse(localStorage.getItem('sidebarUserState')) || {};
        const { t, i18n } = useTranslation();
 
@@ -76,6 +78,13 @@ const MenuSideUser =  ({setIsSidebarOpen }) => {
               setIsActiveTutorial(false)
 
        };
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 2).join('/');
+              if (result == "/dashboard_user/") {
+                     handleClickHome()
+              }
+       }, [location])
        const handleClickProfile = () => {
               setIsActiveHome(false);
               setIsActiveProfile(true)
@@ -92,6 +101,13 @@ const MenuSideUser =  ({setIsSidebarOpen }) => {
               setIsActiveContactUs(false)
               setIsActiveTutorial(false)
        };
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard_user/profile") {
+                     handleClickProfile()
+              }
+       }, [location])
        const handleClickStore =() =>{
               setIsActiveHome(false);
               setIsActiveProfile(false)
@@ -108,6 +124,14 @@ const MenuSideUser =  ({setIsSidebarOpen }) => {
               setIsActiveContactUs(false)
               setIsActiveTutorial(false)
        }
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard_user/store") {
+                     handleClickStore()
+              }
+       }, [location])
+
        const handleClickSubscription =() =>{
               setIsActiveHome(false);
               setIsActiveProfile(false)
@@ -124,6 +148,14 @@ const MenuSideUser =  ({setIsSidebarOpen }) => {
               setIsActiveContactUs(false)
               setIsActiveTutorial(false)
        }
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard_user/subscription") {
+                     handleClickSubscription()
+              }
+       }, [location])
+
        const handleClickDomain =() =>{
               setIsActiveHome(false);
               setIsActiveProfile(false)
@@ -140,6 +172,14 @@ const MenuSideUser =  ({setIsSidebarOpen }) => {
               setIsActiveContactUs(false)
               setIsActiveTutorial(false)              
        }
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard_user/my_domain") {
+                     handleClickDomain()
+              }
+       }, [location])
+
        const handleClickMyDomain =() =>{
               setIsActiveHome(false);
               setIsActiveProfile(false)
@@ -156,6 +196,14 @@ const MenuSideUser =  ({setIsSidebarOpen }) => {
               setIsActiveContactUs(false)
               setIsActiveTutorial(false)
        }
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard_user/my_domain") {
+                     handleClickMyDomain()
+              }
+       }, [location])
+
        const handleClickBuyDomain =() =>{
               setIsActiveHome(false);
               setIsActiveProfile(false)
@@ -172,6 +220,15 @@ const MenuSideUser =  ({setIsSidebarOpen }) => {
               setIsActiveContactUs(false)
               setIsActiveTutorial(false)
        }
+       
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard_user/buy_domain") {
+                     handleClickBuyDomain()
+              }
+       }, [location])
+
        const handleClickExtra =() =>{
               setIsActiveHome(false);
               setIsActiveProfile(false)
@@ -188,6 +245,13 @@ const MenuSideUser =  ({setIsSidebarOpen }) => {
               setIsActiveContactUs(false)
               setIsActiveTutorial(false)
        }
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard_user/extra") {
+                     handleClickExtra()
+              }
+       }, [location])
        const handleClickPayment =() =>{
               setIsActiveHome(false);
               setIsActiveProfile(false)
@@ -204,6 +268,14 @@ const MenuSideUser =  ({setIsSidebarOpen }) => {
               setIsActiveContactUs(false)
               setIsActiveTutorial(false)
        }
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard_user/extra") {
+                     handleClickPayment()
+              }
+       }, [location])
+       
        const handleClickSupport =() =>{
               setIsActiveHome(false);
               setIsActiveProfile(false)
@@ -220,6 +292,14 @@ const MenuSideUser =  ({setIsSidebarOpen }) => {
               setIsActiveContactUs(true)
               setIsActiveTutorial(false)
        }
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard_user/contact_us") {
+                     handleClickSupport()
+              }
+       }, [location])
+
        const handleClickContactUs =() =>{
               setIsActiveHome(false);
               setIsActiveProfile(false)
@@ -236,6 +316,13 @@ const MenuSideUser =  ({setIsSidebarOpen }) => {
               setIsActiveContactUs(true)
               setIsActiveTutorial(false)
        }
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard_user/contact_us") {
+                     handleClickContactUs()
+              }
+       }, [location])
        const handleClickTutorial =() =>{
               setIsActiveHome(false);
               setIsActiveProfile(false)
@@ -252,6 +339,13 @@ const MenuSideUser =  ({setIsSidebarOpen }) => {
               setIsActiveContactUs(false)
               setIsActiveTutorial(true)
        }
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard_user/tutorial") {
+                     handleClickTutorial()
+              }
+       }, [location])
        return (
               <>
                      <div className="w-full h-full mt-3 flex justify-center mb-10">

@@ -137,6 +137,16 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
               setIsActiveContact(false)
               setIsActiveStores(false)
        };
+
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/domain_request") {
+                     handleClickDomainRequest()
+              }
+       }, [location])
+
+
        const handleClickPaymentPending =() =>{
               setIsActiveHome(false);
               setIsActiveDemoRequest(false)
@@ -158,6 +168,15 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
               setIsActiveContact(false)
               setIsActiveStores(false)
        }
+
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/pending_payment") {
+                     handleClickPaymentPending()
+              }
+       }, [location])
+
        const handleClickOrder=() =>{
               setIsActiveHome(false);
               setIsActiveDemoRequest(false)
@@ -179,6 +198,15 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
               setIsActiveContact(false)
               setIsActiveStores(false)
        }
+
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/order") {
+                     handleClickOrder()
+              }
+       }, [location])
+
        const handleClickUser =() =>{
               setIsActiveHome(false);
               setIsActiveDemoRequest(false)
@@ -200,6 +228,15 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
               setIsActiveContact(false)
               setIsActiveStores(false)
        }
+
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/user") {
+                     handleClickUser()
+              }
+       }, [location])
+
        const handleClickSubscription =() =>{
               setIsActiveHome(false);
               setIsActiveDemoRequest(false)
@@ -221,6 +258,14 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
               setIsActiveContact(false)
               setIsActiveStores(false)
        }
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/subscription") {
+                     handleClickSubscription()
+              }
+       }, [location])
+
        const handleClickPlan =() =>{
               setIsActiveHome(false);
               setIsActiveDemoRequest(false)
@@ -242,6 +287,14 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
               setIsActiveContact(false)
               setIsActiveStores(false)
        }
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/plan") {
+                     handleClickPlan()
+              }
+       }, [location])
+
        const handleClickExtra =() =>{
               setIsActiveHome(false);
               setIsActiveDemoRequest(false)
@@ -263,6 +316,15 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
               setIsActiveContact(false)
               setIsActiveStores(false)
        }
+
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/extra_product") {
+                     handleClickExtra()
+              }
+       }, [location])
+
        const handleClickPayment =() =>{
               setIsActiveHome(false);
               setIsActiveDemoRequest(false)
@@ -284,6 +346,14 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
               setIsActiveContact(false)
               setIsActiveStores(false)
        }
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/payment") {
+                     handleClickPayment()
+              }
+       }, [location])
+
        const handleClickSetting =() =>{
               setIsActiveHome(false);
               setIsActiveDemoRequest(false)
@@ -305,6 +375,13 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
               setIsActiveContact(false)
               setIsActiveStores(false)
        }
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/payment_method") {
+                     handleClickSetting()
+              }
+       }, [location])
        const handleClickPaymentMethod =() =>{
               setIsActiveHome(false);
               setIsActiveDemoRequest(false)
@@ -326,6 +403,14 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
               setIsActiveContact(false)
               setIsActiveStores(false)
        }
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/payment_method") {
+                     handleClickPaymentMethod()
+              }
+       }, [location])
+
        const handleClickPromoCode =() =>{
               setIsActiveHome(false);
               setIsActiveDemoRequest(false)
@@ -347,6 +432,15 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
               setIsActiveContact(false)
               setIsActiveStores(false)
        }
+
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/promocode") {
+                     handleClickPromoCode()
+              }
+       }, [location])
+
        const handleClickActivity =() =>{
               setIsActiveHome(false);
               setIsActiveDemoRequest(false)
@@ -368,6 +462,14 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
               setIsActiveContact(false)
               setIsActiveStores(false)
        }
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/activity") {
+                     handleClickActivity()
+              }
+       }, [location])
+
        const handleClickTutorial =() =>{
               setIsActiveHome(false);
               setIsActiveDemoRequest(false)
@@ -389,6 +491,14 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
               setIsActiveContact(false)
               setIsActiveStores(false)
        }
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/tutorial_group") {
+                     handleClickTutorial()
+              }
+       }, [location])
+
        const handleClickContact =() =>{
               setIsActiveHome(false);
               setIsActiveDemoRequest(false)
@@ -410,6 +520,15 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
               setIsActiveContact(true)
               setIsActiveStores(false)
        }
+
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/contact_info") {
+                     handleClickContact()
+              }
+       }, [location])
+
        const handleClickWelcomOffer =() =>{
               setIsActiveHome(false);
               setIsActiveDemoRequest(false)
@@ -431,6 +550,14 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
               setIsActiveContact(false)
               setIsActiveStores(false)
        }
+
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/welcome_offer") {
+                     handleClickWelcomOffer()
+              }
+       }, [location])
        const handleClickStore =() =>{
               setIsActiveHome(false);
               setIsActiveDemoRequest(false)
@@ -452,6 +579,15 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
               setIsActiveContact(false)
               setIsActiveStores(true)
        }
+
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard_admin/stores") {
+                     handleClickStore()
+              }
+       }, [location])
+
        return (
               <>
                      <div className="w-full h-full mt-3 flex justify-center mb-10">
