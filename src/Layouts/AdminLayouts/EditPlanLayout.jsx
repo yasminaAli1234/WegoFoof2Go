@@ -37,28 +37,28 @@ const EditPlanLayout =()=>{
                setIsLoading(false);
         }
     };
-    fetchData(); }, []);
+       fetchData(); }, []);
 
-    useEffect(() => {
-       const fetchData_ar = async () => {
-        setIsLoading(true);
-        try {
-               const response = await axios.get(' https://www.wegostores.com/admin/v1/plan/show/locale=ar', {
-                      headers: {
-                             Authorization: `Bearer ${auth.user.token}`,
-                      },
-               });
-               if (response.status === 200) {
-                      console.log(response.data)
-                      setAllPlanData_ar(response.data.plan)
-               }
-        } catch (error) {
-               console.error('Error fetching data:', error);
-        } finally {
-               setIsLoading(false);
-        }
-    };
-    fetchData_ar(); }, []);
+       useEffect(() => {
+              const fetchData_ar = async () => {
+              setIsLoading(true);
+              try {
+                     const response = await axios.get('https://www.wegostores.com/admin/v1/plan/show?locale=ar', {
+                            headers: {
+                                   Authorization: `Bearer ${auth.user.token}`,
+                            },
+                     });
+                     if (response.status === 200) {
+                            console.log(response.data)
+                            setAllPlanData_ar(response.data.plan)
+                     }
+              } catch (error) {
+                     console.error('Error fetching data:', error);
+              } finally {
+                     setIsLoading(false);
+              }
+       };
+       fetchData_ar(); }, []);
 
     useEffect(() => {
       if (allPlanData.length > 0 && planId) {
@@ -68,9 +68,10 @@ const EditPlanLayout =()=>{
              setPlanEdit(filteredPlan);
       }
     }, [allPlanData, planId]);
+
     useEffect(() => {
        if (allPlanData_ar.length > 0 && planId) {
-              const filteredPlan = allPlanData.find(
+              const filteredPlan = allPlanData_ar.find(
               (plan) => plan.id === parseInt(planId)
               );
               setPlanEdit_ar(filteredPlan);
@@ -78,8 +79,9 @@ const EditPlanLayout =()=>{
      }, [allPlanData_ar, planId]);
 
     console.log('allPlanData', allPlanData); // Logging the whole array
+    console.log('allPlanData_ar', allPlanData_ar); // Logging the whole array
     console.log('PlanEditData', planEdit);
-    console.log('PlanEditData', planEdit_ar);
+    console.log('PlanEditData_ar', planEdit_ar);
     const navigate = useNavigate();
     const handleGoBack = () => {
       navigate(-1, { replace: true });
@@ -95,9 +97,10 @@ const EditPlanLayout =()=>{
     return(
         <>
         <HeaderPageSection handleClick={handleGoBack} name="Edit Plan" />
-        <PlanDataContext.Provider value={planEdit} vlaue_ar= {planEdit_ar}>
-           <EditPlanPage/>
-        </PlanDataContext.Provider>
+        <PlanDataContext.Provider value={{ planEdit, planEdit_ar }}>
+              <EditPlanPage />
+       </PlanDataContext.Provider>
+
         </>
     )
 }

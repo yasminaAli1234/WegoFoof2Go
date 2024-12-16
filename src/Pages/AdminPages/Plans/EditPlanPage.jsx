@@ -80,41 +80,73 @@ const EditPlanPage =()=>{
     const navigate = useNavigate();
     const uploadRef = useRef();
 
-    const planContent = useContext(PlanDataContext);
+    const { planEdit, planEdit_ar} = useContext(PlanDataContext);
 
 
     useEffect(() => {
-        if (planContent) {
-            setName(planContent.name || '');
-            // setTitle(planContent.title || '');
-            setDescription(planContent.description|| '');
-            setFee(planContent.setup_fees|| '');
-            setLimitPlan(planContent.limet_store|| '');
-            setAppActive(planContent.app|| '');
 
-            if(planContent.monthly){
+        if (planEdit) {
+            setName(planEdit.name || '');
+            // setTitle(planContent.title || '');
+            setDescription(planEdit.description|| '');
+            setFee(planEdit.setup_fees|| '');
+            setLimitPlan(planEdit.limet_store|| '');
+            setAppActive(planEdit.app|| '');
+
+            if(planEdit.monthly){
                 setShowMonthlyPriceInput(true)
-                setMonthlyPrice(planContent.monthly)
-                setMonthlyDiscountPrice(planContent.discount_monthly)
+                setMonthlyPrice(planEdit.monthly)
+                setMonthlyDiscountPrice(planEdit.discount_monthly)
             }
-            if(planContent.quarterly){
+            if(planEdit.quarterly){
                 setShowQuarterlyPriceInput(true)
-                setQuarterlyPrice(planContent.quarterly)
-                setQuarterlyDiscountPrice(planContent.discount_quarterly)
+                setQuarterlyPrice(planEdit.quarterly)
+                setQuarterlyDiscountPrice(planEdit.discount_quarterly)
             }
-            if(planContent["semi_annual"]){
+            if(planEdit["semi_annual"]){
                 setShowSemiAnnualPriceInput(true)
-                setSemiAnnualPrice(planContent["semi_annual"])
-                setSemiAnnualDiscountPrice(planContent.discount_semi_annual)
+                setSemiAnnualPrice(planEdit["semi_annual"])
+                setSemiAnnualDiscountPrice(planEdit.discount_semi_annual)
             }
-            if(planContent.yearly){
+            if(planEdit.yearly){
                 setShowYearlyPriceInput(true)
-                setYearlyPrice(planContent.yearly)
-                setYearlyDiscountPrice(planContent.discount_yearly)
+                setYearlyPrice(planEdit.yearly)
+                setYearlyDiscountPrice(planEdit.discount_yearly)
             }
 
         }
-    }, [planContent]);
+
+        if (planEdit_ar) {
+            setName_ar(planEdit_ar.name || '');
+            // setTitle(planContent.title || '');
+            setDescription_ar(planEdit_ar.description|| '');
+            setFee_ar(planEdit_ar.setup_fees|| '');
+            setLimitPlan_ar(planEdit_ar.limet_store|| '');
+            setAppActive_ar(planEdit_ar.app|| '');
+
+            // if(planEdit.monthly){
+            //     setShowMonthlyPriceInput(true)
+            //     setMonthlyPrice(planEdit.monthly)
+            //     setMonthlyDiscountPrice(planEdit.discount_monthly)
+            // }
+            // if(planEdit.quarterly){
+            //     setShowQuarterlyPriceInput(true)
+            //     setQuarterlyPrice(planEdit.quarterly)
+            //     setQuarterlyDiscountPrice(planEdit.discount_quarterly)
+            // }
+            // if(planEdit["semi_annual"]){
+            //     setShowSemiAnnualPriceInput(true)
+            //     setSemiAnnualPrice(planEdit["semi_annual"])
+            //     setSemiAnnualDiscountPrice(planEdit.discount_semi_annual)
+            // }
+            // if(planEdit.yearly){
+            //     setShowYearlyPriceInput(true)
+            //     setYearlyPrice(planEdit.yearly)
+            //     setYearlyDiscountPrice(planEdit.discount_yearly)
+            // }
+
+        }
+    }, [planEdit,planEdit_ar]);
 
     
     const handleGoBack = () => {
@@ -256,7 +288,7 @@ const EditPlanPage =()=>{
 />
 
 
-        <form onSubmit={(event) => handleSubmitEdit(planContent.id, event)} className="w-full flex flex-col items-center justify-center gap-y-10 m-5">
+        <form onSubmit={(event) => handleSubmitEdit(planEdit.id, event)} className="w-full flex flex-col items-center justify-center gap-y-10 m-5">
             {/* data in english */}
             
             {language==='en'? <div className="w-full flex flex-wrap items-center justify-start gap-10">
@@ -539,7 +571,7 @@ const EditPlanPage =()=>{
                         type="text"
                         borderColor="mainColor"
                         placeholder="الأسم"
-                        value={name}
+                        value={name_ar}
                         onChange={(e) => setName_ar(e.target.value)}
                         width="w-full"
                     />
