@@ -9,7 +9,7 @@ import DropDownMenu from '../../../Components/DropDownMenu';
 import {PromoCodeDataLayout} from '../../../Layouts/AdminLayouts/EditPromoCodeLayout'
 const EditPromoCodePage =()=>{
  
-    const promoCodeContent=useContext(PromoCodeDataLayout)
+    const {promoCodeEdit,promoCodeEdit_ar}=useContext(PromoCodeDataLayout)
     
     const auth = useAuth();
     const navigate = useNavigate();
@@ -92,121 +92,175 @@ const EditPromoCodePage =()=>{
     const dropdownTypeRef = useRef();
 
     useEffect(()=>{
-        if (promoCodeContent) {
+        if (promoCodeEdit) {
 
-            setCode(promoCodeContent.code)
-            setTitle(promoCodeContent.title)
-            setStartDate(promoCodeContent.start_date)
-            setEndDate(promoCodeContent.end_date)
-            setLimit(promoCodeContent.user_usage)
-            // set arabic
-            setCode_ar(promoCodeContent.code)
-            setTitle_ar(promoCodeContent.title)
-            setStartDate_ar(promoCodeContent.start_date)
-            setEndDate_ar(promoCodeContent.end_date)
-            setLimit_ar(promoCodeContent.user_usage)
+            setCode(promoCodeEdit.code)
+            setTitle(promoCodeEdit.title)
+            setStartDate(promoCodeEdit.start_date)
+            setEndDate(promoCodeEdit.end_date)
+            setLimit(promoCodeEdit.user_usage)
 
-            if (promoCodeContent.user_type === 'renueve'|| promoCodeContent.user_type === 'تجديد' ) {
+
+            if (promoCodeEdit.user_type === 'renueve') {
                     setSelectUsageType("Renew");
                     setSelectUsageTypeName("Renew");
-                    // ---------------------------
-                    setSelectUsageType_ar("Renew");
-                    setSelectUsageTypeName_ar("Renew");
+                 
 
 
-            } else if (promoCodeContent.user_type === 'first_usage'|| promoCodeContent.user_type === 'استخدام أول' ) {
+            } else if (promoCodeEdit.user_type === 'first_usage') {
                 setSelectUsageType("First Usage");
                 setSelectUsageTypeName("First Usage");
-                // -------------------------
-                setSelectUsageType_ar("First Usage");
-                setSelectUsageTypeName_ar("First Usage");
-
             } 
              else {
                     setSelectUsageType('Select UsageType');
                     setSelectUsageTypeName(null);
 
-                    // ----------------
-                    setSelectUsageType_ar('اختر نوع الاستخدام');
-                    setSelectUsageTypeName_ar(null);
             }
 
-        if (promoCodeContent.calculation_method === "percentage"  ) {
+        if (promoCodeEdit.calculation_method === "percentage"  ) {
             setSelectValueType("Percentage");
             setSelectValueTypeName("Percentage");
-            // ----------------
-            setSelectValueType_ar('Percentage');
-            setSelectValueTypeName_ar("Percentage");
+           
 
-        } else if (promoCodeContent.calculation_method === 'amount') {
+        } else if (promoCodeEdit.calculation_method === 'amount') {
             setSelectValueType("Value");
             setSelectValueTypeName("Value");
-            // -----------------------------
-            setSelectValueType("Value");
-            setSelectValueTypeName("Value");
+        
         } 
          else {
             setSelectValueType('Select ValueType');
             setSelectValueTypeName(null);
-            // ------------------
-            setSelectValueType_ar('اختر نوع الاستخدام');
-            setSelectValueTypeName_ar(null);
+         
         }
 
-        setValueMonthly(promoCodeContent.monthly)
-        setValueQuarterly(promoCodeContent.quarterly)
-        setValueSemiAnnual(promoCodeContent["semi_annual"])
-        setValueYearly(promoCodeContent.yearly)
+        setValueMonthly(promoCodeEdit.monthly)
+        setValueQuarterly(promoCodeEdit.quarterly)
+        setValueSemiAnnual(promoCodeEdit["semi_annual"])
+        setValueYearly(promoCodeEdit.yearly)
 
-        if (promoCodeContent.promo_status === "fixed") {
+        if (promoCodeEdit.promo_status === "fixed") {
             setSelectStatus("Fixed");
             setSelectStatusName("Fixed");
-            setSelectStatus_ar("Fixed");
-            setSelectStatusName_ar("Fixed");
-            setUsageNumber(promoCodeContent.usage)
+            setUsageNumber(promoCodeEdit.usage)
 
-        } else if (promoCodeContent.promo_status === 'unlimited') {
+        } else if (promoCodeEdit.promo_status === 'unlimited') {
             setSelectStatus("UnLimited");
             setSelectStatusName("UnLimited");
-            setSelectStatus_ar("UnLimited");
-            setSelectStatusName_ar("UnLimited");
+          
         } 
          else {
             setSelectStatus('Select Status');
             setSelectStatusName(null);
-            // set arabic
-            setSelectStatus_ar('اختيار الحالة');
-            setSelectStatusName_ar(null);
         }
 
-        if (promoCodeContent.promo_type === "plan") {
+        if (promoCodeEdit.promo_type === "plan") {
             setSelectType("Plan");
             setSelectTypeName("Plan");
-            setSelectType_ar("Plan");
-            setSelectTypeName_ar("Plan");
+          
 
-        } else if (promoCodeContent.promo_type === 'extra') {
+        } else if (promoCodeEdit.promo_type === 'extra') {
             setSelectType("Extra Product");
             setSelectTypeName("Extra Product");
-            setSelectType_ar("Extra Product");
-            setSelectTypeName_ar("Extra Product");
+            
         } 
-        else if (promoCodeContent.promo_type === 'domain') {
+        else if (promoCodeEdit.promo_type === 'domain') {
             setSelectType("Domain");
             setSelectTypeName("Domain");
-            setSelectType_ar("Domain");
-            setSelectTypeName_ar("Domain");
-            setAmount(promoCodeContent.amount)
+            setAmount(promoCodeEdit.amount)
         } 
          else {
             setSelectType('Select Type');
             setSelectTypeName(null);
-            // set arabic
-            setSelectType_ar('اختيار النوع');
+        
+        }
+        }
+    },[promoCodeEdit])
+
+    useEffect(()=>{
+        if (promoCodeEdit_ar) {
+
+            setCode_ar(promoCodeEdit_ar.code)
+            setTitle_ar(promoCodeEdit_ar.title)
+            setStartDate_ar(promoCodeEdit_ar.start_date)
+            setEndDate_ar(promoCodeEdit_ar.end_date)
+            setLimit_ar(promoCodeEdit_ar.user_usage)
+
+
+            if (promoCodeEdit_ar.user_type === 'renueve') {
+                    setSelectUsageType_ar("Renew");
+                    setSelectUsageTypeName_ar("Renew");
+                 
+
+
+            } else if (promoCodeEdit_ar.user_type === 'first_usage') {
+                setSelectUsageType_ar("First Usage");
+                setSelectUsageTypeName_ar("First Usage");
+            } 
+             else {
+                    setSelectUsageType_ar('اختار نوع الاستخدام');
+                    setSelectUsageTypeName_ar(null);
+
+            }
+
+        if (promoCodeEdit_ar.calculation_method === "percentage"  ) {
+            setSelectValueType_ar("Percentage");
+            setSelectValueTypeName_ar("Percentage");
+           
+
+        } else if (promoCodeEdit_ar.calculation_method === 'amount') {
+            setSelectValueType_ar("Value");
+            setSelectValueTypeName_ar("Value");
+        
+        } 
+         else {
+            setSelectValueType_ar('اختار نوع القيمة');
+            setSelectValueTypeName_ar(null);
+         
+        }
+
+        setValueMonthly_ar(promoCodeEdit_ar.monthly)
+        setValueQuarterly_ar(promoCodeEdit_ar.quarterly)
+        setValueSemiAnnual_ar(promoCodeEdit_ar["semi_annual"])
+        setValueYearly_ar(promoCodeEdit_ar.yearly)
+
+        if (promoCodeEdit_ar.promo_status === "fixed") {
+            setSelectStatus_ar("Fixed");
+            setSelectStatusName_ar("Fixed");
+            setUsageNumber_ar(promoCodeEdit_ar.usage)
+
+        } else if (promoCodeEdit_ar.promo_status === 'unlimited') {
+            setSelectStatus_ar("UnLimited");
+            setSelectStatusName_ar("UnLimited");
+          
+        } 
+         else {
+            setSelectStatus_ar('اختار الحالة');
+            setSelectStatusName_ar(null);
+        }
+
+        if (promoCodeEdit_ar.promo_type === "plan") {
+            setSelectType_ar("Plan");
+            setSelectTypeName_ar("Plan");
+          
+
+        } else if (promoCodeEdit_ar.promo_type === 'extra') {
+            setSelectType_ar("Extra Product");
+            setSelectTypeName_ar("Extra Product");
+            
+        } 
+        else if (promoCodeEdit.promo_type === 'domain') {
+            setSelectType("Domain");
+            setSelectTypeName("Domain");
+            setAmount(promoCodeEdit.amount)
+        } 
+         else {
+            setSelectType_ar('اختار النوع');
             setSelectTypeName_ar(null);
+        
         }
         }
-    },[promoCodeContent])
+    },[promoCodeEdit_ar])
+
 
     const handleOpenValueType = () => {
         setOpenSelectValueType(!openSelectValueType);
@@ -380,37 +434,37 @@ const EditPromoCodePage =()=>{
             return;
         }
         // set arabic
-        if (!code_ar) {
-            auth.toastError('الرجاء إدخال الكود.');
-            return;
-        } 
-        if (!title_ar) {
-            auth.toastError('الرجاء إدخال العنوان.');
-            return;
-        } 
-        if (!startDate_ar) {
-            auth.toastError('الرجاء إدخال تاريخ البداية الصحيح.');
-            return;
-        }
-        if (!endDate_ar) {
-            auth.toastError('الرجاء إدخال تاريخ النهاية الصحيح.');
-            return;
-        }
-        if (!selectValueTypeName_ar) {
-            auth.toastError('الرجاء اختيار نوع القيمة.');
-        }
-        if (!selectUsageTypeName_ar) {
-            auth.toastError('الرجاء إدخال نوع الاستخدام.');
-            return;
-        }
-        if (!selectStatusName_ar) {
-            auth.toastError('الرجاء اختيار الحالة.');
-            return;
-        }
-        if (!selectTypeName_ar) {
-            auth.toastError('الرجاء اختيار النوع.');
-            return;
-        }
+        // if (!code_ar) {
+        //     auth.toastError('الرجاء إدخال الكود.');
+        //     return;
+        // } 
+        // if (!title_ar) {
+        //     auth.toastError('الرجاء إدخال العنوان.');
+        //     return;
+        // } 
+        // if (!startDate_ar) {
+        //     auth.toastError('الرجاء إدخال تاريخ البداية الصحيح.');
+        //     return;
+        // }
+        // if (!endDate_ar) {
+        //     auth.toastError('الرجاء إدخال تاريخ النهاية الصحيح.');
+        //     return;
+        // }
+        // if (!selectValueTypeName_ar) {
+        //     auth.toastError('الرجاء اختيار نوع القيمة.');
+        // }
+        // if (!selectUsageTypeName_ar) {
+        //     auth.toastError('الرجاء إدخال نوع الاستخدام.');
+        //     return;
+        // }
+        // if (!selectStatusName_ar) {
+        //     auth.toastError('الرجاء اختيار الحالة.');
+        //     return;
+        // }
+        // if (!selectTypeName_ar) {
+        //     auth.toastError('الرجاء اختيار النوع.');
+        //     return;
+        // }
         // -------------------------------------
 
         
@@ -423,7 +477,7 @@ const EditPromoCodePage =()=>{
         formData.append('user_usage', limit);
 
         const calculationMethod = selectValueType === 'Percentage' ? 'percentage' : 'amount';
-        const calculationMethod_ar = selectValueType === 'Percentage' ? 'percentage' : 'amount';
+        
         formData.append('calculation_method', calculationMethod);
          
         const userType = selectUsageType === 'First Usage' ? 'first_usage' : 'renueve';
@@ -460,32 +514,32 @@ const EditPromoCodePage =()=>{
         }     
        // Arabic Translations
        const translations = [
-        { key: 'code', value: code_ar, locale: 'ar' },
+        { key: 'code', value: code, locale: 'ar' },
         { key: 'title', value: title_ar, locale: 'ar' },
-        { key: 'start_date', value: startDate_ar, locale: 'ar' },
-        { key: 'end_date', value: endDate_ar, locale: 'ar' },
-        { key: 'user_usage', value: limit_ar, locale: 'ar' },
-        { key: 'calculation_method', value: calculationMethod_ar, locale: 'ar' },
-        { key: 'user_type', value: userType_ar, locale: 'ar' },
-        { key: 'monthly', value: valueMonthly_ar, locale: 'ar' },
-        { key: 'quarterly', value: valueQuarterly_ar, locale: 'ar' },
-        { key: 'semi_annual', value: valueSemiAnnual_ar, locale: 'ar' },
-        { key: 'yearly', value: valueYearly_ar, locale: 'ar' }
+        { key: 'start_date', value: startDate, locale: 'ar' },
+        { key: 'end_date', value: endDate, locale: 'ar' },
+        { key: 'user_usage', value: limit, locale: 'ar' },
+        { key: 'calculation_method', value: calculationMethod, locale: 'ar' },
+        { key: 'user_type', value: userType, locale: 'ar' },
+        { key: 'monthly', value: valueMonthly, locale: 'ar' },
+        { key: 'quarterly', value: valueQuarterly, locale: 'ar' },
+        { key: 'semi_annual', value: valueSemiAnnual, locale: 'ar' },
+        { key: 'yearly', value: valueYearly, locale: 'ar' }
     ];
 
     
-    if (selectStatus_ar === 'UnLimited') {
+    if (selectStatus === 'UnLimited') {
         translations.push({ key: 'promo_status', value: 'unlimited', locale: 'ar' });
-    } else if (selectStatus_ar === 'Fixed') {
+    } else if (selectStatus === 'Fixed') {
         translations.push({ key: 'promo_status', value: 'fixed', locale: 'ar' });
-        translations.push({ key: 'usage', value: usageNumber_ar, locale: 'ar' });
+        translations.push({ key: 'usage', value: usageNumber, locale: 'ar' });
     }
 
-    if (selectType_ar === 'Plan') {
+    if (selectType === 'Plan') {
         translations.push({ key: 'promo_type', value: 'plan', locale: 'ar' });
-    } else if (selectType_ar === 'Extra Product') {
+    } else if (selectType === 'Extra Product') {
         translations.push({ key: 'promo_type', value: 'extra', locale: 'ar' });
-    } else if (selectType_ar === 'Domain') {
+    } else if (selectType === 'Domain') {
         translations.push({ key: 'promo_type', value: 'domain', locale: 'ar' });
         translations.push({ key: 'amount', value: amount, locale: 'ar' });
     }
@@ -561,7 +615,7 @@ const EditPromoCodePage =()=>{
      
     handleClick={() => handleChangeLanguage()}
 />
-        <form onSubmit={(event) => handleSubmitEdit(promoCodeContent.id, event)} className="w-full flex flex-col items-center justify-center gap-y-10 m-5">
+        <form onSubmit={(event) => handleSubmitEdit(promoCodeEdit.id, event)} className="w-full flex flex-col items-center justify-center gap-y-10 m-5">
                  {language==="en" ? <div className="w-full flex flex-wrap items-center justify-start gap-10">
                      <div className="lg:w-[30%] sm:w-full">
                          <InputCustom
@@ -749,7 +803,7 @@ const EditPromoCodePage =()=>{
                           type="text"
                           placeholder="الكود"
                           borderColor="mainColor"
-                          value={code_ar}
+                          value={code}
                           onChange={(e) => setCode_ar(e.target.value)}
                       />
                   </div>
@@ -767,7 +821,7 @@ const EditPromoCodePage =()=>{
                           type="Date"
                           placeholder="صالح من"
                           borderColor="mainColor"
-                          value={startDate_ar}
+                          value={startDate}
                           onChange={(e) => setStartDate_ar(e.target.value)}
                       />
                   </div>
@@ -776,7 +830,7 @@ const EditPromoCodePage =()=>{
                           type="Date"
                           placeholder="صالح إلى"
                           borderColor="mainColor"
-                          value={endDate_ar}
+                          value={endDate}
                           onChange={(e) => setEndDate_ar(e.target.value)}
                       />
                   </div>
@@ -785,37 +839,37 @@ const EditPromoCodePage =()=>{
                           type="number"
                           placeholder="استخدام المستخدم"
                           borderColor="mainColor"
-                          value={limit_ar}
+                          value={limit}
                           onChange={(e) => setLimit_ar(e.target.value)}
                       />
                   </div>
                   <div className="lg:w-[30%] sm:w-full">
-                    <DropDownMenu
-                    ref={dropdownUsageTypeRef}
-                    handleOpen={handleOpenUsageType}
-                    handleOpenOption={handleSelectUsageType}
-                    stateoption={selectUsageType_ar}
-                    openMenu={openSelectUsageType_ar}
-                    options={usageTypeData}
-                    />
+                  <DropDownMenu
+                       ref={dropdownUsageTypeRef}
+                       handleOpen={handleOpenUsageType}
+                       handleOpenOption={handleSelectUsageType}
+                       stateoption={selectUsageType}
+                       openMenu={openSelectUsageType}
+                       options={usageTypeData}
+                       />
                 </div> 
                   <div className="lg:w-[30%] sm:w-full">
                         <DropDownMenu
                         ref={dropdownValueTypeRef}
                         handleOpen={handleOpenValueType}
                         handleOpenOption={handleSelectValueType}
-                        stateoption={selectValueType_ar}
-                        openMenu={openSelectValueType_ar}
+                        stateoption={selectValueType}
+                        openMenu={openSelectValueType}
                         options={valueType}
                         />
                     </div> 
-                    {selectValueType_ar === 'Value' && (
+                    {selectValueType === 'Value' && (
                         <>
                         <div className="lg:w-[30%] sm:w-full">
                         <InputCustom
                             placeholder='القيمة الشهرية'
                             borderColor="mainColor"
-                            value={valueMonthly_ar}
+                            value={valueMonthly}
                             onChange={(e) => setValueMonthly_ar(e.target.value)}
                         />
                         </div>
@@ -823,7 +877,7 @@ const EditPromoCodePage =()=>{
                         <InputCustom
                             placeholder='القيمة ربع السنوية'
                             borderColor="mainColor"
-                            value={valueQuarterly_ar}
+                            value={valueQuarterly}
                             onChange={(e) => setValueQuarterly_ar(e.target.value)}
                         />
                         </div>
@@ -831,7 +885,7 @@ const EditPromoCodePage =()=>{
                         <InputCustom
                             placeholder='القيمة نصف السنوية'
                             borderColor="mainColor"
-                            value={valueSemiAnnual_ar}
+                            value={valueSemiAnnual}
                             onChange={(e) => setValueSemiAnnual_ar(e.target.value)}
                         />
                         </div>
@@ -839,19 +893,19 @@ const EditPromoCodePage =()=>{
                         <InputCustom
                              placeholder='القيمة السنوية'
                             borderColor="mainColor"
-                            value={valueYearly_ar}
+                            value={valueYearly}
                             onChange={(e) => setValueYearly_ar(e.target.value)}
                         />
                         </div>
                         </>
                     )}
-                    {selectValueType_ar === 'Percentage' && (
+                    {selectValueType === 'Percentage' && (
                        <>
                        <div className="lg:w-[30%] sm:w-full">
                        <InputCustom
                            placeholder='النسبة الشهرية'
                            borderColor="mainColor"
-                           value={valueMonthly_ar}
+                           value={valueMonthly}
                            onChange={(e) => setValueMonthly_ar(e.target.value)}
                        />
                        </div>
@@ -859,7 +913,7 @@ const EditPromoCodePage =()=>{
                        <InputCustom
                             placeholder='النسبة ربع السنوية'
                            borderColor="mainColor"
-                           value={valueQuarterly_ar}
+                           value={valueQuarterly}
                            onChange={(e) => setValueQuarterly_ar(e.target.value)}
                        />
                        </div>
@@ -867,7 +921,7 @@ const EditPromoCodePage =()=>{
                        <InputCustom
                            placeholder='النسبة نصف السنوية'
                            borderColor="mainColor"
-                           value={valueSemiAnnual_ar}
+                           value={valueSemiAnnual}
                            onChange={(e) => setValueSemiAnnual_ar(e.target.value)}
                        />
                        </div>
@@ -875,7 +929,7 @@ const EditPromoCodePage =()=>{
                        <InputCustom
                            placeholder='النسبة السنوية'
                            borderColor="mainColor"
-                           value={valueYearly_ar}
+                           value={valueYearly}
                            onChange={(e) => setValueYearly_ar(e.target.value)}
                        />
                        </div>
@@ -887,17 +941,17 @@ const EditPromoCodePage =()=>{
                         ref={dropdownStatusRef}
                         handleOpen={handleOpenStatus}
                         handleOpenOption={handleSelectStatus}
-                        stateoption={selectStatus_ar}
-                        openMenu={openSelectStatus_ar}
+                        stateoption={selectStatus}
+                        openMenu={openSelectStatus}
                         options={statusData}
                         />
                     </div> 
-                    {selectStatus_ar === 'Fixed' && (
+                    {selectStatus === 'Fixed' && (
                         <div className="lg:w-[30%] sm:w-full">
                         <InputCustom
                              placeholder="القيمة"
                             borderColor="mainColor"
-                            value={usageNumber_ar}
+                            value={usageNumber}
                             onChange={(e) => setUsageNumber_ar(e.target.value)}
                         />
                         </div>
@@ -908,12 +962,12 @@ const EditPromoCodePage =()=>{
                         ref={dropdownTypeRef}
                         handleOpen={handleOpenType}
                         handleOpenOption={handleSelectType}
-                        stateoption={selectType_ar}
-                        openMenu={openSelectType_ar}
+                        stateoption={selectType}
+                        openMenu={openSelectType}
                         options={typeData}
                         />
                     </div> 
-                    {selectType_ar === 'Domain' && (
+                    {selectType === 'Domain' && (
                         <div className="lg:w-[30%] sm:w-full">
                         <InputCustom
                             placeholder="الكمية"

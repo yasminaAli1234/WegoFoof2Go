@@ -48,7 +48,7 @@ const PublicPage =()=>{
         </div>
       </section>
       <section id="section2" className="h-screen flex items-center justify-center text-white text-3xl">
-        Section 2
+        
       </section>
       <section id="section3" className="h-screen flex items-center justify-center text-white text-3xl">
         Section 3

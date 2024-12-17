@@ -198,10 +198,10 @@ const StorePage = () => {
                               </div>
                             ) : (
                               <>
-                                <Link
+                                {/* <Link
                                 key={store.id}
                                 to={store.link_store}
-                              >
+                              > */}
                                 <div className="mb-4">
                                   <p className="text-lg">{t("Store Link")}:</p>
                                   <Link
@@ -225,11 +225,12 @@ const StorePage = () => {
                                   <p className="text-lg">{store.password || "-"}</p>
                                 </div>
 
-                                <div className="flex justify-between items-center gap-4">
+                                <div className="flex-col gap-3">
                                   {/* Go to Store button */}
-                                  <button
+                                 <div className="flex justify-between items-center ">
+                                 <button
                                     onClick={() => window.open(store.link_store, "_blank")}
-                                    className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg shadow-md transition-all duration-300"
+                                    className="inline-flex items-center gap-2 px-1 py-1 bg-green-600 hover:bg-green-700 text-white rounded-lg shadow-md transition-all duration-300"
                                   >
                                     <FaLink />
                                     <span>{t("Go to Store")}</span>
@@ -243,6 +244,7 @@ const StorePage = () => {
                                     <FaCogs />
                                     <span>{t("CPanel")}</span>
                                   </button>
+                                 </div>
 
                                   {/* Delete icon */}
                                   <button
@@ -253,7 +255,7 @@ const StorePage = () => {
                                     <FaTrashAlt size={24} />
                                   </button>
                                 </div>
-                                </Link>
+                                {/* </Link> */}
                               </>
                             )}
                         </>

@@ -14,6 +14,8 @@ const EditUserLayout = () => {
         const [isLoading, setIsLoading] = useState(false);
         const [allUsersData, setAllUsersData] = useState([]);
         const [userEdit, setUserEdit] = useState(null);
+       //  const [allUsersData_ar, setAllUsersData_ar] = useState([]);
+       //  const [userEdit_ar, setUserEdit_ar] = useState(null);
         const { userId } = useParams();
 
        useEffect(() => {
@@ -37,6 +39,8 @@ const EditUserLayout = () => {
                  };
        fetchData(); }, []);
 
+    
+
        useEffect(() => {
               if (allUsersData.length > 0 && userId) {
                      const filteredUser = allUsersData.find(
@@ -45,7 +49,6 @@ const EditUserLayout = () => {
                      setUserEdit(filteredUser);
               }
               }, [allUsersData, userId]);
-              
               console.log('allUsersData', allUsersData); // Logging the whole array
               console.log('userEdit', userEdit);
 
