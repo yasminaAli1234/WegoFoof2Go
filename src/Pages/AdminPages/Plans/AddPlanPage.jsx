@@ -125,12 +125,12 @@ const AddPlanPage = () => {
             // Prepare translations array
             const translations = [
                 { key: 'name', value: name_ar, locale: 'ar' },
-                { key: 'title', value: title_ar, locale: 'ar' },
+                // { key: 'title', value: title_ar, locale: 'ar' },
                 { key: 'description', value: description_ar, locale: 'ar' },
                 { key: 'fee', value: fee, locale: 'ar' },
                 { key: 'limitPlan', value: limitPlan, locale: 'ar' },
                 // { key: 'thumbnails', value: thumbnails_ar, locale: 'ar' },
-                { key: 'app', value: appActive_ar, locale: 'ar' },
+                // { key: 'app', value: appActive_ar, locale: 'ar' },
                 { key: 'monthly', value: monthlyPrice, locale: 'ar' },
                 { key: 'quarterly', value: quarterlyPrice, locale: 'ar' },
                 { key: 'semi_annual', value: semiAnnualPrice, locale: 'ar' },
@@ -237,7 +237,7 @@ const AddPlanPage = () => {
                         width="w-full"
                     />
                 </div>
-                <div className="lg:w-[30%] sm:w-full">
+                {/* <div className="lg:w-[30%] sm:w-full">
                     <InputCustom
                         type="text"
                         borderColor="mainColor"
@@ -246,7 +246,7 @@ const AddPlanPage = () => {
                         onChange={(e) => setTitle(e.target.value)}
                         width="w-full"
                     />
-                </div>
+                </div> */}
                 <div className="lg:w-[30%] sm:w-full">
                 <textarea
                     className="w-full px-2 py-4 border-2 font-normal eleValueInput rounded-xl border-mainColor text-2xl focus:outline-none focus:ring-2 focus:ring-mainColor"
@@ -511,7 +511,7 @@ const AddPlanPage = () => {
                   width="w-full"
               />
           </div>
-          <div className="lg:w-[30%] sm:w-full">
+          {/* <div className="lg:w-[30%] sm:w-full">
               <InputCustom
                   type="text"
                   borderColor="mainColor"
@@ -520,7 +520,7 @@ const AddPlanPage = () => {
                   onChange={(e) => setTitle_ar(e.target.value)}
                   width="w-full"
               />
-          </div>
+          </div> */}
           <div className="lg:w-[30%] sm:w-full">
           <textarea
               className="w-full px-2 py-4 border-2 font-normal eleValueInput rounded-xl border-mainColor text-2xl focus:outline-none focus:ring-2 focus:ring-mainColor"

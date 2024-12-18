@@ -89,7 +89,7 @@ const EditPlanPage =()=>{
             setName(planEdit.name || '');
             // setTitle(planContent.title || '');
             setDescription(planEdit.description|| '');
-            setFee(planEdit.setup_fees|| '');
+            setFee(planEdit.setup_fees|| 0);
             setLimitPlan(planEdit.limet_store|| '');
             setAppActive(planEdit.app|| '');
 
@@ -120,7 +120,7 @@ const EditPlanPage =()=>{
             setName_ar(planEdit_ar.name || '');
             // setTitle(planContent.title || '');
             setDescription_ar(planEdit_ar.description|| '');
-            setFee_ar(planEdit_ar.setup_fees|| '');
+            setFee_ar(planEdit_ar.setup_fees|| 0);
             setLimitPlan_ar(planEdit_ar.limet_store|| '');
             setAppActive_ar(planEdit_ar.app|| '');
 
@@ -176,12 +176,12 @@ const EditPlanPage =()=>{
         event.preventDefault();
 
     // Validation for English fields
-    if (!title || !description || !fee || !monthlyPrice || !quarterlyPrice || !semiAnnualPrice || !yearlyPrice) {
-        auth.toastError('All required fields must be filled out.');
-        return;
-    }
+    // if (!title || !description || !fee || !monthlyPrice || !quarterlyPrice || !semiAnnualPrice || !yearlyPrice) {
+    //     auth.toastError('All required fields must be filled out.');
+    //     return;
+    // }
 
-    // // Validation for Arabic fields
+    // // // Validation for Arabic fields
     // if (!title_ar || !description_ar || !fee_ar || !monthlyPrice_ar || !quarterlyPrice_ar || !semiAnnualPrice_ar || !yearlyPrice_ar) {
     //     auth.toastError('Please fill out all Arabic fields.');
     //     return;
@@ -192,25 +192,26 @@ const EditPlanPage =()=>{
       // Prepare translations data
       const translations = [
         { key: 'name', value: title_ar, locale: 'ar' },
-        { key: 'plan_id', value: planId, locale: 'ar' },
+        // { key: 'plan_id', value: planId, locale: 'ar' },
         { key: 'description', value: description_ar, locale: 'ar' },
-        { key: 'fee', value: fee_ar, locale: 'ar' },
-        { key: 'limitPlan', value: limitPlan_ar, locale: 'ar' },
-        { key: 'thumbnails', value: thumbnails_ar, locale: 'ar' },
-        { key: 'app', value: appActive_ar, locale: 'ar' },
-        { key: 'monthly', value: monthlyPrice_ar, locale: 'ar' },
-        { key: 'quarterly', value: quarterlyPrice_ar, locale: 'ar' },
-        { key: 'semi_annual', value: semiAnnualPrice_ar, locale: 'ar' },
-        { key: 'yearly', value: yearlyPrice_ar, locale: 'ar' },
-        { key: 'discount_monthly', value: monthlyDiscountPrice_ar, locale: 'ar' },
-        { key: 'discount_quarterly', value: quarterlyDiscountPrice_ar, locale: 'ar' },
-        { key: 'discount_semi_annual', value: semiAnnualDiscountPrice_ar, locale: 'ar' },
-        { key: 'discount_yearly', value: yearlyDiscountPrice_ar, locale: 'ar' }
+        // { key: 'fee', value: fee_ar, locale: 'ar' },
+        // { key: 'limitPlan', value: limitPlan_ar, locale: 'ar' },
+        // { key: 'thumbnails', value: thumbnails_ar, locale: 'ar' },
+        // { key: 'app', value: appActive_ar, locale: 'ar' },
+        // { key: 'monthly', value: monthlyPrice_ar, locale: 'ar' },
+        // { key: 'quarterly', value: quarterlyPrice_ar, locale: 'ar' },
+        // { key: 'semi_annual', value: semiAnnualPrice_ar, locale: 'ar' },
+        // { key: 'yearly', value: yearlyPrice_ar, locale: 'ar' },
+        // { key: 'discount_monthly', value: monthlyDiscountPrice_ar, locale: 'ar' },
+        // { key: 'discount_quarterly', value: quarterlyDiscountPrice_ar, locale: 'ar' },
+        // { key: 'discount_semi_annual', value: semiAnnualDiscountPrice_ar, locale: 'ar' },
+        // { key: 'discount_yearly', value: yearlyDiscountPrice_ar, locale: 'ar' }
     ];
 
     const formData = new FormData();
     formData.append('plan_id', planId);
     formData.append('name', name);
+    formData.append('title', title);
     formData.append('description', description);
     formData.append('setup_fees', fee);
     formData.append('limet_store', limitPlan);
@@ -242,9 +243,11 @@ const EditPlanPage =()=>{
         });
     });
 
-
+    for (let pair of formData.entries()) {
+        console.log(pair[0] + ', ' + pair[1]);
+ }   
             const response = await axios.post(
-                i18n.language==='ar'?` https://www.wegostores.com/admin/v1/plan?locale=ar/update`:` https://www.wegostores.com/admin/v1/plan/update`,
+               `https://www.wegostores.com/admin/v1/plan/update`,
                 formData,
                 {
                     headers: {

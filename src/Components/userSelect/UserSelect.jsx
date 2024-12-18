@@ -9,7 +9,7 @@ import { CiMoneyCheck1 } from "react-icons/ci";
 import { useNavigate, Link } from 'react-router-dom';  // Import useNavigate
 import { FaCrown } from "react-icons/fa";
 import { useTranslation } from 'react-i18next';
-
+import {ButtonAdd} from '../Button.jsx'
 const UserSelect = () => {
   const [select, setSelect] = useState(localStorage.getItem('selectedLanguage')); // Retrieve language from localStorage
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -182,6 +182,53 @@ const UserSelect = () => {
       }
     };
 
+    if (!data) {
+        return   <div
+        className={`fixed w-full inset-0 bg-gray-800 bg-opacity-70 flex items-center justify-center z-1000 ${click ? 'hidden' : ''}`}
+    >
+        <div className="bg-white md:w-3/6 lg:w-2/6 w-full rounded-lg shadow-lg p-6 space-y-4">
+            <div className="flex justify-between items-center">
+                <button
+                    className="bg-red-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-red-600 focus:outline-none"
+                    onClick={handleImageClick}
+                >
+                    Close
+                </button>
+            </div>
+
+            <div className="flex flex-col items-center space-y-4">
+                {isLoading ? (
+                  <div className="w-1/4 h-full flex items-start mt-[10%] justify-center m-auto">
+                      <Loading />
+                  </div>                                
+                  ) : (
+                    <div
+                    className={`cursor-pointer w-full rounded-lg text-center bg-gray-100 shadow-lg p-6 transform transition-all duration-300 hover:scale-105`}
+                >
+                    <h2 className="text-2xl font-bold text-mainColor mb-4">
+                        You currently do not have any active plans
+                    </h2>
+                    <p className="text-lg text-gray-600 mb-6">
+                        Explore our options and choose a plan that suits your needs today!
+                    </p>
+                    <div className="w-full flex justify-center">
+                        <Link to="subscription">
+                            <ButtonAdd
+                                Text="Buy Plan"
+                                isWidth="true"
+                                BgColor="mainColor"
+                                Color="white"
+                                iconColor="white"
+                                className="px-6 py-3 rounded-lg"
+                            />
+                        </Link>
+                    </div>
+                </div>
+                )}
+            </div>
+        </div>
+    </div>
+    }
 
   return (
     <>

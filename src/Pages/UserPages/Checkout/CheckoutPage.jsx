@@ -261,7 +261,7 @@ const CheckoutPage = () => {
       }
     } 
     
-    else if (selectedMethod.name === "paymob") {
+    else if (selectedMethod.name === "paymob" || 'Paymob') {
       // const planItem = cartItems.find((item) => item.type === "plan");
       // const planId = planItem ? planItem.id : null;
       //  console.log(planId)

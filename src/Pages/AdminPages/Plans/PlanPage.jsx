@@ -77,7 +77,8 @@ const PlanPage = () => {
                             prevPlan.filter((plan) => plan.id !== planId)
                      );
               } else {
-                     auth.toastError('Failed to delete Plan.');
+                    //  auth.toastError('Failed to delete Plan.');
+                     auth.toastError('This Plan is subscriped by users.');
               }
        };
 
