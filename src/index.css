@@ -19,7 +19,7 @@
 .contentSection {
   position: absolute;
   top: 0;
-  right: 2%; /* Default for LTR (left to right) */
+  right: 1%; 
   border-radius: 0 15px 15px 0;
   background: #fff;
   transition: right 0.3s ease, left 0.3s ease; /* Smooth transition when switching languages */
@@ -32,8 +32,8 @@ html[dir="rtl"] .contentSection {
 }
 
 .MenuSide a.active {
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: 5px;
+  padding-right: 5px;
   border-radius: 12px;
   background: #fff;
   color: #3F4CD0 !important;

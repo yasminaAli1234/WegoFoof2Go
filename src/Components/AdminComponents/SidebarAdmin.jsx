@@ -7,7 +7,7 @@ const SidebarAdmin =({ isOpen , setIsSidebarOpen}) => {
        return (
               <>
                 <aside
-                 className={`fixed scrollSec w-4/12 lg:w-2/12 xl:w-2/12 sm:w-8/12 
+                 className={`fixed scrollSec w-4/12 md:w-6/12 lg:w-[19%] sm:w-8/12 
                   ${i18n.language === 'ar' ? 'right-0' : 'left-0'} 
                   overflow-y-auto z-10 h-screen flex flex-col items-center bg-mainColor gap-y-3 transition-transform transform ${
                     isOpen ? "translate-x-0" : `${i18n.language === 'ar' ? 'translate-x-full' : '-translate-x-full'}`

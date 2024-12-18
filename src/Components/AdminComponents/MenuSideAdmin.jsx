@@ -594,86 +594,86 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
                             <div className="MenuSide w-5/6 flex flex-col items-center gap-y-4">                      
                                    <Link to="/dashboard_admin" onClick={() =>{handleClickHome();handleLinkClick();}} className={`${isActiveHome ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <HomeIcon isActive={isActiveHome} />
-                                          <span className={`${isActiveHome ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Home</span>
+                                          <span className={`${isActiveHome ? "text-mainColor" : "text-secoundColor"} text-lg font-medium`}>Home</span>
                                    </Link>
                                    <Link to="welcome_offer" onClick={() =>{handleClickWelcomOffer();handleLinkClick();}} className={`${isActiveWelcomOffer ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <WelcomOfferIcon isActive={isActiveWelcomOffer} />
-                                          <span className={`${isActiveWelcomOffer ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Welcom Offer</span>
+                                          <span className={`${isActiveWelcomOffer ? "text-mainColor" : "text-secoundColor"} text-lg font-medium`}>Welcome Offer</span>
                                    </Link>
                                    <Link to="demo_request" onClick={() =>{handleClickDemoRequest();handleLinkClick();}} className={`${isActiveDemoRequest ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <DemorequestsIcon isActive={isActiveDemoRequest} />
-                                          <span className={`${isActiveDemoRequest ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Demo Requests</span>
+                                          <span className={`${isActiveDemoRequest ? "text-mainColor" : "text-secoundColor"} text-lg font-medium`}>Demo Requests</span>
                                    </Link>
                                    <Link to="domain_request" onClick={() =>{handleClickDomainRequest();handleLinkClick();}} className={`${isActiveDomainRequest ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <DomainIcon isActive={isActiveDomainRequest} />
-                                          <span className={`${isActiveDomainRequest ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Domain Requests</span>
+                                          <span className={`${isActiveDomainRequest ? "text-mainColor" : "text-secoundColor"} text-lg font-medium`}>Domain Requests</span>
                                    </Link>
                                    <Link to="pending_payment" onClick={() =>{handleClickPaymentPending();handleLinkClick();}} className={`${isActivePaymentPending ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <DollerIcon isActive={isActivePaymentPending} />
-                                          <span className={`${isActivePaymentPending ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Payment Pending</span>
+                                          <span className={`${isActivePaymentPending ? "text-mainColor" : "text-secoundColor"} text-lg font-medium`}>Payment Pending</span>
                                    </Link>
                                    <Link to="order" onClick={() =>{handleClickOrder();handleLinkClick();}} className={`${isActiveOrder ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <OrderIcon isActive={isActiveOrder} />
-                                          <span className={`${isActiveOrder ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Order</span>
+                                          <span className={`${isActiveOrder ? "text-mainColor" : "text-secoundColor"} text-lg font-medium`}>Order</span>
                                    </Link> 
                                    <Link to="stores" onClick={() =>{handleClickStore();handleLinkClick();}} className={`${isActiveStores ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <StoreIcon isActive={isActiveStores} />
-                                          <span className={`${isActiveStores ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Stores</span>
+                                          <span className={`${isActiveStores ? "text-mainColor" : "text-secoundColor"} text-lg font-medium`}>Stores</span>
                                    </Link> 
                                    <Link to="user" onClick={() =>{handleClickUser();handleLinkClick();}} className={`${isActiveUser ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <UserIcon isActive={isActiveUser} />
-                                          <span className={`${isActiveUser ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>User</span>
+                                          <span className={`${isActiveUser ? "text-mainColor" : "text-secoundColor"} text-lg font-medium`}>User</span>
                                    </Link> 
                                    <Link to="subscription" onClick={() =>{handleClickSubscription();handleLinkClick();}} className={`${isActiveSubscription ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <SubscriptionIcon isActive={isActiveSubscription} />
-                                          <span className={`${isActiveSubscription ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Subscriptions</span>
+                                          <span className={`${isActiveSubscription ? "text-mainColor" : "text-secoundColor"} text-lg font-medium`}>Subscriptions</span>
                                    </Link>
                                    <Link to="plan" onClick={() =>{handleClickPlan();handleLinkClick();}} className={`${isActivePlan ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <PlanIcon isActive={isActivePlan} />
-                                          <span className={`${isActivePlan ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>plan</span>
+                                          <span className={`${isActivePlan ? "text-mainColor" : "text-secoundColor"} text-lg font-medium`}>plan</span>
                                    </Link> 
 
                                    <Link to="extra_product" onClick={() =>{handleClickExtra();handleLinkClick();}} className={`${isActiveExtra ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <ExtraIcon isActive={isActiveExtra} />
-                                          <span className={`${isActiveExtra ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Extras Product</span>
+                                          <span className={`${isActiveExtra ? "text-mainColor" : "text-secoundColor"} text-lg font-medium`}>Extras Product</span>
                                    </Link>
                                    <Link to="payment" onClick={() =>{handleClickPayment();handleLinkClick();}} className={`${isActivePayment ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <PaymentIcon isActive={isActivePayment} />
-                                          <span className={`${isActivePayment ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Payment</span>
+                                          <span className={`${isActivePayment ? "text-mainColor" : "text-secoundColor"} text-lg font-medium`}>Payment</span>
                                    </Link>
                                    <Link to="tutorial_group" onClick={() =>{handleClickTutorial();handleLinkClick();}} className={`${isActiveTutorial ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <TutorialIcon isActive={isActiveTutorial} />
-                                          <span className={`${isActiveTutorial ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Tutorial</span>
+                                          <span className={`${isActiveTutorial ? "text-mainColor" : "text-secoundColor"} text-lg font-medium`}>Tutorial</span>
                                    </Link>
                                   
                                    {/* <Link to="setting" onClick={() =>{handleClickSetting();handleLinkClick();}} className={`${isActiveSetting ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <SettingIcon isActive={isActiveSetting} />
-                                          <span className={`${isActiveSetting ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Settings</span>
+                                          <span className={`${isActiveSetting ? "text-mainColor" : "text-secoundColor"} text-lg font-medium`}>Settings</span>
                                    </Link>   */}
 
                                    <>
                                    <Link to="payment_method" onClick={() =>{handleClickSetting();handleLinkClick();}} className={`${isActiveSetting ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <SettingIcon isActive={isActiveSetting} />
-                                          <span className={`${isActiveSetting ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Settings</span>
+                                          <span className={`${isActiveSetting ? "text-mainColor" : "text-secoundColor"} text-lg font-medium`}>Settings</span>
                                    </Link>
                                    {isActiveSettingList && (
                                    <div className={`${isActiveSettingList ? "h-auto" : "h-0 overflow-hidden"} w-full transition-all duration-500`}>
                                           <ul className={`${isActiveSettingList ? "h-full overflow-hidden" : "h-0 overflow-hidden"} listUser ml-10 bg-blacks transition-all duration-700 flex flex-col gap-y-2`} >
                                                  <Link to="payment_method" onClick={() =>{handleClickPaymentMethod();handleLinkClick();}} className={`${isActivePaymentMethod ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                                         {/* <PromoCodeIcon isActive={isActivePaymentMethod} /> */}
-                                                        <span className={`${isActivePaymentMethod ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Payment Method</span>
+                                                        <span className={`${isActivePaymentMethod ? "text-mainColor" : "text-secoundColor"} text-lg font-medium`}>Payment Method</span>
                                                  </Link> 
                                                  <Link to="promocode" onClick={() =>{handleClickPromoCode();handleLinkClick();}} className={`${isActivePromoCode ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                                         {/* <PromoCodeIcon isActive={isActivePromoCode} /> */}
-                                                        <span className={`${isActivePromoCode ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>PromoCode</span>
+                                                        <span className={`${isActivePromoCode ? "text-mainColor" : "text-secoundColor"} text-lg font-medium`}>PromoCode</span>
                                                  </Link> 
                                                  <Link to="activity" onClick={() =>{handleClickActivity();handleLinkClick();}} className={`${isActiveActivity ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                                         {/* <PromoCodeIcon isActive={isActiveActivity} /> */}
-                                                        <span className={`${isActiveActivity ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Activity</span>
+                                                        <span className={`${isActiveActivity ? "text-mainColor" : "text-secoundColor"} text-lg font-medium`}>Activity</span>
                                                  </Link> 
                                                  <Link to="contact_info" onClick={() =>{handleClickContact();handleLinkClick();}} className={`${isActiveContact ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                                         {/* <PromoCodeIcon isActive={isActiveContact} /> */}
-                                                        <span className={`${isActiveContact ? "text-mainColor" : "text-secoundColor"} text-xl font-medium`}>Contact Information</span>
+                                                        <span className={`${isActiveContact ? "text-mainColor" : "text-secoundColor"} text-lg font-medium`}>Contact Information</span>
                                                  </Link> 
                                           </ul>
                                    </div>
@@ -681,7 +681,7 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
                                    </>
                                    <Link to="/" onClick={() =>{handleLogout();handleLinkClick();}} className="w-full flex items-center justify-start px-0 py-2 gap-x-5">
                                           <IoIosLogOut size={23} style={{ strokeWidth: 2 }} color="#ffff"/>
-                                          <span className="text-secoundColor text-xl font-medium">Log Out</span>
+                                          <span className="text-secoundColor text-lg font-medium">Log Out</span>
                                    </Link>
                             </div>
                      </div>

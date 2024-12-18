@@ -330,11 +330,17 @@ const UserSubscriptionsPage = () => {
                                 <>
                                     <p className="text-lg text-gray-500 line-through">{priceOptions['monthly'] * (selectedPeriod === 'monthly' ? 1 : selectedPeriod === 'quarterly' ? 3 : selectedPeriod === 'semiAnnually' ? 6 : 12)} {t("EGP")} / {t("month")}</p>
                                     <p className="text-3xl font-semibold text-mainColor">{currentPrice} {t("EGP")}</p>
-                                    {selectedPeriod !== 'monthly' && (
+                                    {selectedPeriod !== 'monthly' ? (
                                         <p className="text-green-500 font-semibold mt-2">
                                             {t("Save")} {priceOptions['monthly'] * (selectedPeriod === 'quarterly' ? 3 : selectedPeriod === 'semiAnnually' ? 6 : 12) - currentPrice} {t("EGP")}
                                         </p>
-                                    )}
+                                    ): 
+                                    <>
+                                    <p className="text-green-500 font-semibold mt-2">
+                                        {t("Save")} 0 {t("EGP")}
+                                    </p>
+                                    </>
+                                    }
                                 </>
                             )}
                         </div>
