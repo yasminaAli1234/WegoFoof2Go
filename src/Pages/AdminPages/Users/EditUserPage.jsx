@@ -91,19 +91,21 @@ const EditUserPage =()=>{
             formData.append('status', activeUser); // Append the file
             // append info int array translate
             // Create translations array
-        const translations = [
-            { key: 'name', value: name_ar, locale: 'ar' },
-            { key: 'phone', value: phone_ar, locale: 'ar' },
-            { key: 'email', value: email_ar, locale: 'ar' },
-            { key: 'password', value: password_ar, locale: 'ar' },
-            { key: 'status', value: activeUser_ar, locale: 'ar' },
-        ];
+
+
+        // const translations = [
+        //     { key: 'name', value: name_ar, locale: 'ar' },
+        //     { key: 'phone', value: phone_ar, locale: 'ar' },
+        //     { key: 'email', value: email_ar, locale: 'ar' },
+        //     { key: 'password', value: password_ar, locale: 'ar' },
+        //     { key: 'status', value: activeUser_ar, locale: 'ar' },
+        // ];
     
-        translations.forEach((translation, index) => {
-            Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
-                formData.append(`translations[${index}][${fieldKey}]`, fieldValue);
-            });
-        });
+        // translations.forEach((translation, index) => {
+        //     Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
+        //         formData.append(`translations[${index}][${fieldKey}]`, fieldValue);
+        //     });
+        // });
             
 
             const response = await axios.post(
@@ -145,20 +147,8 @@ const EditUserPage =()=>{
 
     return(
      <div className="">
-                          <Button 
-    type="submit"
-    Text={`Change to ${language === 'en' ? 'Arabic' : 'English'}`}
-    BgColor="bg-mainColor"
-    Color="text-white"
-    Width="fit"
-    Size="text-2xl"
-    px="px-28"
-    rounded="rounded-2xl"
-     
-    handleClick={() => handleChangeLanguage()}
-/>
            <form onSubmit={(event) => handleSubmitEdit(userContent.id, event)} className="w-full flex flex-col items-center justify-center gap-y-10 m-5">
-        {language==='en'?
+        
         <div className="w-full flex flex-wrap items-center justify-start gap-10">
         <div className="lg:w-[30%] sm:w-full">
           <InputCustom
@@ -207,57 +197,7 @@ const EditUserPage =()=>{
                       <CheckBox checked={activeUser} handleClick={handleClick} />
               </div>
           </div>
-    </div>:
-     <div className="w-full flex flex-wrap items-center justify-start gap-10">
-     <div className="lg:w-[30%] sm:w-full">
-       <InputCustom
-               type="text"
-               borderColor="mainColor"
-               placeholder="الاسم"
-               value={name_ar}
-               onChange={(e) => setName_ar(e.target.value)}
-               width="w-full"
-           />
-     </div>
-     <div className="lg:w-[30%] sm:w-full">
-       <InputCustom
-               type="text"
-               borderColor="mainColor"
-               placeholder="رقم الهاتف"
-               value={phone_ar}
-               onChange={(e) => setPhone_ar(e.target.value)}
-               width="w-full"
-           />
-     </div>
-     <div className="lg:w-[30%] sm:w-full">
-       <InputCustom
-               type="text"
-               borderColor="mainColor"
-               placeholder="البريد الإلكتروني"
-               value={email_ar}
-               onChange={(e) => setEmail_ar(e.target.value)}
-               width="w-full"
-           />
-     </div>
-     <div className="lg:w-[30%] sm:w-full">
-       <InputCustom
-               type="password"
-               borderColor="mainColor"
-               placeholder="كلمة المرور"
-               value={password_ar}
-               onChange={(e) => setPassword_ar(e.target.value)}
-               width="w-full"
-               required={false}
-           />
-     </div>
-     <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
-           <span className="text-2xl text-thirdColor font-medium">نشط:</span>
-           <div>
-                   <CheckBox checked={activeUser} handleClick={handleClick} />
-           </div>
-       </div>
- </div>}
-       
+    </div>
 
         <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
             <div className="flex items-center justify-center w-72">

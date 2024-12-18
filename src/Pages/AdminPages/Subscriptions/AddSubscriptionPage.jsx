@@ -196,20 +196,21 @@ const AddSubscriptionPage = () => {
         }
     
         // Validation for Arabic fields
-        if (!selectPlanId_ar || !selectUserId_ar || !selectPackageName_ar) {
-            auth.toastError('يرجى اختيار الحقول المطلوبة.');
-            return;
-        }
+        
+        // if (!selectPlanId_ar || !selectUserId_ar || !selectPackageName_ar) {
+        //     auth.toastError('يرجى اختيار الحقول المطلوبة.');
+        //     return;
+        // }
     
         setIsLoading(true);
     
         try {
             // Prepare translations array
-            const translations = [
-                { key: 'plan_id', value: selectPlanId_ar, locale: 'ar' },
-                { key: 'user_id', value: selectUserId_ar, locale: 'ar' },
-                { key: 'package', value: selectPackageName_ar, locale: 'ar' }
-            ];
+            // const translations = [
+            //     { key: 'plan_id', value: selectPlanId_ar, locale: 'ar' },
+            //     { key: 'user_id', value: selectUserId_ar, locale: 'ar' },
+            //     { key: 'package', value: selectPackageName_ar, locale: 'ar' }
+            // ];
     
             // Create FormData object
             const formData = new FormData();
@@ -229,11 +230,11 @@ const AddSubscriptionPage = () => {
                 formData.append('package', 'yearly');
             }
     
-            translations.forEach((translation, index) => {
-                Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
-                    formData.append(`translations[${index}][${fieldKey}]`, fieldValue);
-                });
-            });
+            // translations.forEach((translation, index) => {
+            //     Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
+            //         formData.append(`translations[${index}][${fieldKey}]`, fieldValue);
+            //     });
+            // });
     
             // API request
             const response = await axios.post(
@@ -276,14 +277,14 @@ const AddSubscriptionPage = () => {
           </div>
         );
     }    
-    const handleChangeLanguage = () => {
-        const newLanguage = language === 'en' ? 'ar' : 'en'; 
-        setLanguage(newLanguage); 
-    };
+    // const handleChangeLanguage = () => {
+    //     const newLanguage = language === 'en' ? 'ar' : 'en'; 
+    //     setLanguage(newLanguage); 
+    // };
 
     return (
        <div className="">
-        <Button 
+        {/* <Button 
     type="submit"
     Text={`Change to ${language === 'en' ? 'Arabic' : 'English'}`}
     BgColor="bg-mainColor"
@@ -294,9 +295,9 @@ const AddSubscriptionPage = () => {
     rounded="rounded-2xl"
      
     handleClick={() => handleChangeLanguage()}
-/>
+/> */}
 <form onSubmit={handleSubmitAdd} className="w-full flex flex-col items-center justify-center gap-y-10 m-5">
-                  {language==='en'? <div className="w-full flex flex-wrap items-center justify-start gap-10">
+                  { <div className="w-full flex flex-wrap items-center justify-start gap-10">
                   <div className="lg:w-[30%] sm:w-full">
                             <DropDownMenu
                             ref={dropdownUserRef}
@@ -327,39 +328,7 @@ const AddSubscriptionPage = () => {
                             options={packageData}
                             />
                      </div>
-                  </div>:
-                    <div className="w-full flex flex-wrap items-center justify-start gap-10">
-                    <div className="lg:w-[30%] sm:w-full">
-                              <DropDownMenu
-                              ref={dropdownUserRef}
-                              handleOpen={handleOpenSelectUser}
-                              handleOpenOption={handleSelectUser}
-                              stateoption={selectUser_ar}
-                              openMenu={openSelectUser_ar}
-                              options={userData}
-                              />
-                       </div>
-                       <div className="lg:w-[30%] sm:w-full">
-                              <DropDownMenu
-                              ref={dropdownPlanRef}
-                              handleOpen={handleOpenSelectPlan}
-                              handleOpenOption={handleSelectPlan}
-                              stateoption={selectPlan_ar}
-                              openMenu={openSelectPlan_ar}
-                              options={planData_ar}
-                              />
-                       </div>
-                       <div className="lg:w-[30%] sm:w-full">
-                              <DropDownMenu
-                              ref={dropdownPackageRef}
-                              handleOpen={handleOpenSelectPackage}
-                              handleOpenOption={handleSelectPackage}
-                              stateoption={selectPackage_ar}
-                              openMenu={openSelectPackage_ar}
-                              options={packageData}
-                              />
-                       </div>
-                    </div>
+                  </div>
                   }
 
                 

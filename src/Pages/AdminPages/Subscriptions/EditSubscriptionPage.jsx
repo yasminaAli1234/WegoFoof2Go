@@ -281,18 +281,18 @@ const EditSubscriptionPage =()=>{
         }
         // ------------------------------------------
 
-        if (!selectPlanId_ar) {
-            auth.toastError('يرجى اختيار خطة.');
-            return;
-        }
-        if (!selectUserId_ar) {
-            auth.toastError('يرجى اختيار مستخدم.');
-            return;
-        }
-        if (!selectPackageName_ar) {
-            auth.toastError('يرجى اختيار باقة الخطة.');
-            return;
-        }
+        // if (!selectPlanId_ar) {
+        //     auth.toastError('يرجى اختيار خطة.');
+        //     return;
+        // }
+        // if (!selectUserId_ar) {
+        //     auth.toastError('يرجى اختيار مستخدم.');
+        //     return;
+        // }
+        // if (!selectPackageName_ar) {
+        //     auth.toastError('يرجى اختيار باقة الخطة.');
+        //     return;
+        // }
 
         setIsLoading(true);
         try {
@@ -312,21 +312,22 @@ const EditSubscriptionPage =()=>{
 
             // -------------------------------
 
-            const translations = [
-                { key: 'plan_id', value: selectPlanId_ar, locale: 'ar' },
-                { key: 'user_id', value: selectUserId_ar, locale: 'ar' },
-                { key: 'package', value: selectPackageName_ar, locale: 'ar' }
-            ];
+            // const translations = [
+            //     { key: 'plan_id', value: selectPlanId_ar, locale: 'ar' },
+            //     { key: 'user_id', value: selectUserId_ar, locale: 'ar' },
+            //     { key: 'package', value: selectPackageName_ar, locale: 'ar' }
+            // ];
     
 
             for (let pair of formData.entries()) {
                 console.log(pair[0] + ', ' + pair[1]);
             } 
-            translations.forEach((translation, index) => {
-                Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
-                    formData.append(`translations[${index}][${fieldKey}]`, fieldValue);
-                });
-            });
+
+            // translations.forEach((translation, index) => {
+            //     Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
+            //         formData.append(`translations[${index}][${fieldKey}]`, fieldValue);
+            //     });
+            // });
 
             const response = await axios.post(
                 ` https://www.wegostores.com/admin/v1/subscripe/update`,
@@ -362,14 +363,14 @@ const EditSubscriptionPage =()=>{
           </div>
         );
     }    
-    const handleChangeLanguage = () => {
-        const newLanguage = language === 'en' ? 'ar' : 'en'; 
-        setLanguage(newLanguage); 
-    };
+    // const handleChangeLanguage = () => {
+    //     const newLanguage = language === 'en' ? 'ar' : 'en'; 
+    //     setLanguage(newLanguage); 
+    // };
 
     return(
        <div className="">
-       <Button 
+       {/* <Button 
     type="submit"
     Text={`Change to ${language === 'en' ? 'Arabic' : 'English'}`}
     BgColor="bg-mainColor"
@@ -380,9 +381,9 @@ const EditSubscriptionPage =()=>{
     rounded="rounded-2xl"
      
     handleClick={() => handleChangeLanguage()}
-/>
+/> */}
 <form onSubmit={(event) => handleSubmitEdit(subscriperContent.id, event)} className="w-full flex flex-col items-center justify-center gap-y-10 m-5">
-        {language==='en' ? <div className="w-full flex flex-wrap items-center justify-start gap-10">
+        { <div className="w-full flex flex-wrap items-center justify-start gap-10">
         <div className="lg:w-[30%] sm:w-full">
                   <DropDownMenu
                   ref={dropdownUserRef}
@@ -413,39 +414,8 @@ const EditSubscriptionPage =()=>{
                   options={packageData}
                   />
            </div>
-        </div>:
-          <div className="w-full flex flex-wrap items-center justify-start gap-10">
-          <div className="lg:w-[30%] sm:w-full">
-                    <DropDownMenu
-                    ref={dropdownUserRef}
-                    handleOpen={handleOpenSelectUser}
-                    handleOpenOption={handleSelectUser}
-                    stateoption={selectUser_ar}
-                    openMenu={openSelectUser_ar}
-                    options={userData}
-                    />
-             </div>
-             <div className="lg:w-[30%] sm:w-full">
-                    <DropDownMenu
-                    ref={dropdownPlanRef}
-                    handleOpen={handleOpenSelectPlan}
-                    handleOpenOption={handleSelectPlan}
-                    stateoption={selectPlan_ar}
-                    openMenu={openSelectPlan_ar}
-                    options={planData_ar}
-                    />
-             </div>
-             <div className="lg:w-[30%] sm:w-full">
-                    <DropDownMenu
-                    ref={dropdownPackageRef}
-                    handleOpen={handleOpenSelectPackage}
-                    handleOpenOption={handleSelectPackage}
-                    stateoption={selectPackage_ar}
-                    openMenu={openSelectPackage_ar}
-                    options={packageData}
-                    />
-             </div>
-          </div>}
+        </div>
+          }
 
       
 

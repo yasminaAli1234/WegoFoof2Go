@@ -92,20 +92,20 @@ const AddUserPage = () => {
         formData.append('password', password);
         formData.append('status', activeUser);
     
-        // Create translations array
-        const translations = [
-            { key: 'name', value: name_ar, locale: 'ar' },
-            { key: 'phone', value: phone_ar, locale: 'ar' },
-            { key: 'email', value: email, locale: 'ar' },
-            { key: 'password', value: password, locale: 'ar' },
-            // { key: 'status', value: activeUser_ar, locale: 'ar' },
-        ];
+        // // Create translations array
+        // const translations = [
+        //     { key: 'name', value: name_ar, locale: 'ar' },
+        //     { key: 'phone', value: phone_ar, locale: 'ar' },
+        //     { key: 'email', value: email, locale: 'ar' },
+        //     { key: 'password', value: password, locale: 'ar' },
+        //     // { key: 'status', value: activeUser_ar, locale: 'ar' },
+        // ];
     
-        translations.forEach((translation, index) => {
-            Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
-                formData.append(`translations[${index}][${fieldKey}]`, fieldValue);
-            });
-        });
+        // translations.forEach((translation, index) => {
+        //     Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
+        //         formData.append(`translations[${index}][${fieldKey}]`, fieldValue);
+        //     });
+        // });
     
         // Set loading state
         setIsLoading(true);
@@ -150,27 +150,16 @@ const AddUserPage = () => {
         }
     };
     
-    const handleChangeLanguage = () => {
-        const newLanguage = language === 'en' ? 'ar' : 'en'; 
-        setLanguage(newLanguage); 
-    };
+    // const handleChangeLanguage = () => {
+    //     const newLanguage = language === 'en' ? 'ar' : 'en'; 
+    //     setLanguage(newLanguage); 
+    // };
 
     return (
        <div className="">
-                    <Button 
-    type="submit"
-    Text={`Change to ${language === 'en' ? 'Arabic' : 'English'}`}
-    BgColor="bg-mainColor"
-    Color="text-white"
-    Width="fit"
-    Size="text-2xl"
-    px="px-28"
-    rounded="rounded-2xl"
-     
-    handleClick={() => handleChangeLanguage()}
-/>
+
 <form onSubmit={handleSubmitAdd} className="w-full flex flex-col items-center justify-center gap-y-10 m-5">
-             {language==='en'? <div className="w-full flex flex-wrap items-center justify-start gap-10">
+             <div className="w-full flex flex-wrap items-center justify-start gap-10">
                       <div className="lg:w-[30%] sm:w-full">
                         <InputCustom
                                 type="text"
@@ -217,58 +206,7 @@ const AddUserPage = () => {
                                     <CheckBox handleClick={handleClick} />
                             </div>
                         </div>
-                  </div>: <div className="w-full flex flex-wrap items-center justify-start gap-10">
-                      <div className="lg:w-[30%] sm:w-full">
-                        <InputCustom
-                                type="text"
-                                borderColor="mainColor"
-                                placeholder="الاسم"
-                                value={name_ar}
-                                onChange={(e) => setName_ar(e.target.value)}
-                                width="w-full"
-                            />
-                      </div>
-                      <div className="lg:w-[30%] sm:w-full">
-                        <InputCustom
-                                type="text"
-                                borderColor="mainColor"
-                                placeholder="رقم الهاتف"
-                                value={phone_ar}
-                                onChange={(e) => setPhone_ar(e.target.value)}
-                                width="w-full"
-                            />
-                      </div>
-                      <div className="lg:w-[30%] sm:w-full">
-                        <InputCustom
-                                type="text"
-                                borderColor="mainColor"
-                                placeholder="البريد الإلكتروني"
-                                value={email}
-                                onChange={(e) => setEmail_ar(e.target.value)}
-                                width="w-full"
-                            />
-                      </div>
-                      <div className="lg:w-[30%] sm:w-full">
-                        <InputCustom
-                                type="password"
-                                borderColor="mainColor"
-                                placeholder="كلمة المرور"
-                                value={password}
-                                onChange={(e) => setPassword_ar(e.target.value)}
-                                width="w-full"
-                            />
-                      </div>
-                      <div className="flex items-center gap-x-4 lg:w-[30%] sm:w-full">
-                      <span className="text-2xl text-thirdColor font-medium">نشط:</span>
-                            <div>
-                                    <CheckBox handleClick={handleClick} />
-                            </div>
-                        </div>
-                  </div>}
-
-                 
-
-      
+                  </div> 
                   <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
                       <div className="flex items-center justify-center w-72">
                           <Button
