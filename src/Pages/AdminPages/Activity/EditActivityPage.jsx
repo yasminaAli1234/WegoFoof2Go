@@ -17,7 +17,7 @@ const EditActivityPage =()=>{
     const [name_ar , setName_ar]=useState('')
     const activityContent = useContext(ActivityDataLayout);
    
-    const [language,setLanguage]= useState('ar')
+    const [language,setLanguage]= useState('en')
 
         const handleChangeLanguage = () => {
         const newLanguage = language === 'en' ? 'ar' : 'en'; 
@@ -82,21 +82,21 @@ const EditActivityPage =()=>{
             });
  
             if (response.status === 200) {
-                auth.toastSuccess(`${language === 'en' ? 'Activity updated successfully!' : 'تم تحديث النشاط بنجاح!'}`);
+                auth.toastSuccess('Activity updated successfully!');
                 handleGoBack();
             } else {
-                auth.toastError(`${language === 'en' ? 'Failed to update Activity.' : 'فشل في تحديث النشاط.'}`);
+                auth.toastError('Failed to update Activity.');
             }
         } catch (error) {    
             console.log(error);
             const errorMessages = error?.response?.data?.errors;
-            let errorMessageString = `${language === 'en' ? 'Error occurred' : 'حدث خطأ'}`;
+            let errorMessageString ='Error occurred';
             
             if (errorMessages) {
                 errorMessageString = Object.values(errorMessages).flat().join(' ');
             }
             
-            auth.toastError(`${language === 'en' ? 'Error' : 'خطأ'}`, errorMessageString);
+            auth.toastError('Error', errorMessageString);
         } finally {
             setIsLoading(false);
         }

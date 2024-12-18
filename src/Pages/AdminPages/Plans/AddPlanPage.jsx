@@ -102,7 +102,6 @@ const AddPlanPage = () => {
     const handleClick = (e) => {
         const isChecked = e.target.checked; // Checked status
         setAppActive(isChecked ? 1 : 0); // Set paymentActive as 1 (true) or 0 (false)
-        // setAppActive_ar(isChecked ? 1 : 0); 
     };
 
     const handleSubmitAdd = async (event) => {
@@ -574,7 +573,7 @@ const AddPlanPage = () => {
           <div className="flex items-center gap-x-4 w-full">
                   <span className="text-2xl text-mainColor font-medium">التطبيق</span>
                    <div>
-                       <CheckBox handleClick={handleClick} checked={appActive_ar}/>
+                       <CheckBox handleClick={handleClick} checked={appActive}/>
                    </div>
           </div>
 
@@ -776,9 +775,6 @@ const AddPlanPage = () => {
              
       </div>} 
             {/* div in arabic */}
-           
-
-
             
             {/* </div> */}
 

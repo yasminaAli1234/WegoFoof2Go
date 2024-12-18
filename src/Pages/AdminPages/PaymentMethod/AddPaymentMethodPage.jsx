@@ -15,9 +15,9 @@ const AddPaymentMethodPage = () => {
   const [description, setDescription] = useState("");
   const [language, setLanguage] = useState("en");
   // set arabic
-  const [thumbnails_ar, setThumbnails_ar] = useState("");
-  const [title_ar, setTitle_ar] = useState("");
-  const [description_ar, setDescription_ar] = useState("");
+  // const [thumbnails_ar, setThumbnails_ar] = useState("");
+  // const [title_ar, setTitle_ar] = useState("");
+  // const [description_ar, setDescription_ar] = useState("");
   
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -42,7 +42,7 @@ const AddPaymentMethodPage = () => {
     if (file) {
       setThumbnailFile(file); // Set file object for upload
       setThumbnails(file.name); // Display file name in the text input
-      setThumbnails_ar(file.name);
+      // setThumbnails_ar(file.name);
     }
   };
 
@@ -70,14 +70,14 @@ const AddPaymentMethodPage = () => {
     //   auth.toastError("يرجى تحميل صورة الصورة المصغرة.");
     //   return;
     // }
-    if (!title_ar) {
-      auth.toastError("يرجى إدخال العنوان.");
-      return;
-    }
-    if (!description_ar) {
-      auth.toastError("يرجى إدخال الوصف.");
-      return;
-    }
+    // if (!title_ar) {
+    //   auth.toastError("يرجى إدخال العنوان.");
+    //   return;
+    // }
+    // if (!description_ar) {
+    //   auth.toastError("يرجى إدخال الوصف.");
+    //   return;
+    // }
 
     setIsLoading(true);
     try {
@@ -88,17 +88,17 @@ const AddPaymentMethodPage = () => {
     formData.append("thumbnail", thumbnailFile);
 
     // Arabic translations
-    const translations = [
-      { key: "name", value: title_ar, locale: "ar" },
-      { key: "description", value: description_ar, locale: "ar" },
-      { key: "thumbnail", value: thumbnails, locale: "ar" },
-    ];
+  //   const translations = [
+  //     { key: "name", value: title_ar, locale: "ar" },
+  //     { key: "description", value: description_ar, locale: "ar" },
+  //     { key: "thumbnail", value: thumbnails, locale: "ar" },
+  //   ];
 
-    translations.forEach((translation, index) => {
-      Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
-          formData.append(`translations[${index}][${fieldKey}]`, fieldValue);
-      });
-  });
+  //   translations.forEach((translation, index) => {
+  //     Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
+  //         formData.append(`translations[${index}][${fieldKey}]`, fieldValue);
+  //     });
+  // });
   
 
       const response = await axios.post(
@@ -113,38 +113,21 @@ const AddPaymentMethodPage = () => {
       );
 
       if (response.status === 200) {
-        console.log("تم إضافة وسيلة الدفع بنجاح");
-        auth.toastSuccess(
-          `${
-            language === "en"
-              ? "Payment Method added successfully!"
-              : "تم إضافة وسيلة الدفع بنجاح!"
-          }`
-        );
+        auth.toastSuccess("Payment Method added successfully!");
         handleGoBack();
       } else {
         console.error(
-          "فشل في إضافة وسيلة الدفع:",
           response.status,
           response.statusText
         );
-        auth.toastError(
-          `${
-            language === "en"
-              ? "Failed to add Payment Method."
-              : "فشل في إضافة وسيلة الدفع."
-          }`
-        );
+        auth.toastError("Failed to add Payment Method.");
       }
     } catch (error) {
       console.error(
-        "خطأ أثناء إضافة وسيلة الدفع:",
-        error?.response?.data?.errors || "خطأ في الشبكة"
+        error?.response?.data?.errors
       );
       const errorMessages = error?.response?.data?.errors;
-      let errorMessageString = `${
-        language === "en" ? "Error occurred" : "حدث خطأ"
-      }`;
+      let errorMessageString = "Error occurred";
 
       if (errorMessages) {
         errorMessageString = Object.values(errorMessages).flat().join(" ");
@@ -155,15 +138,15 @@ const AddPaymentMethodPage = () => {
       setIsLoading(false);
     }
   };
-  const handleChangeLanguage = () => {
-    const newLanguage = language === "en" ? "ar" : "en";
-    setLanguage(newLanguage);
-  };
+  // const handleChangeLanguage = () => {
+  //   const newLanguage = language === "en" ? "ar" : "en";
+  //   setLanguage(newLanguage);
+  // };
   
 
   return (
     <div className="">
-      <Button
+      {/* <Button
         type="submit"
         Text={`Change to ${language === "en" ? "Arabic" : "English"}`}
         BgColor="bg-mainColor"
@@ -173,12 +156,13 @@ const AddPaymentMethodPage = () => {
         px="px-28"
         rounded="rounded-2xl"
         handleClick={() => handleChangeLanguage()}
-      />
+      /> */}
       <form
         onSubmit={handleSubmitAdd}
         className="w-full flex flex-col items-center justify-center gap-y-10 m-5"
       >
-        {language === "en" ? (
+        {/* {language === "en" ?
+         ( */}
           <div className="w-full flex flex-wrap items-center justify-start gap-10">
             <div className="lg:w-[30%] sm:w-full">
               <InputCustom
@@ -218,7 +202,8 @@ const AddPaymentMethodPage = () => {
               />
             </div>
           </div>
-        ) : (
+        {/* )
+         : (
           <div className="w-full flex flex-wrap items-center justify-start gap-10">
             <div className="lg:w-[30%] sm:w-full">
               <InputCustom
@@ -258,7 +243,7 @@ const AddPaymentMethodPage = () => {
               />
             </div>
           </div>
-        )}
+        )} */}
 
         <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
           <div className="flex items-center justify-center w-72">

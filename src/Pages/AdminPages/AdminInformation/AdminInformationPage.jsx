@@ -96,7 +96,16 @@ const AdminInformationPage = () => {
     }    
       
     if (!contacts) {
-        return <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No Contact Information data available</div>;
+        return (
+        <>
+         <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No Contact Information data available</div>
+         <div className='w-2/6 lg:w-1/6'>
+         <Link to={'add'}>
+                <ButtonAdd isWidth="true" BgColor ="mainColor" Color="white" iconColor="white"/>
+         </Link>
+         </div>
+         </>
+        );
     }
        return (
               <>

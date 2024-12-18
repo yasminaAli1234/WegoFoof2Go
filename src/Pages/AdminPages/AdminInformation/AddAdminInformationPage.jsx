@@ -11,22 +11,22 @@ const AddAdminInformationPage = () => {
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [whatsApp, setWhatsApp] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     // set arabic
-    const [email_ar, setEmail_ar] = useState('');
-    const [phone_ar, setPhone_ar] = useState('');
-    const [whatsApp_ar, setWhatsApp_ar] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
+    // const [email_ar, setEmail_ar] = useState('');
+    // const [phone_ar, setPhone_ar] = useState('');
+    // const [whatsApp_ar, setWhatsApp_ar] = useState('');
 
     const navigate = useNavigate();
 
      
-    const [language,setLanguage]= useState('ar')
+    // const [language,setLanguage]= useState('ar')
 
-        const handleChangeLanguage = () => {
-        const newLanguage = language === 'en' ? 'ar' : 'en'; 
-        setLanguage(newLanguage); 
-    };
+    //     const handleChangeLanguage = () => {
+    //     const newLanguage = language === 'en' ? 'ar' : 'en'; 
+    //     setLanguage(newLanguage); 
+    // };
     
     const handleGoBack = () => {
         navigate(-1, { replace: true });
@@ -47,19 +47,19 @@ const AddAdminInformationPage = () => {
             auth.toastError('Please Enter the whatsApp Number.');
             return;
         }
-        // set arabic
-        if (!email_ar) {
-            auth.toastError('يرجى إدخال البريد الإلكتروني.');
-            return;
-        }
-        if (!phone_ar) {
-            auth.toastError('يرجى إدخال رقم الهاتف.');
-            return;
-        }
-        if (!whatsApp_ar) {
-            auth.toastError('يرجى إدخال رقم الواتساب.');
-            return;
-        }
+        // // set arabic
+        // if (!email_ar) {
+        //     auth.toastError('يرجى إدخال البريد الإلكتروني.');
+        //     return;
+        // }
+        // if (!phone_ar) {
+        //     auth.toastError('يرجى إدخال رقم الهاتف.');
+        //     return;
+        // }
+        // if (!whatsApp_ar) {
+        //     auth.toastError('يرجى إدخال رقم الواتساب.');
+        //     return;
+        // }
 
         setIsLoading(true);
         try {
@@ -68,17 +68,17 @@ const AddAdminInformationPage = () => {
             formData.append('phone', phone);
             formData.append('watts_app', whatsApp); // Append the file
 
-            const translations = [
-                { key: 'email', value: email, locale: 'ar' },
-                { key: 'phone', value: phone, locale: 'ar' },
-                { key: 'watts_app', value: whatsApp, locale: 'ar' },
-            ];
+            // const translations = [
+            //     { key: 'email', value: email, locale: 'ar' },
+            //     { key: 'phone', value: phone, locale: 'ar' },
+            //     { key: 'watts_app', value: whatsApp, locale: 'ar' },
+            // ];
 
-            translations.forEach((translation, index) => {
-                Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
-                    formData.append(`translations[${index}][${fieldKey}]`, fieldValue);
-                });
-            });
+            // translations.forEach((translation, index) => {
+            //     Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
+            //         formData.append(`translations[${index}][${fieldKey}]`, fieldValue);
+            //     });
+            // });
 
             const response = await axios.post(
                 ' https://www.wegostores.com/admin/v1/contact_us/add',
@@ -94,23 +94,23 @@ const AddAdminInformationPage = () => {
          
                 if (response.status === 200) {
                     auth.toastSuccess(
-                        language === 'en'
-                            ? 'Contact Information added successfully!'
-                            : 'تم إضافة معلومات الاتصال بنجاح!'
+                        // language === 'en'?
+                         'Contact Information added successfully!'
+                            // : 'تم إضافة معلومات الاتصال بنجاح!'
                     );
                     handleGoBack();
                 } else {
                     console.error('Failed to add Contact Information:', response.status, response.statusText);
                     auth.toastError(
-                        language === 'en'
-                            ? 'Failed to add Contact Information.'
-                            : 'فشل في إضافة معلومات الاتصال.'
+                        // language === 'en'?
+                         'Failed to add Contact Information.'
+                            // : 'فشل في إضافة معلومات الاتصال.'
                     );
                 }
             } catch (error) {
                 console.error('Error adding Contact Information:', error?.response?.data?.errors || 'Network error');
                 const errorMessages = error?.response?.data?.errors;
-                let errorMessageString = language === 'en' ? 'Error occurred' : 'حدث خطأ';
+                let errorMessageString = 'Error occurred';
             
                 if (errorMessages) {
                     errorMessageString = Object.values(errorMessages).flat().join(' ');
@@ -126,7 +126,7 @@ const AddAdminInformationPage = () => {
     return (
 
  <div className="">
-           <Button 
+           {/* <Button 
         type="submit"
         Text={`Change to ${language === 'en' ? 'Arabic' : 'English'}`}
         BgColor="bg-mainColor"
@@ -137,9 +137,10 @@ const AddAdminInformationPage = () => {
         rounded="rounded-2xl"
          
         handleClick={() => handleChangeLanguage()}
-    />
+    /> */}
         <form onSubmit={handleSubmitAdd} className="w-full flex flex-col items-center justify-center gap-y-10 m-5">
-                {language==='en'?   <div className="w-full flex flex-wrap items-center justify-start gap-10">
+                {/* {language==='en'?  */}
+                  <div className="w-full flex flex-wrap items-center justify-start gap-10">
                       <div className="lg:w-[30%] sm:w-full">
                         <InputCustom
                                 type="email"
@@ -170,39 +171,40 @@ const AddAdminInformationPage = () => {
                                 width="w-full"
                             />
                       </div>
-                  </div>:
-                  <div className="w-full flex flex-wrap items-center justify-start gap-10">
-                      <div className="lg:w-[30%] sm:w-full">
-                        <InputCustom
-                                type="email"
-                                borderColor="mainColor"
-                                placeholder="البريد الالكتروني"
-                                value={email}
-                                onChange={(e) => setEmail_ar(e.target.value)}
-                                width="w-full"
-                            />
-                      </div>
-                      <div className="lg:w-[30%] sm:w-full">
-                        <InputCustom
-                                type="text"
-                                borderColor="mainColor"
-                                placeholder="رقم الهاتف"
-                                value={phone}
-                                onChange={(e) => setPhone_ar(e.target.value)}
-                                width="w-full"
-                            />
-                      </div>
-                      <div className="lg:w-[30%] sm:w-full">
-                        <InputCustom
-                                type="text"
-                                borderColor="mainColor"
-                                placeholder="رقم الواتساب"
-                                value={whatsApp}
-                                onChange={(e) => setWhatsApp_ar(e.target.value)}
-                                width="w-full"
-                            />
-                      </div>
-                  </div>}
+                  </div>
+                {/* //   :
+                //   <div className="w-full flex flex-wrap items-center justify-start gap-10">
+                //       <div className="lg:w-[30%] sm:w-full">
+                //         <InputCustom
+                //                 type="email"
+                //                 borderColor="mainColor"
+                //                 placeholder="البريد الالكتروني"
+                //                 value={email}
+                //                 onChange={(e) => setEmail_ar(e.target.value)}
+                //                 width="w-full"
+                //             />
+                //       </div>
+                //       <div className="lg:w-[30%] sm:w-full">
+                //         <InputCustom
+                //                 type="text"
+                //                 borderColor="mainColor"
+                //                 placeholder="رقم الهاتف"
+                //                 value={phone}
+                //                 onChange={(e) => setPhone_ar(e.target.value)}
+                //                 width="w-full"
+                //             />
+                //       </div>
+                //       <div className="lg:w-[30%] sm:w-full">
+                //         <InputCustom
+                //                 type="text"
+                //                 borderColor="mainColor"
+                //                 placeholder="رقم الواتساب"
+                //                 value={whatsApp}
+                //                 onChange={(e) => setWhatsApp_ar(e.target.value)}
+                //                 width="w-full"
+                //             />
+                //       </div>
+                //   </div>} */}
 
       
                   <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">

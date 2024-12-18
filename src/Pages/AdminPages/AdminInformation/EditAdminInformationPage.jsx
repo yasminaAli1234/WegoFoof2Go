@@ -15,9 +15,9 @@ const EditAdminInformationPage = () => {
     const [whatsApp, setWhatsApp] = useState('');
 
        // set arabic
-    const [email_ar, setEmail_ar] = useState('');
-    const [phone_ar, setPhone_ar] = useState('');
-    const [whatsApp_ar, setWhatsApp_ar] = useState('');
+    // const [email_ar, setEmail_ar] = useState('');
+    // const [phone_ar, setPhone_ar] = useState('');
+    // const [whatsApp_ar, setWhatsApp_ar] = useState('');
 
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
@@ -26,12 +26,12 @@ const EditAdminInformationPage = () => {
     const contactContent = useContext(ContactDataContext);
 
        
-    const [language,setLanguage]= useState('ar')
+    // const [language,setLanguage]= useState('ar')
 
-        const handleChangeLanguage = () => {
-        const newLanguage = language === 'en' ? 'ar' : 'en'; 
-        setLanguage(newLanguage); 
-    };
+    //     const handleChangeLanguage = () => {
+    //     const newLanguage = language === 'en' ? 'ar' : 'en'; 
+    //     setLanguage(newLanguage); 
+    // };
 
     useEffect(() => {
         if (contactContent) {
@@ -39,9 +39,9 @@ const EditAdminInformationPage = () => {
             setPhone(contactContent.phone|| '');
             setWhatsApp(contactContent.watts_app || '');
 
-            setEmail_ar(contactContent.email || '');
-            setPhone_ar(contactContent.phone|| '');
-            setWhatsApp_ar(contactContent.watts_app || '');
+            // setEmail_ar(contactContent.email || '');
+            // setPhone_ar(contactContent.phone|| '');
+            // setWhatsApp_ar(contactContent.watts_app || '');
         }
 
     }, [contactContent]);
@@ -67,18 +67,18 @@ const EditAdminInformationPage = () => {
         }
 
            // set arabic
-           if (!email_ar) {
-            auth.toastError('يرجى إدخال البريد الإلكتروني.');
-            return;
-        }
-        if (!phone_ar) {
-            auth.toastError('يرجى إدخال رقم الهاتف.');
-            return;
-        }
-        if (!whatsApp_ar) {
-            auth.toastError('يرجى إدخال رقم الواتساب.');
-            return;
-        }
+        //    if (!email_ar) {
+        //     auth.toastError('يرجى إدخال البريد الإلكتروني.');
+        //     return;
+        // }
+        // if (!phone_ar) {
+        //     auth.toastError('يرجى إدخال رقم الهاتف.');
+        //     return;
+        // }
+        // if (!whatsApp_ar) {
+        //     auth.toastError('يرجى إدخال رقم الواتساب.');
+        //     return;
+        // }
 
         setIsLoading(true);
         try {
@@ -87,17 +87,17 @@ const EditAdminInformationPage = () => {
             formData.append('phone', phone);
             formData.append('watts_app', whatsApp); // Append the file
 
-            const translations = [
-                { key: 'email', value: email_ar, locale: 'ar' },
-                { key: 'phone', value: phone_ar, locale: 'ar' },
-                { key: 'watts_app', value: whatsApp_ar, locale: 'ar' },
-            ];
+            // const translations = [
+            //     { key: 'email', value: email_ar, locale: 'ar' },
+            //     { key: 'phone', value: phone_ar, locale: 'ar' },
+            //     { key: 'watts_app', value: whatsApp_ar, locale: 'ar' },
+            // ];
 
-            translations.forEach((translation, index) => {
-                Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
-                    formData.append(`translations[${index}][${fieldKey}]`, fieldValue);
-                });
-            });
+            // translations.forEach((translation, index) => {
+            //     Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
+            //         formData.append(`translations[${index}][${fieldKey}]`, fieldValue);
+            //     });
+            // });
 
             const response = await axios.post(
                 ` https://www.wegostores.com/admin/v1/contact_us/update/${contactId}`,
@@ -111,16 +111,16 @@ const EditAdminInformationPage = () => {
             );
 
             if (response.status === 200) {
-                auth.toastSuccess(`${language === 'en' ? 'Contact Information updated successfully!' : 'تم تحديث معلومات الاتصال بنجاح!'}`);
+                auth.toastSuccess('Contact Information updated successfully!');
                 handleGoBack();
             } else {
                 console.error('Failed to update Contact Information:', response.status, response.statusText);
-                auth.toastError(`${language === 'en' ? 'Failed to update Contact Information.' : 'فشل في تحديث معلومات الاتصال.'}`);
+                auth.toastError('Failed to update Contact Information.');
             }
             } catch (error) {
                 console.error('Error update Contact Information:', error?.response?.data?.errors || 'Network error');
                 const errorMessages = error?.response?.data?.errors;
-                let errorMessageString = `${language === 'en' ? 'Error occurred' : 'حدث خطأ'}`;
+                let errorMessageString = 'Error occurred';
             
                 if (errorMessages) {
                     errorMessageString = Object.values(errorMessages).flat().join(' ');
@@ -135,7 +135,7 @@ const EditAdminInformationPage = () => {
 
     return (
        <div className="">
-                  <Button 
+                  {/* <Button 
         type="submit"
         Text={`Change to ${language === 'en' ? 'Arabic' : 'English'}`}
         BgColor="bg-mainColor"
@@ -146,10 +146,11 @@ const EditAdminInformationPage = () => {
         rounded="rounded-2xl"
          
         handleClick={() => handleChangeLanguage()}
-    />
+    /> */}
 
          <form onSubmit={(event) => handleSubmitEdit(contactContent.id, event)} className="w-full flex flex-col items-center justify-center gap-y-10 m-5">
-               {language==='en' ?   <div className="w-full flex flex-wrap items-center justify-start gap-10">
+               {/* {language==='en' ? */}
+                  <div className="w-full flex flex-wrap items-center justify-start gap-10">
                       <div className="lg:w-[30%] sm:w-full">
                         <InputCustom
                                 type="email"
@@ -180,7 +181,8 @@ const EditAdminInformationPage = () => {
                                 width="w-full"
                             />
                       </div>
-                  </div>:
+                  </div>
+                  {/* :
                    <div className="w-full flex flex-wrap items-center justify-start gap-10">
                    <div className="lg:w-[30%] sm:w-full">
                      <InputCustom
@@ -212,7 +214,7 @@ const EditAdminInformationPage = () => {
                              width="w-full"
                          />
                    </div>
-               </div>}
+               </div>} */}
 
                  
       

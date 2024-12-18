@@ -50,38 +50,38 @@ const AddPromoCodePage = () => {
     const [amount,setAmount]=useState('')
 
         // set arabic 
-        const [code_ar , setCode_ar]=useState('')
-        const [title_ar , setTitle_ar]=useState('')
-        const [startDate_ar , setStartDate_ar]=useState('')
-        const [endDate_ar,setEndDate_ar]=useState('')
-        const [limit_ar,setLimit_ar]=useState('')
+        // const [code_ar , setCode_ar]=useState('')
+        // const [title_ar , setTitle_ar]=useState('')
+        // const [startDate_ar , setStartDate_ar]=useState('')
+        // const [endDate_ar,setEndDate_ar]=useState('')
+        // const [limit_ar,setLimit_ar]=useState('')
 
-        const [valueMonthly_ar,setValueMonthly_ar]=useState('')
-        const [valueQuarterly_ar,setValueQuarterly_ar]=useState('')
-        const [valueSemiAnnual_ar,setValueSemiAnnual_ar]=useState('')
-        const [valueYearly_ar,setValueYearly_ar]=useState('')
+        // const [valueMonthly_ar,setValueMonthly_ar]=useState('')
+        // const [valueQuarterly_ar,setValueQuarterly_ar]=useState('')
+        // const [valueSemiAnnual_ar,setValueSemiAnnual_ar]=useState('')
+        // const [valueYearly_ar,setValueYearly_ar]=useState('')
     
-        const [valueType_ar, setValueType_ar] = useState([{ name: 'percentage' }, { name: 'value' }]);
-        const [selectValueType_ar, setSelectValueType_ar] = useState('اختر نوع القيمة');
-        const [selectValueTypeName_ar, setSelectValueTypeName_ar] = useState(null);
-        const [openSelectValueType_ar, setOpenSelectValueType_ar] = useState(false);
+        // const [valueType_ar, setValueType_ar] = useState([{ name: 'percentage' }, { name: 'value' }]);
+        // const [selectValueType_ar, setSelectValueType_ar] = useState('اختر نوع القيمة');
+        // const [selectValueTypeName_ar, setSelectValueTypeName_ar] = useState(null);
+        // const [openSelectValueType_ar, setOpenSelectValueType_ar] = useState(false);
     
-        const [usageTypeData_ar, setUsageTypeData_ar] = useState([{ name: 'First Usage' }, { name: 'Renew' }]);
-        const [selectUsageType_ar, setSelectUsageType_ar] = useState('اختيار نوع الاستخدام');
-        const [selectUsageTypeName_ar, setSelectUsageTypeName_ar] = useState(null);
-        const [openSelectUsageType_ar, setOpenSelectUsageType_ar] = useState(false);
+        // const [usageTypeData_ar, setUsageTypeData_ar] = useState([{ name: 'First Usage' }, { name: 'Renew' }]);
+        // const [selectUsageType_ar, setSelectUsageType_ar] = useState('اختيار نوع الاستخدام');
+        // const [selectUsageTypeName_ar, setSelectUsageTypeName_ar] = useState(null);
+        // const [openSelectUsageType_ar, setOpenSelectUsageType_ar] = useState(false);
     
-        const [statusData_ar, setStatusData_ar] =  useState([{ name: 'UnLimited' }, { name: 'Fixed' }]);
-        const [selectStatus_ar, setSelectStatus_ar] = useState('اختيار الحالة');
-        const [selectStatusName_ar, setSelectStatusName_ar] = useState(null);
-        const [openSelectStatus_ar, setOpenSelectStatus_ar] = useState(false);
+        // const [statusData_ar, setStatusData_ar] =  useState([{ name: 'UnLimited' }, { name: 'Fixed' }]);
+        // const [selectStatus_ar, setSelectStatus_ar] = useState('اختيار الحالة');
+        // const [selectStatusName_ar, setSelectStatusName_ar] = useState(null);
+        // const [openSelectStatus_ar, setOpenSelectStatus_ar] = useState(false);
     
-        const [usageNumber_ar,setUsageNumber_ar]=useState('')
+        // const [usageNumber_ar,setUsageNumber_ar]=useState('')
     
-        const [typeData_ar, setTypeData_ar] = useState([{ name: 'Plan' }, { name: 'Extra Product' }, { name: 'Domain' }]);
-        const [selectType_ar, setSelectType_ar] = useState('اختيار النوع');
-        const [selectTypeName_ar, setSelectTypeName_ar] = useState(null);
-        const [openSelectType_ar, setOpenSelectType_ar] = useState(false);
+        // const [typeData_ar, setTypeData_ar] = useState([{ name: 'Plan' }, { name: 'Extra Product' }, { name: 'Domain' }]);
+        // const [selectType_ar, setSelectType_ar] = useState('اختيار النوع');
+        // const [selectTypeName_ar, setSelectTypeName_ar] = useState(null);
+        // const [openSelectType_ar, setOpenSelectType_ar] = useState(false);
     
 
     const dropdownValueTypeRef = useRef();
@@ -95,10 +95,10 @@ const AddPromoCodePage = () => {
         setOpenSelectStatus(false)
         setOpenSelectType(false)
         // --------------------
-        setOpenSelectValueType_ar(!openSelectValueType_ar);
-        setOpenSelectUsageType_ar(false)
-        setOpenSelectStatus_ar(false)
-        setOpenSelectType_ar(false)
+        // setOpenSelectValueType_ar(!openSelectValueType_ar);
+        // setOpenSelectUsageType_ar(false)
+        // setOpenSelectStatus_ar(false)
+        // setOpenSelectType_ar(false)
       };
     const handleOpenUsageType = () => {
         setOpenSelectValueType(false);
@@ -106,10 +106,10 @@ const AddPromoCodePage = () => {
         setOpenSelectStatus(false)
         setOpenSelectType(false)
         // -------------------------
-        setOpenSelectValueType_ar(false);
-        setOpenSelectUsageType_ar(!openSelectUsageType_ar);
-        setOpenSelectStatus_ar(false)
-        setOpenSelectType_ar(false)
+        // setOpenSelectValueType_ar(false);
+        // setOpenSelectUsageType_ar(!openSelectUsageType_ar);
+        // setOpenSelectStatus_ar(false)
+        // setOpenSelectType_ar(false)
     };
     const handleOpenStatus = () => {
         setOpenSelectValueType(false);
@@ -117,10 +117,10 @@ const AddPromoCodePage = () => {
         setOpenSelectStatus(!openSelectStatus)
         setOpenSelectType(false)
         // --------------------
-        setOpenSelectValueType_ar(false);
-        setOpenSelectUsageType_ar(false);
-        setOpenSelectStatus_ar(!openSelectStatus)
-        setOpenSelectType_ar(false)
+        // setOpenSelectValueType_ar(false);
+        // setOpenSelectUsageType_ar(false);
+        // setOpenSelectStatus_ar(!openSelectStatus)
+        // setOpenSelectType_ar(false)
     };
     const handleOpenType = () => {
         setOpenSelectValueType(false);
@@ -128,10 +128,10 @@ const AddPromoCodePage = () => {
         setOpenSelectStatus(false)
         setOpenSelectType(!openSelectType)
         // ---------------------
-        setOpenSelectValueType_ar(false);
-        setOpenSelectUsageType_ar(false);
-        setOpenSelectStatus_ar(false)
-        setOpenSelectType_ar(!openSelectType_ar)
+        // setOpenSelectValueType_ar(false);
+        // setOpenSelectUsageType_ar(false);
+        // setOpenSelectStatus_ar(false)
+        // setOpenSelectType_ar(!openSelectType_ar)
     };
 
     const handleSelectValueType = (e) => {
@@ -145,10 +145,10 @@ const AddPromoCodePage = () => {
 
         // -----------------------
 
-        setSelectValueType_ar(selectedOptionName);
-        setSelectValueTypeName_ar(selectedOptionValue)
-        setOpenSelectValueType_ar(false);
-        console.log('Selected ValueType:', selectedOptionName);
+        // setSelectValueType_ar(selectedOptionName);
+        // setSelectValueTypeName_ar(selectedOptionValue)
+        // setOpenSelectValueType_ar(false);
+        // console.log('Selected ValueType:', selectedOptionName);
       };
       const handleSelectUsageType = (e) => {
         const inputElement = e.currentTarget.querySelector('.inputVal');
@@ -158,10 +158,10 @@ const AddPromoCodePage = () => {
         setSelectUsageTypeName(selectedOptionValue)
         setOpenSelectUsageType(false);
         // -------------------
-        setSelectUsageType_ar(selectedOptionName);
-        setSelectUsageTypeName_ar(selectedOptionValue)
-        setOpenSelectUsageType_ar(false);
-        console.log('Selected UsageType:', selectedOptionName);
+        // setSelectUsageType_ar(selectedOptionName);
+        // setSelectUsageTypeName_ar(selectedOptionValue)
+        // setOpenSelectUsageType_ar(false);
+        // console.log('Selected UsageType:', selectedOptionName);
       };
       const handleSelectStatus = (e) => {
         const inputElement = e.currentTarget.querySelector('.inputVal');
@@ -171,10 +171,10 @@ const AddPromoCodePage = () => {
         setSelectStatusName(selectedOptionValue)
         setOpenSelectStatus(false);
         // ---------------
-        setSelectStatus_ar(selectedOptionName);
-        setSelectStatusName_ar(selectedOptionValue)
-        setOpenSelectStatus_ar(false);
-        console.log('Selected Status:', selectedOptionName);
+        // setSelectStatus_ar(selectedOptionName);
+        // setSelectStatusName_ar(selectedOptionValue)
+        // setOpenSelectStatus_ar(false);
+        // console.log('Selected Status:', selectedOptionName);
       };
       const handleSelectType = (e) => {
         const inputElement = e.currentTarget.querySelector('.inputVal');
@@ -186,18 +186,18 @@ const AddPromoCodePage = () => {
             setSelectTypeName(selectedOptionValue)
             setOpenSelectType(false);
 
-            setSelectType_ar(selectedOptionName);
-            setSelectTypeName_ar(selectedOptionValue)
-            setOpenSelectType_ar(false);
+            // setSelectType_ar(selectedOptionName);
+            // setSelectTypeName_ar(selectedOptionValue)
+            // setOpenSelectType_ar(false);
         }
         else{
             setSelectType(selectedOptionName);
             setSelectTypeName(selectedOptionValue)
             setOpenSelectType(false);
 
-            setSelectType_ar(selectedOptionName);
-            setSelectTypeName_ar(selectedOptionValue)
-            setOpenSelectType_ar(false);
+            // setSelectType_ar(selectedOptionName);
+            // setSelectTypeName_ar(selectedOptionValue)
+            // setOpenSelectType_ar(false);
         }
 
 
@@ -231,10 +231,10 @@ const AddPromoCodePage = () => {
             setOpenSelectStatus(false)
             setOpenSelectType(false);
             // ----------------
-            setOpenSelectValueType_ar(false)
-            setOpenSelectUsageType_ar(false)
-            setOpenSelectStatus_ar(false)
-            setOpenSelectType_ar(false);
+            // setOpenSelectValueType_ar(false)
+            // setOpenSelectUsageType_ar(false)
+            // setOpenSelectStatus_ar(false)
+            // setOpenSelectType_ar(false);
         }
       };
  
@@ -287,37 +287,37 @@ const AddPromoCodePage = () => {
         // -----------------------------
 
 
-        if (!code_ar) {
-            auth.toastError('الرجاء إدخال الكود.');
-            return;
-        } 
-        if (!title_ar) {
-            auth.toastError('الرجاء إدخال العنوان.');
-            return;
-        } 
-        if (!startDate_ar) {
-            auth.toastError('الرجاء إدخال تاريخ البداية الصحيح.');
-            return;
-        }
-        if (!endDate_ar) {
-            auth.toastError('الرجاء إدخال تاريخ النهاية الصحيح.');
-            return;
-        }
-        if (!selectValueTypeName_ar) {
-            auth.toastError('الرجاء اختيار نوع القيمة.');
-        }
-        if (!selectUsageTypeName_ar) {
-            auth.toastError('الرجاء إدخال نوع الاستخدام.');
-            return;
-        }
-        if (!selectStatusName_ar) {
-            auth.toastError('الرجاء اختيار الحالة.');
-            return;
-        }
-        if (!selectTypeName_ar) {
-            auth.toastError('الرجاء اختيار النوع.');
-            return;
-        }
+        // if (!code_ar) {
+        //     auth.toastError('الرجاء إدخال الكود.');
+        //     return;
+        // } 
+        // if (!title_ar) {
+        //     auth.toastError('الرجاء إدخال العنوان.');
+        //     return;
+        // } 
+        // if (!startDate_ar) {
+        //     auth.toastError('الرجاء إدخال تاريخ البداية الصحيح.');
+        //     return;
+        // }
+        // if (!endDate_ar) {
+        //     auth.toastError('الرجاء إدخال تاريخ النهاية الصحيح.');
+        //     return;
+        // }
+        // if (!selectValueTypeName_ar) {
+        //     auth.toastError('الرجاء اختيار نوع القيمة.');
+        // }
+        // if (!selectUsageTypeName_ar) {
+        //     auth.toastError('الرجاء إدخال نوع الاستخدام.');
+        //     return;
+        // }
+        // if (!selectStatusName_ar) {
+        //     auth.toastError('الرجاء اختيار الحالة.');
+        //     return;
+        // }
+        // if (!selectTypeName_ar) {
+        //     auth.toastError('الرجاء اختيار النوع.');
+        //     return;
+        // }
 
     // Prepare FormData
     const formData = new FormData();
@@ -329,12 +329,12 @@ const AddPromoCodePage = () => {
 
     // Calculation Method
     const calculationMethod = selectValueType === 'percentage' ? 'percentage' : 'amount';
-    const calculationMethod_ar = selectValueType_ar === 'percentage' ? 'percentage' : 'amount';
+    // const calculationMethod_ar = selectValueType_ar === 'percentage' ? 'percentage' : 'amount';
     formData.append('calculation_method', calculationMethod);
 
     // User Type
     const userType = selectUsageType === 'First Usage' ? 'first_usage' : 'renew';
-    const userType_ar = selectUsageType_ar === 'First Usage' ? 'First Usage' : 'renew';
+    // const userType_ar = selectUsageType_ar === 'First Usage' ? 'First Usage' : 'renew';
     formData.append('user_type', userType);
 
     // Values
@@ -362,41 +362,41 @@ const AddPromoCodePage = () => {
     }
 
     // Arabic Translations
-    const translations = [
-        { key: 'code', value: code_ar, locale: 'ar' },
-        { key: 'title', value: title_ar, locale: 'ar' },
-        { key: 'start_date', value: startDate_ar, locale: 'ar' },
-        { key: 'end_date', value: endDate_ar, locale: 'ar' },
-        { key: 'user_usage', value: limit_ar, locale: 'ar' },
-        { key: 'calculation_method', value: calculationMethod_ar, locale: 'ar' },
-        { key: 'user_type', value: userType_ar, locale: 'ar' },
-        { key: 'monthly', value: valueMonthly_ar, locale: 'ar' },
-        { key: 'quarterly', value: valueQuarterly_ar, locale: 'ar' },
-        { key: 'semi_annual', value: valueSemiAnnual_ar, locale: 'ar' },
-        { key: 'yearly', value: valueYearly_ar, locale: 'ar' }
-    ];
+    // const translations = [
+    //     { key: 'code', value: code_ar, locale: 'ar' },
+    //     { key: 'title', value: title_ar, locale: 'ar' },
+    //     { key: 'start_date', value: startDate_ar, locale: 'ar' },
+    //     { key: 'end_date', value: endDate_ar, locale: 'ar' },
+    //     { key: 'user_usage', value: limit_ar, locale: 'ar' },
+    //     { key: 'calculation_method', value: calculationMethod_ar, locale: 'ar' },
+    //     { key: 'user_type', value: userType_ar, locale: 'ar' },
+    //     { key: 'monthly', value: valueMonthly_ar, locale: 'ar' },
+    //     { key: 'quarterly', value: valueQuarterly_ar, locale: 'ar' },
+    //     { key: 'semi_annual', value: valueSemiAnnual_ar, locale: 'ar' },
+    //     { key: 'yearly', value: valueYearly_ar, locale: 'ar' }
+    // ];
 
-    if (selectStatus_ar === 'UnLimited') {
-        translations.push({ key: 'promo_status', value: 'unlimited', locale: 'ar' });
-    } else if (selectStatus_ar === 'Fixed') {
-        translations.push({ key: 'promo_status', value: 'fixed', locale: 'ar' });
-        translations.push({ key: 'usage', value: usageNumber_ar, locale: 'ar' });
-    }
+    // if (selectStatus_ar === 'UnLimited') {
+    //     translations.push({ key: 'promo_status', value: 'unlimited', locale: 'ar' });
+    // } else if (selectStatus_ar === 'Fixed') {
+    //     translations.push({ key: 'promo_status', value: 'fixed', locale: 'ar' });
+    //     translations.push({ key: 'usage', value: usageNumber_ar, locale: 'ar' });
+    // }
 
-    if (selectType_ar === 'Plan') {
-        translations.push({ key: 'promo_type', value: 'plan', locale: 'ar' });
-    } else if (selectType_ar === 'Extra Product') {
-        translations.push({ key: 'promo_type', value: 'extra', locale: 'ar' });
-    } else if (selectType_ar === 'Domain') {
-        translations.push({ key: 'promo_type', value: 'domain', locale: 'ar' });
-        translations.push({ key: 'amount', value: amount, locale: 'ar' });
-    }
+    // if (selectType_ar === 'Plan') {
+    //     translations.push({ key: 'promo_type', value: 'plan', locale: 'ar' });
+    // } else if (selectType_ar === 'Extra Product') {
+    //     translations.push({ key: 'promo_type', value: 'extra', locale: 'ar' });
+    // } else if (selectType_ar === 'Domain') {
+    //     translations.push({ key: 'promo_type', value: 'domain', locale: 'ar' });
+    //     translations.push({ key: 'amount', value: amount, locale: 'ar' });
+    // }
 
-    translations.forEach((translation, index) => {
-        Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
-            formData.append(`translations[${index}][${fieldKey}]`, fieldValue);
-        });
-    });
+    // translations.forEach((translation, index) => {
+    //     Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
+    //         formData.append(`translations[${index}][${fieldKey}]`, fieldValue);
+    //     });
+    // });
            
     // Submit the form
     setIsLoading(true)
@@ -409,36 +409,36 @@ const AddPromoCodePage = () => {
             });
  
             if (response.status === 200) {
-                auth.toastSuccess(language === 'ar' ? 'تم إضافة الكود الترويجي بنجاح!' : 'PromoCode added successfully!');
+                auth.toastSuccess('PromoCode added successfully!');
                 handleGoBack();
             } else {
-                auth.toastError(language === 'ar' ? 'فشل في إضافة الكود الترويجي.' : 'Failed to add PromoCode.');
+                auth.toastError('Failed to add PromoCode.');
             } 
         }catch (error) {    
                 console.log(error);
                 if (error.response?.data?.faild === 'You have exceeded the maximum use promo code') {
-                    auth.toastError(language === 'ar' ? 'لقد تجاوزت الحد الأقصى لاستخدام الكود الترويجي' : 'You have exceeded the maximum use promo code');
+                    auth.toastError('You have exceeded the maximum use promo code');
                 } else {
                     const errorMessages = error?.response?.data?.errors;
-                    let errorMessageString = language === 'ar' ? 'حدث خطأ' : 'Error occurred';
+                    let errorMessageString = 'Error occurred';
                     if (errorMessages) {
                         errorMessageString = Object.values(errorMessages).flat().join(' ');
                     }
-                    auth.toastError(language === 'ar' ? 'خطأ' : 'Error', errorMessageString);
+                    auth.toastError('Error', errorMessageString);
                 }
             } finally {
                 setIsLoading(false);
             }
     };
-    const handleChangeLanguage = () => {
-        const newLanguage = language === 'en' ? 'ar' : 'en'; 
-        setLanguage(newLanguage); 
-    };
+    // const handleChangeLanguage = () => {
+    //     const newLanguage = language === 'en' ? 'ar' : 'en'; 
+    //     setLanguage(newLanguage); 
+    // };
     
  
        return (
         <>
-               <Button 
+               {/* <Button 
     type="submit"
     Text={`Change to ${language === 'en' ? 'Arabic' : 'English'}`}
     BgColor="bg-mainColor"
@@ -449,9 +449,10 @@ const AddPromoCodePage = () => {
     rounded="rounded-2xl"
      
     handleClick={() => handleChangeLanguage()}
-/>
+/> */}
          <form onSubmit={handleSubmitAdd} className="w-full flex flex-col items-center justify-center gap-y-10 m-5">
-                {language==='en' ?   <div className="w-full flex flex-wrap items-center justify-start gap-10">
+                {/* {language==='en' ? */}
+                   <div className="w-full flex flex-wrap items-center justify-start gap-10">
                       <div className="lg:w-[30%] sm:w-full">
                           <InputCustom
                               type="text"
@@ -631,7 +632,8 @@ const AddPromoCodePage = () => {
                             />
                             </div>
                         )}
-                  </div>:
+                  </div>
+                  {/* :
                    <div className="w-full flex flex-wrap items-center justify-start gap-10">
                    <div className="lg:w-[30%] sm:w-full">
                        <InputCustom
@@ -812,7 +814,7 @@ const AddPromoCodePage = () => {
                          />
                          </div>
                      )}
-               </div>}
+               </div>} */}
 
                  
       

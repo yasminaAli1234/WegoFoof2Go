@@ -50,38 +50,38 @@ const EditPromoCodePage =()=>{
     const [openSelectType, setOpenSelectType] = useState(false);
 
         // set arabic 
-        const [code_ar , setCode_ar]=useState('')
-        const [title_ar , setTitle_ar]=useState('')
-        const [startDate_ar , setStartDate_ar]=useState('')
-        const [endDate_ar,setEndDate_ar]=useState('')
-        const [limit_ar,setLimit_ar]=useState('')
+        // const [code_ar , setCode_ar]=useState('')
+        // const [title_ar , setTitle_ar]=useState('')
+        // const [startDate_ar , setStartDate_ar]=useState('')
+        // const [endDate_ar,setEndDate_ar]=useState('')
+        // const [limit_ar,setLimit_ar]=useState('')
 
-        const [valueMonthly_ar,setValueMonthly_ar]=useState('')
-        const [valueQuarterly_ar,setValueQuarterly_ar]=useState('')
-        const [valueSemiAnnual_ar,setValueSemiAnnual_ar]=useState('')
-        const [valueYearly_ar,setValueYearly_ar]=useState('')
+        // const [valueMonthly_ar,setValueMonthly_ar]=useState('')
+        // const [valueQuarterly_ar,setValueQuarterly_ar]=useState('')
+        // const [valueSemiAnnual_ar,setValueSemiAnnual_ar]=useState('')
+        // const [valueYearly_ar,setValueYearly_ar]=useState('')
     
-        // const [valueType_ar, setValueType_ar] = useState([{ name: 'نسبة مئوية' }, { name: 'قيمة' }]);
-        const [selectValueType_ar, setSelectValueType_ar] = useState('اختر نوع القيمة');
-        const [selectValueTypeName_ar, setSelectValueTypeName_ar] = useState(null);
-        const [openSelectValueType_ar, setOpenSelectValueType_ar] = useState(false);
-    
-        
-        const [selectUsageType_ar, setSelectUsageType_ar] = useState('اختيار نوع الاستخدام');
-        const [selectUsageTypeName_ar, setSelectUsageTypeName_ar] = useState(null);
-        const [openSelectUsageType_ar, setOpenSelectUsageType_ar] = useState(false);
+        // // const [valueType_ar, setValueType_ar] = useState([{ name: 'نسبة مئوية' }, { name: 'قيمة' }]);
+        // const [selectValueType_ar, setSelectValueType_ar] = useState('اختر نوع القيمة');
+        // const [selectValueTypeName_ar, setSelectValueTypeName_ar] = useState(null);
+        // const [openSelectValueType_ar, setOpenSelectValueType_ar] = useState(false);
     
         
-        const [selectStatus_ar, setSelectStatus_ar] = useState('اختيار الحالة');
-        const [selectStatusName_ar, setSelectStatusName_ar] = useState(null);
-        const [openSelectStatus_ar, setOpenSelectStatus_ar] = useState(false);
+        // const [selectUsageType_ar, setSelectUsageType_ar] = useState('اختيار نوع الاستخدام');
+        // const [selectUsageTypeName_ar, setSelectUsageTypeName_ar] = useState(null);
+        // const [openSelectUsageType_ar, setOpenSelectUsageType_ar] = useState(false);
     
-        const [usageNumber_ar,setUsageNumber_ar]=useState('')
+        
+        // const [selectStatus_ar, setSelectStatus_ar] = useState('اختيار الحالة');
+        // const [selectStatusName_ar, setSelectStatusName_ar] = useState(null);
+        // const [openSelectStatus_ar, setOpenSelectStatus_ar] = useState(false);
+    
+        // const [usageNumber_ar,setUsageNumber_ar]=useState('')
     
        
-        const [selectType_ar, setSelectType_ar] = useState('اختيار النوع');
-        const [selectTypeName_ar, setSelectTypeName_ar] = useState(null);
-        const [openSelectType_ar, setOpenSelectType_ar] = useState(false);
+        // const [selectType_ar, setSelectType_ar] = useState('اختيار النوع');
+        // const [selectTypeName_ar, setSelectTypeName_ar] = useState(null);
+        // const [openSelectType_ar, setOpenSelectType_ar] = useState(false);
     
 
     const [amount,setAmount]=useState('')
@@ -176,90 +176,90 @@ const EditPromoCodePage =()=>{
         }
     },[promoCodeEdit])
 
-    useEffect(()=>{
-        if (promoCodeEdit_ar) {
+    // useEffect(()=>{
+    //     if (promoCodeEdit_ar) {
 
-            setCode_ar(promoCodeEdit_ar.code)
-            setTitle_ar(promoCodeEdit_ar.title)
-            setStartDate_ar(promoCodeEdit_ar.start_date)
-            setEndDate_ar(promoCodeEdit_ar.end_date)
-            setLimit_ar(promoCodeEdit_ar.user_usage)
+    //         setCode_ar(promoCodeEdit_ar.code)
+    //         setTitle_ar(promoCodeEdit_ar.title)
+    //         setStartDate_ar(promoCodeEdit_ar.start_date)
+    //         setEndDate_ar(promoCodeEdit_ar.end_date)
+    //         setLimit_ar(promoCodeEdit_ar.user_usage)
 
 
-            if (promoCodeEdit_ar.user_type === 'renueve') {
-                    setSelectUsageType_ar("Renew");
-                    setSelectUsageTypeName_ar("Renew");
+    //         if (promoCodeEdit_ar.user_type === 'renueve') {
+    //                 setSelectUsageType_ar("Renew");
+    //                 setSelectUsageTypeName_ar("Renew");
                  
 
 
-            } else if (promoCodeEdit_ar.user_type === 'first_usage') {
-                setSelectUsageType_ar("First Usage");
-                setSelectUsageTypeName_ar("First Usage");
-            } 
-             else {
-                    setSelectUsageType_ar('اختار نوع الاستخدام');
-                    setSelectUsageTypeName_ar(null);
+    //         } else if (promoCodeEdit_ar.user_type === 'first_usage') {
+    //             setSelectUsageType_ar("First Usage");
+    //             setSelectUsageTypeName_ar("First Usage");
+    //         } 
+    //          else {
+    //                 setSelectUsageType_ar('اختار نوع الاستخدام');
+    //                 setSelectUsageTypeName_ar(null);
 
-            }
+    //         }
 
-        if (promoCodeEdit_ar.calculation_method === "percentage"  ) {
-            setSelectValueType_ar("Percentage");
-            setSelectValueTypeName_ar("Percentage");
+    //     if (promoCodeEdit_ar.calculation_method === "percentage"  ) {
+    //         setSelectValueType_ar("Percentage");
+    //         setSelectValueTypeName_ar("Percentage");
            
 
-        } else if (promoCodeEdit_ar.calculation_method === 'amount') {
-            setSelectValueType_ar("Value");
-            setSelectValueTypeName_ar("Value");
+    //     } else if (promoCodeEdit_ar.calculation_method === 'amount') {
+    //         setSelectValueType_ar("Value");
+    //         setSelectValueTypeName_ar("Value");
         
-        } 
-         else {
-            setSelectValueType_ar('اختار نوع القيمة');
-            setSelectValueTypeName_ar(null);
+    //     } 
+    //      else {
+    //         setSelectValueType_ar('اختار نوع القيمة');
+    //         setSelectValueTypeName_ar(null);
          
-        }
+    //     }
 
-        setValueMonthly_ar(promoCodeEdit_ar.monthly)
-        setValueQuarterly_ar(promoCodeEdit_ar.quarterly)
-        setValueSemiAnnual_ar(promoCodeEdit_ar["semi_annual"])
-        setValueYearly_ar(promoCodeEdit_ar.yearly)
+    //     setValueMonthly_ar(promoCodeEdit_ar.monthly)
+    //     setValueQuarterly_ar(promoCodeEdit_ar.quarterly)
+    //     setValueSemiAnnual_ar(promoCodeEdit_ar["semi_annual"])
+    //     setValueYearly_ar(promoCodeEdit_ar.yearly)
 
-        if (promoCodeEdit_ar.promo_status === "fixed") {
-            setSelectStatus_ar("Fixed");
-            setSelectStatusName_ar("Fixed");
-            setUsageNumber_ar(promoCodeEdit_ar.usage)
+    //     if (promoCodeEdit_ar.promo_status === "fixed") {
+    //         setSelectStatus_ar("Fixed");
+    //         setSelectStatusName_ar("Fixed");
+    //         setUsageNumber_ar(promoCodeEdit_ar.usage)
 
-        } else if (promoCodeEdit_ar.promo_status === 'unlimited') {
-            setSelectStatus_ar("UnLimited");
-            setSelectStatusName_ar("UnLimited");
+    //     } else if (promoCodeEdit_ar.promo_status === 'unlimited') {
+    //         setSelectStatus_ar("UnLimited");
+    //         setSelectStatusName_ar("UnLimited");
           
-        } 
-         else {
-            setSelectStatus_ar('اختار الحالة');
-            setSelectStatusName_ar(null);
-        }
+    //     } 
+    //      else {
+    //         setSelectStatus_ar('اختار الحالة');
+    //         setSelectStatusName_ar(null);
+    //     }
 
-        if (promoCodeEdit_ar.promo_type === "plan") {
-            setSelectType_ar("Plan");
-            setSelectTypeName_ar("Plan");
+    //     if (promoCodeEdit_ar.promo_type === "plan") {
+    //         setSelectType_ar("Plan");
+    //         setSelectTypeName_ar("Plan");
           
 
-        } else if (promoCodeEdit_ar.promo_type === 'extra') {
-            setSelectType_ar("Extra Product");
-            setSelectTypeName_ar("Extra Product");
+    //     } else if (promoCodeEdit_ar.promo_type === 'extra') {
+    //         setSelectType_ar("Extra Product");
+    //         setSelectTypeName_ar("Extra Product");
             
-        } 
-        else if (promoCodeEdit.promo_type === 'domain') {
-            setSelectType("Domain");
-            setSelectTypeName("Domain");
-            setAmount(promoCodeEdit.amount)
-        } 
-         else {
-            setSelectType_ar('اختار النوع');
-            setSelectTypeName_ar(null);
+    //     } 
+    //     else if (promoCodeEdit.promo_type === 'domain') {
+    //         setSelectType("Domain");
+    //         setSelectTypeName("Domain");
+    //         setAmount(promoCodeEdit.amount)
+    //     } 
+    //      else {
+    //         setSelectType_ar('اختار النوع');
+    //         setSelectTypeName_ar(null);
         
-        }
-        }
-    },[promoCodeEdit_ar])
+    //     }
+    //     }
+    // },[promoCodeEdit_ar])
 
 
     const handleOpenValueType = () => {
@@ -268,10 +268,10 @@ const EditPromoCodePage =()=>{
         setOpenSelectStatus(false)
         setOpenSelectType(false)
         // --------------
-        setOpenSelectValueType_ar(!openSelectValueType_ar);
-        setOpenSelectUsageType_ar(false)
-        setOpenSelectStatus_ar(false)
-        setOpenSelectType_ar(false)
+        // setOpenSelectValueType_ar(!openSelectValueType_ar);
+        // setOpenSelectUsageType_ar(false)
+        // setOpenSelectStatus_ar(false)
+        // setOpenSelectType_ar(false)
       };
     const handleOpenUsageType = () => {
         setOpenSelectValueType(false);
@@ -279,10 +279,10 @@ const EditPromoCodePage =()=>{
         setOpenSelectStatus(false)
         setOpenSelectType(false)
         // ---------------
-        setOpenSelectValueType_ar(false);
-        setOpenSelectUsageType_ar(!openSelectUsageType_ar);
-        setOpenSelectStatus_ar(false)
-        setOpenSelectType_ar(false)
+        // setOpenSelectValueType_ar(false);
+        // setOpenSelectUsageType_ar(!openSelectUsageType_ar);
+        // setOpenSelectStatus_ar(false)
+        // setOpenSelectType_ar(false)
     };
     const handleOpenStatus = () => {
         setOpenSelectValueType(false);
@@ -290,10 +290,10 @@ const EditPromoCodePage =()=>{
         setOpenSelectStatus(!openSelectStatus)
         setOpenSelectType(false)
         // -----------------
-        setOpenSelectValueType_ar(false);
-        setOpenSelectUsageType_ar(false);
-        setOpenSelectStatus_ar(!openSelectStatus_ar)
-        setOpenSelectType_ar(false)
+        // setOpenSelectValueType_ar(false);
+        // setOpenSelectUsageType_ar(false);
+        // setOpenSelectStatus_ar(!openSelectStatus_ar)
+        // setOpenSelectType_ar(false)
     };
     const handleOpenType = () => {
         setOpenSelectValueType(false);
@@ -301,10 +301,10 @@ const EditPromoCodePage =()=>{
         setOpenSelectStatus(false)
         setOpenSelectType(!openSelectType)
         // ---------------------
-        setOpenSelectValueType_ar(false);
-        setOpenSelectUsageType_ar(false);
-        setOpenSelectStatus_ar(false)
-        setOpenSelectType_ar(!openSelectType_ar)
+        // setOpenSelectValueType_ar(false);
+        // setOpenSelectUsageType_ar(false);
+        // setOpenSelectStatus_ar(false)
+        // setOpenSelectType_ar(!openSelectType_ar)
     };
 
     const handleSelectValueType = (e) => {
@@ -315,10 +315,10 @@ const EditPromoCodePage =()=>{
         setSelectValueTypeName(selectedOptionValue)
         setOpenSelectValueType(false);
         // -------
-        setSelectValueType_ar(selectedOptionName);
-        setSelectValueTypeName_ar(selectedOptionValue)
-        setOpenSelectValueType_ar(false);
-        console.log('Selected ValueType:', selectedOptionName);
+        // setSelectValueType_ar(selectedOptionName);
+        // setSelectValueTypeName_ar(selectedOptionValue)
+        // setOpenSelectValueType_ar(false);
+        // console.log('Selected ValueType:', selectedOptionName);
       };
       const handleSelectUsageType = (e) => {
         const inputElement = e.currentTarget.querySelector('.inputVal');
@@ -328,10 +328,10 @@ const EditPromoCodePage =()=>{
         setSelectUsageTypeName(selectedOptionValue)
         setOpenSelectUsageType(false);
         // -----------------
-        setSelectUsageType_ar(selectedOptionName);
-        setSelectUsageTypeName_ar(selectedOptionValue)
-        setOpenSelectUsageType_ar(false);
-        console.log('Selected UsageType:', selectedOptionName);
+        // setSelectUsageType_ar(selectedOptionName);
+        // setSelectUsageTypeName_ar(selectedOptionValue)
+        // setOpenSelectUsageType_ar(false);
+        // console.log('Selected UsageType:', selectedOptionName);
       };
       const handleSelectStatus = (e) => {
         const inputElement = e.currentTarget.querySelector('.inputVal');
@@ -341,10 +341,10 @@ const EditPromoCodePage =()=>{
         setSelectStatusName(selectedOptionValue)
         setOpenSelectStatus(false);
         // -------------------
-        setSelectStatus_ar(selectedOptionName);
-        setSelectStatusName_ar(selectedOptionValue)
-        setOpenSelectStatus_ar(false);
-        console.log('Selected Status:', selectedOptionName);
+        // setSelectStatus_ar(selectedOptionName);
+        // setSelectStatusName_ar(selectedOptionValue)
+        // setOpenSelectStatus_ar(false);
+        // console.log('Selected Status:', selectedOptionName);
       };
       const handleSelectType = (e) => {
         const inputElement = e.currentTarget.querySelector('.inputVal');
@@ -354,10 +354,10 @@ const EditPromoCodePage =()=>{
         setSelectTypeName(selectedOptionValue)
         setOpenSelectType(false);
         // ---------------------
-        setSelectType_ar(selectedOptionName);
-        setSelectTypeName_ar(selectedOptionValue)
-        setOpenSelectType_ar(false);
-        console.log('Selected Type:', selectedOptionName);
+        // setSelectType_ar(selectedOptionName);
+        // setSelectTypeName_ar(selectedOptionValue)
+        // setOpenSelectType_ar(false);
+        // console.log('Selected Type:', selectedOptionName);
       };
 
 
@@ -380,10 +380,10 @@ const EditPromoCodePage =()=>{
             setOpenSelectType(false);
 
             // -----------
-            setOpenSelectValueType_ar(false)
-            setOpenSelectUsageType_ar(false)
-            setOpenSelectStatus_ar(false)
-            setOpenSelectType_ar(false);
+            // setOpenSelectValueType_ar(false)
+            // setOpenSelectUsageType_ar(false)
+            // setOpenSelectStatus_ar(false)
+            // setOpenSelectType_ar(false);
         }
       };
  
@@ -513,42 +513,42 @@ const EditPromoCodePage =()=>{
                console.log(pair[0] + ', ' + pair[1]);
         }     
        // Arabic Translations
-       const translations = [
-        { key: 'code', value: code, locale: 'ar' },
-        { key: 'title', value: title_ar, locale: 'ar' },
-        { key: 'start_date', value: startDate, locale: 'ar' },
-        { key: 'end_date', value: endDate, locale: 'ar' },
-        { key: 'user_usage', value: limit, locale: 'ar' },
-        { key: 'calculation_method', value: calculationMethod, locale: 'ar' },
-        { key: 'user_type', value: userType, locale: 'ar' },
-        { key: 'monthly', value: valueMonthly, locale: 'ar' },
-        { key: 'quarterly', value: valueQuarterly, locale: 'ar' },
-        { key: 'semi_annual', value: valueSemiAnnual, locale: 'ar' },
-        { key: 'yearly', value: valueYearly, locale: 'ar' }
-    ];
+    //    const translations = [
+    //     { key: 'code', value: code, locale: 'ar' },
+    //     { key: 'title', value: title_ar, locale: 'ar' },
+    //     { key: 'start_date', value: startDate, locale: 'ar' },
+    //     { key: 'end_date', value: endDate, locale: 'ar' },
+    //     { key: 'user_usage', value: limit, locale: 'ar' },
+    //     { key: 'calculation_method', value: calculationMethod, locale: 'ar' },
+    //     { key: 'user_type', value: userType, locale: 'ar' },
+    //     { key: 'monthly', value: valueMonthly, locale: 'ar' },
+    //     { key: 'quarterly', value: valueQuarterly, locale: 'ar' },
+    //     { key: 'semi_annual', value: valueSemiAnnual, locale: 'ar' },
+    //     { key: 'yearly', value: valueYearly, locale: 'ar' }
+    // ];
 
     
-    if (selectStatus === 'UnLimited') {
-        translations.push({ key: 'promo_status', value: 'unlimited', locale: 'ar' });
-    } else if (selectStatus === 'Fixed') {
-        translations.push({ key: 'promo_status', value: 'fixed', locale: 'ar' });
-        translations.push({ key: 'usage', value: usageNumber, locale: 'ar' });
-    }
+    // if (selectStatus === 'UnLimited') {
+    //     translations.push({ key: 'promo_status', value: 'unlimited', locale: 'ar' });
+    // } else if (selectStatus === 'Fixed') {
+    //     translations.push({ key: 'promo_status', value: 'fixed', locale: 'ar' });
+    //     translations.push({ key: 'usage', value: usageNumber, locale: 'ar' });
+    // }
 
-    if (selectType === 'Plan') {
-        translations.push({ key: 'promo_type', value: 'plan', locale: 'ar' });
-    } else if (selectType === 'Extra Product') {
-        translations.push({ key: 'promo_type', value: 'extra', locale: 'ar' });
-    } else if (selectType === 'Domain') {
-        translations.push({ key: 'promo_type', value: 'domain', locale: 'ar' });
-        translations.push({ key: 'amount', value: amount, locale: 'ar' });
-    }
+    // if (selectType === 'Plan') {
+    //     translations.push({ key: 'promo_type', value: 'plan', locale: 'ar' });
+    // } else if (selectType === 'Extra Product') {
+    //     translations.push({ key: 'promo_type', value: 'extra', locale: 'ar' });
+    // } else if (selectType === 'Domain') {
+    //     translations.push({ key: 'promo_type', value: 'domain', locale: 'ar' });
+    //     translations.push({ key: 'amount', value: amount, locale: 'ar' });
+    // }
 
-    translations.forEach((translation, index) => {
-        Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
-            formData.append(`translations[${index}][${fieldKey}]`, fieldValue);
-        });
-    });
+    // translations.forEach((translation, index) => {
+    //     Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
+    //         formData.append(`translations[${index}][${fieldKey}]`, fieldValue);
+    //     });
+    // });
         
 
         // const calculationMethod = selectValueType === 'percentage' ? 'percentage' : 'amount';
@@ -566,29 +566,23 @@ const EditPromoCodePage =()=>{
             });
  
             if (response.status === 200) {
-                auth.toastSuccess(
-                    language === 'ar' ? 'تم تحديث رمز الخصم بنجاح!' : 'PromoCode Updated successfully!'
-                );
-                // handleGoBack();
+                auth.toastSuccess('PromoCode Updated successfully!');
+                handleGoBack();
             } else {
-                auth.toastError(
-                    language === 'ar' ? 'فشل في تحديث رمز الخصم.' : 'Failed to Update PromoCode.'
-                );
+                auth.toastError('Failed to Update PromoCode.');
             }
         } catch (error) {    
             console.log(error);
             if (error.response.data.faild === 'You have exceeded the maximum use promo code') {
-                auth.toastError(
-                    language === 'ar' ? 'لقد تجاوزت الحد الأقصى لاستخدام رمز الخصم' : 'You have exceeded the maximum use promo code'
-                );
+                auth.toastError('You have exceeded the maximum use promo code');
             } else {
                 const errorMessages = error?.response?.data.errors;
-                let errorMessageString = language === 'ar' ? 'حدث خطأ' : 'Error occurred';
+                let errorMessageString = 'Error occurred';
                 if (errorMessages) {
                     errorMessageString = Object.values(errorMessages).flat().join(' ');
                 }
                 auth.toastError(
-                    language === 'ar' ? 'خطأ' : 'Error',
+                    language === 'Error',
                     errorMessageString
                 );
             }
@@ -596,14 +590,14 @@ const EditPromoCodePage =()=>{
             setIsLoading(false);
         }
     };
-    const handleChangeLanguage = () => {
-        const newLanguage = language === 'en' ? 'ar' : 'en'; 
-        setLanguage(newLanguage); 
-    };
+    // const handleChangeLanguage = () => {
+    //     const newLanguage = language === 'en' ? 'ar' : 'en'; 
+    //     setLanguage(newLanguage); 
+    // };
   
     return(
         <>
-          <Button 
+          {/* <Button 
     type="submit"
     Text={`Change to ${language === 'en' ? 'Arabic' : 'English'}`}
     BgColor="bg-mainColor"
@@ -614,9 +608,10 @@ const EditPromoCodePage =()=>{
     rounded="rounded-2xl"
      
     handleClick={() => handleChangeLanguage()}
-/>
+/> */}
         <form onSubmit={(event) => handleSubmitEdit(promoCodeEdit.id, event)} className="w-full flex flex-col items-center justify-center gap-y-10 m-5">
-                 {language==="en" ? <div className="w-full flex flex-wrap items-center justify-start gap-10">
+                 {/* {language==="en" ? */}
+                 <div className="w-full flex flex-wrap items-center justify-start gap-10">
                      <div className="lg:w-[30%] sm:w-full">
                          <InputCustom
                              type="text"
@@ -796,7 +791,8 @@ const EditPromoCodePage =()=>{
                            />
                            </div>
                        )}
-                 </div>:
+                 </div>
+                 {/* :
                   <div className="w-full flex flex-wrap items-center justify-start gap-10">
                   <div className="lg:w-[30%] sm:w-full">
                       <InputCustom
@@ -977,11 +973,9 @@ const EditPromoCodePage =()=>{
                         />
                         </div>
                     )}
-              </div>}
+              </div>} */}
 
                 
-
-
      
                  <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
                      <div className="flex items-center justify-center w-72">

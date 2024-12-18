@@ -15,7 +15,7 @@ const AddActivityPage = () => {
     // set arabic
     const [name_ar , setName_ar]=useState('')
  
-    const [language,setLanguage]= useState('ar')
+    const [language,setLanguage]= useState('en')
     const handleGoBack = () => {
             navigate(-1, { replace: true });
     };
@@ -77,25 +77,19 @@ const AddActivityPage = () => {
             );
     
             if (response.status === 200) {
-                auth.toastSuccess(
-                    language === 'en' ? 'Activity added successfully!' : 'تم إضافة النشاط بنجاح!'
-                );
+                auth.toastSuccess('Activity added successfully!');
                 handleGoBack();
             } else {
-                auth.toastError(
-                    language === 'en' ? 'Failed to add Activity.' : 'فشل في إضافة النشاط.'
-                );
+                auth.toastError('Failed to add Activity.');
             }
         } catch (error) {
             console.log(error);
             const errorMessages = error?.response?.data?.errors;
-            let errorMessageString = `${language === 'en' ? 'Error occurred' : 'حدث خطأ'}`;
+            let errorMessageString ='Error occurred';
             if (errorMessages) {
                 errorMessageString = Object.values(errorMessages).flat().join(' ');
             }
-            auth.toastError(
-                language === 'en' ? 'Error' : 'خطأ',
-                errorMessageString
+            auth.toastError('Error',errorMessageString
             );
         } finally {
             setIsLoading(false);
@@ -129,7 +123,8 @@ const AddActivityPage = () => {
                               onChange={(e) => setName(e.target.value)}
                           />
                       </div>  
-                  </div>:
+                  </div>
+                  :
                     <div className="w-full flex flex-wrap items-center justify-start gap-10">
                     <div className="lg:w-[30%] sm:w-full">
                         <InputCustom

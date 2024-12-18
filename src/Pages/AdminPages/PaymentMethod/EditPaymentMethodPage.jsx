@@ -16,8 +16,8 @@ const EditPaymentMethodPage =()=>{
     const [language, setLanguage] = useState("en");
       // set arabic
   
-  const [title_ar, setTitle_ar] = useState("");
-  const [description_ar, setDescription_ar] = useState("");
+//   const [title_ar, setTitle_ar] = useState("");
+//   const [description_ar, setDescription_ar] = useState("");
   const translate = new FormData();
 
     const [isLoading, setIsLoading] = useState(false);
@@ -29,10 +29,10 @@ const EditPaymentMethodPage =()=>{
 
     const paymentContent = useContext(PaymentMethodDataContext);
 
-    const handleChangeLanguage = () => {
-        const newLanguage = language === "en" ? "ar" : "en";
-        setLanguage(newLanguage);
-      };
+    // const handleChangeLanguage = () => {
+    //     const newLanguage = language === "en" ? "ar" : "en";
+    //     setLanguage(newLanguage);
+    //   };
 
     useEffect(() => {
         if (paymentContent) {
@@ -41,8 +41,8 @@ const EditPaymentMethodPage =()=>{
             // setThumbnailFile(paymentContent.thumbnailUrl || '');
             setThumbnails(paymentContent.thumbnailUrl || '');
             // set translate
-            setTitle_ar(paymentContent.name || '');
-            setDescription_ar(paymentContent.description|| '');
+            // setTitle_ar(paymentContent.name || '');
+            // setDescription_ar(paymentContent.description|| '');
             
         }
     }, [paymentContent]);
@@ -89,14 +89,14 @@ const EditPaymentMethodPage =()=>{
 
           // set info arabic
    
-      if (!title_ar) {
-        auth.toastError("يرجى إدخال العنوان.");
-        return;
-      }
-      if (!description_ar) {
-        auth.toastError("يرجى إدخال الوصف.");
-        return;
-      }
+    //   if (!title_ar) {
+    //     auth.toastError("يرجى إدخال العنوان.");
+    //     return;
+    //   }
+    //   if (!description_ar) {
+    //     auth.toastError("يرجى إدخال الوصف.");
+    //     return;
+    //   }
 
         setIsLoading(true);
         try {
@@ -116,17 +116,17 @@ const EditPaymentMethodPage =()=>{
             } 
 
             // Arabic translations
-    const translations = [
-        { key: "name", value: title_ar, locale: "ar" },
-        { key: "description", value: description_ar, locale: "ar" },
-        // { key: "thumbnail", value: thumbnails_ar, locale: "ar" },
-      ];
+    // const translations = [
+    //     { key: "name", value: title_ar, locale: "ar" },
+    //     { key: "description", value: description_ar, locale: "ar" },
+    //     // { key: "thumbnail", value: thumbnails_ar, locale: "ar" },
+    //   ];
   
-      translations.forEach((translation, index) => {
-        Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
-            formData.append(`translations[${index}][${fieldKey}]`, fieldValue);
-        });
-    });
+    //   translations.forEach((translation, index) => {
+    //     Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
+    //         formData.append(`translations[${index}][${fieldKey}]`, fieldValue);
+    //     });
+    // });
 
             const response = await axios.post(
                 ' https://www.wegostores.com/admin/v1/payment/method/update',
@@ -140,17 +140,14 @@ const EditPaymentMethodPage =()=>{
             );
 
             if (response.status === 200) {
-                console.log('تم تحديث وسيلة الدفع بنجاح');
-                auth.toastSuccess(`${language === 'en' ? 'Payment Method Updated successfully!' : 'تم تحديث وسيلة الدفع بنجاح!'}`);
+                auth.toastSuccess('Payment Method Updated successfully!');
                 handleGoBack();
             } else {
-                console.error('فشل في تحديث وسيلة الدفع:', response.status, response.statusText);
-                auth.toastError(`${language === 'en' ? 'Failed to update Payment Method.' : 'فشل في تحديث وسيلة الدفع.'}`);
+                auth.toastError('Failed to update Payment Method.');
             }
             } catch (error) {
-                console.error('خطأ أثناء تحديث وسيلة الدفع:', error?.response?.data?.errors || 'خطأ في الشبكة');
                 const errorMessages = error?.response?.data?.errors;
-                let errorMessageString = `${language === 'en' ? 'Error occurred' : 'حدث خطأ'}`;
+                let errorMessageString = 'Error occurred';
             
                 if (errorMessages) {
                     errorMessageString = Object.values(errorMessages).flat().join(' ');
@@ -164,7 +161,7 @@ const EditPaymentMethodPage =()=>{
     };
     return(
        <div className="">
-              <Button
+              {/* <Button
         type="submit"
         Text={`Change to ${language === "en" ? "Arabic" : "English"}`}
         BgColor="bg-mainColor"
@@ -174,9 +171,10 @@ const EditPaymentMethodPage =()=>{
         px="px-28"
         rounded="rounded-2xl"
         handleClick={() => handleChangeLanguage()}
-      />
+      /> */}
        <form onSubmit={(event) => handleSubmitEdit(paymentContent.id, event)} className="w-full flex flex-col items-center justify-center gap-y-10 m-5">
-        {language==="en"?<div className="w-full flex flex-wrap items-center justify-start gap-10">
+        {/* {language==="en"? */}
+        <div className="w-full flex flex-wrap items-center justify-start gap-10">
             <div className="lg:w-[30%] sm:w-full">
               <InputCustom
                       type="text"
@@ -214,47 +212,48 @@ const EditPaymentMethodPage =()=>{
                       ref={uploadRef}
                   />
               </div>
-        </div>:
-                <div className="w-full flex flex-wrap items-center justify-start gap-10">
-                <div className="lg:w-[30%] sm:w-full">
-                    <InputCustom
-                        type="text"
-                        borderColor="mainColor"
-                        placeholder="الاسم"
-                        value={title_ar}
-                        onChange={(e) => setTitle_ar(e.target.value)}
-                        width="w-full"
-                    />
-                </div>
-                <div className="lg:w-[30%] sm:w-full">
-                    <InputCustom
-                        type="text"
-                        borderColor="mainColor"
-                        placeholder="الوصف"
-                        value={description_ar}
-                        onChange={(e) => setDescription_ar(e.target.value)}
-                        width="w-full"
-                    />
-                </div>
-                <div className="lg:w-[30%] sm:w-full">
-                    <InputCustom
-                        type="text"
-                        borderColor="mainColor"
-                        placeholder="الصورة المصغرة"
-                        value={thumbnails}
-                        readOnly={true} 
-                        onClick={handleInputClick}
-                        upload="true"
-                    />
-                    <input
-                        type="file"
-                        className="hidden"
-                        onChange={handleFileChange}
-                        ref={uploadRef}
-                    />
-                </div>
-            </div>
-        }
+        </div>
+        {/* // :
+        //         <div className="w-full flex flex-wrap items-center justify-start gap-10">
+        //         <div className="lg:w-[30%] sm:w-full">
+        //             <InputCustom
+        //                 type="text"
+        //                 borderColor="mainColor"
+        //                 placeholder="الاسم"
+        //                 value={title_ar}
+        //                 onChange={(e) => setTitle_ar(e.target.value)}
+        //                 width="w-full"
+        //             />
+        //         </div>
+        //         <div className="lg:w-[30%] sm:w-full">
+        //             <InputCustom
+        //                 type="text"
+        //                 borderColor="mainColor"
+        //                 placeholder="الوصف"
+        //                 value={description_ar}
+        //                 onChange={(e) => setDescription_ar(e.target.value)}
+        //                 width="w-full"
+        //             />
+        //         </div>
+        //         <div className="lg:w-[30%] sm:w-full">
+        //             <InputCustom
+        //                 type="text"
+        //                 borderColor="mainColor"
+        //                 placeholder="الصورة المصغرة"
+        //                 value={thumbnails}
+        //                 readOnly={true} 
+        //                 onClick={handleInputClick}
+        //                 upload="true"
+        //             />
+        //             <input
+        //                 type="file"
+        //                 className="hidden"
+        //                 onChange={handleFileChange}
+        //                 ref={uploadRef}
+        //             />
+        //         </div>
+        //     </div>
+        // } */}
 
 
 
