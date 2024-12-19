@@ -50,33 +50,34 @@ const EditPlanPage =()=>{
     const [name_ar, setName_ar] = useState('');
     const [title_ar, setTitle_ar] = useState('');
     const [description_ar, setDescription_ar] = useState('');
-    const [fee_ar, setFee_ar] = useState('');
-    const [limitPlan_ar, setLimitPlan_ar] = useState('');
-    const [thumbnails_ar, setThumbnails_ar] = useState('');
-    const [thumbnailFile_ar, setThumbnailFile_ar] = useState(null); // Store the file object
-    const [appActive_ar, setAppActive_ar] = useState(0); // Default status to 0
-    const [isLoading_ar, setIsLoading_ar] = useState(false);
 
-    const [monthlyPrice_ar, setMonthlyPrice_ar] = useState('');
-    const [monthlyDiscountPrice_ar, setMonthlyDiscountPrice_ar] = useState('');
-    const [MonthlySetUpFeesPrice_ar, setMonthlySetUpFeesPrice_ar] = useState('');
+    // const [fee_ar, setFee_ar] = useState('');
+    // const [limitPlan_ar, setLimitPlan_ar] = useState('');
+    // const [thumbnails_ar, setThumbnails_ar] = useState('');
+    // const [thumbnailFile_ar, setThumbnailFile_ar] = useState(null); // Store the file object
+    // const [appActive_ar, setAppActive_ar] = useState(0); // Default status to 0
+    // const [isLoading_ar, setIsLoading_ar] = useState(false);
 
-    const [quarterlyPrice_ar, setQuarterlyPrice_ar] = useState('');
-    const [quarterlyDiscountPrice_ar, setQuarterlyDiscountPrice_ar] = useState('');
-    const [quarterlySetUpFeesPrice_ar, setQuarterlySetUpFeesPrice_ar] = useState('');
+    // const [monthlyPrice_ar, setMonthlyPrice_ar] = useState('');
+    // const [monthlyDiscountPrice_ar, setMonthlyDiscountPrice_ar] = useState('');
+    // const [MonthlySetUpFeesPrice_ar, setMonthlySetUpFeesPrice_ar] = useState('');
 
-    const [semiAnnualPrice_ar, setSemiAnnualPrice_ar] = useState('');
-    const [semiAnnualDiscountPrice_ar, setSemiAnnualDiscountPrice_ar] = useState('');
-    const [semiAnnualSetUpFeesPrice_ar, setSemiAnnualSetUpFeesPrice_ar] = useState('');
+    // const [quarterlyPrice_ar, setQuarterlyPrice_ar] = useState('');
+    // const [quarterlyDiscountPrice_ar, setQuarterlyDiscountPrice_ar] = useState('');
+    // const [quarterlySetUpFeesPrice_ar, setQuarterlySetUpFeesPrice_ar] = useState('');
 
-    const [yearlyPrice_ar, setYearlyPrice_ar] = useState(''); 
-    const [yearlyDiscountPrice_ar, setYearlyDiscountPrice_ar] = useState(''); 
-    const [yearlySetUpFeesPrice_ar, setYearlySetUpFeesPrice_ar] = useState(''); 
+    // const [semiAnnualPrice_ar, setSemiAnnualPrice_ar] = useState('');
+    // const [semiAnnualDiscountPrice_ar, setSemiAnnualDiscountPrice_ar] = useState('');
+    // const [semiAnnualSetUpFeesPrice_ar, setSemiAnnualSetUpFeesPrice_ar] = useState('');
+
+    // const [yearlyPrice_ar, setYearlyPrice_ar] = useState(''); 
+    // const [yearlyDiscountPrice_ar, setYearlyDiscountPrice_ar] = useState(''); 
+    // const [yearlySetUpFeesPrice_ar, setYearlySetUpFeesPrice_ar] = useState(''); 
     
-    const [showMonthlyPriceInput_ar, setShowMonthlyPriceInput_ar] = useState(false);
-    const [showQuarterlyPriceInput_ar, setShowQuarterlyPriceInput_ar] = useState(false);
-    const [showSemiAnnualPriceInput_ar, setShowSemiAnnualPriceInput_ar] = useState(false);
-    const [showYearlyPriceInput_ar, setShowYearlyPriceInput_ar] = useState(false);
+    // const [showMonthlyPriceInput_ar, setShowMonthlyPriceInput_ar] = useState(false);
+    // const [showQuarterlyPriceInput_ar, setShowQuarterlyPriceInput_ar] = useState(false);
+    // const [showSemiAnnualPriceInput_ar, setShowSemiAnnualPriceInput_ar] = useState(false);
+    // const [showYearlyPriceInput_ar, setShowYearlyPriceInput_ar] = useState(false);
     const navigate = useNavigate();
     const uploadRef = useRef();
 
@@ -120,9 +121,9 @@ const EditPlanPage =()=>{
             setName_ar(planEdit_ar.name || '');
             // setTitle(planContent.title || '');
             setDescription_ar(planEdit_ar.description|| '');
-            setFee_ar(planEdit_ar.setup_fees|| 0);
-            setLimitPlan_ar(planEdit_ar.limet_store|| '');
-            setAppActive_ar(planEdit_ar.app|| '');
+            // setFee_ar(planEdit_ar.setup_fees|| 0);
+            // setLimitPlan_ar(planEdit_ar.limet_store|| '');
+            // setAppActive_ar(planEdit_ar.app|| '');
 
             // if(planEdit.monthly){
             //     setShowMonthlyPriceInput(true)
@@ -191,7 +192,7 @@ const EditPlanPage =()=>{
         try {
       // Prepare translations data
       const translations = [
-        { key: 'name', value: title_ar, locale: 'ar' },
+        { key: 'name', value: name_ar, locale: 'ar' },
         // { key: 'plan_id', value: planId, locale: 'ar' },
         { key: 'description', value: description_ar, locale: 'ar' },
         // { key: 'fee', value: fee_ar, locale: 'ar' },
@@ -598,7 +599,7 @@ const EditPlanPage =()=>{
                     rows={1}
                 ></textarea>
                 </div>
-                <div className="lg:w-[30%] sm:w-full">
+                {/* <div className="lg:w-[30%] sm:w-full">
                     <InputCustom
                         type="number"
                         borderColor="mainColor"
@@ -607,8 +608,8 @@ const EditPlanPage =()=>{
                         onChange={(e) => setFee_ar(e.target.value)}
                         width="w-full"
                     />
-                </div>
-                <div className="lg:w-[30%] sm:w-full">
+                </div> */}
+                {/* <div className="lg:w-[30%] sm:w-full">
                     <InputCustom
                         type="number"
                         borderColor="mainColor"
@@ -617,8 +618,8 @@ const EditPlanPage =()=>{
                         onChange={(e) => setLimitPlan_ar(e.target.value)}
                         width="w-full"
                     />
-                </div>
-                <div className="lg:w-[30%] sm:w-full">
+                </div> */}
+                {/* <div className="lg:w-[30%] sm:w-full">
                     <InputCustom
                             type="text"
                             borderColor="mainColor"
@@ -635,211 +636,18 @@ const EditPlanPage =()=>{
                             onChange={handleFileChange}
                             ref={uploadRef}
                         />
-                </div>
+                </div> */}
 
-                <div className="flex items-center gap-x-4 w-full">
+                {/* <div className="flex items-center gap-x-4 w-full">
                         <span className="text-2xl text-mainColor font-medium">التطبيق:</span>
                          <div>
                              <CheckBox handleClick={handleClick} checked={appActive}/>
                          </div>
-                </div>
+                </div> */}
 
                 {/* Price Option Checkboxes */}
                 {/* <div className="lg:w-[30%] sm:w-full flex flex-col gap-2"> */}
-                <div className="flex w-full flex-col gap-5">
-                    {/* Monthly Price Checkbox */}
-                    <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
-                    <div className=" flex items-center gap-3 w-full lg:w-1/3">
-                        <input 
-                            type="checkbox" 
-                            checked={showMonthlyPriceInput}
-                            onChange={() => setShowMonthlyPriceInput(prev => !prev)}
-                            className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
-                        />
-                        <label  className="text-2xl text-mainColor font-medium">شهري</label>
-                    </div>
-                        {/* Conditional Price Inputs */}
-                        {showMonthlyPriceInput && (
-                        <>
-                        <div className="lg:w-1/2 sm:w-full">
-                            <InputCustom
-                                type="number"
-                                borderColor="mainColor"
-                                placeholder="أدخل السعر"
-                                value={monthlyPrice}
-                                onChange={(e) => setMonthlyPrice_ar(e.target.value)}
-                                width="w-full"
-                            />
-                        </div>
-                        <div className="lg:w-1/2 sm:w-full">
-                         <InputCustom
-                             type="number"
-                             borderColor="mainColor"
-                             placeholder="أدخل سعر الخصم"
-                             value={monthlyDiscountPrice}
-                             onChange={(e) => setMonthlyDiscountPrice_ar(e.target.value)}
-                             width="w-full"
-                             required={false}
-                         />
-                        </div>
-                        {/* <div className="lg:w-1/2 sm:w-full">
-                        <InputCustom
-                            type="number"
-                            borderColor="mainColor"
-                            placeholder="Enter SetUp Fees"
-                            value={MonthlySetUpFeesPrice}
-                            onChange={(e) => setMonthlySetUpFeesPrice(e.target.value)}
-                            width="w-full"
-                        />
-                        </div> */}
-                        </>
-                        )}
-                    </div>
-
-                    {/* 3 Months Price Checkbox */}
-                    <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
-                    <div className="flex items-center gap-3 w-full lg:w-1/3 ">
-                        <input 
-                            type="checkbox" 
-                            checked={showQuarterlyPriceInput}
-                            onChange={() => setShowQuarterlyPriceInput(prev => !prev)}
-                            className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
-                        />
-                        <label  className="text-2xl text-mainColor font-medium">ربع السعر</label>
-                    </div>
-                    {showQuarterlyPriceInput && (
-                        <>
-                        <div className="lg:w-1/2 sm:w-full">
-                            <InputCustom
-                                type="number"
-                                borderColor="mainColor"
-                                placeholder="أدخل السعر"
-                                value={quarterlyPrice}
-                                onChange={(e) => setQuarterlyPrice_ar(e.target.value)}
-                                width="w-full"
-                            />
-                        </div>
-                        <div className="lg:w-1/2 sm:w-full">
-                        <InputCustom
-                            type="number"
-                            borderColor="mainColor"
-                            placeholder="أدخل سعر الخصم"
-                            value={quarterlyDiscountPrice}
-                            onChange={(e) => setQuarterlyDiscountPrice_ar(e.target.value)}
-                            width="w-full"
-                            required={false}
-                        />
-                        </div>
-                        {/* <div className="lg:w-1/2 sm:w-full">
-                        <InputCustom
-                            type="number"
-                            borderColor="mainColor"
-                            placeholder="Enter SetUp Fees"
-                            value={quarterlySetUpFeesPrice}
-                            onChange={(e) => setQuarterlySetUpFeesPrice(e.target.value)}
-                            width="w-full"
-                        />
-                        </div> */}
-                        </>
-                    )}
-                    </div>
-
-                    {/* 6 Months Price Checkbox */}
-                    <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
-                    <div className="flex items-center gap-3 w-full lg:w-1/3 ">
-                        <input 
-                            type="checkbox" 
-                            checked={showSemiAnnualPriceInput}
-                            onChange={() => setShowSemiAnnualPriceInput(prev => !prev)}
-                            className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
-                        />
-                        <label  className="text-2xl text-mainColor font-medium">نصف سنوي</label>
-                    </div>
-                    {showSemiAnnualPriceInput && (
-                        <>
-                        <div className="lg:w-1/2 sm:w-full">
-                            <InputCustom
-                                type="number"
-                                borderColor="mainColor"
-                                placeholder="أدخل السعر"
-                                value={semiAnnualPrice}
-                                onChange={(e) => setSemiAnnualPrice_ar(e.target.value)}
-                                width="w-full"
-                            />
-                        </div>
-                        <div className="lg:w-1/2 sm:w-full">
-                        <InputCustom
-                            type="number"
-                            borderColor="mainColor"
-                            placeholder="أدخل سعر الخصم"
-                            value={semiAnnualDiscountPrice}
-                            onChange={(e) => setSemiAnnualDiscountPrice_ar(e.target.value)}
-                            width="w-full"
-                            required={false}
-                        />
-                        </div>
-                        {/* <div className="lg:w-1/2 sm:w-full">
-                        <InputCustom
-                            type="number"
-                            borderColor="mainColor"
-                            placeholder="Enter SetUp Fees"
-                            value={semiAnnualSetUpFeesPrice}
-                            onChange={(e) => setSemiAnnualSetUpFeesPrice(e.target.value)}
-                            width="w-full"
-                        />
-                        </div> */}
-                        </>
-                    )}
-                    </div>
-
-                    {/* yearly Price Checkbox */}
-                    <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
-                    <div className="flex items-center gap-3 w-full lg:w-1/3 ">
-                        <input 
-                            type="checkbox" 
-                            checked={showYearlyPriceInput}
-                            onChange={() => setShowYearlyPriceInput(prev => !prev)}
-                            className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
-                        />
-                        <label  className="text-2xl text-mainColor font-medium">سنوي</label>
-                    </div>
-                    {showYearlyPriceInput && (
-                        <>
-                        <div className="lg:w-1/2 sm:w-full">
-                            <InputCustom
-                                type="number"
-                                borderColor="mainColor"
-                                placeholder="أدخل السعر"
-                                value={yearlyPrice}
-                                onChange={(e) => setYearlyPrice_ar(e.target.value)}
-                                width="w-full"
-                            />
-                        </div>
-                        <div className="lg:w-1/2 sm:w-full">
-                        <InputCustom
-                            type="number"
-                            borderColor="mainColor"
-                            placeholder="أدخل سعر الخصم"
-                            value={yearlyDiscountPrice}
-                            onChange={(e) => setYearlyDiscountPrice_ar(e.target.value)}
-                            width="w-full"
-                            required={false}
-                        />
-                        </div>
-                        {/* <div className="lg:w-1/2 sm:w-full">
-                        <InputCustom
-                            type="number"
-                            borderColor="mainColor"
-                            placeholder="Enter SetUp Fees"
-                            value={yearlySetUpFeesPrice}
-                            onChange={(e) => setYearlySetUpFeesPrice(e.target.value)}
-                            width="w-full"
-                        />
-                        </div> */}
-                        </>
-                    )}
-                    </div>
-                </div>
+             
 
                    
             </div>}

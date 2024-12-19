@@ -17,7 +17,7 @@ const EditAdminTutorialPage =()=>{
     const [name_ar, setName_ar] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
-
+    
     const handleGoBack = () => {
         navigate(-1, { replace: true });
     };
@@ -44,7 +44,7 @@ const EditAdminTutorialPage =()=>{
         }
 
         if (!name_ar) {
-            auth.toastError("يرجى إدخال اسم المجموعة.");
+            auth.toastError('Please Enter the Group Name.');
             return;
           }
 
@@ -78,44 +78,36 @@ const EditAdminTutorialPage =()=>{
 
             if (response.status === 200) {
                 auth.toastSuccess(
-                    language === 'ar' 
-                        ? 'تم تحديث المجموعة التعليمية بنجاح!' 
-                        : 'Tutorial Group updated successfully!'
+                   'Tutorial Group updated successfully!'
                 );
                 handleGoBack();
             } else {
                 console.error(
-                    language === 'ar' 
-                        ? 'فشل في تحديث المجموعة التعليمية:' 
-                        : 'Failed to update Tutorial Group:', 
+                  'Failed to update Tutorial Group:', 
                     response.status, 
                     response.statusText
                 );
                 auth.toastError(
-                    language === 'ar' 
-                        ? 'فشل في تحديث المجموعة التعليمية.' 
-                        : 'Failed to update Tutorial Group.'
+                 
+                       'Failed to update Tutorial Group.'
                 );
             }
         } catch (error) {
             console.error(
-                language === 'ar' 
-                    ? 'خطأ أثناء تحديث المجموعة التعليمية:' 
-                    : 'Error updating Tutorial Group:', 
+                'Error updating Tutorial Group:', 
                 error?.response?.data?.errors || 'Network error'
             );
         
             const errorMessages = error?.response?.data?.errors;
-            let errorMessageString = language === 'ar' ? 'حدث خطأ' : 'Error occurred';
+            let errorMessageString = 'Error occurred';
         
             if (errorMessages) {
                 errorMessageString = Object.values(errorMessages).flat().join(' ');
             }
         
             auth.toastError(
-                language === 'ar' 
-                    ? `خطأ: ${errorMessageString}` 
-                    : `Error: ${errorMessageString}`
+              
+                     `Error: ${errorMessageString}`
             );
         } finally {
             setIsLoading(false);

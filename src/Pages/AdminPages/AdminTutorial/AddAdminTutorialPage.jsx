@@ -28,7 +28,7 @@ const AddAdminTutorialPage = () => {
       return;
     }
     if (!name_ar) {
-      auth.toastError("يرجى إدخال اسم المجموعة.");
+      auth.toastError("Please Enter the Group Name Arabic.");
       return;
     }
   

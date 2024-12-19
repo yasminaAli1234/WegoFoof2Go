@@ -61,7 +61,7 @@ const EditTutorialPage =()=>{
             if (file) {
                 setVideoFile(file);
                 setVideo(file.name);
-                setVideo_ar(file.name);
+                
             }
     };
 
@@ -77,12 +77,12 @@ const EditTutorialPage =()=>{
             return;
         }
         if (!name_ar) {
-            auth.toastError('يرجى إدخال الاسم.');
+            auth.toastError('Please Enter the Name Arabic.');
             return;
         }
         
         if (!description_ar) {
-            auth.toastError('يرجى إدخال الوصف.');
+            auth.toastError('Please Enter the Description Arabic.');
             return;
         }
         // if (!videoFile) {
@@ -129,44 +129,34 @@ const EditTutorialPage =()=>{
 
             if (response.status === 200) {
                 auth.toastSuccess(
-                    language === 'ar' 
-                        ? 'تم تحديث البرنامج التعليمي بنجاح!' 
-                        : 'Tutorial updated successfully!'
+                  'Tutorial updated successfully!'
                 );
                 handleGoBack();
             } else {
                 console.error(
-                    language === 'ar' 
-                        ? 'فشل في تحديث البرنامج التعليمي:' 
-                        : 'Failed to update Tutorial:', 
+                     'Failed to update Tutorial:', 
                     response.status, 
                     response.statusText
                 );
                 auth.toastError(
-                    language === 'ar' 
-                        ? 'فشل في تحديث البرنامج التعليمي.' 
-                        : 'Failed to update Tutorial.'
+                   'Failed to update Tutorial.'
                 );
             }
         } catch (error) {
             console.error(
-                language === 'ar' 
-                    ? 'خطأ أثناء تحديث البرنامج التعليمي:' 
-                    : 'Error updating Tutorial:', 
+               'Error updating Tutorial:', 
                 error?.response?.data?.errors || 'Network error'
             );
         
             const errorMessages = error?.response?.data?.errors;
-            let errorMessageString = language === 'ar' ? 'حدث خطأ' : 'Error occurred';
+            let errorMessageString = 'Error occurred';
         
             if (errorMessages) {
                 errorMessageString = Object.values(errorMessages).flat().join(' ');
             }
         
             auth.toastError(
-                language === 'ar' 
-                    ? `خطأ: ${errorMessageString}` 
-                    : `Error: ${errorMessageString}`
+                `Error: ${errorMessageString}`
             );
         } finally {
             setIsLoading(false);
@@ -253,7 +243,7 @@ const EditTutorialPage =()=>{
                       width="w-full"
                   />
             </div>
-            <div className="lg:w-[30%] sm:w-full">
+            {/* <div className="lg:w-[30%] sm:w-full">
               <InputCustom
                   type="text"
                   upload={true}
@@ -270,7 +260,8 @@ const EditTutorialPage =()=>{
                   onChange={handleVideoFileChange}
                   ref={videoRef}
               />
-          </div>
+          </div> */}
+          
         </div>}
 
         <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">

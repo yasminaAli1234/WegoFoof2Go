@@ -46,40 +46,40 @@ const EditExtraProductPage =()=>{
     const [extraTypeName, setExtraTypeName] = useState();
     const [openExtraType, setOpenExtraType] = useState(false);
     const dropdownExtraType = useRef();
-    const dropdownExtraType_ar = useRef();
+    // const dropdownExtraType_ar = useRef();
 
     const {productEdit,productEdit_ar} = useContext(productDataContext);
 // arabic edit
 const [name_ar, setName_ar] = useState('');
 const [description_ar, setDescription_ar] = useState('');
-const [price_ar, setPrice_ar] = useState(''); // For one-time price or monthly price
-const [fee_ar, setFee_ar] = useState('');
+// const [price_ar, setPrice_ar] = useState(''); // For one-time price or monthly price
+// const [fee_ar, setFee_ar] = useState('');
 
-const [monthlyPrice_ar, setMonthlyPrice_ar] = useState('');
-const [monthlyDiscountPrice_ar, setMonthlyDiscountPrice_ar] = useState('');
-const [MonthlySetUpFeesPrice_ar, setMonthlySetUpFeesPrice_ar] = useState('');
+// const [monthlyPrice_ar, setMonthlyPrice_ar] = useState('');
+// const [monthlyDiscountPrice_ar, setMonthlyDiscountPrice_ar] = useState('');
+// const [MonthlySetUpFeesPrice_ar, setMonthlySetUpFeesPrice_ar] = useState('');
 
-const [quarterlyPrice_ar, setQuarterlyPrice_ar] = useState('');
-const [quarterlyDiscountPrice_ar, setQuarterlyDiscountPrice_ar] = useState('');
-const [quarterlySetUpFeesPrice_ar, setQuarterlySetUpFeesPrice_ar] = useState('');
+// const [quarterlyPrice_ar, setQuarterlyPrice_ar] = useState('');
+// const [quarterlyDiscountPrice_ar, setQuarterlyDiscountPrice_ar] = useState('');
+// const [quarterlySetUpFeesPrice_ar, setQuarterlySetUpFeesPrice_ar] = useState('');
 
-const [semiAnnualPrice_ar, setSemiAnnualPrice_ar] = useState('');
-const [semiAnnualDiscountPrice_ar, setSemiAnnualDiscountPrice_ar] = useState('');
-const [semiAnnualSetUpFeesPrice_ar, setSemiAnnualSetUpFeesPrice_ar] = useState('');
+// const [semiAnnualPrice_ar, setSemiAnnualPrice_ar] = useState('');
+// const [semiAnnualDiscountPrice_ar, setSemiAnnualDiscountPrice_ar] = useState('');
+// const [semiAnnualSetUpFeesPrice_ar, setSemiAnnualSetUpFeesPrice_ar] = useState('');
 
-const [yearlyPrice_ar, setYearlyPrice_ar] = useState(''); 
-const [yearlyDiscountPrice_ar, setYearlyDiscountPrice_ar] = useState(''); 
-const [yearlySetUpFeesPrice_ar, setYearlySetUpFeesPrice_ar] = useState(''); 
+// const [yearlyPrice_ar, setYearlyPrice_ar] = useState(''); 
+// const [yearlyDiscountPrice_ar, setYearlyDiscountPrice_ar] = useState(''); 
+// const [yearlySetUpFeesPrice_ar, setYearlySetUpFeesPrice_ar] = useState(''); 
 
-const [showMonthlyPriceInput_ar, setShowMonthlyPriceInput_ar] = useState(false);
-const [showQuarterlyPriceInput_ar, setShowQuarterlyPriceInput_ar] = useState(false);
-const [showSemiAnnualPriceInput_ar, setShowSemiAnnualPriceInput_ar] = useState(false);
-const [showYearlyPriceInput_ar, setShowYearlyPriceInput_ar] = useState(false);
+// const [showMonthlyPriceInput_ar, setShowMonthlyPriceInput_ar] = useState(false);
+// const [showQuarterlyPriceInput_ar, setShowQuarterlyPriceInput_ar] = useState(false);
+// const [showSemiAnnualPriceInput_ar, setShowSemiAnnualPriceInput_ar] = useState(false);
+// const [showYearlyPriceInput_ar, setShowYearlyPriceInput_ar] = useState(false);
 
 
-const [extraType_ar, setExtraType_ar] = useState('اختار النوع');
-const [extraTypeName_ar, setExtraTypeName_ar] = useState();
-const [openExtraType_ar, setOpenExtraType_ar] = useState(false);
+// const [extraType_ar, setExtraType_ar] = useState('اختار النوع');
+// const [extraTypeName_ar, setExtraTypeName_ar] = useState();
+// const [openExtraType_ar, setOpenExtraType_ar] = useState(false);
 
 
 // change handle button
@@ -180,87 +180,87 @@ const handleChangeLanguage = () => {
         if (productEdit_ar) {
             setName_ar(productEdit_ar.name || '');
             setDescription_ar(productEdit_ar.description|| '');
-            setFee_ar(productEdit_ar.setup_fees|| '');
+           
 
-            if (productEdit_ar.status) {
+            // if (productEdit_ar.status) {
             
-                if (productEdit_ar.status === 'one_time') {
-                    setExtraType_ar('One Time')
-                    setExtraTypeName_ar('One Time')
-                    setPrice_ar(productEdit_ar.price)
+            //     if (productEdit_ar.status === 'one_time') {
+            //         setExtraType_ar('One Time')
+            //         setExtraTypeName_ar('One Time')
+            //         setPrice_ar(productEdit_ar.price)
 
 
 
-                }
+            //     }
 
-                // // set arabic
-                // if (productContent.status ==='مرة واحدة') {
-                //     setExtraType_ar('مرة واحدة')
-                //     setExtraTypeName_ar('مرة واحدة')
-                //     setPrice_ar(productContent.price)
-                // }
+            //     // // set arabic
+            //     // if (productContent.status ==='مرة واحدة') {
+            //     //     setExtraType_ar('مرة واحدة')
+            //     //     setExtraTypeName_ar('مرة واحدة')
+            //     //     setPrice_ar(productContent.price)
+            //     // }
 
 
-                 else if (productEdit_ar.status === 'recurring') {
-                    setExtraType_ar('Recurring')
-                    setExtraTypeName_ar('Recurring')
+            //      else if (productEdit_ar.status === 'recurring') {
+            //         setExtraType_ar('Recurring')
+            //         setExtraTypeName_ar('Recurring')
 
                   
                  
 
 
-                    if(productEdit_ar.monthly){
-                        setShowMonthlyPriceInput_ar(true)
-                        setMonthlyPrice_ar(productEdit_ar.monthly)
-                        setMonthlyDiscountPrice_ar(productEdit_ar.discount_monthly)
-                    }
-                    if(productEdit_ar.quarterly){
-                        setShowQuarterlyPriceInput_ar(true)
-                        setQuarterlyPrice_ar(productEdit_ar.quarterly)
-                        setQuarterlyDiscountPrice_ar(productEdit_ar.discount_quarterly)
+            //         if(productEdit_ar.monthly){
+            //             setShowMonthlyPriceInput_ar(true)
+            //             setMonthlyPrice_ar(productEdit_ar.monthly)
+            //             setMonthlyDiscountPrice_ar(productEdit_ar.discount_monthly)
+            //         }
+            //         if(productEdit_ar.quarterly){
+            //             setShowQuarterlyPriceInput_ar(true)
+            //             setQuarterlyPrice_ar(productEdit_ar.quarterly)
+            //             setQuarterlyDiscountPrice_ar(productEdit_ar.discount_quarterly)
                  
-                    }
-                    if(productEdit_ar["semi_annual"]){
-                        setShowSemiAnnualPriceInput_ar(true)
-                        setSemiAnnualPrice_ar(productEdit_ar["semi_annual"])
-                        setSemiAnnualDiscountPrice_ar(productEdit_ar.discount_semi_annual)
+            //         }
+            //         if(productEdit_ar["semi_annual"]){
+            //             setShowSemiAnnualPriceInput_ar(true)
+            //             setSemiAnnualPrice_ar(productEdit_ar["semi_annual"])
+            //             setSemiAnnualDiscountPrice_ar(productEdit_ar.discount_semi_annual)
 
                        
-                    }
-                    if(productEdit_ar.yearly){
-                        setShowYearlyPriceInput_ar(true)
-                        setYearlyPrice_ar(productEdit_ar.yearly)
-                        setYearlyDiscountPrice_ar(productEdit_ar.discount_yearly)
+            //         }
+            //         if(productEdit_ar.yearly){
+            //             setShowYearlyPriceInput_ar(true)
+            //             setYearlyPrice_ar(productEdit_ar.yearly)
+            //             setYearlyDiscountPrice_ar(productEdit_ar.discount_yearly)
                    
-                    }
-                } 
-                // set arabic
-                // else if (productContent.status === 'متكرر') {
-                //     setExtraType_ar('متكرر')
-                //     setExtraTypeName_ar('متكرر')
+            //         }
+            //     } 
+            //     // set arabic
+            //     // else if (productContent.status === 'متكرر') {
+            //     //     setExtraType_ar('متكرر')
+            //     //     setExtraTypeName_ar('متكرر')
 
-                //     if(productContent.monthly){
-                //         setShowMonthlyPriceInput_ar(true)
-                //         setMonthlyPrice_ar(productContent.monthly)
-                //         setMonthlyDiscountPrice_ar(productContent.discount_monthly)
-                //     }
-                //     if(productContent.quarterly){
-                //         setShowQuarterlyPriceInput_ar(true)
-                //         setQuarterlyPrice_ar(productContent.quarterly)
-                //         setQuarterlyDiscountPrice_ar(productContent.discount_quarterly)
-                //     }
-                //     if(productContent["semi_annual"]){
-                //         setShowSemiAnnualPriceInput_ar(true)
-                //         setSemiAnnualPrice_ar(productContent["semi_annual"])
-                //         setSemiAnnualDiscountPrice_ar(productContent.discount_semi_annual)
-                //     }
-                //     if(productContent.yearly){
-                //         setShowYearlyPriceInput_ar(true)
-                //         setYearlyPrice_ar(productContent.yearly)
-                //         setYearlyDiscountPrice_ar(productContent.discount_yearly)
-                //     }
-                // } 
-            }
+            //     //     if(productContent.monthly){
+            //     //         setShowMonthlyPriceInput_ar(true)
+            //     //         setMonthlyPrice_ar(productContent.monthly)
+            //     //         setMonthlyDiscountPrice_ar(productContent.discount_monthly)
+            //     //     }
+            //     //     if(productContent.quarterly){
+            //     //         setShowQuarterlyPriceInput_ar(true)
+            //     //         setQuarterlyPrice_ar(productContent.quarterly)
+            //     //         setQuarterlyDiscountPrice_ar(productContent.discount_quarterly)
+            //     //     }
+            //     //     if(productContent["semi_annual"]){
+            //     //         setShowSemiAnnualPriceInput_ar(true)
+            //     //         setSemiAnnualPrice_ar(productContent["semi_annual"])
+            //     //         setSemiAnnualDiscountPrice_ar(productContent.discount_semi_annual)
+            //     //     }
+            //     //     if(productContent.yearly){
+            //     //         setShowYearlyPriceInput_ar(true)
+            //     //         setYearlyPrice_ar(productContent.yearly)
+            //     //         setYearlyDiscountPrice_ar(productContent.discount_yearly)
+            //     //     }
+            //     // } 
+            // }
 
         }
     }, [productEdit_ar]);
@@ -288,9 +288,9 @@ const handleChangeLanguage = () => {
        
         setExtraType(selectedOptionName);
         setExtraTypeName(selectedOptionValue);
-        // --------
-        setExtraType_ar(selectedOptionName);
-        setExtraTypeName_ar(selectedOptionValue);
+        // // --------
+        // setExtraType_ar(selectedOptionName);
+        // setExtraTypeName_ar(selectedOptionValue);
         setOpenExtraType(false);
         console.log(selectedOptionValue)
         console.log(selectedOptionName)
@@ -345,17 +345,14 @@ const handleChangeLanguage = () => {
         }
         // ------
         if (!name_ar) {
-            auth.toastError('الرجاء إدخال اسم المنتج.');
+            auth.toastError('Please Enter the Product Name Arabic.');
             return;
         }
         if (!description_ar) {
-            auth.toastError('الرجاء إدخال الوصف.');
+            auth.toastError('Please Enter the Description Arabic.');
             return;
         }
-        if (!extraTypeName_ar) {
-            auth.toastError('الرجاء اختيار النوع.');
-            return;
-        }
+      
         
         // Conditional validation for pricing fields based on type
       
@@ -384,28 +381,29 @@ const handleChangeLanguage = () => {
             }
         }
         // ----------------
-        if (extraTypeName_ar === 'one_time' && !price_ar) {
-            auth.toastError(':الرجاء إدخال السعر');
-            return;
-        }
-        if (extraTypeName_ar === 'recurring') {
-            if (!monthlyPrice_ar) {
-                auth.toastError('الرجاء إدخال السعر الشهري.');
-                return;
-            }
-            if (!quarterlyPrice_ar) {
-                auth.toastError('الرجاء إدخال السعر ربع السنوي.');
-                return;
-            }
-            if (!semiAnnualPrice_ar) {
-                auth.toastError('الرجاء إدخال السعر نصف السنوي.');
-                return;
-            }
-            if (!yearlyPrice_ar) {
-                auth.toastError('الرجاء إدخال السعر السنوي.');
-                return;
-            }
-        }
+
+        // if (extraTypeName_ar === 'one_time' && !price_ar) {
+        //     auth.toastError(':الرجاء إدخال السعر');
+        //     return;
+        // }
+        // if (extraTypeName_ar === 'recurring') {
+        //     if (!monthlyPrice_ar) {
+        //         auth.toastError('الرجاء إدخال السعر الشهري.');
+        //         return;
+        //     }
+        //     if (!quarterlyPrice_ar) {
+        //         auth.toastError('الرجاء إدخال السعر ربع السنوي.');
+        //         return;
+        //     }
+        //     if (!semiAnnualPrice_ar) {
+        //         auth.toastError('الرجاء إدخال السعر نصف السنوي.');
+        //         return;
+        //     }
+        //     if (!yearlyPrice_ar) {
+        //         auth.toastError('الرجاء إدخال السعر السنوي.');
+        //         return;
+        //     }
+        // }
         
         setIsLoading(true);
         try {
@@ -451,33 +449,34 @@ const handleChangeLanguage = () => {
             const translations = [
                 { key: 'name', value: name_ar, locale: 'ar' },
                 { key: 'description', value: description_ar, locale: 'ar' },
-                { key: 'setup_fees', value: fee_ar, locale: 'ar' },
+               
             ];
 
           // Handle the translation for recurring products
-          if (extraType_ar === 'One Time') {
-            translations.push({ key: 'status', value: 'one_time', locale: 'ar' });
-            translations.push({ key: 'price', value: price_ar, locale: 'ar' });
-        } else if (extraType_ar === 'Recurring') {
-            translations.push({ key: 'status', value: 'recurring', locale: 'ar' });
 
-            if (showMonthlyPriceInput_ar && monthlyPrice_ar) {
-                translations.push({ key: 'monthly', value: monthlyPrice_ar, locale: 'ar' });
-                translations.push({ key: 'discount_monthly', value: monthlyDiscountPrice_ar, locale: 'ar' });
-            }
-            if (showQuarterlyPriceInput_ar && quarterlyPrice_ar) {
-                translations.push({ key: 'quarterly', value: quarterlyPrice_ar, locale: 'ar' });
-                translations.push({ key: 'discount_quarterly', value: quarterlyDiscountPrice_ar, locale: 'ar' });
-            }
-            if (showSemiAnnualPriceInput_ar && semiAnnualPrice_ar) {
-                translations.push({ key: 'semi_annual', value: semiAnnualPrice_ar, locale: 'ar' });
-                translations.push({ key: 'discount_semi_annual', value: semiAnnualDiscountPrice_ar, locale: 'ar' });
-            }
-            if (showYearlyPriceInput_ar && yearlyPrice_ar) {
-                translations.push({ key: 'yearly', value: yearlyPrice_ar, locale: 'ar' });
-                translations.push({ key: 'discount_yearly', value: yearlyDiscountPrice_ar, locale: 'ar' });
-            }
-        }
+        //   if (extraType_ar === 'One Time') {
+        //     translations.push({ key: 'status', value: 'one_time', locale: 'ar' });
+        //     translations.push({ key: 'price', value: price_ar, locale: 'ar' });
+        // } else if (extraType_ar === 'Recurring') {
+        //     translations.push({ key: 'status', value: 'recurring', locale: 'ar' });
+
+        //     if (showMonthlyPriceInput_ar && monthlyPrice_ar) {
+        //         translations.push({ key: 'monthly', value: monthlyPrice_ar, locale: 'ar' });
+        //         translations.push({ key: 'discount_monthly', value: monthlyDiscountPrice_ar, locale: 'ar' });
+        //     }
+        //     if (showQuarterlyPriceInput_ar && quarterlyPrice_ar) {
+        //         translations.push({ key: 'quarterly', value: quarterlyPrice_ar, locale: 'ar' });
+        //         translations.push({ key: 'discount_quarterly', value: quarterlyDiscountPrice_ar, locale: 'ar' });
+        //     }
+        //     if (showSemiAnnualPriceInput_ar && semiAnnualPrice_ar) {
+        //         translations.push({ key: 'semi_annual', value: semiAnnualPrice_ar, locale: 'ar' });
+        //         translations.push({ key: 'discount_semi_annual', value: semiAnnualDiscountPrice_ar, locale: 'ar' });
+        //     }
+        //     if (showYearlyPriceInput_ar && yearlyPrice_ar) {
+        //         translations.push({ key: 'yearly', value: yearlyPrice_ar, locale: 'ar' });
+        //         translations.push({ key: 'discount_yearly', value: yearlyDiscountPrice_ar, locale: 'ar' });
+        //     }
+        // }
 
         translations.forEach((translation, index) => {
             Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
@@ -500,15 +499,15 @@ const handleChangeLanguage = () => {
             );
     
             if (response.status === 200) {
-                auth.toastSuccess(`${language === 'en' ? 'Extra Product updated successfully!' : 'تم تحديث المنتج الإضافي بنجاح!'}`);
+                auth.toastSuccess( 'Extra Product updated successfully!');
                 handleGoBack();
             } else {
-                auth.toastError(`${language === 'en' ? 'Failed to update Extra Product.' : 'فشل في تحديث المنتج الإضافي.'}`);
+                auth.toastError('Failed to update Extra Product.' );
             }
         } catch (error) {
             console.log(error);
             const errorMessage = error?.response?.data?.errors || 
-                                 (language === 'en' ? 'Network error' : 'خطأ في الشبكة');
+                                 ('Network error' );
             auth.toastError(errorMessage);
         } finally {
             setIsLoading(false);
@@ -820,7 +819,7 @@ const handleChangeLanguage = () => {
                     rows={1}
                 ></textarea>
                 </div>
-                <div className="lg:w-[30%] sm:w-full">
+                {/* <div className="lg:w-[30%] sm:w-full">
                     <InputCustom
                         type="number"
                         borderColor="mainColor"
@@ -829,8 +828,8 @@ const handleChangeLanguage = () => {
                         onChange={(e) => setFee_ar(e.target.value)}
                         width="w-full"
                     />
-                </div>
-                <div className="lg:w-[30%] sm:w-full">
+                </div> */}
+                {/* <div className="lg:w-[30%] sm:w-full">
                     <DropDownMenu
                        ref={dropdownExtraType}
                        handleOpen={handleOpenExtraType}
@@ -839,10 +838,10 @@ const handleChangeLanguage = () => {
                        openMenu={openExtraType}
                        options={extraTypeData}
                     />
-                </div>
+                </div> */}
                 
                 {/* Conditionally render price inputs based on extraType */}
-                {extraType === 'One Time' && (
+                {/* {extraType === 'One Time' && (
                     <div className="lg:w-[30%] sm:w-full">
                         <InputCustom
                             type="number"
@@ -853,223 +852,9 @@ const handleChangeLanguage = () => {
                             width="w-full"
                         />
                     </div>
-                )}
+                )} */}
 
-                {extraType === 'Recurring' && (
-                    <>
-                        {/* <div className="lg:w-[30%] sm:w-full">
-                            <InputCustom
-                                type="number"
-                                borderColor="mainColor"
-                                placeholder="Price (Monthly)"
-                                value={monthlyPrice}
-                                onChange={(e) => setMonthlyPrice(e.target.value)}
-                                width="w-full"
-                            />
-                        </div>
-                        <div className="lg:w-[30%] sm:w-full">
-                            <InputCustom
-                                type="number"
-                                borderColor="mainColor"
-                                placeholder="Price (Yearly)"
-                                value={yearlyPrice}
-                                onChange={(e) => setYearlyPrice(e.target.value)}
-                                width="w-full"
-                            />
-                        </div> */}
-
-                <div className="flex w-full flex-col gap-5">
-                    {/* Monthly Price Checkbox */}
-                    <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
-                    <div className=" flex items-center gap-3 w-full lg:w-1/3">
-                        <input 
-                            type="checkbox" 
-                            checked={showMonthlyPriceInput}
-                            onChange={() => setShowMonthlyPriceInput(prev => !prev)}
-                            className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
-                        />
-                        <label  className="text-2xl text-mainColor font-medium">شهري</label>
-                    </div>
-                        {/* Conditional Price Inputs */}
-                        {showMonthlyPriceInput && (
-                        <>
-                        <div className="lg:w-1/2 sm:w-full">
-                            <InputCustom
-                                type="number"
-                                borderColor="mainColor"
-                                 placeholder="أدخل السعر"
-                                value={monthlyPrice}
-                                onChange={(e) => setMonthlyPrice_ar(e.target.value)}
-                                width="w-full"
-                            />
-                        </div>
-                        <div className="lg:w-1/2 sm:w-full">
-                         <InputCustom
-                             type="number"
-                             borderColor="mainColor"
-                             placeholder="أدخل سعر الخصم"
-                             value={monthlyDiscountPrice}
-                             onChange={(e) => setMonthlyDiscountPrice_ar(e.target.value)}
-                             width="w-full"
-                         />
-                        </div>
-                        {/* <div className="lg:w-1/2 sm:w-full">
-                        <InputCustom
-                            type="number"
-                            borderColor="mainColor"
-                            placeholder="Enter SetUp Fees"
-                            value={MonthlySetUpFeesPrice}
-                            onChange={(e) => setMonthlySetUpFeesPrice(e.target.value)}
-                            width="w-full"
-                        />
-                        </div> */}
-                        </>
-                        )}
-                    </div>
-
-                    {/* 3 Months Price Checkbox */}
-                    <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
-                    <div className="flex items-center gap-3 w-full lg:w-1/3 ">
-                        <input 
-                            type="checkbox" 
-                            checked={showQuarterlyPriceInput}
-                            onChange={() => setShowQuarterlyPriceInput(prev => !prev)}
-                            className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
-                        />
-                        <label  className="text-2xl text-mainColor font-medium">ربع سنوي</label>
-                    </div>
-                    {showQuarterlyPriceInput && (
-                        <>
-                        <div className="lg:w-1/2 sm:w-full">
-                            <InputCustom
-                                type="number"
-                                borderColor="mainColor"
-                                 placeholder="أدخل السعر"
-                                value={quarterlyPrice}
-                                onChange={(e) => setQuarterlyPrice_ar(e.target.value)}
-                                width="w-full"
-                            />
-                        </div>
-                        <div className="lg:w-1/2 sm:w-full">
-                        <InputCustom
-                            type="number"
-                            borderColor="mainColor"
-                            placeholder="أدخل سعر الخصم"
-                            value={quarterlyDiscountPrice}
-                            onChange={(e) => setQuarterlyDiscountPrice_ar(e.target.value)}
-                            width="w-full"
-                        />
-                        </div>
-                        {/* <div className="lg:w-1/2 sm:w-full">
-                        <InputCustom
-                            type="number"
-                            borderColor="mainColor"
-                            placeholder="Enter SetUp Fees"
-                            value={quarterlySetUpFeesPrice}
-                            onChange={(e) => setQuarterlySetUpFeesPrice(e.target.value)}
-                            width="w-full"
-                        />
-                        </div> */}
-                        </>
-                    )}
-                    </div>
-
-                    {/* 6 Months Price Checkbox */}
-                    <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
-                    <div className="flex items-center gap-3 w-full lg:w-1/3 ">
-                        <input 
-                            type="checkbox" 
-                            checked={showSemiAnnualPriceInput}
-                            onChange={() => setShowSemiAnnualPriceInput(prev => !prev)}
-                            className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
-                        />
-                        <label  className="text-2xl text-mainColor font-medium">نصف سنوي</label>
-                    </div>
-                    {showSemiAnnualPriceInput && (
-                        <>
-                        <div className="lg:w-1/2 sm:w-full">
-                            <InputCustom
-                                type="number"
-                                borderColor="mainColor"
-                                 placeholder="أدخل السعر"
-                                value={semiAnnualPrice}
-                                onChange={(e) => setSemiAnnualPrice_ar(e.target.value)}
-                                width="w-full"
-                            />
-                        </div>
-                        <div className="lg:w-1/2 sm:w-full">
-                        <InputCustom
-                            type="number"
-                            borderColor="mainColor"
-                            placeholder="أدخل سعر الخصم"
-                            value={semiAnnualDiscountPrice}
-                            onChange={(e) => setSemiAnnualDiscountPrice_ar(e.target.value)}
-                            width="w-full"
-                        />
-                        </div>
-                        {/* <div className="lg:w-1/2 sm:w-full">
-                        <InputCustom
-                            type="number"
-                            borderColor="mainColor"
-                            placeholder="Enter SetUp Fees"
-                            value={semiAnnualSetUpFeesPrice}
-                            onChange={(e) => setSemiAnnualSetUpFeesPrice(e.target.value)}
-                            width="w-full"
-                        />
-                        </div> */}
-                        </>
-                    )}
-                    </div>
-
-                    {/* yearly Price Checkbox */}
-                    <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
-                    <div className="flex items-center gap-3 w-full lg:w-1/3 ">
-                        <input 
-                            type="checkbox" 
-                            checked={showYearlyPriceInput}
-                            onChange={() => setShowYearlyPriceInput(prev => !prev)}
-                            className="h-5 w-5 rounded-full border-mainColor checked:w-8 checked:h-8  checked:bg-blue-500"
-                        />
-                        <label  className="text-2xl text-mainColor font-medium">سنوي</label>
-                    </div>
-                    {showYearlyPriceInput && (
-                        <>
-                        <div className="lg:w-1/2 sm:w-full">
-                            <InputCustom
-                                type="number"
-                                borderColor="mainColor"
-                                 placeholder="أدخل السعر"
-                                value={yearlyPrice}
-                                onChange={(e) => setYearlyPrice_ar(e.target.value)}
-                                width="w-full"
-                            />
-                        </div>
-                        <div className="lg:w-1/2 sm:w-full">
-                        <InputCustom
-                            type="number"
-                            borderColor="mainColor"
-                            placeholder="أدخل سعر الخصم"
-                            value={yearlyDiscountPrice}
-                            onChange={(e) => setYearlyDiscountPrice_ar(e.target.value)}
-                            width="w-full"
-                        />
-                        </div>
-                        {/* <div className="lg:w-1/2 sm:w-full">
-                        <InputCustom
-                            type="number"
-                            borderColor="mainColor"
-                            placeholder="Enter SetUp Fees"
-                            value={yearlySetUpFeesPrice}
-                            onChange={(e) => setYearlySetUpFeesPrice(e.target.value)}
-                            width="w-full"
-                        />
-                        </div> */}
-                        </>
-                    )}
-                    </div>
-                </div>
-                    </>
-                )}
+              
             </div>}
 
             {/* create arabic */}

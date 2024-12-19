@@ -40,7 +40,7 @@ const AddActivityPage = () => {
             return;
         }
         if (!name_ar) {
-            auth.toastError('من فضلك أدخل الاسم');
+            auth.toastError('Please Enter Name Arabic.');
             return;
         }
     

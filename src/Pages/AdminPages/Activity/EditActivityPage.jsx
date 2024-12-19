@@ -15,7 +15,7 @@ const EditActivityPage =()=>{
     const [name , setName]=useState('')
     // set arabic
     const [name_ar , setName_ar]=useState('')
-    const activityContent = useContext(ActivityDataLayout);
+    const {activityEdit,activityEdit_ar} = useContext(ActivityDataLayout);
    
     const [language,setLanguage]= useState('en')
 
@@ -24,12 +24,17 @@ const EditActivityPage =()=>{
         setLanguage(newLanguage); 
     };
     useEffect(() => {
-        if (activityContent) {
-            setName(activityContent.name || '');
-            setName_ar(activityContent.name || '');
+        if (activityEdit) {
+            setName(activityEdit.name || '');
         }
-    }, [activityContent]);
+    }, [activityEdit]);
 
+    useEffect(() => {
+        if (activityEdit_ar) {
+           
+            setName_ar(activityEdit_ar.name || '');
+        }
+    }, [activityEdit_ar]);
     const handleGoBack = () => {
             navigate(-1, { replace: true });
     };
@@ -51,7 +56,7 @@ const EditActivityPage =()=>{
             return;
         } 
         if (!name_ar) {
-            auth.toastError('يرجى إدخال الاسم');
+            auth.toastError('Please enter a name Arabic');
             return;
         } 
         const formData = new FormData();
@@ -117,7 +122,7 @@ const EditActivityPage =()=>{
      
     handleClick={() => handleChangeLanguage()}
 />
-<form onSubmit={(event) => handleSubmitEdit(activityContent.id, event)} className="w-full flex flex-col items-center justify-center gap-y-10 m-5">
+<form onSubmit={(event) => handleSubmitEdit(activityEdit.id, event)} className="w-full flex flex-col items-center justify-center gap-y-10 m-5">
                {language==='en'?   <div className="w-full flex flex-wrap items-center justify-start gap-10">
                       <div className="lg:w-[30%] sm:w-full">
                           <InputCustom

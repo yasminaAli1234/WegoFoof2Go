@@ -66,18 +66,18 @@ const AddTutorialPage = () => {
       
         // Validation for Arabic inputs
         if (!name_ar) {
-          auth.toastError('يرجى إدخال الاسم.');
+          auth.toastError('Please Enter the Name Arabic.');
           return;
         }
         if (!description_ar) {
-          auth.toastError('يرجى إدخال الوصف.');
+          auth.toastError('Please Enter the Description Arabic.');
           return;
         }
       
-        if (language === 'ar' && !videoFile) {
-          auth.toastError('يرجى إدخال الفيديو.');
-          return;
-        }
+        // if (language === 'ar' && !videoFile) {
+        //   auth.toastError('يرجى إدخال الفيديو.');
+        //   return;
+        // }
       
         setIsLoading(true);
         try {
@@ -118,44 +118,34 @@ const AddTutorialPage = () => {
       
           if (response.status === 200) {
             auth.toastSuccess(
-              language === 'ar'
-                ? 'تمت إضافة البرنامج التعليمي بنجاح!'
-                : 'Tutorial added successfully!'
+             'Tutorial added successfully!'
             );
             handleGoBack();
           } else {
             console.error(
-              language === 'ar'
-                ? 'فشل في إضافة البرنامج التعليمي:'
-                : 'Failed to add Tutorial:',
+             'Failed to add Tutorial:',
               response.status,
               response.statusText
             );
             auth.toastError(
-              language === 'ar'
-                ? 'فشل في إضافة البرنامج التعليمي.'
-                : 'Failed to add Tutorial.'
+             'Failed to add Tutorial.'
             );
           }
         } catch (error) {
           console.error(
-            language === 'ar'
-              ? 'خطأ أثناء إضافة البرنامج التعليمي:'
-              : 'Error adding Tutorial:',
+          'Error adding Tutorial:',
             error?.response?.data?.errors || 'Network error'
           );
       
           const errorMessages = error?.response?.data?.errors;
-          let errorMessageString = language === 'ar' ? 'حدث خطأ' : 'Error occurred';
+          let errorMessageString = 'Error occurred';
       
           if (errorMessages) {
             errorMessageString = Object.values(errorMessages).flat().join(' ');
           }
       
           auth.toastError(
-            language === 'ar'
-              ? `خطأ: ${errorMessageString}`
-              : `Error: ${errorMessageString}`
+            `Error: ${errorMessageString}`
           );
         } finally {
           setIsLoading(false);
@@ -243,7 +233,8 @@ const AddTutorialPage = () => {
                                 width="w-full"
                             />
                       </div>
-                      <div className="lg:w-[30%] sm:w-full">
+
+                      {/* <div className="lg:w-[30%] sm:w-full">
                         <InputCustom
                             type="text"
                             upload={true}
@@ -260,7 +251,8 @@ const AddTutorialPage = () => {
                             onChange={handleVideoFileChange}
                             ref={videoRef}
                         />
-                    </div>
+                    </div> */}
+                    
                   </div>}
       
                   <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">

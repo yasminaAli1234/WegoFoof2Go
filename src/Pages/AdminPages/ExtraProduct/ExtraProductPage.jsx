@@ -11,7 +11,7 @@ import { PiStorefront } from "react-icons/pi";
 import { CiMoneyCheck1 } from "react-icons/ci";
 import { FaCrown } from "react-icons/fa";
 import { useTranslation } from 'react-i18next';
-import { convertNumberToArabic } from '../../../Components/convert_number';
+// import { convertNumberToArabic } from '../../../Components/convert_number';
 import { BiDollar } from "react-icons/bi";
 
 const ExtraProductPage = () => {
@@ -23,7 +23,7 @@ const ExtraProductPage = () => {
     const [productChanged, setProductChanged] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
     const [openDialog, setOpenDialog] = useState(null);
-
+    
      const [billingPeriod, setBillingPeriod] = useState({});
        const [selectedPlanId, setSelectedPlanId] = useState(null);
 
@@ -229,10 +229,10 @@ const ExtraProductPage = () => {
                      {/* Plan Details */}
                      <div className="space-y-4 mb-6">
                             <p className="text-sm text-gray-600">{product.description}</p>
-                            <p className="flex items-center gap-2"><PiStorefront size={26} /><span className="font-semibold">{t("Number of stores:")}</span> {convertNumberToArabic(product.limet_store ,i18n.language)|| '0'}</p>
-                            <p className="flex items-center gap-2"><CiMoneyCheck1 size={30} className='text-mainColor' /><span className="font-semibold text-mainColor">{t("SetUp Fees:")}</span> {convertNumberToArabic(product.setup_fees,i18n.language) || '0'} {t("EGP")}</p>
+                            <p className="flex items-center gap-2"><PiStorefront size={26} /><span className="font-semibold">{t("Number of stores:")}</span> {product.limet_store || '0'}</p>
+                            <p className="flex items-center gap-2"><CiMoneyCheck1 size={30} className='text-mainColor' /><span className="font-semibold text-mainColor">{t("SetUp Fees:")}</span> {product.setup_fees || '0'} {t("EGP")}</p>
                             {product.status === "one_time" && (
-                            <p className="flex items-center gap-2"><BiDollar size={30} className='text-mainColor' /><span className="font-semibold text-mainColor">{t("price")}:</span> {convertNumberToArabic(product.price,i18n.language) || '0'} {t("EGP")}</p>
+                            <p className="flex items-center gap-2"><BiDollar size={30} className='text-mainColor' /><span className="font-semibold text-mainColor">{t("price")}:</span> {product.price || '0'} {t("EGP")}</p>
                             )}
                      </div>
 
@@ -258,9 +258,9 @@ const ExtraProductPage = () => {
                      <div className="text-center ">
                      {discountedPrice ? (
                             <>
-                            <p className="text-lg line-through">{convertNumberToArabic(currentPrice,i18n.language)} {t("EGP")}</p>
-                            <p className="text-3xl font-semibold text-mainColor">{convertNumberToArabic(discountedPrice,i18n.language)} {t("EGP")}</p>
-                            <p className="text-green-500 font-semibold mt-2">{t("Save")} {convertNumberToArabic(savings,i18n.language)} {t("EGP")} {t("per")} {t(selectedPeriod)}</p>
+                            <p className="text-lg line-through">{currentPrice} {t("EGP")}</p>
+                            <p className="text-3xl font-semibold text-mainColor">{discountedPrice} {t("EGP")}</p>
+                            <p className="text-green-500 font-semibold mt-2">{t("Save")} {savings} {t("EGP")} {t("per")} {t(selectedPeriod)}</p>
                             </>
                      ) : (
                             <>

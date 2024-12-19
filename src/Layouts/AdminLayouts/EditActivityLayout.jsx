@@ -15,6 +15,10 @@ const EditActivityLayout =()=>{
   const [activityEdit, setActivityEdit] = useState(null);
   const { activityId } = useParams();
 
+  const [allActivityData_ar, setAllActivityData_ar] = useState([]);
+  const [activityEdit_ar, setActivityEdit_ar] = useState(null);
+  
+
   const fetchData = async () => {
     setIsLoading(true);
     try {
@@ -33,10 +37,32 @@ const EditActivityLayout =()=>{
            setIsLoading(false);
     }
 };
+const fetchData_ar = async () => {
+       setIsLoading(true);
+       try {
+              const response = await axios.get(' https://www.wegostores.com/admin/v1/activity?locale=ar', {
+                     headers: {
+                            Authorization: `Bearer ${auth.user.token}`,
+                     },
+              });
+              if (response.status === 200) {
+                     console.log(response.data)
+                     setAllActivityData_ar(response.data.activity)
+              }
+       } catch (error) {
+              console.error('Error fetching data:', error);
+       } finally {
+              setIsLoading(false);
+       }
+   };
 
 useEffect(() => {
     fetchData(); 
 }, []);
+
+useEffect(() => {
+       fetchData_ar(); 
+   }, []);
 
   useEffect(() => {
     if (allActivityData.length > 0 && activityId) {
@@ -46,6 +72,15 @@ useEffect(() => {
            setActivityEdit(filteredActivity);
     }
     }, [allActivityData, activityId]);
+
+    useEffect(() => {
+       if (allActivityData_ar.length > 0 && activityId) {
+              const filteredActivity = allActivityData_ar.find(
+              (activity) => activity.id === parseInt(activityId)
+              );
+              setActivityEdit_ar(filteredActivity);
+       }
+       }, [allActivityData_ar, activityId]);
     
     console.log('allActivityData', allActivityData); // Logging the whole array
     console.log('activityEdit', activityEdit);
@@ -65,7 +100,7 @@ useEffect(() => {
     return(
         <>
         <HeaderPageSection handleClick={handleGoBack} name="Edit Activity" />
-        <ActivityDataLayout.Provider value={activityEdit}>
+        <ActivityDataLayout.Provider value={{activityEdit,activityEdit_ar}}>
             <EditActivityPage/>
         </ActivityDataLayout.Provider>
         </>
