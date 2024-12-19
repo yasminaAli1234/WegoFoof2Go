@@ -134,8 +134,10 @@ const resources = {
       "Product Name :":"Product Name :",
       "One time setup fees :" :"One time setup fees :",
       "Remove": "Remove",
-      "plans" :"plans"
-      
+      "plans" :"plans",
+      "Change Language":"Change Language",
+      "Close":"Close",
+      "Select Language":"Select Language"
       // Add more translations
     },
   },
@@ -154,6 +156,9 @@ const resources = {
       "Product Type :" :" :نوع المنتج ",
       "Product Name :":":اسم المنتج",
       "plans":"خطط",
+      "Select Language":"اختار اللغة",
+      "Change Language":"تغير اللغة",
+      "Close":"الغاء",
       "One time setup fees :":" :رسوم الإعداد لمرة واحدة ",
       "subscription" :" الاشتراك",
       "extras": "الإضافات",

@@ -7,6 +7,10 @@ export default {
         primaryeRegular: ["Regular"],
         primaryeMedium: ["Medium"],
         primaryeBold: ["Bold"],
+       
+      },
+      boxShadow: {
+        'custom': '0 10px 15px rgba(0, 0, 0, 0.8)', // Custom shadow
       },
       colors: {
         mainColor: "#1A237E",
