@@ -279,7 +279,59 @@ const BuyDomainPage =()=>{
     }    
       
     if (!alldomainRequest) {
-        return <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No domain Request data available</div>;
+        return (
+            <>
+                    {/* <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No domain Request data available</div>; */}
+              <form onSubmit={handleSubmitAdd} className="w-full flex flex-col gap-y-8 bg-gradient-to-b from-white to-gray-50 rounded-2xl shadow-lg">
+            <div className="w-full flex flex-col gap-6 p-6 bg-white rounded-lg shadow-sm border border-gray-200">
+                <h1 className="text-3xl text-mainColor font-bold tracking-tight mb-4">{t('Request Your Custom Domain')}</h1>
+
+                <div className="w-full flex flex-col md:flex-row justify-between items-center gap-6">
+                {/* Dropdown and Input Group */}
+                <div className="flex flex-col md:flex-row w-full border border-mainColor rounded-lg shadow-sm">
+                    
+                    {/* Dropdown Menu */}
+                    <div className="w-full lg:w-[40%] p-3 flex items-center">
+                    <DropDownMenu
+                        ref={dropdownStoreRef}
+                        handleOpen={handleOpenSelectStore}
+                        handleOpenOption={handleSelectStore}
+                        stateoption={selectStore}
+                        openMenu={openSelectStore}
+                        options={storeData}
+                        borderWidth={0}
+                    />
+                    </div>
+
+                    {/* Input Field */}
+                    <input
+                    className="p-4 font-semibold text-lg w-full bg-gray-50 border-l border-gray-200 rounded-r-lg focus:bg-white focus:border-mainColor focus:ring-2 focus:ring-mainColor/30 outline-none transition-all duration-300 ease-in-out"
+                    type="text"
+                    placeholder={t("Enter Domain Name")}
+                    value={domainRequest}
+                    onChange={(e) => setDomainRequest(e.target.value)}
+                    />
+                </div>
+
+                {/* Submit Button */}
+                <div className=" flex items-center justify-center">
+                    <Button
+                        type="submit"
+                        Text={t("send")}
+                        BgColor="bg-mainColor hover:bg-mainColor/90 transition duration-200 ease-in-out"
+                        Color="text-white"
+                        Width="w-full md:w-auto"
+                        Size="text-xl"
+                        px="px-16"
+                        py="py-3"
+                        rounded="rounded-full shadow-md"
+                    />
+                </div>
+                </div>
+            </div>
+            </form>
+            </>
+        )
     }
 
     return(

@@ -108,99 +108,26 @@ const UserSelect = () => {
       };
       
       
-      
-
   const handleImageClick = () => {
     setClick(true);
     localStorage.setItem('popupClosed', 'true'); // Mark popup as closed
   };
-  const handleBillingPeriodChange = (planId, newPeriod) => {
-    setBillingPeriod((prev) => ({ ...prev, [planId]: newPeriod }));
-};
 
-    const handleAddToCart = async (plan, event) => {
-      if (event) event.preventDefault();
+    const handleAddToCart = async (plan) => {
+      
+      const planWithPeriodAndPrice = {
+          ...plan.plan,
+          billingPeriod: plan.duration,
+          finalprice: plan.price ,
+      };
+      console.log(planWithPeriodAndPrice)
 
-      setIsLoading(true);
-
-      try {
-          const response = await axios.post(
-              ' https://www.wegostores.com/user/v1/cart/pending',
-              {
-                  id: plan.id, // Properly include plan.id as a key-value pair
-                  type: "plan",
-              },
-              {
-                  headers: {
-                      Authorization: `Bearer ${auth.user.token}`,
-                      'Content-Type': 'application/json', // Explicitly specify JSON content type
-                  },
-              }
-          );
-
-          const data = response.data;
-
-          if (response.status === 200 && data.success === "You can buy it") {
-              // Calculate price options
-              const selectedPeriod = billingPeriod[plan.id] || 'monthly';
-              const priceOptions = {
-                  monthly: plan.monthly,
-                  quarterly: plan.quarterly || plan.monthly * 3,
-                  semiAnnually: plan["semi_annual"] || plan.monthly * 6,
-                  annually: plan.yearly,
-              };
-
-              const discountOptions = {
-                  monthly: plan.discount_monthly,
-                  quarterly: plan.discount_quarterly,
-                  semiAnnually: plan.discount_semi_annual,
-                  annually: plan.discount_yearly,
-              };
-
-              const currentPrice = discountOptions[selectedPeriod]
-                  ? discountOptions[selectedPeriod]
-                  : priceOptions[selectedPeriod];
-
-              const planWithPeriodAndPrice = {
-                  ...plan,
-                  billingPeriod: selectedPeriod,
-                  finalprice: currentPrice + plan.setup_fees,
-              };
-
-              // Update cart based on the selected plan
-              if (selectedPlanId === plan.id) {
-                  setSelectedPlanId(null);
-                  dispatch(removeFromCart(planWithPeriodAndPrice));
-                  localStorage.removeItem('selectedPlanId');
-              } else {
-                  if (selectedPlanId !== null) {
-                      const previousPlan = (plan.id === selectedPlanId);
-                      const previousPrice = priceOptions[billingPeriod[previousPlan.id] || 'monthly'];
-                      const previousPlanWithPeriodAndPrice = {
-                          ...previousPlan,
-                          billingPeriod: billingPeriod[previousPlan.id] || 'monthly',
-                          finalprice: previousPrice + plan.setup_fees,
-                      };
-                      dispatch(removeFromCart(previousPlanWithPeriodAndPrice));
-                      localStorage.removeItem('selectedPlanId');
-                  }
-                  dispatch(addToCart(planWithPeriodAndPrice));
-                  setSelectedPlanId(plan.id);
-                  localStorage.setItem('selectedPlanId', plan.id);
-              }
-              navigate('cart')
-              localStorage.removeItem('popupClosed');
-
-          } else {
-              // Toast error if success message is not "you can buy it"
-              auth.toastError('Error', data?.message || 'Failed to add to cart.');
-          }
-      } catch (error) {
-          console.error(error);
-          // auth.toastError(error.response.data.faild)
-      } finally {
-          setIsLoading(false);
-      }
+      dispatch(addToCart(planWithPeriodAndPrice));
+      setSelectedPlanId(plan.id);
+      localStorage.setItem('selectedPlanId', plan.id);
+      // console.log(planWithPeriodAndPrice)
+      navigate('cart')
+      localStorage.removeItem('popupClosed');
     };
 
     if (!data) {
@@ -255,23 +182,6 @@ const UserSelect = () => {
     <>
         {userPlanId === null? (
             (() => {
-                const selectedPeriod = billingPeriod[data.plan?.id] || 'monthly';
-                const priceOptions = {
-                    monthly: data.plan?.monthly,
-                    quarterly: data.plan?.quarterly || data.plan?.monthly * 3,
-                    semiAnnually: data.plan?.semi_annual|| data.plan?.monthly * 6,
-                    annually: data.plan?.yearly || data.plan?.monthly * 12,
-                };
-                const discountOptions = {
-                    monthly: data.plan?.discount_monthly,
-                    quarterly: data.plan?.discount_quarterly,
-                    semiAnnually: data.plan?.discount_semi_annual,
-                    annually: data.plan?.discount_yearly,
-                };
-                const currentPrice = priceOptions[selectedPeriod];
-                const discountedPrice = discountOptions[selectedPeriod];
-                const savings = discountedPrice ? currentPrice - discountedPrice : 0;
-
                 return (
                     <div
                         className={`fixed w-full inset-0 bg-gray-800 bg-opacity-70 flex items-center justify-center z-1000 ${click ? 'hidden' : ''}`}
@@ -371,18 +281,17 @@ const UserSelect = () => {
                                                 )}
                                             </div> */}
 
-                                {selectedPlanId != data.plan?.id && (
+                                {/* {selectedPlanId != data.plan?.id && ( */}
                                     <button
-                                    onClick={() => handleAddToCart(data?.plan,event)}
-                                    className={`w-full py-3 font-semibold rounded-lg transition-all duration-300 transform 
-                                    ${selectedPlanId === data.plan?.id ? 'bg-red-600 text-white hover:bg-red-700' : 'bg-mainColor text-white hover:bg-blue-700'} 
+                                    onClick={() => handleAddToCart(data)}
+                                    className={`w-full py-3 font-semibold rounded-lg transition-all duration-300 transform bg-mainColor text-white hover:bg-blue-700
                                     hover:scale-105 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mainColor`}
                                     >
                                     {t("Add to Cart")}
                                     </button>
-                                )}
+                                {/* )} */}
 
-                                {/* Remove from Cart and Go to Cart Buttons */}
+                                {/* Remove from Cart and Go to Cart Buttons
                                 {selectedPlanId == data.plan?.id && (
                                     <div className="flex space-x-3 mt-3">
                                     <button
@@ -396,7 +305,7 @@ const UserSelect = () => {
                                                                                 {t("Go to Cart")}
                                     </Link>
                                     </div>
-                                )}
+                                )} */}
                                         </div>
                                     </div>
                                 )}

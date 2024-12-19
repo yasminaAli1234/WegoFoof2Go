@@ -101,9 +101,9 @@ const UserHomePage = () => {
             {t("Create Store")}
           </button>
         </Link>
-        <button className="bg-mainColor text-white px-5 py-3 rounded-lg shadow-md hover:shadow-lg transition hover:bg-blue-700 text-sm font-semibold">
+        {/* <button className="bg-mainColor text-white px-5 py-3 rounded-lg shadow-md hover:shadow-lg transition hover:bg-blue-700 text-sm font-semibold">
           {t("Request Demo")}
-        </button>
+        </button> */}
       </div>
     </header>
 
