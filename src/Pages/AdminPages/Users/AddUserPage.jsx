@@ -63,14 +63,14 @@ const AddUserPage = () => {
         }
     
         // Translate to Arabic
-        if (!name_ar) {
-            auth.toastError('يرجى إدخال الاسم.');
-            return;
-        }
-        if (!phone_ar) {
-            auth.toastError('يرجى إدخال رقم الهاتف.');
-            return;
-        }
+        // if (!name_ar) {
+        //     auth.toastError('يرجى إدخال الاسم.');
+        //     return;
+        // }
+        // if (!phone_ar) {
+        //     auth.toastError('يرجى إدخال رقم الهاتف.');
+        //     return;
+        // }
         // if (!email_ar) {
         //     auth.toastError('يرجى إدخال البريد الإلكتروني.');
         //     return;
