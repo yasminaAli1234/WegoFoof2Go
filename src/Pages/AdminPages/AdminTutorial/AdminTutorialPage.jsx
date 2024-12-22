@@ -33,6 +33,7 @@ const AdminTutorialPage = () => {
         },
       });
       if (response.status === 200) {
+        console.log(response.data)
         setTutorialGroups(response.data.tutorial_group);
         setTutorialChanged(response.data.tutorial_group.tutorials);
       }
@@ -274,7 +275,7 @@ const AdminTutorialPage = () => {
                             <PiVideoFill size={30}/>
                             </div>
                             <div className="text-mainColor text-xl mb-1">
-                            {tutorial.title}
+                            {tutorial.name}
                             </div>
                         </button>
                         </Link>

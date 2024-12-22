@@ -168,8 +168,9 @@ const AddStorePage = () => {
         }
     } catch (error) {
         console.log(error.response.data.faild)
-        if(error.response.data.faild=== "You must buy plan"){
-            auth.toastError('You must buy plan first');
+        if(error.response.data.faild=== "You must buy new plan"){
+            auth.toastError('You have exceeded the store limit for this plan. Please consider purchasing a new plan.');
+            handleGoBack();
         }
         const errorMessages = error?.response?.data.errors;
         let errorMessageString = 'Error occurred';

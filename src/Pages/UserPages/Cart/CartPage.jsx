@@ -716,7 +716,7 @@ const CartPage = () => {
             <span>{totalPrice} {t("EGP")}</span>
           </div>
           <div className="flex justify-between text-base sm:text-lg text-red-500 mb-3">
-            <span>{t("Discount:")}</span>
+            <span>{t("Discount")}</span>
             <span>-{discount} {t("EGP")}</span>
           </div>
           <div className="flex justify-between text-base sm:text-lg font-bold text-green-600">

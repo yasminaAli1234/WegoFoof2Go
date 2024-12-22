@@ -374,9 +374,10 @@ const ExtraPage = () => {
                             return (
                                    <div      
                                    key={product.id}
-                                   className={`relative p-6 ${product.my_extra === true && !selectedProductIds.includes(product.id) ? 'bg-blue-800 text-white' : 'text-mainColor'}  shadow-md text-2xl rounded-lg border border-gray-200 hover:shadow-lg transition-all 
+                                   className={`relative flex flex-col justify-between  p-6 ${product.my_extra === true && !selectedProductIds.includes(product.id) ? 'bg-blue-800 text-white' : 'text-mainColor'}  shadow-md text-2xl rounded-lg border border-gray-200 hover:shadow-lg transition-all 
                                    ${selectedProductIds.includes(product.id) ? 'border-green-500 bg-green-100' : ''}`}
                                    >
+                                   <div>
                                           <h2 className="text-center font-semibold text-3xl mb-4">{product.name}</h2>
 
                                           <div className="space-y-3 mb-6">
@@ -401,17 +402,7 @@ const ExtraPage = () => {
                                           </select>
                                           </div>
 
-                                          {/* <div className="text-center mb-4">
-                                          {selectedPeriod !== 'monthly' && (
-                                                 <p className="text-lg text-gray-500">{priceOptions.monthly} {t("EGP")} / {t("month")}</p>
-                                          )}
-                                          <p className="text-3xl font-bold text-mainColor">{currentPrice} {t("EGP")}</p>
-                                          <span className="text-gray-600">{selectedPeriod === 'monthly' ? t('per month') : `per ${selectedPeriod}`}</span>
-                                          {savings > 0 && (
-                                                 <p className="text-green-500 font-semibold mt-2">{t("Save")} {savings} {t("EGP per")} {selectedPeriod}</p>
-                                          )}
-                                          </div>  */}
-
+                            
                                           <div className="text-center mb-4">
                                           {discountedPrice ? (
                                                  <>
@@ -437,139 +428,90 @@ const ExtraPage = () => {
                                                  </>
                                           )}
                                           </div>
-
-
-
-                            {/* <div>
-                            {product.my_extra === true ? (
-                            <button
-                            className="w-full py-3 font-semibold rounded-lg transition-transform transform bg-gray-300 text-gray-800 hover:scale-105"
-                            >
-                            {t("My Extra Product")}
-                            </button>
-                            ) : (
-                            <>
-                            <div className="w-full">
-                                   {!selectedProductIds.includes(product.id) && (
-                                   <button
-                                   onClick={() => handleAddToCart(product)}
-                                   className={`w-full py-3 font-semibold rounded-lg transition-all duration-300 transform 
-                                          ${selectedProductIds.includes(product.id) ? 'bg-red-600 text-white hover:bg-red-700' : 'bg-mainColor text-white hover:bg-blue-700'} 
-                                          hover:scale-105 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mainColor`}
-                                   >
-                                   {t("Add to Cart")}
-                                   </button>
-                                   )}
-
-                                   {selectedProductIds.includes(product.id) && (
-                                   <div className="flex space-x-3 mt-3">
-                                   <button
-                                          onClick={() => handleRemoveFromCart(product)}
-                                          className="w-full text-xl py-3 font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-md"
-                                   >
-                                          {t("Remove from Cart")}
-                                   </button>
-                                   <button
-                                          onClick={() => navigate('../cart')}
-                                          className="w-full text-xl py-3 font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-md"
-                                   >
-                                          {t("Go to Cart")}
-                                   </button>
                                    </div>
-                                   )}
-                            </div>
-                            </>
-                            )}
 
-                            {selectedProductIds.includes(product.id) && (
-                            <div className="absolute top-0 left-0 p-2 bg-green-500 text-white text-sm font-semibold rounded-tr-lg">
-                            {t("selected")}
-                            </div>
-                            )}
-                            </div> */}
-
-                            <div>
-                                   {product.my_extra === true ? (
+                                   <div>
+                                          {product.my_extra === true ? (
+                                                 <>
+                                                 <div className="w-full relative border rounded-lg p-4 bg-gray-50 shadow-lg">
+                                                 {/* Badge indicating "My Plan" */}
+                                                 <div className="absolute flex items-center top-0 left-0 transform -translate-y-2 -translate-x-2 bg-mainColor text-white text-sm font-bold py-2 px-4 rounded-full shadow-lg">
+                                                        <FaCrown  className="fas fa-crown text-yellow-400 mr-1"/> {t("My Extra Product")}
+                                                 </div>
+                                          
+                                                 {/* Upgrade Button */}
+                                                 {!selectedProductIds.includes(product.id) && (
+                                                        <button
+                                                        onClick={() => handleAddToCart(product,event)}
+                                                        className="w-full py-3 mt-4 font-semibold rounded-lg transition-all duration-300 transform bg-blue-800 text-white hover:bg-blue-700 hover:scale-105 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                                                        >
+                                                        {t("Upgrade Now")}
+                                                        </button>
+                                                 )}
+                                          
+                                                 {/* Remove from Cart and Go to Cart Buttons */}
+                                                 {selectedProductIds.includes(product.id)&& (
+                                                        <div className="flex space-x-3 mt-4">
+                                                        <button
+                                                               onClick={() => handleAddToCart(product,event)}
+                                                               className="w-full text-xl py-3 font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-md"
+                                                        >
+                                                               {t("Remove from Cart")}
+                                                        </button>
+                                                        <button
+                                                               onClick={() => navigate('../cart')}
+                                                               className="w-full text-xl py-3 font-semibold text-white bg-green-600 hover:bg-green-700 rounded-lg shadow-md"
+                                                        >
+                                                        {t("Go to Cart")}
+                                                        </button>
+                                                        </div>
+                                                 )}
+                                                 </div>
+                                          </>
+                                          )   
+                                          : (
                                           <>
-                                          <div className="w-full relative border rounded-lg p-4 bg-gray-50 shadow-lg">
-                                          {/* Badge indicating "My Plan" */}
-                                          <div className="absolute flex items-center top-0 left-0 transform -translate-y-2 -translate-x-2 bg-mainColor text-white text-sm font-bold py-2 px-4 rounded-full shadow-lg">
-                                                 <FaCrown  className="fas fa-crown text-yellow-400 mr-1"/> {t("My Extra Product")}
-                                          </div>
-                                   
-                                          {/* Upgrade Button */}
+                                          <div className="w-full">
+                                          {/* Add to Cart Button */}
                                           {!selectedProductIds.includes(product.id) && (
                                                  <button
                                                  onClick={() => handleAddToCart(product,event)}
-                                                 className="w-full py-3 mt-4 font-semibold rounded-lg transition-all duration-300 transform bg-blue-800 text-white hover:bg-blue-700 hover:scale-105 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                                                 className={`w-full py-3 font-semibold rounded-lg transition-all duration-300 transform 
+                                                 ${selectedProductIds.includes(product.id) ? 'bg-red-600 text-white hover:bg-red-700' : 'bg-mainColor text-white hover:bg-blue-700'} 
+                                                 hover:scale-105 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mainColor`}
                                                  >
-                                                 {t("Upgrade Now")}
+                                                 {t("Add to Cart")}
                                                  </button>
                                           )}
-                                   
+
                                           {/* Remove from Cart and Go to Cart Buttons */}
                                           {selectedProductIds.includes(product.id)&& (
-                                                 <div className="flex space-x-3 mt-4">
+                                                 <div className="flex space-x-3 mt-3">
                                                  <button
-                                                        onClick={() => handleAddToCart(product,event)}
-                                                        className="w-full text-xl py-3 font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-md"
+                                                 onClick={() => handleAddToCart(product,event)}
+                                                 className="w-full text-xl py-3 font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-md"
                                                  >
-                                                        {t("Remove from Cart")}
+                                                 {t("Remove from Cart")}
                                                  </button>
                                                  <button
-                                                        onClick={() => navigate('../cart')}
-                                                        className="w-full text-xl py-3 font-semibold text-white bg-green-600 hover:bg-green-700 rounded-lg shadow-md"
+                                                 onClick={() => navigate('../cart')}
+                                                 className="w-full text-xl py-3 font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-md"
                                                  >
-                                                       {t("Go to Cart")}
+                                                 {t("Go to Cart")}
                                                  </button>
                                                  </div>
                                           )}
                                           </div>
-                                   </>
-                                   )   
-                                   : (
-                                   <>
-                                   <div className="w-full">
-                                   {/* Add to Cart Button */}
-                                   {!selectedProductIds.includes(product.id) && (
-                                          <button
-                                          onClick={() => handleAddToCart(product,event)}
-                                          className={`w-full py-3 font-semibold rounded-lg transition-all duration-300 transform 
-                                          ${selectedProductIds.includes(product.id) ? 'bg-red-600 text-white hover:bg-red-700' : 'bg-mainColor text-white hover:bg-blue-700'} 
-                                          hover:scale-105 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mainColor`}
-                                          >
-                                          {t("Add to Cart")}
-                                          </button>
-                                   )}
+                                          </>
+                                          )}
 
-                                   {/* Remove from Cart and Go to Cart Buttons */}
-                                   {selectedProductIds.includes(product.id)&& (
-                                          <div className="flex space-x-3 mt-3">
-                                          <button
-                                          onClick={() => handleAddToCart(product,event)}
-                                          className="w-full text-xl py-3 font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-md"
-                                          >
-                                          {t("Remove from Cart")}
-                                          </button>
-                                          <button
-                                          onClick={() => navigate('../cart')}
-                                          className="w-full text-xl py-3 font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-md"
-                                          >
-                                          {t("Go to Cart")}
-                                          </button>
+                                          {/* "Selected" Label */}
+                                          {selectedProductIds.includes(product.id) && (
+                                          <div className="absolute top-0 left-0 p-2 bg-green-500 text-white text-sm font-semibold rounded-tr-lg">
+                                          {t("Selected")}
                                           </div>
-                                   )}
+                                          )}
                                    </div>
-                                   </>
-                                   )}
-
-                                   {/* "Selected" Label */}
-                                   {selectedProductIds.includes(product.id) && (
-                                   <div className="absolute top-0 left-0 p-2 bg-green-500 text-white text-sm font-semibold rounded-tr-lg">
-                                   {t("Selected")}
-                                   </div>
-                                   )}
-                            </div>
 
                             </div>
                             );

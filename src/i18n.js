@@ -137,7 +137,9 @@ const resources = {
       "plans" :"plans",
       "Change Language":"Change Language",
       "Close":"Close",
-      "Select Language":"Select Language"
+      "Select Language":"Select Language",
+      "Discount" :"Discount",
+
       // Add more translations
     },
   },
@@ -205,7 +207,7 @@ const resources = {
       "Order Summary":"ملخص الطلب",
       "Total Price:" :":السعر الإجمالي",
       "EGP" :"جنيه مصري",
-      "Discount:" :":الخصم",
+      "Discount" :"الخصم",
       "Total After Discount:":"الإجمالي بعد الخصم",
       "Have a Promo Code?" :"هل لديك رمز ترويجي؟",
       "Applying...":"...يتم التطبيق",
