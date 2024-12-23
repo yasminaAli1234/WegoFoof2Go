@@ -187,9 +187,9 @@ const PaymentPage = () => {
                                         <h4 className="text-xl font-semibold text-blue-600">Plan Details</h4>
                                         <div className="text-gray-700 pl-4 text-xl">
                                         <p><span className="font-semibold">Name:</span> {order.plans?.name || '-'}</p>
-                                        <p><span className="font-semibold">SetUp Fees: </span>{order.plans?.setup_fees || '0.00'} LE</p>
-                                        <p><span className="font-semibold">Price Per Month: </span>{order.plans?.price_per_month || '0.00'} LE</p>
-                                        <p><span className="font-semibold">Price Per Year: </span>{order.plans?.price_per_year || '0.00'} LE</p>
+                                        <p><span className="font-semibold">Total Price : </span>{order.price_item || '0.00'} LE</p>
+                                        <p><span className="font-semibold">Duration: </span>{order.price_cycle || '-'}</p>
+                                        {/* <p><span className="font-semibold">Price Per Year: </span>{order.plans?.price_per_year || '0.00'} LE</p> */}
                                         <p><span className="font-semibold">Limit Store:</span> {order.plans?.limet_store || 'N/A'}</p>
                                         <p><span className="font-semibold">Included App:</span> {order.plans?.app === "1" ?"True" : "False" || 'N/A'}</p>
                                         </div>
@@ -202,7 +202,7 @@ const PaymentPage = () => {
                                         <h4 className="text-lg font-semibold text-green-600">Domain Details</h4>
                                         <div className="text-gray-700 pl-4 text-xl">
                                                 <p><span className="font-semibold">Domain Name:</span> {order.domain.name || '-'}</p>
-                                                <p><span className="font-semibold">Price:</span> {order.domain.price || '-'}</p>
+                                                <p><span className="font-semibold">Total Price :</span> {order.price_cycle || '-'}</p>
                                                 <p><span className="font-semibold">Store Name:</span> {order.domain.status || '-'}</p>
                                         </div>
                                         </div>
@@ -213,6 +213,8 @@ const PaymentPage = () => {
                                         <h4 className="text-lg font-semibold text-purple-600">Extra Product</h4>
                                         <div className="text-gray-700 pl-4 text-xl">
                                                 <p><span className="font-semibold">Product Name:</span> {order.extra?.name || '-'}</p>
+                                                <p><span className="font-semibold">Total Price : </span>{order.price_item || '0.00'} LE</p>
+                                                <p><span className="font-semibold">Duration: </span>{order.price_cycle || '-'}</p>
                                         </div>
                                         </div>
                                         )}
