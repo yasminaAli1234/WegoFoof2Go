@@ -635,6 +635,7 @@ const AddPlanPage = () => {
                         Size="text-2xl"
                         px="px-28"
                         rounded="rounded-2xl"
+                        stateLoding={isLoading}
                     />
                 </div>
                 <button onClick={handleGoBack} className="text-2xl text-mainColor">Cancel</button>

@@ -137,7 +137,10 @@ const resources = {
       "plans" :"plans",
       "Change Language":"Change Language",
       "Close":"Close",
-      "Select Language":"Select Language"
+      "Select Language":"Select Language",
+      "approved":"approved",
+      "rejected":"rejected"
+
       // Add more translations
     },
   },
@@ -156,6 +159,8 @@ const resources = {
       "Product Type :" :" :نوع المنتج ",
       "Product Name :":":اسم المنتج",
       "plans":"خطط",
+      "approved":"معتمد",
+      "rejected":"مرفوض",
       "Select Language":"اختار اللغة",
       "Change Language":"تغير اللغة",
       "Close":"الغاء",
@@ -316,7 +321,7 @@ const resources = {
       "No Extra Products Available": "لا توجد منتجات إضافية متاحة",
       "Request New Extra Product": "طلب منتج إضافي جديد",
       "Learn and Grow": "تعلم وتطور",
-      "contact_us" :"التواصل معنا ",
+      "contact_us" :"تواصل معنا ",
       "Get in Touch with Us" : "تواصل معنا" ,
       "We’re here to help! Reach out via phone, WhatsApp, or email." :"نحن هنا لمساعدتك! تواصل معنا عبر الهاتف أو الواتساب أو البريد الإلكتروني",
       "Copy Number" :"نسخ الرقم",

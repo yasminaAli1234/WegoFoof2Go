@@ -61,35 +61,27 @@ const AddAdminTutorialPage = () => {
   
       if (response.status === 200) {
         auth.toastSuccess(
-          language === "ar"
-            ? "تمت إضافة المجموعة التعليمية بنجاح!"
-            : "Tutorial Group added successfully!"
+         "Tutorial Group added successfully!"
         );
         handleGoBack();
       } else {
         console.error(
-          language === "ar"
-            ? "فشل في إضافة المجموعة التعليمية:"
-            : "Failed to add Tutorial Group:",
+          "Failed to add Tutorial Group:",
           response.status,
           response.statusText
         );
         auth.toastError(
-          language === "ar"
-            ? "فشل في إضافة المجموعة التعليمية."
-            : "Failed to add Tutorial Group."
+        "Failed to add Tutorial Group."
         );
       }
     } catch (error) {
       console.error(
-        language === "ar"
-          ? "خطأ أثناء إضافة المجموعة التعليمية:"
-          : "Error adding Tutorial Group:",
+       "Error adding Tutorial Group:",
         error?.response?.data?.errors || "Network error"
       );
   
       const errorMessages = error?.response?.data?.errors;
-      let errorMessageString = language === "ar" ? "حدث خطأ" : "Error occurred";
+      let errorMessageString =  "Error occurred";
   
       if (errorMessages) {
         errorMessageString = Object.values(errorMessages).flat().join(" ");

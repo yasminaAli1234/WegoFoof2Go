@@ -132,7 +132,7 @@ const PaymentHistoryPage = () => {
                                                         </td>
                                                         <td
                                                                 className={`min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center ${payment.status === "approved" ? "text-green-500" : "text-red-500"} text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden`}>
-                                                                {payment?.status || '_'}
+                                                                {t(payment?.status) || '_'}
                                                         </td>
                                                 </tr>
                                         ))}

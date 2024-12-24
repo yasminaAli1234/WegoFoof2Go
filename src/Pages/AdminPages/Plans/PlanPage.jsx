@@ -17,6 +17,7 @@ import { FaCrown } from "react-icons/fa";
 const PlanPage = () => {
 
     const auth = useAuth();
+    const [expanded,setExpanded] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [plans, setPlans] = useState('');
     const [planChanged, setPlanChanged] = useState(false);
@@ -28,6 +29,10 @@ const PlanPage = () => {
     const [selectedPlanId, setSelectedPlanId] = useState(null);
     const {t,i18n} = useTranslation();
 
+    const togleeExpanded= ()=>{
+    setExpanded(pre=>!pre);
+
+    }
     const fetchData = async () => {
         setIsLoading(true);
         try {
@@ -240,7 +245,12 @@ const PlanPage = () => {
       
                           {/* Plan Details */}
                           <div className="space-y-4 mb-6">
-                              <p className="text-sm text-gray-600">{plan.description}</p>
+                          <p 
+  onClick={() => setExpanded(!expanded)} 
+  className="text-sm text-gray-600 cursor-pointer"
+>
+  {expanded ? plan.description : `${plan.description.slice(0, 30)}...`}
+</p>
                               <p className="flex items-center gap-2"><PiStorefront size={26} /><span className="font-semibold">{t("Number of stores:")}</span> {convertNumberToArabic(plan.limet_store ,i18n.language)|| '0'}</p>
                               <p className="flex items-center gap-2"><CiMoneyCheck1 size={30} className='text-mainColor' /><span className="font-semibold text-mainColor">{t("SetUp Fees:")}</span> {convertNumberToArabic(plan.setup_fees,i18n.language) || '0'} {t("EGP")}</p>
                               <div className="flex flex-wrap items-center gap-x-4 w-full">

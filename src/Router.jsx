@@ -159,7 +159,7 @@ export const router = createBrowserRouter([
       path: "verification",
       element: <EmailVerification />,
     },
-
+    
     //SignUp user page
     {
       path: "signUp",
