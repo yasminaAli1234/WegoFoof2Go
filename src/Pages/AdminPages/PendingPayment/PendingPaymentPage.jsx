@@ -94,6 +94,7 @@ const [selectedOrders, setSelectedOrders] = useState([]);
                 ...prevStatuses,
                 [selectedPaymentId]: selectedOption
               }));
+              window.location.reload();
             } else {
               console.error(`Failed to send ${selectedOption} action`);
             }

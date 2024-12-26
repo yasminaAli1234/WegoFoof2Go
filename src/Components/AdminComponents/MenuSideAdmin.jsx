@@ -600,10 +600,10 @@ const MenuSideAdmin = ({setIsSidebarOpen }) => {
                                           <WelcomOfferIcon isActive={isActiveWelcomOffer} />
                                           <span className={`${isActiveWelcomOffer ? "text-mainColor" : "text-secoundColor"} text-lg font-medium`}>Welcome Offer</span>
                                    </Link>
-                                   <Link to="demo_request" onClick={() =>{handleClickDemoRequest();handleLinkClick();}} className={`${isActiveDemoRequest ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
+                                   {/* <Link to="demo_request" onClick={() =>{handleClickDemoRequest();handleLinkClick();}} className={`${isActiveDemoRequest ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <DemorequestsIcon isActive={isActiveDemoRequest} />
                                           <span className={`${isActiveDemoRequest ? "text-mainColor" : "text-secoundColor"} text-lg font-medium`}>Demo Requests</span>
-                                   </Link>
+                                   </Link> */}
                                    <Link to="domain_request" onClick={() =>{handleClickDomainRequest();handleLinkClick();}} className={`${isActiveDomainRequest ? 'active' : ''} w-full flex items-center justify-start px-0 py-2 gap-x-5`}>
                                           <DomainIcon isActive={isActiveDomainRequest} />
                                           <span className={`${isActiveDomainRequest ? "text-mainColor" : "text-secoundColor"} text-lg font-medium`}>Domain Requests</span>

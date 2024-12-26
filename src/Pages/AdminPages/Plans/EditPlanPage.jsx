@@ -92,7 +92,7 @@ const EditPlanPage =()=>{
             setDescription(planEdit.description|| '');
             setFee(planEdit.setup_fees|| 0);
             setLimitPlan(planEdit.limet_store|| '');
-            setAppActive(planEdit.app|| '');
+            setAppActive(planEdit.app||0);
 
             if(planEdit.monthly){
                 setShowMonthlyPriceInput(true)

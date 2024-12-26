@@ -217,6 +217,11 @@ const CheckoutPage = () => {
       if (thumbnailFile) {
         formData.append("invoice_image", thumbnailFile);
       }
+
+      for (let pair of formData.entries()) {
+        console.log(pair[0] + ', ' + pair[1]);
+    } 
+
             try {
         setIsLoading(true); // Set loading state
   

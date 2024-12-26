@@ -24,19 +24,15 @@ const ProtectedRoute = ({ allowedRoles }) => {
        if (!hasPermission) {
               if (auth.user.role === "admin") {
                      return <Navigate to={'/dashboard_admin'} />;
-                     // return window.location.href = "https://login.elmanhag.shop/dashboard_admin";
               }else if(auth.user.role === "user") {
                      return <Navigate to={'/dashboard_user'} />;
-                     // return window.location.href = "https://login.elmanhag.shop/dashboard_admin";
               }
             else {
                      console.log('5')
                      return <Navigate to={'/'} />;
               }
        }
-       // if (location.pathname == 'login.elmanhag.shop') {
-       //        return window.location.href = "https://elmanhag.com";
-       // }
+
 
        return <Outlet />;
 };

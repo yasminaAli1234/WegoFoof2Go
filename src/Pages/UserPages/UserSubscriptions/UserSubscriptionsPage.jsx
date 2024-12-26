@@ -187,13 +187,13 @@ const UserSubscriptionsPage = () => {
                 };
     
                 // Update cart based on the selected plan
-                if (selectedPlanId === plan.id) {
+                if (selectedPlanId == plan.id) {
                     setSelectedPlanId(null);
                     dispatch(removeFromCart(planWithPeriodAndPrice));
                     localStorage.removeItem('selectedPlanId');
                 } else {
                     if (selectedPlanId !== null) {
-                        const previousPlan = plans.find((p) => p.id === selectedPlanId);
+                        const previousPlan = plans.find((p) => p.id == selectedPlanId);
                         const previousPrice = priceOptions[billingPeriod[previousPlan.id] || 'monthly'];
                         const previousPlanWithPeriodAndPrice = {
                             ...previousPlan,
@@ -286,15 +286,15 @@ const UserSubscriptionsPage = () => {
                 return (
                     <div
                         key={plan.id}
-                        className={`relative p-6 transition-all duration-300 ease-in-out transform rounded-lg shadow-lg hover:shadow-xl border border-gray-200 hover:scale-105 
-                            ${selectedPlanId == plan.id ? 'border-green-500 bg-green-100' : 'bg-white text-mainColor'}`}
+                        className={`relative flex flex-col justify-between p-6 text-mainColor transition-all duration-300 ease-in-out transform rounded-lg shadow-lg hover:shadow-xl border border-gray-200 hover:scale-105 
+                        ${selectedPlanId === plan.id ? 'border-green-500 bg-green-100' : ''} ${plan.my_plan === true && selectedPlanId !== plan.id? 'bg-mainColor text-white' : ''}  `}
                     >
+                    <div>
                         {/* Header */}
                         <h2 className="text-center font-bold text-2xl mb-4">{plan.name}</h2>
-    
                         {/* Plan Details */}
                         <div className="space-y-4 mb-6">
-                            <p className="text-sm text-gray-600">{plan.description}</p>
+                            <p className="text-sm">{plan.description}</p>
                             <p className="flex items-center gap-2"><PiStorefront size={26} /><span className="font-semibold">{t("Number of stores:")}</span> {convertNumberToArabic(plan.limet_store ,i18n.language)|| '0'}</p>
     
                             {plan.my_plan !== true && (
@@ -323,7 +323,7 @@ const UserSubscriptionsPage = () => {
                             {discountedPrice ? (
                                 <>
                                     <p className="text-lg line-through">{convertNumberToArabic(currentPrice,i18n.language)} {t("EGP")}</p>
-                                    <p className="text-3xl font-semibold text-mainColor">{convertNumberToArabic(discountedPrice,i18n.language)} {t("EGP")}</p>
+                                    <p className="text-3xl font-semibold ">{convertNumberToArabic(discountedPrice,i18n.language)} {t("EGP")}</p>
                                     <p className="text-green-500 font-semibold mt-2">{t("Save")} {convertNumberToArabic(savings,i18n.language)} {t("EGP")} {t("per")} {t(selectedPeriod)}</p>
                                 </>
                             ) : (
@@ -344,7 +344,8 @@ const UserSubscriptionsPage = () => {
                                 </>
                             )}
                         </div>
-    
+                    </div>
+
                         {/* Plan Buttons */}
                         <div>
                             {plan.my_plan === true ? (
