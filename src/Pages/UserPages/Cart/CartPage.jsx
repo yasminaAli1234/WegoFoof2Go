@@ -458,6 +458,7 @@ import axios from 'axios';
 import { useAuth } from "../../../Context/Auth";
 
 import { useTranslation } from 'react-i18next';
+import { convertNumberToArabic } from '../../../Components/convert_number';
 
 const CartPage = () => {
   const auth = useAuth();
@@ -469,7 +470,7 @@ const CartPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   // const capitalizeFirstLetter = (str) => str.charAt(0).toUpperCase() + str.slice(1);
-  const {t} = useTranslation()
+  const {t,i18n} = useTranslation()
 
   const calculateTotal = () => {
     return cartItems
@@ -623,10 +624,10 @@ const CartPage = () => {
                   </p> */}
                   <div className='flex flex-col'>
                   <p className="text-base sm:text-lg font-semibold text-gray-800">
-                  {t("One time setup fees :")} {(item.setup_fees || 0).toFixed(2)} {t("EGP")}
+                  {t("One time setup fees :")} {(convertNumberToArabic(item.setup_fees ,i18n.language)|| 0)} {t("EGP")}
                   </p>
                   <p className="text-base sm:text-lg font-semibold text-gray-800">
-                  {item.billingPeriod } {t("subscription")} : {(item.finalprice - item.setup_fees || item.price || 0).toFixed(2)} {t("EGP")}
+                  {item.billingPeriod } {t("subscription")} : {(convertNumberToArabic(item.finalprice - item.setup_fees,i18n.language) || convertNumberToArabic(item.price,i18n.language) || 0)} {t("EGP")}
                   </p>
                   </div>
                 </div>
@@ -643,8 +644,8 @@ const CartPage = () => {
                       className="bg-gray-50 border border-gray-300 text-gray-700 rounded-md p-2 focus:ring-2 focus:ring-blue-400"
                     >
                       <option value="monthly">Monthly</option>
-                      <option value="quarterly">3 Months</option>
-                      <option value="semiAnnually">6 Months</option>
+                      <option value="quarterly">{convertNumberToArabic(3,i18n.language)} Months</option>
+                      <option value="semiAnnually">{convertNumberToArabic(6,i18n.language)} Months</option>
                       <option value="annually">Yearly</option>
                     </select>
                   </div>
@@ -664,8 +665,8 @@ const CartPage = () => {
                       className="bg-gray-50 border border-gray-300 text-gray-700 rounded-md p-2 focus:ring-2 focus:ring-blue-400"
                     >
                       <option value="monthly">Monthly</option>
-                      <option value="quarterly">3 Months</option>
-                      <option value="semiAnnually">6 Months</option>
+                      <option value="quarterly">{convertNumberToArabic(3,i18n.language)} Months</option>
+                      <option value="semiAnnually">{convertNumberToArabic(6,i18n.language)} Months</option>
                       <option value="annually">Yearly</option>
                     </select>
                   </div>
@@ -713,15 +714,15 @@ const CartPage = () => {
           <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-4">{t("Order Summary")}</h3>
           <div className="flex justify-between text-base sm:text-lg mb-3">
             <span>{t("Total Price:")}</span>
-            <span>{totalPrice} {t("EGP")}</span>
+            <span>{convertNumberToArabic(totalPrice,i18n.language)} {t("EGP")}</span>
           </div>
           <div className="flex justify-between text-base sm:text-lg text-red-500 mb-3">
             <span>{t("Discount:")}</span>
-            <span>-{discount} {t("EGP")}</span>
+            <span>-{convertNumberToArabic(discount,i18n.language)} {t("EGP")}</span>
           </div>
           <div className="flex justify-between text-base sm:text-lg font-bold text-green-600">
             <span>{t("Total After Discount:")}</span>
-            <span>{discountedPrice || totalPrice} {t("EGP")}</span>
+            <span>{convertNumberToArabic(discountedPrice,i18n.language) || convertNumberToArabic(totalPrice,i18n.language)} {t("EGP")}</span>
           </div>
         </div>
 

@@ -11,6 +11,7 @@ import CheckBox from '../../../Components/CheckBox';
 import PaymentModel from '../../../Components/PaymentModel';
 import { useTranslation } from 'react-i18next';
 import i18n from '../../../i18n';
+import { convertNumberToArabic } from '../../../Components/convert_number';
 
 const PaymentHistoryPage = () => {
         const { t } = useTranslation();
@@ -103,7 +104,7 @@ const PaymentHistoryPage = () => {
                                                         <td
                                                                 className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                                         >
-                                                                {index + 1}
+                                                                {convertNumberToArabic(index + 1,i18n.language)}
                                                         </td>
                                                         <td
                                                                 className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"

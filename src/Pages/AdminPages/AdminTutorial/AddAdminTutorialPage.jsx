@@ -97,7 +97,6 @@ const AddAdminTutorialPage = () => {
     const newLanguage = language === 'en' ? 'ar' : 'en'; 
     setLanguage(newLanguage); 
 };
-
   return (
     <div className="">
         <Button 

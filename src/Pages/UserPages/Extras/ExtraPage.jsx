@@ -246,9 +246,9 @@ const ExtraPage = () => {
 
                                           <p> {product.description}</p>
                                           {product.my_extra !== true && (              
-                                          <p className="flex items-center gap-2"><CiMoneyCheck1 size={30} className='font-semibold' /><span className="font-semibold">{t("SetUp Fees")}:</span> {product.setup_fees || '0'} {t("EGP")}</p>
+                                          <p className="flex items-center gap-2"><CiMoneyCheck1 size={30} className='font-semibold' /><span className="font-semibold">{t("SetUp Fees")}:</span> {convertNumberToArabic(product.setup_fees ,i18n.language)|| convertNumberToArabic(0,i18n.language)} {t("EGP")}</p>
                                           )}
-                                          <p className="flex items-center gap-2"><MdAttachMoney size={30} className='font-semibold' /><span className="font-semibold">{t("price")}:</span> {product.price || '0'} {t("EGP")}</p>
+                                          <p className="flex items-center gap-2"><MdAttachMoney size={30} className='font-semibold' /><span className="font-semibold">{t("price")}:</span> {convertNumberToArabic(product.price,i18n.language) || convertNumberToArabic(0,i18n.language)} {t("EGP")}</p>
                                    </div> 
 
                                    <div>
@@ -430,7 +430,7 @@ const ExtraPage = () => {
                                                  ):
                                                  (
                                                         <p className="text-green-500 font-semibold mt-2">
-                                                        {t("Save")} 0 {t('EGP')}
+                                                        {t("Save")} {convertNumberToArabic(0,i18n.language)} {t('EGP')}
                                                         </p>
                                                  )
                                                  }

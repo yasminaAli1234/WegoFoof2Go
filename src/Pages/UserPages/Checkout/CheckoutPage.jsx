@@ -8,6 +8,7 @@ import { useLocation ,useNavigate} from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from 'react-redux';
 import { clearCart} from '../../../Redux/CartSlice.js';
+import { convertNumberToArabic } from '../../../Components/convert_number';
 
 const CheckoutPage = () => {
   const auth = useAuth();
@@ -397,19 +398,19 @@ const CheckoutPage = () => {
       {/* Display total price */}
       <div className="flex justify-between text-lg text-gray-700 mb-3">
         <span className="font-medium">{t("Total Price:")}</span>
-        <span className="font-semibold text-mainColor">{totalPrice} {t("EGP")}</span>
+        <span className="font-semibold text-mainColor">{convertNumberToArabic(totalPrice,i18n.language)} {t("EGP")}</span>
       </div>
 
       {/* Display discount */}
       <div className="flex justify-between text-lg text-gray-700 mb-3">
         <span className="font-medium">{t("Discount:")}</span>
-        <span className="font-semibold text-red-600">{discount} {t("EGP")}</span>
+        <span className="font-semibold text-red-600">{convertNumberToArabic(discount,i18n.language)} {t("EGP")}</span>
       </div>
 
       {/* Display total after discount */}
       <div className="flex justify-between text-lg font-bold text-gray-900">
         <span>{t("Total Price After Discount:")}</span>
-        <span className="text-green-600">{discountedPrice} {t("EGP")}</span>
+        <span className="text-green-600">{convertNumberToArabic(discountedPrice,i18n.language)} {t("EGP")}</span>
       </div>
         </div>
 
