@@ -5,7 +5,6 @@ const resources = {
   en: {
     translation: {
       "monthly":"monthly",
-      "quarterly":"quarterly",
       "semiAnnually" :"semiAnnually",
       "annually":"annually",
       "hello": "Hello",
@@ -108,10 +107,6 @@ const resources = {
       "EGP": "EGP",
       "month": "month",
       "quarterly": "Quarterly",
-      "semiAnnually": "Semi-Annually",
-      "annually": "Annually",
-
-
       "Welcome !": "Welcome !",
       "Here’s an overview of your dashboard": "Here’s an overview of your dashboard",
       "Create Store": "Create Store",
@@ -139,9 +134,7 @@ const resources = {
       "Close":"Close",
       "Select Language":"Select Language",
       "Discount" :"Discount",
-,
-      "approved":"approved",
-      "rejected":"rejected"
+    
 
       // Add more translations
     },
@@ -161,7 +154,6 @@ const resources = {
       "Product Type :" :" :نوع المنتج ",
       "Product Name :":":اسم المنتج",
       "plans":"خطط",
-      "approved":"معتمد",
       "rejected":"مرفوض",
       "Select Language":"اختار اللغة",
       "Change Language":"تغير اللغة",
@@ -205,13 +197,11 @@ const resources = {
       "status": "الحالة",
       "pending": "معلق",
       "approved": "موافق عليه",
-      "rejected": "مرفوض",
       "Your cart is empty.": "عربة التسوق الخاصة بك فارغة.",
       "Clear Cart":"إفراغ السلة",
       "Proceed to Checkout":"الانتقال إلى الدفع",
       "Order Summary":"ملخص الطلب",
-      "Total Price:" :":السعر الإجمالي",
-      "EGP" :"جنيه مصري",
+      
       "Discount" :"الخصم",
       "Total After Discount:":"الإجمالي بعد الخصم",
       "Have a Promo Code?" :"هل لديك رمز ترويجي؟",
@@ -226,15 +216,13 @@ const resources = {
       "Submit Order" :"إرسال الطلب",
       "Order Request Successful!" :"!تمت عملية طلب الطلب بنجاح",
       "Thank you for your order! We’ll be in touch with you shortly to confirm the details.":".شكرًا لطلبك! سنتواصل معك قريبًا لتأكيد التفاصيل",
-      "Close" :"إغلاق",
-      "Proceed to Checkout" : "الانتقال إلى الدفع" ,
-      "My Extra Product" :"منتجي الإضافي",
+      
       "Upgrade Now" :"ترقية الآن",
       "Remove from Cart" :"إزالة من السلة",
       "Go to Cart" :"انتقل إلى السلة",
       "Add to Cart" :"أضف إلى السلة",
       "Selected" :"تم الاختيار",
-      "Save" :"حفظ",
+      
       "per" :"لكل",
       "Price :" :":السعر",
       "Renew Date :" :":تاريخ التجديد",
@@ -244,9 +232,7 @@ const resources = {
       "noApprovedRequests": "لا توجد طلبات نطاقات موافقة",
       "noRejectedRequests": "لا توجد طلبات نطاقات مرفوضة",
       "price": "السعر",
-      "Add to Cart": "أضف إلى السلة",
-      "Remove from Cart": "إزالة من السلة",
-      "Go to Cart": "اذهب إلى السلة",
+    
       "reason": "سبب الرفض",
       "selected": "محدد",
       "rejectedReason": "سبب الرفض",
@@ -268,7 +254,7 @@ const resources = {
       "Invoice": "الفاتورة",
       "Action": "الإجراء",
       "plan": "الخطة",
-      "Your Plan": "Your Plan",
+      
       "View Services": "عرض الخدمات",
       "View Invoice": "عرض الفاتورة",
       "Service Details": "تفاصيل الخدمة",
@@ -295,15 +281,11 @@ const resources = {
       "6 Months": "٦ أشهر",
       "Yearly": "سنوي",
       "per month": "شهريًا",
-      "per": "لكل",
+      
       "Save": "وفر",
       "EGP per": "جنيه لكل",
       "EGP": "جنيه",
-      "month": "شهر",
-      "quarterly": "ربع سنوي",
-      "semiAnnually": "نصف سنوي",
-      "annually": "سنويًا",
-
+      
       "Welcome !": "مرحبًا !",
       "Here’s an overview of your dashboard": "إليك نظرة عامة على لوحتك",
       "Create Store": "إنشاء متجر",
