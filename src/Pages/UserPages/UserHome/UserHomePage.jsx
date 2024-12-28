@@ -19,6 +19,8 @@ const UserHomePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate(); // Replace useHistory with useNavigate
   const { t } = useTranslation();
+  const [selectedPlanId, setSelectedPlanId] = useState(null)
+  const [userData, setUserData] = useState('');
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -58,15 +60,37 @@ const UserHomePage = () => {
     }
   };
 
+  const ProfilefetchData = async () => {
+    setIsLoading(true);
+    try {
+        const response = await axios.get(' https://www.wegostores.com/user/v1/profile', {
+            headers: {
+                Authorization: `Bearer ${auth.user.token}`,
+            },
+        });
+        if (response.status === 200) {
+            console.log(response.data)
+            setUserData(response.data.user);
+        }
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    } finally {
+        setIsLoading(false);
+    }
+    };
+
   useEffect(() => {
       fetchData();
       fetchTutorial();
-     
+      ProfilefetchData()
   }, []);
 
-    useEffect(() => {
-      fetchData();
-    }, []); 
+  useEffect(() => {
+    const savedPlanId = localStorage.getItem('selectedPlanId');
+    if (savedPlanId) {
+        setSelectedPlanId(savedPlanId);
+    }
+  }, []);
 
     if (isLoading) {
       return (
@@ -85,7 +109,11 @@ const UserHomePage = () => {
           
           <div className="p-2 xl:p-6 bg-gray-50 min-h-screen font-sans">
           <div className="w-full">
-  <UserSelect />
+            {
+              !selectedPlanId && (
+                <UserSelect />
+              )
+            }
 </div>
     {/* Header */}
     <header className="flex flex-col sm:flex-row sm:justify-between sm:items-center bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-6 rounded-xl shadow-lg mb-8">
@@ -114,9 +142,31 @@ const UserHomePage = () => {
         <h2 className="text-xl font-semibold text-gray-800 mb-4 text-center">
           {t("Your Plan")}
         </h2>
-        <p className="text-gray-600 mb-6 text-xl">
+        <p className="text-gray-600  mb-2  text-xl">
           {t("Plan")}: <strong className="text-gray-800">{data.plan?.name || t("No Plan Available")}</strong>
         </p>
+
+        <p className="text-gray-600  mb-2 text-xl">
+        {t("Plan Duration")}: 
+          <strong className="text-gray-800">
+            {userData.package === "1" 
+              ? "Monthly" 
+              : userData.package === "3" 
+              ? "3 Months" 
+              : userData.package === "6" 
+              ? "6 Months" 
+              : userData.package === "yearly" 
+              ? "Yearly" 
+              : t("-")}
+          </strong>
+        </p>
+        <p className="text-gray-600 mb-2 text-xl">
+          {t("Start Date")}: <strong className="text-gray-800">{userData.start_date ||'0'}</strong>
+        </p>
+        <p className="text-gray-600 mb-2 text-xl">
+          {t("Expire Date")}: <strong className="text-gray-800">{userData.expire_date ||'0'}</strong>
+        </p>
+
         <Link to="subscription" className="mt-auto text-center bg-blue-800 text-white px-4 py-3 rounded-lg hover:bg-blue-900 text-xl transition font-semibold">
           <button>
             {t("Upgrade Plan")}
@@ -188,7 +238,7 @@ const UserHomePage = () => {
             <p className="text-gray-600 text-xl">{t("No Extra Products Available")}</p>
           )}
         </div>
-        <Link to="buy_domain" className="mt-auto text-center bg-blue-800 text-white px-4 py-3 rounded-lg hover:bg-blue-900 text-xl transition font-semibold">
+        <Link to="extra" className="mt-auto text-center bg-blue-800 text-white px-4 py-3 rounded-lg hover:bg-blue-900 text-xl transition font-semibold">
           <button>
           {t("Request New Extra Product")}
           </button>
@@ -202,12 +252,14 @@ const UserHomePage = () => {
         </h2>
         <ul className="space-y-3 mb-6">
           {tutorialGroups.map((tutorial, index) => (
-            <li key={index} className="text-blue-500 text-xl font-medium hover:underline">
+            <Link to="tutorial" className="text-blue-500 text-xl font-medium hover:underline">
+            <li key={index}>
               {tutorial.name}
             </li>
+            </Link>
           ))}
         </ul>
-        <Link to="buy_domain" className="mt-auto text-center bg-blue-800 text-white px-4 py-3 rounded-lg hover:bg-blue-900 text-xl transition font-semibold">
+        <Link to="tutorial" className="mt-auto text-center bg-blue-800 text-white px-4 py-3 rounded-lg hover:bg-blue-900 text-xl transition font-semibold">
           <button>
           {t("Explore Tutorials")}
           </button>
