@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { clearCart, updateCartItem ,removeFromCart} from '../../../Redux/CartSlice.js';
 import axios from 'axios';
 import { useAuth } from "../../../Context/Auth";
-
+import Loading from '../../../Components/Loading.jsx';
 import { useTranslation } from 'react-i18next';
 import { convertNumberToArabic } from '../../../Components/convert_number';
 
@@ -30,7 +30,7 @@ const CartPage = () => {
             },
           });
       if (response.status === 200) {
-        console.log(response.data)
+        console.log(response.data.welcome_offer)
         setData(response.data.welcome_offer);
       } else {
         console.error('Error fetching data:', response.status);
@@ -164,6 +164,19 @@ const CartPage = () => {
 
   const totalPrice = calculateTotal();
 
+  if (isLoading) {
+    return (
+      <div className="w-1/4 h-full flex items-start mt-[10%] justify-center m-auto">
+        <Loading />
+      </div>
+    );
+}    
+  
+if (!data) {
+    return <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No plans data available</div>;
+}
+
+
   return (
 
   <div className='flex flex-col bg-gray-50 w-full p-4 xl:p-6'>
@@ -197,7 +210,7 @@ const CartPage = () => {
                   </p>
                   </div>
                 </div>
-                {(item.type === "plan"  && (item.id === data.id)) && (
+                {item.type === "plan" && (item.id !== data?.plan?.id) && (
                   <div className="flex flex-wrap items-center mt-3 sm:mt-4">
                     <label className="text-sm font-semibold text-gray-600 mr-3">
                       {t("Billing Period:")}
