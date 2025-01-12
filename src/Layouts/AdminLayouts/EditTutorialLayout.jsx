@@ -25,7 +25,7 @@ const EditAdminTutorialLayout = () => {
               const fetchData = async () => {
                      setIsLoading(true);
                      try {
-                            const response = await axios.get(' https://www.wegostores.com/admin/v1/tutorial_group', {
+                            const response = await axios.get(' https://login.wegostores.com/admin/v1/tutorial_group', {
                                    headers: {
                                           Authorization: `Bearer ${auth.user.token}`,
                                    },
@@ -46,7 +46,7 @@ const EditAdminTutorialLayout = () => {
         const fetchData_ar = async () => {
                setIsLoading(true);
                try {
-                      const response = await axios.get(' https://www.wegostores.com/admin/v1/tutorial_group?locale=ar', {
+                      const response = await axios.get(' https://login.wegostores.com/admin/v1/tutorial_group?locale=ar', {
                              headers: {
                                     Authorization: `Bearer ${auth.user.token}`,
                              },

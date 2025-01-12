@@ -24,7 +24,7 @@ const CartPage = () => {
   const fetchData = async () => {
     setIsLoading(true);
         try {
-        const response = await axios.get(' https://www.wegostores.com/user/v1/welcome_offer', {
+        const response = await axios.get(' https://login.wegostores.com/user/v1/welcome_offer', {
             headers: {
                 Authorization: `Bearer ${auth.user.token}`,
             },
@@ -79,7 +79,7 @@ const CartPage = () => {
 
     try {
       const response = await axios.post(
-        " https://www.wegostores.com/user/v1/promocode",
+        " https://login.wegostores.com/user/v1/promocode",
         formattedData,
         {
           headers: {
@@ -210,7 +210,7 @@ if (!data) {
                   </p>
                   </div>
                 </div>
-                {item.type === "plan" && (item.id !== data?.plan?.id) && (
+                {item.type === "plan" && (item.id !== data?.plan?.id)&& (
                   <div className="flex flex-wrap items-center mt-3 sm:mt-4">
                     <label className="text-sm font-semibold text-gray-600 mr-3">
                       {t("Billing Period:")}

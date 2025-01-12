@@ -51,7 +51,7 @@ const PaymentHistoryPage = () => {
     const fetchData = async () => {
         setIsLoading(true);
         try {
-               const response = await axios.get(i18n.language==="ar" ? ' https://www.wegostores.com/user/v1/payment/history?locale=ar' :' https://www.wegostores.com/user/v1/payment/history', {
+               const response = await axios.get(i18n.language==="ar" ? ' https://login.wegostores.com/user/v1/payment/history?locale=ar' :' https://login.wegostores.com/user/v1/payment/history', {
                       headers: {
                              Authorization: `Bearer ${auth.user.token}`,
                       },

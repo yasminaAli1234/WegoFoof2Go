@@ -20,7 +20,7 @@ const SubscriptionPage = () => {
     const fetchData = async () => {
         setIsLoading(true);
         try {
-               const response = await axios.get(' https://www.wegostores.com/admin/v1/subscripe', {
+               const response = await axios.get(' https://login.wegostores.com/admin/v1/subscripe', {
                       headers: {
                              Authorization: `Bearer ${auth.user.token}`,
                       },
@@ -67,7 +67,7 @@ const SubscriptionPage = () => {
 
        const deleteUser = async (userId, authToken) => {
               try {
-                     const response = await axios.delete(` https://www.wegostores.com/admin/v1/subscripe/delete/${userId}`, {
+                     const response = await axios.delete(` https://login.wegostores.com/admin/v1/subscripe/delete/${userId}`, {
                             headers: {
                                    Authorization: `Bearer ${authToken}`,
                             },

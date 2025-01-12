@@ -4,7 +4,7 @@ import { useAuth } from "../../../Context/Auth";
 import Loading from "../../../Components/Loading";
 import InputCustom from "../../../Components/InputCustom";
 import { Button } from "../../../Components/Button";
-import { useLocation ,useNavigate} from "react-router-dom";
+import { Link, useLocation ,useNavigate} from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from 'react-redux';
 import { clearCart} from '../../../Redux/CartSlice.js';
@@ -39,7 +39,7 @@ const CheckoutPage = () => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        i18n.language==='ar'?" https://www.wegostores.com/user/v1/subscription/payment_methods?locale=ar":" https://www.wegostores.com/user/v1/subscription/payment_methods",
+        i18n.language==='ar'?" https://login.wegostores.com/user/v1/subscription/payment_methods?locale=ar":" https://login.wegostores.com/user/v1/subscription/payment_methods",
         {
           headers: {
             Authorization: `Bearer ${auth.user.token}`,
@@ -77,63 +77,10 @@ const CheckoutPage = () => {
     }
   };
 
-  // const handleApplyPromo = async () => {
-  //   if (!promoCode) {
-  //     alert("Please enter a promo code.");
-  //     return;
-  //   }
-
-  //   setIsLoading(true);
-
-  //   const formattedData = {
-  //     code: promoCode,
-  //     plan: cartItems
-  //       .filter((item) => item.id && item.billingprice_cycle)
-  //       .map((item) => ({
-  //         plan_id: item.id,
-  //         duration: item.billingprice_cycle,
-  //         price: item.price_per_month || item.price_per_year || 0,
-  //       })),
-  //     extra: cartItems
-  //       .filter((item) => item.name && item.price && !item.billingPeriod)
-  //       .map((item) => ({
-  //         extra_id: item.id,
-  //         price: item.price,
-  //       })),
-  //     domain: [],
-  //   };
-
-  //   try {
-  //     const response = await axios.post(
-  //       " https://www.wegostores.com/user/v1/promocode",
-  //       formattedData,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${auth.user.token}`,
-  //         },
-  //       }
-  //     );
-
-  //     if (response.status === 200) {
-  //       const { discount } = response.data; // Extract the discount
-  //       setDiscount(discount); // Update the discount state
-  //       const newTotal = totalPrice - discount; // Calculate the discounted total
-  //       setDiscountedPrice(newTotal); // Update state with the new total
-  //       auth.toastSuccess(`Promo code applied! You saved ${discount} EGP.`);
-  //       setPromoCode("");
-  //     } else {
-  //       auth.toastError("Failed to apply promo code. Please try again.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error applying promo code:", error);
-  //     auth.toastError("Invalid promo code.");
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-
   const handleSubmit = async () => {
-    if (selectedMethod.name === "VodafoneCash") {
+
+
+    if (selectedMethod.name.toLowerCase().includes("vodafoneCash")) {
       // Define a duration mapping object
       const durationMap = {
         monthly: 1,
@@ -226,7 +173,7 @@ const CheckoutPage = () => {
         setIsLoading(true); // Set loading state
   
         const response = await axios.post(
-          " https://www.wegostores.com/user/v1/cart",
+          " https://login.wegostores.com/user/v1/cart",
           // requestData, 
           formData,
           {
@@ -267,7 +214,7 @@ const CheckoutPage = () => {
       }
     } 
     
-    else if (selectedMethod.name === "paymob" || 'Paymob') {
+    else if (selectedMethod.name.toLowerCase().includes("paymob")) {
       // const planItem = cartItems.find((item) => item.type === "plan");
       // const planId = planItem ? planItem.id : null;
       //  console.log(planId)
@@ -310,7 +257,7 @@ const CheckoutPage = () => {
         setIsLoading(true);
   
         const response = await axios.post(
-          " https://www.wegostores.com/user/v1/payment/credit",
+          " https://login.wegostores.com/user/v1/payment/credit",
           requestData,
           {
             headers: {
@@ -352,6 +299,10 @@ const CheckoutPage = () => {
         setIsLoading(false);
       }
     }
+
+    else if (selectedMethod.name.toLowerCase().includes("instapay")) {
+      window.open("https://ipn.eg/S/wegostation/instapay/50VPZB");
+    }  
   };
   
   
@@ -373,28 +324,9 @@ const CheckoutPage = () => {
 
   return (
     <div className="flex flex-col gap-5 p-6 bg-gray-50 rounded-lg shadow-lg">
-      {/* <label className="font-semibold text-3xl text-mainColor">
-        Select Payment Method:
-      </label> */}
 
       <div className="w-full flex flex-col xl:flex-row-reverse gap-5">
         <div className="bg-white sm-w-full xl:w-1/2 shadow-md p-4 rounded-lg ">
-        
-          {/* <div className="flex items-center gap-4 mt-4">
-            <input
-              type="text"
-              value={promoCode}
-              onChange={(e) => setPromoCode(e.target.value)}
-              placeholder="Enter promo code"
-              className="flex-1 text-xl px-4 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-mainColor transition-all ease-in-out duration-300"
-            />
-            <button
-              onClick={handleApplyPromo}
-              className="px-6 py-2 text-xl bg-mainColor text-white font-semibold rounded-lg hover:bg-mainColor-dark transition-all ease-in-out duration-300"
-            >
-              Apply
-            </button>
-          </div> */}
 
       <h3 className="text-2xl font-semibold text-gray-800 mt-6 mb-4">
        {t("Order Summary")}
@@ -424,41 +356,6 @@ const CheckoutPage = () => {
         {t("Select Payment Method:")}
       </label>
 
-        {/* {paymentMethods.map((method) => (
-                  <div key={method.id} className="shadow bg-white p-6 w-full">
-                    <label className="text-2xl flex items-center gap-3 cursor-pointer text-mainColor">
-                      <input
-                        type="radio"
-                        name="paymentMethod"
-                        className="w-6 h-6 border-2 text-mainColor border-mainColor"
-                        value={method.name}
-                        onChange={() => setSelectedMethod(method)}
-                      />
-                      <img src={method.thumbnailUrl} alt={method.name} className="w-16" />
-                      {method.name}
-                    </label>
-            {selectedMethod.name === "VodafoneCash" && (
-            <div className="lg:w-full sm:w-full flex flex-col gap-5 mt-4 p-4">
-              <InputCustom
-                type="text"
-                borderColor="mainColor"
-                placeholder="Upload Receipt"
-                value={thumbnails}
-                readOnly={true}
-                onClick={handleInputClick}
-                upload="true"
-              />
-              <input
-                type="file"
-                className="hidden"
-                onChange={handleFileChange}
-                ref={uploadRef}
-              />
-            </div>
-            )}
-                  </div>
-                ))} */}
-
         {paymentMethods.map((method) => (
           <div key={method.id} className="shadow bg-white p-6 w-full">
             <label className="text-2xl flex items-center gap-3 cursor-pointer text-mainColor">
@@ -472,7 +369,8 @@ const CheckoutPage = () => {
               <img src={method.thumbnailUrl} alt={method.name} className="w-16" />
               {method.name}
             </label>
-            {selectedMethod && selectedMethod.name === "VodafoneCash" && method.name === "VodafoneCash" && (
+            {/* {selectedMethod && selectedMethod.name === "VodafoneCash" && method.name === "VodafoneCash" && ( */}
+            {selectedMethod && selectedMethod.name.toLowerCase().includes("vodafonecash") && method.name.toLowerCase().includes("vodafonecash")  && (
               <div className="lg:w-full sm:w-full flex flex-col gap-5 mt-4 p-4">
                 <InputCustom
                   type="text"
@@ -490,6 +388,11 @@ const CheckoutPage = () => {
                   ref={uploadRef}
                 />
               </div>
+            )}
+            {selectedMethod && selectedMethod.name.toLowerCase().includes("instapay") && method.name.toLowerCase().includes("instapay")  && (
+              <Link target="_blank" to="https://ipn.eg/S/wegostation/instapay/50VPZB" className="lg:w-full sm:w-full flex flex-col gap-5 mt-4 p-4">
+                <Button  Text={"Pay Now"}/>
+              </Link>
             )}
           </div>
         ))}

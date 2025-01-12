@@ -30,7 +30,7 @@ const ExtraProductPage = () => {
     const fetchData = async () => {
         setIsLoading(true);
         try {
-               const response = await axios.get(i18n.language==='en'? 'https://www.wegostores.com/admin/v1/extra/show':'https://www.wegostores.com/admin/v1/extra/show?locale=ar', {
+               const response = await axios.get(i18n.language==='en'? 'https://login.wegostores.com/admin/v1/extra/show':'https://login.wegostores.com/admin/v1/extra/show?locale=ar', {
                       headers: {
                              Authorization: `Bearer ${auth.user.token}`,
                       },
@@ -82,7 +82,7 @@ const ExtraProductPage = () => {
 
        const deleteProduct = async (productId, authToken) => {
               try {
-                     const response = await axios.delete(` https://www.wegostores.com/admin/v1/extra/delete/${productId}`, {
+                     const response = await axios.delete(` https://login.wegostores.com/admin/v1/extra/delete/${productId}`, {
                             headers: {
                                    Authorization: `Bearer ${authToken}`,
                             },

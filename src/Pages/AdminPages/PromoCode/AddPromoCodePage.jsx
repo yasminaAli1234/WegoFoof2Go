@@ -401,7 +401,7 @@ const AddPromoCodePage = () => {
     // Submit the form
     setIsLoading(true)
         try {
-            const response = await axios.post(' https://www.wegostores.com/admin/v1/promoCode/create',formData, {
+            const response = await axios.post(' https://login.wegostores.com/admin/v1/promoCode/create',formData, {
                 headers: {
                     Authorization: `Bearer ${auth.user.token}`,
                     'Content-Type': 'application/json', // Use JSON since we're sending a JSON object now

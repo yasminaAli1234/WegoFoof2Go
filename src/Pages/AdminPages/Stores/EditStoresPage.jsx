@@ -71,7 +71,7 @@ const EditStoresPage = () => {
             formData.append('link_cbanal', cpanel); // Append the file
 
             const response = await axios.post(
-                ' https://www.wegostores.com/admin/v1/payment/method/create',
+                ' https://login.wegostores.com/admin/v1/payment/method/create',
                 formData,
                 {
                     headers: {

@@ -42,7 +42,7 @@ const BuyDomainPage =()=>{
      const fetchStoresData = async () => {
         setIsLoading(true);
         try {
-               const response = await axios.get(' https://www.wegostores.com/user/v1/store', {
+               const response = await axios.get(' https://login.wegostores.com/user/v1/store', {
                       headers: {
                              Authorization: `Bearer ${auth.user.token}`,
                       },
@@ -118,7 +118,7 @@ const BuyDomainPage =()=>{
     
         try {
             const response = await axios.post(
-                ' https://www.wegostores.com/user/v1/cart/pending',
+                ' https://login.wegostores.com/user/v1/cart/pending',
                 {
                     id: domain.id, // Properly include plan.id as a key-value pair
                     type: "domain",
@@ -187,7 +187,7 @@ const BuyDomainPage =()=>{
     const fetchData = async () => {
         setIsLoading(true);
         try {
-               const response = await axios.get(' https://www.wegostores.com/user/v1/domains/my_domains', {
+               const response = await axios.get(' https://login.wegostores.com/user/v1/domains/my_domains', {
                       headers: {
                              Authorization: `Bearer ${auth.user.token}`,
                       },
@@ -233,7 +233,7 @@ const BuyDomainPage =()=>{
     
         setIsLoading(true);
         try {
-            const response = await axios.post(' https://www.wegostores.com/user/v1/domains/add_domain',formData, {
+            const response = await axios.post(' https://login.wegostores.com/user/v1/domains/add_domain',formData, {
                 headers: {
                     Authorization: `Bearer ${auth.user.token}`,
                     'Content-Type': 'application/json', // Use JSON since we're sending a JSON object now

@@ -488,7 +488,7 @@ const handleChangeLanguage = () => {
     
             // Sending the form data via POST request
             const response = await axios.post(
-                ` https://www.wegostores.com/admin/v1/extra/update/${productId}`,
+                ` https://login.wegostores.com/admin/v1/extra/update/${productId}`,
                 formData,
                 {
                     headers: {

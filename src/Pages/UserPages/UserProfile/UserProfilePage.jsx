@@ -18,7 +18,7 @@ const UserProfilePage =()=>{
 const fetchData = async () => {
     setIsLoading(true);
     try {
-        const response = await axios.get(' https://www.wegostores.com/user/v1/profile', {
+        const response = await axios.get(' https://login.wegostores.com/user/v1/profile', {
             headers: {
                 Authorization: `Bearer ${auth.user.token}`,
               },

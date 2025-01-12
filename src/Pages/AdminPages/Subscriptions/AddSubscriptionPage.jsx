@@ -56,7 +56,7 @@ const AddSubscriptionPage = () => {
     const fetchUserData = async () => {
         setIsLoading(true);
         try {
-               const response = await axios.get(' https://www.wegostores.com/admin/v1/users/view', {
+               const response = await axios.get(' https://login.wegostores.com/admin/v1/users/view', {
                       headers: {
                              Authorization: `Bearer ${auth.user.token}`,
                       },
@@ -74,7 +74,7 @@ const AddSubscriptionPage = () => {
     const fetchPlanData = async () => {
         setIsLoading(true);
         try {
-               const response = await axios.get(' https://www.wegostores.com/admin/v1/plan/show', {
+               const response = await axios.get(' https://login.wegostores.com/admin/v1/plan/show', {
                       headers: {
                              Authorization: `Bearer ${auth.user.token}`,
                       },
@@ -238,7 +238,7 @@ const AddSubscriptionPage = () => {
     
             // API request
             const response = await axios.post(
-                ' https://www.wegostores.com/admin/v1/subscripe/add',
+                ' https://login.wegostores.com/admin/v1/subscripe/add',
                 formData,
                 {
                     headers: {

@@ -113,7 +113,7 @@ const AddUserPage = () => {
         try {
             // Send data to the API
             const response = await axios.post(
-                ' https://www.wegostores.com/admin/v1/users/add',
+                ' https://login.wegostores.com/admin/v1/users/add',
                 formData,
                 {
                     headers: {
