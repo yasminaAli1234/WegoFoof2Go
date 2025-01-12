@@ -354,6 +354,7 @@ const [selectedOrders, setSelectedOrders] = useState([]);
                                                         <h4 className="text-xl font-semibold text-blue-600">Plan Details</h4>
                                                         <div className="text-gray-700 pl-4 text-xl">
                                                         <p><span className="font-semibold">Name:</span> {order.plans?.name || '-'}</p>
+                                                        <p><span className="font-semibold">Duration: </span>{order?.price_cycle || '-'} </p>
                                                         <p><span className="font-semibold">SetUp Fees: </span>{order.plans?.setup_fees || '0.00'} LE</p>
                                                         {
                                                         order.price_cycle === "monthly" ? (
@@ -403,6 +404,7 @@ const [selectedOrders, setSelectedOrders] = useState([]);
                                                                 <h4 className="text-xl font-semibold text-blue-600">Plan Details</h4>
                                                                 <div className="text-gray-700 pl-4 text-xl">
                                                                 <p><span className="font-semibold">Name:</span> {order.extra?.name || '-'}</p>
+                                                                <p><span className="font-semibold">Duration: </span>{order?.price_cycle || '-'} </p>
                                                                 <p><span className="font-semibold">SetUp Fees: </span>{order.extra?.setup_fees || '0.00'} LE</p>
                                                                 {order.extra?.status === "one_time" ?
                                                                 (

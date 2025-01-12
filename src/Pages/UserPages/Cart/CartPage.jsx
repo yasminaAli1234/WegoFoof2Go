@@ -1,462 +1,10 @@
-// import React, { useEffect } from 'react';
-// import { useNavigate, Link } from 'react-router-dom';
-// import { useSelector, useDispatch } from 'react-redux';
-// import { clearCart } from '../../../Redux/CartSlice.js';
-
-// const CartPage = () => {
-//   const cartItems = useSelector((state) => state.cart);
-  // const dispatch = useDispatch();
-
-//   useEffect(() => {
-//     console.log(cartItems); // Log cart items whenever they change
-//   }, [cartItems]);
-
-//   const handleClearCart = () => {
-//     dispatch(clearCart());
-//   };
-
-//   const calculateTotal = () => {
-//     return cartItems.reduce((total, item) => total + (item.price || item.finalprice || 0), 0).toFixed(2);
-//   };
-
-//   const totalPrice = calculateTotal(); // Calculate total price once
-
-//   return (
-//     <div className="container mx-auto p-6 max-w-3xl">
-//       <h1 className="text-3xl font-bold text-gray-800 mb-6">Shopping Cart</h1>
-
-//       <div className="bg-white shadow-lg rounded-lg p-6">
-//         {cartItems.length > 0 ? (
-//           cartItems.map((item) => (
-//             <div
-//               key={item.id}
-//               className="flex justify-between items-center border-b border-gray-200 py-4 last:border-none"
-//             >
-//               <div>
-//                 <h3 className="text-lg font-semibold text-gray-800">{item.name}</h3>
-//                 {/* <p className="text-sm text-gray-500">{item.type}</p> */}
-//               </div>
-//               <p className="text-lg font-semibold text-gray-800">{(item.price || item.finalprice || 0).toFixed(2)} EGP</p>
-//             </div>
-//           ))
-//         ) : (
-//           <p className="text-center text-gray-500 py-6">Your cart is empty.</p>
-//         )}
-//       </div>
-
-//       {cartItems.length > 0 && (
-//         <div className="mt-6 p-4 bg-gray-100 rounded-lg shadow-lg">
-//           <div className="flex justify-between items-center">
-//             <h3 className="text-xl font-bold text-gray-800">Total</h3>
-//             <p className="text-2xl font-semibold text-green-600">{totalPrice} EGP</p>
-//           </div>
-//         </div>
-//       )}
-
-//       <div className="mt-6 flex justify-between gap-4">
-//         <button
-//           onClick={handleClearCart}
-//           className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-lg font-semibold text-lg"
-//         >
-//           Clear Cart
-//         </button>
-//         <Link
-//           to="../checkout"
-//           state={{ cartItems, totalPrice }}
-//           className="flex justify-center w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold text-lg"
-//         >
-//           <button>
-//             Proceed to Checkout
-//           </button>
-//         </Link>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default CartPage;
-
-
-
-// import React, { useEffect } from 'react';
-// import { useNavigate, Link } from 'react-router-dom';
-// import { useSelector, useDispatch } from 'react-redux';
-// import { clearCart, updateCartItem } from '../../../Redux/CartSlice.js'; // Import actions
-
-// const CartPage = () => {
-//   const cartItems = useSelector((state) => state.cart);
-//   const dispatch = useDispatch();
-
-//   // Log cart items whenever they change
-//   useEffect(() => {
-//     console.log("Cart Items Updated:", cartItems);
-//   }, [cartItems]);
-
-//   // Clear cart action
-//   const handleClearCart = () => {
-//     dispatch(clearCart());
-//   };
-
-//   // Calculate total price
-//   const calculateTotal = () => {
-//     return cartItems.reduce((total, item) => total + (item.finalprice ||item.price|| 0), 0).toFixed(2);
-//   };
-
-//   // Handle billing period change
-//   const handleBillingPeriodChange = (itemId, newPeriod, item) => {
-//     // Calculate the new price based on the selected period
-//     const priceOptions = {
-//       monthly: item.price_per_month ||item.monthly,
-//       quarterly: item.price_per_quarter || item.price_per_month * 3 ||item.quarterly|| item.monthly * 3,
-//       semiAnnually: item.price_per_semi_annual || item.price_per_month * 6 ||item["semi-annual"]|| item.monthly * 6,
-//       annually: item.price_per_year ||item.yearly,
-//     };
-
-//     const newPrice = priceOptions[newPeriod];
-//     const updatedItem = {
-//       ...item,
-//       billingPeriod: newPeriod,
-//       finalprice: newPrice,
-//     };
-
-//     // Dispatch action to update the cart item
-//     dispatch(updateCartItem({ id: itemId, type: item.type, updatedItem }));
-//   };
-
-//   const totalPrice = calculateTotal(); // Calculate total price once
-
-//   return (
-//     <div className="container mx-auto p-6 max-w-3xl">
-//       <h1 className="text-3xl font-bold text-gray-800 mb-6">Shopping Cart</h1>
-
-//       <div className="bg-white shadow-lg rounded-lg p-6">
-//         {cartItems.length > 0 ? (
-//           cartItems.map((item ,index) => (
-//             <div key={index} className="flex flex-col border-b border-gray-200 py-4 last:border-none">
-//               <div className="flex justify-between items-center">
-//                 <h3 className="text-lg font-semibold text-gray-800">{item.name}</h3>
-//                 <p className="text-lg font-semibold text-gray-800">{(item.finalprice ||item.price || 0).toFixed(2)} EGP</p>
-//               </div>
-
-//               {/* Conditionally render extra items */}
-//               {item.type === 'extra' && item.status !== 'one_time' && (
-//                 <div className="flex items-center mt-4">
-//                 <label htmlFor={`billing-${index}`} className="text-sm font-semibold text-gray-600 mr-2">
-//                   Billing Period:
-//                 </label>
-//                 <select
-//                   id={`billing-${index}`}
-//                   value={item.billingPeriod || 'monthly'}
-//                   onChange={(e) => handleBillingPeriodChange(item.id, e.target.value, item)}
-//                   className="bg-gray-100 border border-gray-400 text-gray-700 rounded-lg p-2"
-//                 >
-//                   <option value="monthly">Monthly</option>
-//                   <option value="quarterly">3 Months</option>
-//                   <option value="semiAnnually">6 Months</option>
-//                   <option value="annually">Yearly</option>
-//                 </select>
-//               </div>
-//               )}
-
-//               {/* Show billing period dropdown if item type is "plan" */}
-//               {item.type === 'plan' && (
-//                 <div className="flex items-center mt-4">
-//                   <label htmlFor={`billing-${index}`} className="text-sm font-semibold text-gray-600 mr-2">
-//                     Billing Period:
-//                   </label>
-//                   <select
-//                     id={`billing-${item.id}`}
-//                     value={item.billingPeriod || 'monthly'}
-//                     onChange={(e) => handleBillingPeriodChange(item.id, e.target.value, item)}
-//                     className="bg-gray-100 border border-gray-400 text-gray-700 rounded-lg p-2"
-//                   >
-//                     <option value="monthly">Monthly</option>
-//                     <option value="quarterly">3 Months</option>
-//                     <option value="semiAnnually">6 Months</option>
-//                     <option value="annually">Yearly</option>
-//                   </select>
-//                 </div>
-//               )}
-//             </div>
-//           ))
-//         ) : (
-//           <p className="text-center text-gray-500 py-6">Your cart is empty.</p>
-//         )}
-//       </div>
-
-//       {cartItems.length > 0 && (
-//         <div className="mt-6 p-4 bg-gray-100 rounded-lg shadow-lg">
-//           <div className="flex justify-between items-center">
-//             <h3 className="text-xl font-bold text-gray-800">Total</h3>
-//             <p className="text-2xl font-semibold text-green-600">{totalPrice} EGP</p>
-//           </div>
-//         </div>
-//       )}
-//       <div className="mt-6 flex justify-between gap-4">
-//         <button
-//           onClick={handleClearCart}
-//           className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-lg font-semibold text-lg"
-//         >
-//           Clear Cart
-//         </button>
-//         <Link
-//           to="../checkout"
-//           state={{ cartItems, totalPrice }}
-//           className="flex justify-center w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold text-lg"
-//         >
-//           <button>
-//             Proceed to Checkout
-//           </button>
-//         </Link>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default CartPage;
-
-
-
-// import React, { useEffect ,useState} from 'react';
-// import { useNavigate, Link } from 'react-router-dom';
-// import { useSelector, useDispatch } from 'react-redux';
-// import { clearCart, updateCartItem } from '../../../Redux/CartSlice.js'; // Import actions
-
-// const CartPage = () => {
-//   const cartItems = useSelector((state) => state.cart);
-//   const dispatch = useDispatch();
-//   const [promoCode, setPromoCode] = useState("");
-//   const [discount, setDiscount] = useState(0); // State to store the discount amount
-//   const [discountedPrice, setDiscountedPrice] = useState('');
-
-//   const handleApplyPromo = async () => {
-//     if (!promoCode) {
-//       alert("Please enter a promo code.");
-//       return;
-//     }
-
-//     setIsLoading(true);
-
-//     const formattedData = {
-//       code: promoCode,
-//       plan: cartItems
-//         .filter((item) => item.id && item.billingPeriod)
-//         .map((item) => ({
-//           plan_id: item.id,
-//           duration: item.billingPeriod,
-//           price: item.price_per_month || item.price_per_year || 0,
-//         })),
-//       extra: cartItems
-//         .filter((item) => item.name && item.price && !item.billingPeriod)
-//         .map((item) => ({
-//           extra_id: item.id,
-//           price: item.price,
-//         })),
-//       domain: [],
-//     };
-
-//     try {
-//       const response = await axios.post(
-//         " https://www.wegostores.com/user/v1/promocode",
-//         formattedData,
-//         {
-//           headers: {
-//             Authorization: `Bearer ${auth.user.token}`,
-//           },
-//         }
-//       );
-
-//       if (response.status === 200) {
-//         const { discount } = response.data; // Extract the discount
-//         setDiscount(discount); // Update the discount state
-//         const newTotal = totalPrice - discount; // Calculate the discounted total
-//         setDiscountedPrice(newTotal); // Update state with the new total
-//         auth.toastSuccess(`Promo code applied! You saved ${discount} EGP.`);
-//         setPromoCode("");
-//       } else {
-//         auth.toastError("Failed to apply promo code. Please try again.");
-//       }
-//     } catch (error) {
-//       console.error("Error applying promo code:", error);
-//       auth.toastError("Invalid promo code.");
-//     } finally {
-//       setIsLoading(false);
-//     }
-//   };
-
-//   // Log cart items whenever they change
-//   useEffect(() => {
-//     console.log("Cart Items Updated:", cartItems);
-//   }, [cartItems]);
-
-//   // Clear cart action
-//   const handleClearCart = () => {
-//     dispatch(clearCart());
-//   };
-
-//   // Calculate total price
-//   const calculateTotal = () => {
-//     return cartItems.reduce((total, item) => total + (item.finalprice ||item.price|| 0), 0).toFixed(2);
-//   };
-
-//   // Handle billing period change
-//   const handleBillingPeriodChange = (itemId, newPeriod, item) => {
-//     // Calculate the new price based on the selected period
-//     const priceOptions = {
-//       monthly: item.price_per_month ||item.monthly,
-//       quarterly: item.price_per_quarter || item.price_per_month * 3 ||item.quarterly|| item.monthly * 3,
-//       semiAnnually: item.price_per_semi_annual || item.price_per_month * 6 ||item["semi-annual"]|| item.monthly * 6,
-//       annually: item.price_per_year ||item.yearly,
-//     };
-
-//     const newPrice = priceOptions[newPeriod];
-//     const updatedItem = {
-//       ...item,
-//       billingPeriod: newPeriod,
-//       finalprice: newPrice,
-//     };
-
-//     // Dispatch action to update the cart item
-//     dispatch(updateCartItem({ id: itemId, type: item.type, updatedItem }));
-//   };
-
-//   const totalPrice = calculateTotal(); // Calculate total price once
-
-//   return (
-//     <div className="container mx-auto p-6 max-w-3xl">
-//       <h1 className="text-3xl font-bold text-gray-800 mb-6">Shopping Cart</h1>
-
-//       <div className="bg-white shadow-lg rounded-lg p-6">
-//         {cartItems.length > 0 ? (
-//           cartItems.map((item ,index) => (
-//             <div key={index} className="flex flex-col border-b border-gray-200 py-4 last:border-none">
-//               <div className="flex justify-between items-center">
-//                 <h3 className="text-lg font-semibold text-gray-800">{item.name}</h3>
-//                 <p className="text-lg font-semibold text-gray-800">{(item.finalprice ||item.price || 0).toFixed(2)} EGP</p>
-//               </div>
-
-//               {/* Conditionally render extra items */}
-//               {item.type === 'extra' && item.status !== 'one_time' && (
-//                 <div className="flex items-center mt-4">
-//                 <label htmlFor={`billing-${index}`} className="text-sm font-semibold text-gray-600 mr-2">
-//                   Billing Period:
-//                 </label>
-//                 <select
-//                   id={`billing-${index}`}
-//                   value={item.billingPeriod || 'monthly'}
-//                   onChange={(e) => handleBillingPeriodChange(item.id, e.target.value, item)}
-//                   className="bg-gray-100 border border-gray-400 text-gray-700 rounded-lg p-2"
-//                 >
-//                   <option value="monthly">Monthly</option>
-//                   <option value="quarterly">3 Months</option>
-//                   <option value="semiAnnually">6 Months</option>
-//                   <option value="annually">Yearly</option>
-//                 </select>
-//               </div>
-//               )}
-
-//               {/* Show billing period dropdown if item type is "plan" */}
-//               {item.type === 'plan' && (
-//                 <div className="flex items-center mt-4">
-//                   <label htmlFor={`billing-${index}`} className="text-sm font-semibold text-gray-600 mr-2">
-//                     Billing Period:
-//                   </label>
-//                   <select
-//                     id={`billing-${item.id}`}
-//                     value={item.billingPeriod || 'monthly'}
-//                     onChange={(e) => handleBillingPeriodChange(item.id, e.target.value, item)}
-//                     className="bg-gray-100 border border-gray-400 text-gray-700 rounded-lg p-2"
-//                   >
-//                     <option value="monthly">Monthly</option>
-//                     <option value="quarterly">3 Months</option>
-//                     <option value="semiAnnually">6 Months</option>
-//                     <option value="annually">Yearly</option>
-//                   </select>
-//                 </div>
-//               )}
-//             </div>
-//           ))
-//         ) : (
-//           <p className="text-center text-gray-500 py-6">Your cart is empty.</p>
-//         )}
-//       </div>
-
-//       {cartItems.length > 0 && (
-//         <div className="mt-6 p-4 bg-gray-100 rounded-lg shadow-lg">
-//           <div className="flex justify-between items-center">
-//             <h3 className="text-xl font-bold text-gray-800">Total</h3>
-//             <p className="text-2xl font-semibold text-green-600">{totalPrice} EGP</p>
-//           </div>
-//         </div>
-//       )}
-//       <div className="mt-6 flex justify-between gap-4">
-//         <button
-//           onClick={handleClearCart}
-//           className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-lg font-semibold text-lg"
-//         >
-//           Clear Cart
-//         </button>
-//         <Link
-//           to="../checkout"
-//           state={{ cartItems, totalPrice }}
-//           className="flex justify-center w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold text-lg"
-//         >
-//           <button>
-//             Proceed to Checkout
-//           </button>
-//         </Link>
-//       </div>
-
-//        {/* Promo Code Section */}
-//        <div className="promo-code-section mt-6 bg-white p-4 shadow rounded-lg">
-//         <h3 className="text-xl font-semibold">Have a Promo Code?</h3>
-//         <div className="flex items-center gap-4 mt-4">
-//           <input
-//             type="text"
-//             value={promoCode}
-//             onChange={(e) => setPromoCode(e.target.value)}
-//             placeholder="Enter promo code"
-//             className="flex-1 text-lg px-4 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-mainColor"
-//           />
-//           <button
-//             onClick={handleApplyPromo}
-//             className="px-6 py-2 text-lg bg-mainColor text-white font-semibold rounded-lg hover:bg-mainColor-dark"
-//           >
-//             Apply
-//           </button>
-//         </div>
-//       </div>
-
-//       {/* Order Summary */}
-//       <div className="order-summary mt-6 bg-white p-4 shadow rounded-lg">
-//         <h3 className="text-xl font-semibold">Order Summary</h3>
-//         <div className="flex justify-between text-lg mt-3">
-//           <span>Total Price:</span>
-//           <span>{totalPrice} EGP</span>
-//         </div>
-//         <div className="flex justify-between text-lg text-red-600">
-//           <span>Discount:</span>
-//           <span>-{discount} EGP</span>
-//         </div>
-//         <div className="flex justify-between text-lg font-bold text-green-600">
-//           <span>Total After Discount:</span>
-//           <span>{discountedPrice} EGP</span>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default CartPage;
-
-
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { clearCart, updateCartItem ,removeFromCart} from '../../../Redux/CartSlice.js';
 import axios from 'axios';
 import { useAuth } from "../../../Context/Auth";
-
+import Loading from '../../../Components/Loading.jsx';
 import { useTranslation } from 'react-i18next';
 import { convertNumberToArabic } from '../../../Components/convert_number';
 
@@ -469,8 +17,33 @@ const CartPage = () => {
   const [discountedPrice, setDiscountedPrice] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  const [data, setData] = useState({});
   // const capitalizeFirstLetter = (str) => str.charAt(0).toUpperCase() + str.slice(1);
   const {t,i18n} = useTranslation()
+
+  const fetchData = async () => {
+    setIsLoading(true);
+        try {
+        const response = await axios.get(' https://www.wegostores.com/user/v1/welcome_offer', {
+            headers: {
+                Authorization: `Bearer ${auth.user.token}`,
+            },
+          });
+      if (response.status === 200) {
+        console.log(response.data.welcome_offer)
+        setData(response.data.welcome_offer);
+      } else {
+        console.error('Error fetching data:', response.status);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const calculateTotal = () => {
     return cartItems
@@ -535,12 +108,7 @@ const CartPage = () => {
   };
 
   const handleBillingPeriodChange = (itemId, newPeriod, item) => {
-    // const priceOptions = {
-    //   monthly: item.price_per_month,
-    //   quarterly: item.price_per_month * 3,
-    //   semiAnnually: item.price_per_month * 6,
-    //   annually: item.price_per_year,
-    // };
+
 
     const priceOptions = {
       monthly: item.monthly,
@@ -590,13 +158,24 @@ const CartPage = () => {
     }
   };
   
-  
-
   const handleClearCart = () => {
     dispatch(clearCart());
   };
 
   const totalPrice = calculateTotal();
+
+  if (isLoading) {
+    return (
+      <div className="w-1/4 h-full flex items-start mt-[10%] justify-center m-auto">
+        <Loading />
+      </div>
+    );
+}    
+  
+if (!data) {
+    return <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No plans data available</div>;
+}
+
 
   return (
 
@@ -631,7 +210,7 @@ const CartPage = () => {
                   </p>
                   </div>
                 </div>
-                {item.type === "plan" && (
+                {item.type === "plan" && (item.id !== data?.plan?.id) && (
                   <div className="flex flex-wrap items-center mt-3 sm:mt-4">
                     <label className="text-sm font-semibold text-gray-600 mr-3">
                       {t("Billing Period:")}
@@ -671,14 +250,14 @@ const CartPage = () => {
                     </select>
                   </div>
                 )}
-<div className="flex justify-between items-center mt-3">
-  <button
-    onClick={() => handleRemoveItem(item)}
-    className="text-red-500 font-semibold hover:underline"
-  >
-    {t("Remove")}
-  </button>
-</div>
+                <div className="flex justify-between items-center mt-3">
+                  <button
+                    onClick={() => handleRemoveItem(item)}
+                    className="text-red-500 font-semibold hover:underline"
+                  >
+                    {t("Remove")}
+                  </button>
+                </div>
               </div>
             ))
           ) : (

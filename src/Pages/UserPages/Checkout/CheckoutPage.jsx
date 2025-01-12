@@ -138,8 +138,8 @@ const CheckoutPage = () => {
       const durationMap = {
         monthly: 1,
         quarterly: 3,
-        "semi-annual": 6, // Updated to match your example
-        yearly: "yearly",
+        semiAnnually: 6, // Updated to match your example
+        annually: "yearly",
       };
   
       // Process Plan Items

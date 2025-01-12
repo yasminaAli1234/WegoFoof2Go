@@ -20,6 +20,7 @@ const UserSubscriptionsPage = () => {
     const [selectedPlanId, setSelectedPlanId] = useState(null);
     const navigate = useNavigate();
     const {t,i18n} = useTranslation();
+    const [userData, setUserData] = useState('');
 
     // Fetch plans from API
     const fetchData = async () => {
@@ -49,93 +50,6 @@ const UserSubscriptionsPage = () => {
         }
     };
     
-
-    // Add to cart logic
-    // const handleAddToCart =async (plan ,event) => {
-
-    //     event.preventDefault();
-
-    //     setIsLoading(true);
-    //     try {
-    //         const response = await axios.post(
-    //             ' https://www.wegostores.com/user/v1/cart/pending',
-    //             {
-    //                 id: plan.id, // Properly include plan.id as a key-value pair
-    //                 type: "plan"
-    //             },
-    //             {
-    //                 headers: {
-    //                     Authorization: `Bearer ${auth.user.token}`,
-    //                     'Content-Type': 'application/json', // Explicitly specify JSON content type
-    //                 },
-    //             }
-    //         );            
-    //         console.log(response)
-    
-    //         if (response.status === 200) {
-    //             // console.log(response)
-    //             // handleGoBack();
-    //         } 
-    //         // else {
-    //         //     auth.toastError('Failed to add Store.');
-    //         // }
-    //     } catch (error) {
-            // console.log(error.response.data.faild)
-    //         const errorMessages = error?.response?.data.errors;
-    //         let errorMessageString = 'Error occurred';
-    
-    //         if (errorMessages) {
-    //             errorMessageString = Object.values(errorMessages).flat().join(' ');
-    //         }
-    //         // auth.toastError('Error', errorMessageString);
-    //     } finally {
-    //         setIsLoading(false);
-    //     }
-    //     // const selectedPeriod = billingPeriod[plan.id] || 'monthly';
-    //     // const priceOptions = {
-    //     //     monthly: plan.monthly,
-    //     //     quarterly: plan.quarterly || plan.monthly * 3,
-    //     //     semiAnnually: plan["semi_annual"] || plan.monthly * 6,
-    //     //     annually: plan.yearly,
-    //     // };
-    //     // const discountOptions = {
-    //     //     monthly: plan.discount_monthly,
-    //     //     quarterly: plan.discount_quarterly,
-    //     //     semiAnnually: plan.discount_semi_annual,
-    //     //     annually: plan.discount_yearly,
-    //     // };
-
-    //     // const currentPrice = discountOptions[selectedPeriod] 
-    //     // ? discountOptions[selectedPeriod] 
-    //     // : priceOptions[selectedPeriod];
-
-    //     // const planWithPeriodAndPrice = { 
-    //     //     ...plan, 
-    //     //     billingPeriod: selectedPeriod, 
-    //     //     finalprice: currentPrice + plan.setup_fees
-    //     // };
-
-    //     // if (selectedPlanId == plan.id) {
-    //     //     setSelectedPlanId(null);
-    //     //     dispatch(removeFromCart(planWithPeriodAndPrice));
-    //     //     localStorage.removeItem('selectedPlanId');
-    //     // } else {
-    //     //     if (selectedPlanId !== null) {
-    //     //         const previousPlan = plans.find((p) => p.id == selectedPlanId);
-    //     //         const previousPrice = priceOptions[billingPeriod[previousPlan.id] || 'monthly'];
-    //     //         const previousPlanWithPeriodAndPrice = {
-    //     //             ...previousPlan,
-    //     //             billingPeriod: billingPeriod[previousPlan.id] || 'monthly',
-    //     //             finalprice: previousPrice + plan.setup_fees,
-    //     //         };
-    //     //         dispatch(removeFromCart(previousPlanWithPeriodAndPrice));
-    //     //         localStorage.removeItem('selectedPlanId');
-    //     //     }
-    //     //     dispatch(addToCart(planWithPeriodAndPrice));
-    //     //     setSelectedPlanId(plan.id);
-    //     //     localStorage.setItem('selectedPlanId', plan.id);
-    //     // }
-    // };
 
     const handleAddToCart = async (plan, event) => {
         if (event) event.preventDefault();
@@ -250,6 +164,31 @@ const UserSubscriptionsPage = () => {
     }, [selectedPlanId, plans, dispatch]); // Ensure to run only when selectedPlanId or plans change
 
 
+    const ProfilefetchData = async () => {
+        setIsLoading(true);
+        try {
+            const response = await axios.get(' https://www.wegostores.com/user/v1/profile', {
+                headers: {
+                    Authorization: `Bearer ${auth.user.token}`,
+                },
+            });
+            if (response.status === 200) {
+                console.log(response.data)
+                setUserData(response.data.user);
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        } finally {
+            setIsLoading(false);
+        }
+        };
+    
+      useEffect(() => {
+          ProfilefetchData()
+      }, []);
+    
+
+
     if (isLoading) {
         return (
             <div className="w-1/4 h-full flex items-start mt-[10%] justify-center m-auto">
@@ -303,7 +242,7 @@ const UserSubscriptionsPage = () => {
                         </div>
     
                         {/* Billing Period */}
-                        <div className="flex justify-between items-center mb-4">
+                        {/* <div className="flex justify-between items-center mb-4">
                             <label htmlFor={`billing-${plan.id}`} className="text-lg font-medium">{t("Billing Period:")}</label>
                             <select
                                 id={`billing-${plan.id}`}
@@ -317,7 +256,36 @@ const UserSubscriptionsPage = () => {
                                 <option value="annually">{t("Yearly")}</option>
                             </select>
                         </div>
-    
+                    */}
+
+<div className="flex justify-between items-center mb-4">
+    <label htmlFor={`billing-${plan.id}`} className="text-lg font-medium">
+        {t("Billing Period:")}
+    </label>
+    <select
+        id={`billing-${plan.id}`}
+        value={selectedPeriod}
+        onChange={(e) => handleBillingPeriodChange(plan.id, e.target.value)}
+        className="bg-gray-100 border border-gray-300 text-gray-700 rounded-lg p-2 focus:ring-2 focus:ring-mainColor"
+    >
+        {plan.my_plan ? (
+            <>
+                {userData.package !== "1" && <option value="monthly">{t("Monthly")}</option>}
+                {userData.package !== "3" && <option value="quarterly">{t("3 Months")}</option>}
+                {userData.package !== "6" && <option value="semiAnnually">{t("6 Months")}</option>}
+                {userData.package !== "yearly" && <option value="annually">{t("Yearly")}</option>}
+            </>
+        ) : (
+            <>
+                <option value="monthly">{t("Monthly")}</option>
+                <option value="quarterly">{t("3 Months")}</option>
+                <option value="semiAnnually">{t("6 Months")}</option>
+                <option value="annually">{t("Yearly")}</option>
+            </>
+        )}
+    </select>
+</div>
+
                         {/* Pricing and Savings */}
                         <div className="text-center mb-4">
                             {discountedPrice ? (
