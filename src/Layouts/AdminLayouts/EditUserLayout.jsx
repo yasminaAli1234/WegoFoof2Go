@@ -22,7 +22,7 @@ const EditUserLayout = () => {
               const fetchData = async () => {
                      setIsLoading(true);
                      try {
-                            const response = await axios.get(' https://www.wegostores.com/admin/v1/users/view', {
+                            const response = await axios.get(' https://login.wegostores.com/admin/v1/users/view', {
                                    headers: {
                                           Authorization: `Bearer ${auth.user.token}`,
                                    },

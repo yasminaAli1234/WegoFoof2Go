@@ -131,7 +131,7 @@ const EditSubscriptionPage =()=>{
     const fetchUserData = async () => {
         setIsLoading(true);
         try {
-               const response = await axios.get(' https://www.wegostores.com/admin/v1/users/view', {
+               const response = await axios.get(' https://login.wegostores.com/admin/v1/users/view', {
                       headers: {
                              Authorization: `Bearer ${auth.user.token}`,
                       },
@@ -149,7 +149,7 @@ const EditSubscriptionPage =()=>{
     const fetchPlanData = async () => {
         setIsLoading(true);
         try {
-               const response = await axios.get(' https://www.wegostores.com/admin/v1/plan/show', {
+               const response = await axios.get(' https://login.wegostores.com/admin/v1/plan/show', {
                       headers: {
                              Authorization: `Bearer ${auth.user.token}`,
                       },
@@ -330,7 +330,7 @@ const EditSubscriptionPage =()=>{
             // });
 
             const response = await axios.post(
-                ` https://www.wegostores.com/admin/v1/subscripe/update`,
+                ` https://login.wegostores.com/admin/v1/subscripe/update`,
                 formData,
                 {
                     headers: {

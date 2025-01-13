@@ -248,7 +248,7 @@ const EditPlanPage =()=>{
         console.log(pair[0] + ', ' + pair[1]);
  }   
             const response = await axios.post(
-               `https://www.wegostores.com/admin/v1/plan/update`,
+               `https://login.wegostores.com/admin/v1/plan/update`,
                 formData,
                 {
                     headers: {

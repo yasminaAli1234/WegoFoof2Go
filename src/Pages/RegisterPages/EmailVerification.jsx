@@ -23,7 +23,7 @@
 //     }
 //     setIsLoading(true); // Start loading
 //     try {
-//       const response = await axios.post(' https://www.wegostores.com/user/v1/signUp/code', { email });
+//       const response = await axios.post(' https://login.wegostores.com/user/v1/signUp/code', { email });
 //       if (response.status === 200) {
 //         auth.toastSuccess('Code Sent To Your Email successfully!');
 //         // console.log(response.data.code)
@@ -193,7 +193,7 @@
 //     try {
 //         // Send email to Code API
 //         await axios.post(
-//             " https://www.wegostores.com/user/v1/signUp/code",
+//             " https://login.wegostores.com/user/v1/signUp/code",
 //             { email },
 //             { headers: { "Content-Type": "application/json" } }
 //         );
@@ -212,7 +212,7 @@
 //         const { email } = userDetails;
 
 //         // Verify Code API
-//         const response = await axios.post(" https://www.wegostores.com/user/v1/signUp/code", {
+//         const response = await axios.post(" https://login.wegostores.com/user/v1/signUp/code", {
 //             email,
 //             code: verificationCode,
 //         });
@@ -221,7 +221,7 @@
 //             // Sign Up API
 //             const { name, phone, password } = userDetails;
 //             await axios.post(
-//                 " https://www.wegostores.com/user/v1/signUp",
+//                 " https://login.wegostores.com/user/v1/signUp",
 //                 { name, phone, email, password, conf_password: confPassword },
 //                 { headers: { "Content-Type": "application/json" } }
 //             );
@@ -240,7 +240,7 @@
 //     try {
 //         const { email } = userDetails;
 
-//         await axios.post(" https://www.wegostores.com/user/v1/signUp/resend_code", { email });
+//         await axios.post(" https://login.wegostores.com/user/v1/signUp/resend_code", { email });
 //         auth.toastSuccess("New verification code sent!");
 //     } catch (error) {
 //         console.error(error.response?.data || error.message);
@@ -299,7 +299,7 @@ const EmailVerification = () => {
     }
     setIsLoading(true);
     try {
-      const response = await axios.post(' https://www.wegostores.com/user/v1/signUp/code', { email });
+      const response = await axios.post(' https://login.wegostores.com/user/v1/signUp/code', { email });
       if (response.status === 200) {
         auth.toastSuccess('Code sent to your email successfully!');
         setApiCode(response.data.code);
@@ -319,7 +319,7 @@ const EmailVerification = () => {
     setError("");
     setIsLoading(true);
     try {
-      const response = await axios.post(' https://www.wegostores.com/user/v1/signUp/code', { email });
+      const response = await axios.post(' https://login.wegostores.com/user/v1/signUp/code', { email });
       if (response.status === 200) {
         auth.toastSuccess('Code resent to your email successfully!');
         setApiCode(response.data.code);

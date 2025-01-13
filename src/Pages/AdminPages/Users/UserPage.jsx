@@ -22,7 +22,7 @@ const UserPage = () => {
     const fetchData = async () => {
         setIsLoading(true);
         try {
-               const response = await axios.get(' https://www.wegostores.com/admin/v1/users/view', {
+               const response = await axios.get(' https://login.wegostores.com/admin/v1/users/view', {
                       headers: {
                              Authorization: `Bearer ${auth.user.token}`,
                       },
@@ -45,7 +45,7 @@ const UserPage = () => {
     const handleLoginUserClick = async (userId) => {
         try {
           // Replace with your actual API URL to fetch user data and token
-          const response = await axios.get(` https://www.wegostores.com/admin/v1/users/user_login/${userId}`,
+          const response = await axios.get(` https://login.wegostores.com/admin/v1/users/user_login/${userId}`,
                 {
                         headers: {
                                Authorization: `Bearer ${auth.user.token}`,
@@ -111,7 +111,7 @@ const UserPage = () => {
 
        const deleteUser = async (userId, authToken) => {
               try {
-                     const response = await axios.delete(` https://www.wegostores.com/admin/v1/users/delete/${userId}`, {
+                     const response = await axios.delete(` https://login.wegostores.com/admin/v1/users/delete/${userId}`, {
                             headers: {
                                    Authorization: `Bearer ${authToken}`,
                             },
@@ -137,7 +137,7 @@ const UserPage = () => {
         
                 try {
                 const response = await axios.put(
-                ` https://www.wegostores.com/admin/v1/users/status/${userId}`,
+                ` https://login.wegostores.com/admin/v1/users/status/${userId}`,
                 {status: newStatus },
                 {
                 headers: {

@@ -20,7 +20,7 @@ const DomainRequestPage = () => {
     const fetchData = async () => {
         setIsLoading(true);
         try {
-            const response = await axios.get(' https://www.wegostores.com/admin/v1/domains', {
+            const response = await axios.get(' https://login.wegostores.com/admin/v1/domains', {
                 headers: {
                     Authorization: `Bearer ${auth.user.token}`,
                 },
@@ -71,7 +71,7 @@ const DomainRequestPage = () => {
                 console.log("Token:", auth.user.token); // Debug token
     
                 const response = await axios.put(
-                    ` https://www.wegostores.com/admin/v1/domains/approve/${selectedDomain.id}`,
+                    ` https://login.wegostores.com/admin/v1/domains/approve/${selectedDomain.id}`,
                     {price}, // No body required
                     {
                         headers: {
@@ -89,7 +89,7 @@ const DomainRequestPage = () => {
                 const formData = { rejected_reason: rejectReason };
     
                 const response = await axios.put(
-                    ` https://www.wegostores.com/admin/v1/domains/rejected/${selectedDomain.id}`,
+                    ` https://login.wegostores.com/admin/v1/domains/rejected/${selectedDomain.id}`,
                     formData,
                     {
                         headers: {

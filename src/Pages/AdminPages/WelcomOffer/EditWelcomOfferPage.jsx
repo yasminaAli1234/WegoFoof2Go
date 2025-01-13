@@ -113,7 +113,7 @@ const EditWelcomOfferPage = () => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        " https://www.wegostores.com/admin/v1/plan/show",
+        " https://login.wegostores.com/admin/v1/plan/show",
         {
           headers: {
             Authorization: `Bearer ${auth.user.token}`,
@@ -297,7 +297,7 @@ const EditWelcomOfferPage = () => {
       formData.append('translation', translate)
 
       const response = await axios.post(
-        ` https://www.wegostores.com/admin/v1/welcome_offer/update/${offerId}`,
+        ` https://login.wegostores.com/admin/v1/welcome_offer/update/${offerId}`,
         formData,
         {
           headers: {

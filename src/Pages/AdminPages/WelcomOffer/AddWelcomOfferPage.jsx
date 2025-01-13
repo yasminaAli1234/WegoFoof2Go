@@ -49,7 +49,7 @@ const AddWelcomOfferPage = () => {
     const fetchData = async () => {
         setIsLoading(true);
         try {
-               const response = await axios.get(' https://www.wegostores.com/admin/v1/plan/show', {
+               const response = await axios.get(' https://login.wegostores.com/admin/v1/plan/show', {
                       headers: {
                              Authorization: `Bearer ${auth.user.token}`,
                       },
@@ -245,7 +245,7 @@ const AddWelcomOfferPage = () => {
     });
             
             const response = await axios.post(
-                ' https://www.wegostores.com/admin/v1/welcome_offer/add',
+                ' https://login.wegostores.com/admin/v1/welcome_offer/add',
                 formData,
                 {
                     headers: {

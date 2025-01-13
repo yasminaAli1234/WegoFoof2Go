@@ -216,7 +216,7 @@ const AddPlanPage = () => {
     
             // API request
             const response = await axios.post(
-                ' https://www.wegostores.com/admin/v1/plan/create',
+                ' https://login.wegostores.com/admin/v1/plan/create',
                 formData,
                 {
                     headers: {

@@ -81,7 +81,7 @@ const AddAdminInformationPage = () => {
             // });
 
             const response = await axios.post(
-                ' https://www.wegostores.com/admin/v1/contact_us/add',
+                ' https://login.wegostores.com/admin/v1/contact_us/add',
                 formData,
                 {
                     headers: {

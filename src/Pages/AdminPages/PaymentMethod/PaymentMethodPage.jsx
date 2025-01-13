@@ -20,7 +20,7 @@ const PaymentMethodPage = () => {
     const fetchData = async () => {
         setIsLoading(true);
         try {
-               const response = await axios.get(' https://www.wegostores.com/admin/v1/payment/method/show', {
+               const response = await axios.get(' https://login.wegostores.com/admin/v1/payment/method/show', {
                       headers: {
                              Authorization: `Bearer ${auth.user.token}`,
                       },
@@ -67,7 +67,7 @@ const PaymentMethodPage = () => {
 
        const deletePayment = async (paymentId, authToken) => {
               try {
-                const response = await axios.delete(` https://www.wegostores.com/admin/v1/payment/method/delete/${paymentId}`, {
+                const response = await axios.delete(` https://login.wegostores.com/admin/v1/payment/method/delete/${paymentId}`, {
                         headers: {
                                    Authorization: `Bearer ${authToken}`,
                             },
@@ -162,7 +162,8 @@ const PaymentMethodPage = () => {
                                                 </Link>
 
                                                 {
-                                                        payment.name !== "paymob" && payment.name !== "Paymob" ? 
+                                                       !(payment.name.toLowerCase() === "paymob" || payment.name.toLowerCase() === "instapay")
+                                                       ? 
                                                         (
                                                         <>
                                                         <button type="button" onClick={() => handleOpenDialog(payment.id)}>

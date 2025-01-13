@@ -117,7 +117,7 @@ const EditTutorialPage =()=>{
            
 
             const response = await axios.post(
-                ` https://www.wegostores.com/admin/v1/tutorial/update/${tutorialId}`,
+                ` https://login.wegostores.com/admin/v1/tutorial/update/${tutorialId}`,
                 formData,
                 {
                     headers: {

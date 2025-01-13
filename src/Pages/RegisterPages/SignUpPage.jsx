@@ -71,7 +71,7 @@ const handleSubmit = async (event) => {
     try {
         // Send email to Code API
         const response = await axios.post(
-            " https://www.wegostores.com/user/v1/signUp/code",
+            " https://login.wegostores.com/user/v1/signUp/code",
             { email },
             { headers: { "Content-Type": "application/json" } }
         );
@@ -99,7 +99,7 @@ const handleSubmit = async (event) => {
 
                 // Attempt to sign up the user
                 const response = await axios.post(
-                    " https://www.wegostores.com/user/v1/signUp",
+                    " https://login.wegostores.com/user/v1/signUp",
                     { name, phone, email, password, conf_password: confPassword },
                     { headers: { 'Content-Type': 'application/json' } }
                 );
@@ -157,7 +157,7 @@ const handleSubmit = async (event) => {
         setError("");
         setIsLoading(true);
         try {
-        const response = await axios.post(' https://www.wegostores.com/user/v1/signUp/code', { email });
+        const response = await axios.post(' https://login.wegostores.com/user/v1/signUp/code', { email });
         if (response.status === 200) {
             auth.toastSuccess('Code resent to your email successfully!');
             setApiCode(response.data.code);

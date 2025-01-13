@@ -36,7 +36,7 @@ const PlanPage = () => {
     const fetchData = async () => {
         setIsLoading(true);
         try {
-               const response = await axios.get(i18n.language==='en'?' https://www.wegostores.com/admin/v1/plan/show':' https://www.wegostores.com/admin/v1/plan/show?locale=ar', {
+               const response = await axios.get(i18n.language==='en'?' https://login.wegostores.com/admin/v1/plan/show':' https://login.wegostores.com/admin/v1/plan/show?locale=ar', {
                       headers: {
                              Authorization: `Bearer ${auth.user.token}`,
                       },
@@ -90,7 +90,7 @@ const PlanPage = () => {
        const deletePlan = async (planId, authToken) => {
               console.log(planId)
               try {
-                     const response = await axios.delete(` https://www.wegostores.com/admin/v1/plan/delete/${planId}`, {
+                     const response = await axios.delete(` https://login.wegostores.com/admin/v1/plan/delete/${planId}`, {
                             headers: {
                                    Authorization: `Bearer ${authToken}`,
                             },

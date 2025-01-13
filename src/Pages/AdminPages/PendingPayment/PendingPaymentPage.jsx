@@ -69,13 +69,13 @@ const [selectedOrders, setSelectedOrders] = useState([]);
           try {
             let response;
             if (selectedOption === "Approve") {
-              response = await axios.post(` https://www.wegostores.com/admin/v1/payment/approve/${selectedPaymentId}`, {}, {
+              response = await axios.post(` https://login.wegostores.com/admin/v1/payment/approve/${selectedPaymentId}`, {}, {
                 headers: {
                   Authorization: `Bearer ${auth.user.token}`,
                 },
               });
             } else if (selectedOption === "Reject") {
-              response = await axios.post(` https://www.wegostores.com/admin/v1/payment/rejected/${selectedPaymentId}`,
+              response = await axios.post(` https://login.wegostores.com/admin/v1/payment/rejected/${selectedPaymentId}`,
                 {
                         rejected_reason: rejectReason
                 },
@@ -108,7 +108,7 @@ const [selectedOrders, setSelectedOrders] = useState([]);
     const fetchData = async () => {
         setIsLoading(true);
         try {
-               const response = await axios.get(' https://www.wegostores.com/admin/v1/payment/show/pending', {
+               const response = await axios.get(' https://login.wegostores.com/admin/v1/payment/show/pending', {
                       headers: {
                              Authorization: `Bearer ${auth.user.token}`,
                       },

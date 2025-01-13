@@ -50,7 +50,7 @@ const LoginUser =()=>{
         
 
         try {
-            const response = await axios.post(' https://www.wegostores.com/api/v1/auth/login', {
+            const response = await axios.post(' https://login.wegostores.com/api/v1/auth/login', {
                 email,
                 password,
             });

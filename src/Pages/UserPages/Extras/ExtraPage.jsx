@@ -33,7 +33,7 @@ const ExtraPage = () => {
     const fetchData = async () => {
         setIsLoading(true);
         try {
-               const response = await axios.get(i18n.language==='ar'?' https://www.wegostores.com/user/v1/extra?locale=ar':' https://www.wegostores.com/user/v1/extra', {
+               const response = await axios.get(i18n.language==='ar'?' https://login.wegostores.com/user/v1/extra?locale=ar':' https://login.wegostores.com/user/v1/extra', {
                       headers: {
                              Authorization: `Bearer ${auth.user.token}`,
                       },
@@ -61,7 +61,7 @@ const ExtraPage = () => {
    
        try {
            const response = await axios.post(
-               ' https://www.wegostores.com/user/v1/cart/pending',
+               ' https://login.wegostores.com/user/v1/cart/pending',
                {
                    id: product.id, // Properly include plan.id as a key-value pair
                    type: "extra",
