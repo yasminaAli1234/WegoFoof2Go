@@ -48,11 +48,11 @@ const {t} = useTranslation();
   // Function to handle navigation
 
   return (
-    <section className="features">
+    <section className="features px-2">
    <div className="flex flex-wrap justify-center text-white gap-10">
   {featuresData.map((feature, index) => (
     <Link
-   to='/features'
+   to='features'
       key={index}
        className="w-64 md:w-48 lg:w-1/5 p-6 border border-gray-300 rounded-lg shadow-lg">
     

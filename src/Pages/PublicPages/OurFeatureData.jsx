@@ -110,7 +110,7 @@ const featuresData = [
 const FeaturesPage = () => {
   const {t} = useTranslation();
   return (
-    <section  className="py-16 px-10 ml-30" >
+    <section  className="py-16 px-10 ml-30 bg-mainColor" >
       {/* Section Title */}
       <h2 className="text-3xl font-bold text-center mb-4 text-white">{t("Our Features")}</h2>
       <p className="text-center text-lg text-white mb-8">

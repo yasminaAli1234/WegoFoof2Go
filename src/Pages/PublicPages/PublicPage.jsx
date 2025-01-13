@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import logo from "../../../public/Images/logo white.png";
 import { Button } from "../../Components/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import homeImage from "../../../public/Images/homeImage.png";
 import imageLanding from '../../assets/Images/assets/img/landing.png'
 import { FiArrowRight } from "react-icons/fi";
@@ -23,7 +23,7 @@ import { CgMenu } from 'react-icons/cg';
 import { useTranslation } from "react-i18next";
 const PublicPage = () => {
          const dropdownRef = useRef(null)
-         
+         const navigate = useNavigate()
          const {i18n,t } = useTranslation();
          const [activeLink, setActiveLink] = useState('Home'); // Default active link
          const [menuOpen, setMenuOpen] = useState(false);
@@ -47,6 +47,10 @@ const PublicPage = () => {
                        setOpen(false);
                 }
          };
+         const handleNavigate =()=>{
+          navigate('/login')
+
+         }
   
          useEffect(() => {
                 document.addEventListener('mousedown', handleClickOutside);
@@ -95,9 +99,14 @@ const PublicPage = () => {
     isScrolled ? 'bg-mainColor' : 'bg-transparent'
   }`}
 >
-  <div className="w-2/6 lg:w-1/4 mt-4 flex text-white items-center justify-center py-4 px-4 text-xl font-semibold">
-    <img src={logo} alt="wegoStore" height={90} width={200} />
-     <div className="hidden lg:flex w-4/12 items-center py-1 gap-5 justify-center text-xl font-medium mr-3 text-mainColor hover:cursor-pointer transition-all duration-300">
+<div className="w-2/6 lg:w-1/4 mt-4 flex flex-col lg:flex-row text-white items-start justify-center py-4 px-4 text-xl font-semibold">
+
+  <img
+  src={logo}
+  alt="wegoStore"
+  className="max-w-full sm:max-w-[150px] md:max-w-[150px] h-auto object-contain"
+/>
+     <div className=" lg:flex w-4/12 items-center py-1 gap-5 justify-center text-xl font-medium mr-3 text-mainColor hover:cursor-pointer transition-all duration-300">
     <div className="relative" ref={dropdownRef}>
       <button
         className="flex items-center gap-1 justify-between text-2xl"
@@ -229,27 +238,44 @@ const PublicPage = () => {
 
 
 {/* Section 1 */}
-<section id="section1" className="h-screen flex items-center justify-center text-white text-2xl px-4">
-  <div className="w-full flex flex-col gap-3 justify-center">
-    <div className="w-full flex justify-center mt-10">
-      <img src={homeImage} alt="" className="w-full lg:w-1/6 lg:h-1/6" />
+<section id="section1" className="h-screen flex items-center justify-center text-white px-4">
+  <div className="w-full flex flex-col gap-4 justify-center items-center">
+    {/* Image Section */}
+    <div className="w-full flex justify-center mt-6">
+      <img
+        src={homeImage}
+        alt="Home"
+        className="w-2/3 sm:w-1/2 lg:w-1/6 lg:h-1/6"
+      />
     </div>
-    <h1 className="font-semibold text-2xl lg:text-3xl text-center">
+
+    {/* Heading */}
+    <h1 className="font-semibold text-lg sm:text-xl lg:text-3xl text-center">
       {t("Design Your Perfect Website in One Click!")}
     </h1>
+
+    {/* Paragraph */}
     <div className="w-full flex justify-center">
-      <p className="font-normal text-1xl text-center w-full lg:w-5/6">
-        {t("Enjoy a fast and easy process to create a stunning website that reflects your identity, with our flexible packages ensuring you a unique experience in no time. Choose what suits you and start your digital journey with confidence!")}
+      <p className="font-normal text-sm sm:text-base lg:text-lg text-center w-full sm:w-5/6">
+        {t(
+          "Enjoy a fast and easy process to create a stunning website that reflects your identity, with our flexible packages ensuring you a unique experience in no time. Choose what suits you and start your digital journey with confidence!"
+        )}
       </p>
     </div>
-    <button className="text-2xl font-medium w-fit py-2 px-9 lg:py-4 lg:px-6 flex items-center border rounded-xl bg-secoundColor text-mainColor hover:bg-blue-200 transition-colors">
+
+    {/* Button */}
+    <button
+      onClick={() => handleNavigate()}
+      className="text-sm sm:text-lg font-medium py-2 px-6 sm:py-3 sm:px-8 lg:py-4 lg:px-6 flex items-center border rounded-xl bg-secoundColor text-mainColor hover:bg-blue-200 transition-colors mt-4"
+    >
       {t("Start Now")}
-      <span className="flex items-center justify-center w-10 h-10 ml-3 rounded-full bg-mainColor text-white">
-        <FiArrowRight size={20} />
+      <span className="flex items-center justify-center w-8 sm:w-10 h-8 sm:h-10 ml-2 sm:ml-3 rounded-full bg-mainColor text-white">
+        <FiArrowRight size={16} sm={20} />
       </span>
     </button>
   </div>
 </section>
+
 
 
 {/* Section 2 */}

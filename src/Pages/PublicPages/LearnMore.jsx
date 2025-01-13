@@ -35,7 +35,7 @@ const LearnMoreSection = () => {
   ];
 
   return (
-    <section className="py-16 text-white ">
+    <section className="py-16 px-4 text-white ">
       {/* Section Title */}
       <h2 className="text-3xl font-bold text-center mb-2">{t("Learn more about starting an online store")}</h2>
       <p className="text-center text-lg text-gray-200 mb-8">
