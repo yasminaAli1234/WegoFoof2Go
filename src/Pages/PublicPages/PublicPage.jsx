@@ -99,45 +99,44 @@ const PublicPage = () => {
     isScrolled ? 'bg-mainColor' : 'bg-transparent'
   }`}
 >
-<div className="w-2/6 lg:w-1/4 mt-4 flex flex-col lg:flex-row text-white items-start justify-center py-4 px-4 text-xl font-semibold">
-
-  <img
-  src={logo}
-  alt="wegoStore"
-  className="max-w-full sm:max-w-[150px] md:max-w-[150px] h-auto object-contain"
-/>
-     <div className=" lg:flex w-4/12 items-center py-1 gap-5 justify-center text-xl font-medium mr-3 text-mainColor hover:cursor-pointer transition-all duration-300">
-    <div className="relative" ref={dropdownRef}>
-      <button
-        className="flex items-center gap-1 justify-between text-2xl"
-        onClick={handleClickOpen}
-      >
-        <CiGlobe className="text-white text-2xl" />
-        <span className="flex items-center text-white font-medium">
-          {t(i18n.language.toUpperCase())}
-          <IoIosArrowDown
-            className={`${open ? "rotate-180" : "rotate-0"} mt-1 ml-1 transition-all duration-300`}
-          />
-        </span>
-      </button>
-      <div
-        className={`${open ? "block" : "hidden"} absolute w-28 top-14 -left-3.5 bg-white rounded-xl border-2 overflow-hidden`}
-      >
-        <div
-          className="flex items-center py-1 gap-1 justify-center text-xl font-medium text-mainColor hover:cursor-pointer hover:bg-mainColor hover:text-secoundColor transition-all duration-300"
-          onClick={() => handleOptionClick("EN")}
+  <div className="w-2/6 lg:w-1/4 mt-4 flex flex-col lg:flex-row text-white items-start justify-center py-4 px-4 text-xl font-semibold">
+    <img
+      src={logo}
+      alt="wegoStore"
+      className="max-w-full sm:max-w-[150px] md:max-w-[150px] h-auto object-contain"
+    />
+    <div className="lg:flex w-4/12 items-center py-1 gap-5 justify-center text-xl font-medium mr-3 text-mainColor hover:cursor-pointer transition-all duration-300">
+      <div className="relative" ref={dropdownRef}>
+        <button
+          className="flex items-center gap-1 justify-between text-2xl"
+          onClick={handleClickOpen}
         >
-          <CiGlobe /> EN
-        </div>
+          <CiGlobe className="text-white text-2xl" />
+          <span className="flex items-center text-white font-medium">
+            {t(i18n.language.toUpperCase())}
+            <IoIosArrowDown
+              className={`${open ? 'rotate-180' : 'rotate-0'} mt-1 ml-1 transition-all duration-300`}
+            />
+          </span>
+        </button>
         <div
-          className="flex items-center py-1 gap-1 justify-center text-xl font-medium text-mainColor hover:cursor-pointer hover:bg-mainColor hover:text-secoundColor transition-all duration-300"
-          onClick={() => handleOptionClick("AR")}
+          className={`${open ? 'block' : 'hidden'} absolute w-28 top-14 -left-3.5 bg-white rounded-xl border-2 overflow-hidden`}
         >
-          <CiGlobe /> AR
+          <div
+            className="flex items-center py-1 gap-1 justify-center text-xl font-medium text-mainColor hover:cursor-pointer hover:bg-mainColor hover:text-secoundColor transition-all duration-300"
+            onClick={() => handleOptionClick('EN')}
+          >
+            <CiGlobe /> EN
+          </div>
+          <div
+            className="flex items-center py-1 gap-1 justify-center text-xl font-medium text-mainColor hover:cursor-pointer hover:bg-mainColor hover:text-secoundColor transition-all duration-300"
+            onClick={() => handleOptionClick('AR')}
+          >
+            <CiGlobe /> AR
+          </div>
         </div>
       </div>
     </div>
-  </div>
   </div>
 
   {/* Navbar Links */}
@@ -145,57 +144,48 @@ const PublicPage = () => {
     <li className="relative" onClick={() => handleClick('Home')}>
       <a href="#section1" className="text-2xl hover:text-red-500 transition-colors">{t("Home")}</a>
       <span className={`absolute bottom-[-10px] left-0 h-[3px] bg-white transition-all duration-300 ${
-          activeLink === 'Home' ? 'w-[70%]' : 'w-0'
-        }`}></span>
+        activeLink === 'Home' ? 'w-[70%]' : 'w-0'
+      }`}></span>
     </li>
     <li className="relative" onClick={() => handleClick('About Us')}>
       <a href="#section2" className="text-2xl transition-colors">{t("About Us")}</a>
       <span className={`absolute bottom-[-10px] left-0 h-[3px] bg-white transition-all duration-300 ${
-          activeLink === 'About Us' ? 'w-[70%]' : 'w-0'
-        }`}></span>
+        activeLink === 'About Us' ? 'w-[70%]' : 'w-0'
+      }`}></span>
     </li>
     <li className="relative" onClick={() => handleClick('Our features')}>
       <a href="#features" className="text-2xl transition-colors">{t("Our Features")}</a>
       <span className={`absolute bottom-[-10px] left-0 h-[3px] bg-white transition-all duration-300 ${
-          activeLink === 'Our features' ? 'w-[70%]' : 'w-0'
-        }`}></span>
+        activeLink === 'Our features' ? 'w-[70%]' : 'w-0'
+      }`}></span>
     </li>
     <li className="relative" onClick={() => handleClick('Plan')}>
       <a href="#plan" className="text-2xl transition-colors">{t("Plan")}</a>
       <span className={`absolute bottom-[-10px] left-0 h-[3px] bg-white transition-all duration-300 ${
-          activeLink === 'Plan' ? 'w-[70%]' : 'w-0'
-        }`}></span>
+        activeLink === 'Plan' ? 'w-[70%]' : 'w-0'
+      }`}></span>
     </li>
     <li className="relative" onClick={() => handleClick('Contact Us')}>
       <a href="#contactUs" className="text-2xl transition-colors">{t("Contact Us")}</a>
       <span className={`absolute bottom-[-10px] left-0 h-[3px] bg-white transition-all duration-300 ${
-          activeLink === 'Contact Us' ? 'w-[70%]' : 'w-0'
-        }`}></span>
+        activeLink === 'Contact Us' ? 'w-[70%]' : 'w-0'
+      }`}></span>
     </li>
-    {/* <li className="relative" onClick={() => handleClick('All Feature')}>
-      <a href="#features" className="text-2xl hover:text-red-500 transition-colors">{t("Feature")}</a>
-      <span className={`absolute bottom-[-10px] left-0 h-[3px] bg-white transition-all duration-300 ${
-          activeLink === 'All Feature' ? 'w-[70%]' : 'w-0'
-        }`}></span>
-    </li> */}
   </ul>
 
-  {/* Login / Sign Up Buttons */}
-  <div className="flex items-center py-2 gap-5 w-4/6 lg:w-1/4">
-  <Link to="/login">
-    <button className="text-xl font-medium w-32 h-12 flex items-center justify-center border rounded-xl hover:bg-secoundColor hover:text-mainColor">
-      {t("Login")}
-    </button>
-  </Link>
-  <Link to="/signUp">
-    <button className="text-xl font-medium w-32 h-12 flex items-center justify-center bg-secoundColor text-mainColor border rounded-xl hover:bg-mainColor hover:text-white">
-      {t("SignUp")}
-    </button>
-  </Link>
-  {/* Language Dropdown */}
- 
-</div>
-
+  {/* Login/SignUp buttons on Desktop */}
+  <div className="hidden lg:flex items-center gap-4 py-4">
+    <Link to="/login">
+      <button className="text-xl font-medium w-32 h-12 flex items-center justify-center border rounded-xl hover:bg-secoundColor hover:text-mainColor">
+        {t("Login")}
+      </button>
+    </Link>
+    <Link to="/signUp">
+      <button className="text-xl font-medium w-32 h-12 flex items-center justify-center bg-secoundColor text-mainColor border rounded-xl hover:bg-mainColor hover:text-white">
+        {t("SignUp")}
+      </button>
+    </Link>
+  </div>
 
   {/* Hamburger Menu for Small Screens */}
   <div className="lg:hidden flex items-center justify-center px-4">
@@ -216,7 +206,7 @@ const PublicPage = () => {
         X
       </button>
     </div>
-    <ul className="flex flex-col items-center space-y-6 mt-4">
+    <ul className="flex flex-col items-start space-y-6 mx-5 mt-4">
       <li onClick={() => handleClick('Home')}>
         <a href="#section1" className="text-xl hover:text-red-500 transition-colors duration-300">{t("Home")}</a>
       </li>
@@ -233,8 +223,25 @@ const PublicPage = () => {
         <a href="#contactUs" className="text-xl hover:text-red-500 transition-colors duration-300">{t("Contact Us")}</a>
       </li>
     </ul>
+
+    {/* Login / Sign Up Buttons inside Mobile Menu */}
+    <div className="flex flex-col items-start mx-5 py-2 gap-5 w-4/6 lg:w-1/4">
+      <Link to="/login">
+        <button className="text-xl font-medium w-32 h-12 flex items-center justify-center border rounded-xl hover:bg-secoundColor hover:text-mainColor">
+          {t("Login")}
+        </button>
+      </Link>
+      <Link to="/signUp">
+        <button className="text-xl font-medium w-32 h-12 flex items-center justify-center bg-secoundColor text-mainColor border rounded-xl hover:bg-mainColor hover:text-white">
+          {t("SignUp")}
+        </button>
+      </Link>
+    </div>
   </div>
 )}
+
+
+
 
 
 {/* Section 1 */}
