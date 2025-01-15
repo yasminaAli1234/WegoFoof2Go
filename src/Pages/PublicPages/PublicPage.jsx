@@ -51,7 +51,7 @@ const PublicPage = () => {
                 }
          };
          const handleNavigate =()=>{
-          navigate('/login')
+          navigate('/signUp')
 
          }
          useEffect(() => {
