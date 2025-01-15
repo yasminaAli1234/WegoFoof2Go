@@ -3,13 +3,13 @@ import logo from "../../../public/Images/LogoImage.png";
 const ContactSection = ({id}) => {
   const {t} = useTranslation()
     return (
-      <section id={id} className="py-16 text-white">
+      <section  id={id} className="py-16 bg-secoundColor text-mainColor">
         {/* Section Title */}
      <div className=" flex justify-center items-center text-center flex-col">
      <h2 className="text-3xl font-bold text-center mb-4">{t("We are happy to answer your questions at any time.")}</h2>
         
         {/* Description Text */}
-        <p className="text-center text-lg text-gray-200 w-[50%] mb-8">
+        <p className="text-center text-lg text-gray-700 w-[50%] mb-8">
           {t("Your opinion matters to us. Please feel free to reach out with any questions or concerns. We're committed to providing prompt responses.")}
         </p>
      </div>
@@ -18,7 +18,7 @@ const ContactSection = ({id}) => {
         <div className="flex flex-col-reverse lg:flex-row justify-between items-center max-w-6xl mx-auto">
           {/* Left Section: Form */}
           <div className="w-full lg:w-1/2 space-y-4">
-            <form className="space-y-6  p-8 rounded-lg shadow-md">
+            <form className="space-y-6  p-8 rounded-lg shadow-md bg-mainColor">
               {/* Full Name */}
               <div className="flex flex-col">
                 
@@ -26,7 +26,7 @@ const ContactSection = ({id}) => {
                   type="text"
                   id="fullName"
                   name="fullName"
-                  className="border-b bg-transparent border-gray-300 p-3  focus:outline-none focus:ring-2 "
+                  className="border-b bg-transparent border-b-gray-300 p-3  focus:outline-none focus:ring-2 "
                   placeholder={t("Enter your full name")}
                 />
               </div>
@@ -70,7 +70,7 @@ const ContactSection = ({id}) => {
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full py-3 bg-white text-mainColor font-semibold rounded-lg  focus:outline-none"
+                className="w-full py-3 bg-secoundColor text-mainColor font-semibold rounded-lg  focus:outline-none"
               >
                 {t("Send")}
               </button>
