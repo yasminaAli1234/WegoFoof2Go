@@ -35,7 +35,7 @@ const LearnMoreSection = () => {
   ];
 
   return (
-    <section className="py-16 px-4 text-white ">
+    <section className="py-16 px-4 text-secoundColor ">
       {/* Section Title */}
       <h2 className="text-3xl font-bold text-center mb-2">{t("Learn more about starting an online store")}</h2>
       <p className="text-center text-lg text-gray-200 mb-8">
@@ -47,7 +47,7 @@ const LearnMoreSection = () => {
         {questionsAndAnswers.map((item, index) => (
           <div
             key={index}
-            className="bg-white rounded-lg shadow-lg p-6 border-b border-white transition-transform duration-300 hover:scale-105"
+            className="bg-secoundColor rounded-lg shadow-lg p-6 border-b border-secoundColor transition-transform duration-300 hover:scale-105"
           >
             {/* Question and Icon */}
             <div className="flex justify-between items-center w-full cursor-pointer" onClick={() => toggleAnswer(index)}>

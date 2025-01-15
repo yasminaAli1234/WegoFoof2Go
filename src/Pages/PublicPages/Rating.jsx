@@ -17,10 +17,10 @@ const CustomerReviewsSlider = () => {
     { name: "Laila Tarek", review: "Great customer support and very helpful team.", rating: 5 }
   ];
   return (
-    <section className="py-16 px-10">
+    <section className="py-16 mt-10 bg-secoundColor px-10">
       {/* Section Title */}
-      <h2 className="text-3xl font-bold text-center mb-4 text-white">{t("What Our Customers Say About Us")}</h2>
-      <p className="text-center text-lg text-gray-400 mb-8">{t("Don't take our word, hear from them.")}</p>
+      <h2 className="text-3xl font-bold text-center mb-4 text-mainColor">{t("What Our Customers Say About Us")}</h2>
+      <p className="text-center text-lg text-gray-700 mb-8">{t("Don't take our word, hear from them.")}</p>
 
       {/* Scrollable Row */}
       <div className="flex overflow-x-auto pb-6 space-x-6 scrollbar-hide">
@@ -28,23 +28,23 @@ const CustomerReviewsSlider = () => {
         {reviews.map((review, index) => (
           <div
             key={index}
-            className="w-72 bg-white rounded-lg shadow-lg p-6 flex-shrink-0"
+            className="w-72 bg-mainColor rounded-lg shadow-lg p-6  flex-shrink-0"
           >
-            <h3 className="text-xl font-semibold text-center mb-4 text-mainColor">{t(`${review.name}`)}</h3>
-            <p className="text-center text-gray-600 mb-4">{t(`${review.review}`)}</p>
+            <h3 className="text-xl font-semibold text-center mb-4 text-secoundColor">{t(`${review.name}`)}</h3>
+            <p className="text-center text-gray-300 mb-4">{t(`${review.review}`)}</p>
             {/* Star Rating */}
             <div className="flex justify-center mb-4">
               {[...Array(5)].map((_, index) => (
                 <span key={index}>
                   {index < review.rating ? (
-                    <FaStar className="w-6 h-6 text-mainColor" />
+                    <FaStar className="w-6 h-6 text-secoundColor" />
                   ) : (
-                    <FaRegStar className="w-6 h-6 text-mainColor" />
+                    <FaRegStar className="w-6 h-6 text-secoundColor" />
                   )}
                 </span>
               ))}
             </div>
-            <button className="bg-mainColor text-white py-2 px-4 rounded-full w-full text-center">See More</button>
+            <button className="bg-secoundColor text-mainColor py-2 px-4 rounded-full w-full text-center">See More</button>
           </div>
         ))}
       </div>

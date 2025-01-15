@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import logo from "../../../public/Images/logo white.png";
 import { Button } from "../../Components/Button";
+import 'aos/dist/aos.css'; // AOS styles
 import { Link, useNavigate } from "react-router-dom";
 import homeImage from "../../../public/Images/homeImage.png";
 import imageLanding from '../../assets/Images/assets/img/landing.png'
@@ -17,6 +18,8 @@ import Plan from "./Plan";
 import { CiGlobe } from "react-icons/ci";
 import { IoIosArrowDown } from "react-icons/io"; 
 import { IoNotifications } from "react-icons/io5";
+import AOS from 'aos';
+
 import FeaturesPage from "./OurFeatureData";
 import { FaLightbulb, FaCheckCircle, FaHeadset } from 'react-icons/fa';
 import { CgMenu } from 'react-icons/cg';
@@ -51,6 +54,15 @@ const PublicPage = () => {
           navigate('/login')
 
          }
+         useEffect(() => {
+          // Initialize AOS with custom settings (optional)
+          AOS.init({
+            duration: 1000, // animation duration (milliseconds)
+            easing: 'ease-in-out', // easing function
+            once: false, // animation will happen only once (not repeat on scroll)
+            mirror: true,
+          });
+        }, []);
   
          useEffect(() => {
                 document.addEventListener('mousedown', handleClickOutside);
@@ -92,35 +104,35 @@ const PublicPage = () => {
   }, []);
 
   return (
-<div className="bg-mainColor text-secondColor">
+<div className="bg-mainColor text-secoundColor">
   {/* Navigation Bar */}
   <nav
-  className={`fixed w-full text-white flex justify-between z-10 transition-all duration-300 ${
-    isScrolled ? 'bg-mainColor' : 'bg-transparent'
+  className={`fixed w-full  flex justify-between z-10 transition-all duration-300 ${
+    isScrolled ? 'bg-mainColor' : 'bg-mainColor'
   }`}
 >
-  <div className="w-2/6 lg:w-1/4 mt-4 flex flex-col lg:flex-row text-white items-start justify-center py-4 px-4 text-xl font-semibold">
+  <div className="w-2/6 lg:w-1/4 mt-4 flex flex-col lg:flex-row text-secoundColor  items-start justify-center py-4 px-4 text-xl font-semibold">
     <img
       src={logo}
       alt="wegoStore"
       className="max-w-full sm:max-w-[150px] md:max-w-[150px] h-auto object-contain"
     />
-    <div className="lg:flex w-4/12 items-center py-1 gap-5 justify-center text-xl font-medium mr-3 text-mainColor hover:cursor-pointer transition-all duration-300">
+    <div className="lg:flex w-4/12 items-center py-1 gap-5 justify-center text-xl font-medium mr-3 text-secoundColor hover:cursor-pointer transition-all duration-300">
       <div className="relative" ref={dropdownRef}>
         <button
           className="flex items-center gap-1 justify-between text-2xl"
           onClick={handleClickOpen}
         >
-          <CiGlobe className="text-white text-2xl" />
-          <span className="flex items-center text-white font-medium">
+          <CiGlobe className="text-secoundColor text-2xl" />
+          <span className="flex items-center text-secoundColor font-medium">
             {t(i18n.language.toUpperCase())}
             <IoIosArrowDown
-              className={`${open ? 'rotate-180' : 'rotate-0'} mt-1 ml-1 transition-all duration-300`}
+              className={`${open ? 'rotate-180' : 'rotate-0'} mt-1 ml-1 transition-all text-secoundColor duration-300`}
             />
           </span>
         </button>
         <div
-          className={`${open ? 'block' : 'hidden'} absolute w-28 top-14 -left-3.5 bg-white rounded-xl border-2 overflow-hidden`}
+          className={`${open ? 'block' : 'hidden'} absolute w-28 top-14 -left-3.5 bg-secoundColor rounded-xl border-2 overflow-hidden`}
         >
           <div
             className="flex items-center py-1 gap-1 justify-center text-xl font-medium text-mainColor hover:cursor-pointer hover:bg-mainColor hover:text-secoundColor transition-all duration-300"
@@ -143,31 +155,31 @@ const PublicPage = () => {
   <ul className="hidden items-center lg:flex w-2/4 justify-center space-x-8 py-4 gap-3 relative">
     <li className="relative" onClick={() => handleClick('Home')}>
       <a href="#section1" className="text-2xl hover:text-red-500 transition-colors">{t("Home")}</a>
-      <span className={`absolute bottom-[-10px] left-0 h-[3px] bg-white transition-all duration-300 ${
+      <span className={`absolute bottom-[-10px] left-0 h-[3px] bg-mainColor transition-all duration-300 ${
         activeLink === 'Home' ? 'w-[70%]' : 'w-0'
       }`}></span>
     </li>
     <li className="relative" onClick={() => handleClick('About Us')}>
       <a href="#section2" className="text-2xl transition-colors">{t("About Us")}</a>
-      <span className={`absolute bottom-[-10px] left-0 h-[3px] bg-white transition-all duration-300 ${
+      <span className={`absolute bottom-[-10px] left-0 h-[3px] bg-mainColor transition-all duration-300 ${
         activeLink === 'About Us' ? 'w-[70%]' : 'w-0'
       }`}></span>
     </li>
     <li className="relative" onClick={() => handleClick('Our features')}>
       <a href="#features" className="text-2xl transition-colors">{t("Our Features")}</a>
-      <span className={`absolute bottom-[-10px] left-0 h-[3px] bg-white transition-all duration-300 ${
+      <span className={`absolute bottom-[-10px] left-0 h-[3px] bg-mainColor transition-all duration-300 ${
         activeLink === 'Our features' ? 'w-[70%]' : 'w-0'
       }`}></span>
     </li>
     <li className="relative" onClick={() => handleClick('Plan')}>
       <a href="#plan" className="text-2xl transition-colors">{t("Plan")}</a>
-      <span className={`absolute bottom-[-10px] left-0 h-[3px] bg-white transition-all duration-300 ${
+      <span className={`absolute bottom-[-10px] left-0 h-[3px] bg-mainColor transition-all duration-300 ${
         activeLink === 'Plan' ? 'w-[70%]' : 'w-0'
       }`}></span>
     </li>
     <li className="relative" onClick={() => handleClick('Contact Us')}>
       <a href="#contactUs" className="text-2xl transition-colors">{t("Contact Us")}</a>
-      <span className={`absolute bottom-[-10px] left-0 h-[3px] bg-white transition-all duration-300 ${
+      <span className={`absolute bottom-[-10px] left-0 h-[3px] bg-mainColor transition-all duration-300 ${
         activeLink === 'Contact Us' ? 'w-[70%]' : 'w-0'
       }`}></span>
     </li>
@@ -176,7 +188,7 @@ const PublicPage = () => {
   {/* Login/SignUp buttons on Desktop */}
   <div className="hidden lg:flex items-center gap-4 py-4">
     <Link to="/login">
-      <button className="text-xl font-medium w-32 h-12 flex items-center justify-center border rounded-xl hover:bg-secoundColor hover:text-mainColor">
+      <button className="text-xl  text-white font-medium w-32 h-12 flex items-center justify-center border rounded-xl hover:bg-secoundColor hover:text-mainColor">
         {t("Login")}
       </button>
     </Link>
@@ -190,18 +202,18 @@ const PublicPage = () => {
   {/* Hamburger Menu for Small Screens */}
   <div className="lg:hidden flex items-center justify-center px-4">
     <button onClick={toggleMenu}>
-      <CgMenu className="text-3xl text-white" />
+      <CgMenu className="text-3xl text-secoundColor" />
     </button>
   </div>
 </nav>
 
 {/* Mobile Menu */}
 {menuOpen && (
-  <div className="lg:hidden absolute top-0 left-0 w-full max-w-[90%] mx-auto z-50 bg-mainColor text-white py-6 rounded-lg shadow-lg">
+  <div className="lg:hidden absolute top-0 left-0 w-full max-w-[90%] mx-auto z-50 bg-mainColor text-secoundColor py-6 rounded-lg shadow-lg">
     <div className="flex justify-end px-4">
       <button
         onClick={toggleMenu}
-        className="text-xl flex justify-center items-center flex-col font-bold text-white bg-red-500 px-3 py-1 rounded-full hover:bg-red-600 transition-all duration-300"
+        className="text-xl flex justify-center items-center flex-col font-bold text-secoundColor bg-red-500 px-3 py-1 rounded-full hover:bg-red-600 transition-all duration-300"
       >
         X
       </button>
@@ -245,7 +257,7 @@ const PublicPage = () => {
 
 
 {/* Section 1 */}
-<section id="section1" className="h-screen flex items-center justify-center text-white px-4">
+<section id="section1" data-aos="zoom-in"  className="h-screen flex items-center bg-secoundColor justify-center text-mainColor px-4">
   <div className="w-full flex flex-col gap-4 justify-center items-center">
     {/* Image Section */}
     <div className="w-full flex justify-center mt-6">
@@ -276,7 +288,7 @@ const PublicPage = () => {
       className="text-sm sm:text-lg font-medium py-2 px-6 sm:py-3 sm:px-8 lg:py-4 lg:px-6 flex items-center border rounded-xl bg-secoundColor text-mainColor hover:bg-blue-200 transition-colors mt-4"
     >
       {t("Start Now")}
-      <span className="flex items-center justify-center w-8 sm:w-10 h-8 sm:h-10 ml-2 sm:ml-3 rounded-full bg-mainColor text-white">
+      <span className="flex items-center justify-center w-8 sm:w-10 h-8 sm:h-10 ml-2 sm:ml-3 rounded-full bg-mainColor text-secoundColor">
         <FiArrowRight size={16} sm={20} />
       </span>
     </button>
@@ -286,33 +298,33 @@ const PublicPage = () => {
 
 
 {/* Section 2 */}
-<section id="section2" className="h-auto flex flex-col items-start justify-start w-full text-white text-3xl px-4">
+<section id="section2" data-aos="fade-left" className="h-auto flex flex-col items-start justify-start w-full text-secoundColor text-3xl px-4">
   <div className="w-full">
-    <div className="flex flex-col lg:flex-row justify-around items-center w-full bg-white py-10">
+    <div className="flex flex-col lg:flex-row justify-around items-center w-full bg-mainColor py-10">
       <div className="flex flex-col gap-3 items-center text-center">
-        <h3 className="text-xl font-semibold text-mainColor">{t("Active Subscriptions")}</h3>
-        <span className="text-3xl font-bold text-mainColor">{t("100+")}</span>
+        <h3 className="text-xl font-semibold text-secoundColor">{t("Active Subscriptions")}</h3>
+        <span className="text-3xl font-bold text-secoundColor">{t("100+")}</span>
       </div>
       <div className="flex flex-col gap-3 items-center text-center">
-        <h3 className="text-xl font-semibold text-mainColor">{t("New Orders Count")}</h3>
-        <span className="text-3xl font-bold text-mainColor">{t("200+")}</span>
+        <h3 className="text-xl font-semibold text-secoundColor">{t("New Orders Count")}</h3>
+        <span className="text-3xl font-bold text-secoundColor">{t("200+")}</span>
       </div>
       <div className="flex flex-col gap-3 items-center text-center">
-        <h3 className="text-xl font-semibold text-mainColor">{t("Websites Created")}</h3>
-        <span className="text-3xl font-bold text-mainColor">{t("50+")}</span>
+        <h3 className="text-xl font-semibold text-secoundColor">{t("Websites Created")}</h3>
+        <span className="text-3xl font-bold text-secoundColor">{t("50+")}</span>
       </div>
     </div>
 
-    <div className="flex flex-col lg:flex-row justify-between items-start w-full py-10 mt-10 px-10">
+    <div className="flex bg-secoundColor flex-col lg:flex-row justify-between items-start w-full py-10 mt-10 px-10">
       <div className="flex flex-col gap-6 items-start w-full md:w-1/2">
         <h1 className="text-3xl font-bold text-white">
           {t("Let's shape the digital future, together")}
         </h1>
-        <ul className="list-disc pl-6 text-lg text-white">
-          <li>{t("Customer-Centric: We prioritize understanding and meeting our clients' unique needs.")}</li>
-          <li>{t("Tailored Solutions: We design custom software solutions to exceed client expectations.")}</li>
-          <li>{t("Comprehensive Approach: We offer more than just technology products to help clients grow.")}</li>
-          <li>{t("Strong Partnerships: We collaborate closely with clients to build their digital presence and increase efficiency.")}</li>
+        <ul className="list-none pl-6 text-lg text-mainColor">
+          <li className="text-xl">{t("Customer-Centric: We prioritize understanding and meeting our clients' unique needs.")}</li>
+          <li className="text-xl">{t("Tailored Solutions: We design custom software solutions to exceed client expectations.")}</li>
+          <li className="text-xl">{t("Comprehensive Approach: We offer more than just technology products to help clients grow.")}</li>
+          <li className="text-xl">{t("Strong Partnerships: We collaborate closely with clients to build their digital presence and increase efficiency.")}</li>
         </ul>
       </div>
 
@@ -325,7 +337,7 @@ const PublicPage = () => {
 
 
       {/* Sections 3 */}
-      <section className="bg-mainColor text-white py-20">
+      <section data-aos="zoom-out" className="bg-mainColor text-secoundColor py-20">
       <div className="text-center mb-16">
         <h2 className="text-4xl font-semibold">{t("What Makes Us Different?")}</h2>
         <p className="text-xl mt-4">{t("Technology experts, committed to providing you the best.")}</p>
@@ -333,19 +345,19 @@ const PublicPage = () => {
 
       <div className="flex flex-wrap justify-center gap-10">
         {/* Card 1 */}
-        <div className="bg-white text-mainColor flex justify-center items-center flex-col p-6 rounded-lg shadow-lg w-64 md:w-80">
+        <div className="bg-secoundColor text-mainColor flex justify-center items-center flex-col p-6 rounded-lg shadow-lg w-64 md:w-80">
           <FaLightbulb className="text-7xl text-mainColor mb-6" />
           <p className="text-center text-lg font-medium">{t("We bring your digital visions to life.")} </p>
         </div>
 
         {/* Card 2 */}
-        <div className="bg-white text-mainColor flex justify-center items-center flex-col p-6 rounded-lg shadow-lg w-64 md:w-80">
+        <div className="bg-secoundColor text-mainColor flex justify-center items-center flex-col p-6 rounded-lg shadow-lg w-64 md:w-80">
           <FaCheckCircle className="text-7xl text-mainColor mb-6" />
           <p className="text-center text-lg font-medium">{t("Our software is built to the highest standards.")}</p>
         </div>
 
         {/* Card 3 */}
-        <div className="bg-white text-mainColor flex justify-center items-center flex-col p-6 rounded-lg shadow-lg w-64 md:w-80">
+        <div className="bg-secoundColor text-mainColor flex justify-center items-center flex-col p-6 rounded-lg shadow-lg w-64 md:w-80">
           <FaHeadset className="text-7xl text-mainColor mb-6" />
           <p className="text-center text-lg font-medium">{t("Our support team is available around the clock.")}</p>
         </div>

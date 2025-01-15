@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import logo from "../../../public/Images/logo.png";
+import logo from "../../../public/Images/logo white.png";
 import payment from '../../assets/Images/assets/img/Payment.png'
 import Vodafone from '../../assets/Images/assets/img/Vodafone.png'
 import visa from '../../assets/Images/assets/img/visa.png'
@@ -8,7 +8,7 @@ import mastercard  from '../../assets/Images/assets/img/mastercard.png'
 const Footer = () => {
   const {t} = useTranslation()
     return (
-      <footer className="bg-white text-mainColor py-12 px-2">
+      <footer className="bg-mainColor text-secoundColor py-12 px-2">
       {/* Footer Container */}
       <div className="max-w-screen-xl mx-auto flex flex-col md:flex-row justify-between space-y-6 md:space-y-0">
         {/* Left Section: Logo */}
@@ -64,7 +64,7 @@ const Footer = () => {
             {/* Visa */}
             <div
               onClick={() => window.location.href = "https://www.visa.com"}
-              className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center bg-white shadow-lg rounded-lg cursor-pointer transition-transform hover:scale-105"
+              className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center bg-secoundColor shadow-lg rounded-lg cursor-pointer transition-transform hover:scale-105"
             >
               <img
                 src={visa}
@@ -76,7 +76,7 @@ const Footer = () => {
             {/* Instapay */}
             <div
               onClick={() => window.location.href = "https://www.instapay.com"}
-              className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center bg-white shadow-lg rounded-lg cursor-pointer transition-transform hover:scale-105"
+              className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center bg-secoundColor shadow-lg rounded-lg cursor-pointer transition-transform hover:scale-105"
             >
               <img
                 src={instapay}
@@ -88,7 +88,7 @@ const Footer = () => {
             {/* Mastercard */}
             <div
               onClick={() => window.location.href = "https://www.mastercard.com"}
-              className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center bg-white shadow-lg rounded-lg cursor-pointer transition-transform hover:scale-105"
+              className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center bg-secoundColor shadow-lg rounded-lg cursor-pointer transition-transform hover:scale-105"
             >
               <img
                 src={mastercard}
@@ -100,7 +100,7 @@ const Footer = () => {
             {/* Vodafone */}
             <div
               onClick={() => window.location.href = "https://www.vodafone.com"}
-              className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center bg-white shadow-lg rounded-lg cursor-pointer transition-transform hover:scale-105"
+              className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center bg-secoundColor shadow-lg rounded-lg cursor-pointer transition-transform hover:scale-105"
             >
               <img
                 src={Vodafone}
@@ -111,7 +111,7 @@ const Footer = () => {
           </div>
     
           {/* Right: Copyright */}
-          <p className="text-mainColor text-sm sm:text-base">
+          <p className="text-secoundColor text-sm sm:text-base">
             {t("©2024. All rights reserved.")}
           </p>
         </div>

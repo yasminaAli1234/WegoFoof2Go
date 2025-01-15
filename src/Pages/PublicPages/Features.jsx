@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // AOS styles
 import {
   FaRegThumbsUp,
   FaUsers,
@@ -46,20 +48,29 @@ const Features = () => {
   ];
 const {t} = useTranslation();
   // Function to handle navigation
+  useEffect(() => {
+    // Initialize AOS with custom settings (optional)
+    AOS.init({
+      duration: 1000, // animation duration (milliseconds)
+      easing: 'ease-in-out', // easing function
+      once: false, // animation will happen only once (not repeat on scroll)
+      mirror: true,
+    });
+  }, []);
 
   return (
-    <section className="features px-2">
-   <div className="flex flex-wrap justify-center text-white gap-10">
+    <section className="features px-2 mt-5">
+   <div className="flex flex-wrap justify-center text-secoundColor gap-10">
   {featuresData.map((feature, index) => (
     <Link
    to='features'
       key={index}
-       className="w-64 md:w-48 lg:w-1/5 p-6 border border-gray-300 rounded-lg shadow-lg">
+       className="w-64 md:w-48 lg:w-1/5 p-6 bg-secoundColor border border-gray-300 rounded-lg shadow-lg">
     
-      <div className="icon flex items-center justify-center text-8xl w-full h-32 mb-4">
+      <div className="icon flex items-center text-mainColor justify-center text-8xl w-full h-32 mb-4">
         {feature.icon}
       </div>
-      <h3 className="text-center text-lg font-semibold">{t(feature.title)}</h3>
+      <h3 className="text-center text-mainColor text-lg font-semibold">{t(feature.title)}</h3>
     </Link>
   ))}
 </div>
