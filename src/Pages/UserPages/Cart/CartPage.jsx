@@ -210,7 +210,7 @@ if (!data) {
                   </p>
                   </div>
                 </div>
-                {item.type === "plan" && (item.id !== data?.plan?.id)&& (
+                {item.type === "plan" && (item.welcome_offer_plan !== true)&& (
                   <div className="flex flex-wrap items-center mt-3 sm:mt-4">
                     <label className="text-sm font-semibold text-gray-600 mr-3">
                       {t("Billing Period:")}
@@ -292,11 +292,11 @@ if (!data) {
         <div className="bg-white p-2 xl:p-4 shadow-md rounded-lg">
           <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-4">{t("Order Summary")}</h3>
           <div className="flex justify-between text-base sm:text-lg mb-3">
-            <span>{t("Total Price:")}</span>
+            <span>{t("price")}:</span>
             <span>{convertNumberToArabic(totalPrice,i18n.language)} {t("EGP")}</span>
           </div>
           <div className="flex justify-between text-base sm:text-lg text-red-500 mb-3">
-            <span>{t("Discount:")}</span>
+            <span>{t("Discount")}:</span>
             <span>-{convertNumberToArabic(discount,i18n.language)} {t("EGP")}</span>
           </div>
           <div className="flex justify-between text-base sm:text-lg font-bold text-green-600">

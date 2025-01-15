@@ -114,17 +114,34 @@ const UserSelect = () => {
   };
 
     const handleAddToCart = async (plan) => {
+
+        const priceOptions = {
+            monthly: plan.plan?.monthly,
+            quarterly: plan.plan?.quarterly || plan.plan?.monthly * 3,
+            semiAnnually: plan.plan?.semi_annual|| plan.plan?.monthly * 6,
+            annually: plan.plan?.yearly,
+        };
+
+        const discountOptions = {
+            monthly: plan.plan?.discount_monthly,
+            quarterly: plan.plan?.discount_quarterly,
+            semiAnnually: plan.plan?.discount_semi_annual,
+            annually: plan.plan?.discount_yearly,
+        };
       
       const planWithPeriodAndPrice = {
           ...plan.plan,
           billingPeriod: plan.duration,
-          finalprice: plan.price ,
+        //   finalprice: plan.price ,
+        finalprice:priceOptions[plan.duration] ? priceOptions[plan.duration]: discountOptions[plan.duration] ,
+        welcome_offer_price:plan.price ,
+        welcome_offer_plan:true
       };
       console.log(planWithPeriodAndPrice)
 
       dispatch(addToCart(planWithPeriodAndPrice));
       setSelectedPlanId(plan.id);
-      localStorage.setItem('selectedPlanId', plan.id);
+      localStorage.setItem('selectedPlanId', plan.plan.id);
       // console.log(planWithPeriodAndPrice)
       navigate('cart')
       localStorage.removeItem('popupClosed');
@@ -214,7 +231,7 @@ const UserSelect = () => {
                                     >
                                         <div className="overflow-hidden rounded-lg">
                                             <img
-                                                src={i18n.language? data.en_image_link : data.ar_image_link}
+                                                src={i18n.language === "en"? data.en_image_link : data.ar_image_link}
                                                 alt="Plan Image"
                                                 className="w-full h-56 object-fit rounded-lg transition-transform duration-300 hover:scale-110"
                                             />
@@ -224,63 +241,6 @@ const UserSelect = () => {
                                             key={data.id}
                                             className={`relative p-6 text-mainColor shadow-md text-xl rounded-lg border border-gray-200 hover:shadow-lg transition-all`}
                                         >
-                                            
-
-                                            {/* <div className="space-y-3 mb-3">
-                                                <p>{data.plan?.description}</p>
-                                                <p className="flex items-center gap-2">
-                                                    <PiStorefront size={26} />
-                                                    <span className="font-semibold">{t("Number of stores:")}</span>
-                                                    {data.plan?.limet_store || '0'}
-                                                </p>
-                                                <p className="flex items-center gap-2">
-                                                    <CiMoneyCheck1 size={30} className='text-mainColor font-semibold' />
-                                                    <span className="font-semibold text-mainColor">{t("SetUp Fees:")}</span>
-                                                    {data.plan?.setup_fees || '0'} {t("EGP")}
-                                                </p>
-                                            </div> */}
-{/* 
-                                            <div className="flex justify-between items-center mb-2">
-                                                <label htmlFor={`billing-${data.plan?.id}`} className="text-xl font-semibold">
-                                                    {t("Billing Period:")}
-                                                </label>
-                                                <select
-                                                    id={`billing-${data.plan?.id}`}
-                                                    value={selectedPeriod}
-                                                    onChange={(e) => handleBillingPeriodChange(data.plan?.id, e.target.value)}
-                                                    className="bg-gray-100 border border-gray-400 text-gray-700 rounded-lg p-2"
-                                                >
-                                                    <option value="monthly">Monthly</option>
-                                                    <option value="quarterly">3 Months</option>
-                                                    <option value="semiAnnually">6 Months</option>
-                                                    <option value="annually">Yearly</option>
-                                                </select>
-                                            </div> */}
-
-                                            {/* <div className="text-center mb-4">
-                                                {discountedPrice ? (
-                                                    <>
-                                                        <p className="text-lg line-through">{currentPrice} {t("EGP")}</p>
-                                                        <p className="text-3xl font-bold">{discountedPrice} {t("EGP")}</p>
-                                                        <p className="text-green-500 font-semibold mt-2">
-                                                            {t("Save")} {savings} {t("EGP")} {t("per")} {selectedPeriod}
-                                                        </p>
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                        <p className="text-lg text-gray-500 line-through">
-                                                            {priceOptions['monthly'] * (selectedPeriod === 'monthly' ? 1 : selectedPeriod === 'quarterly' ? 3 : selectedPeriod === 'semiAnnually' ? 6 : 12)} {t("EGP")} / {t("month")}
-                                                        </p>
-                                                        <p className="text-3xl font-bold text-mainColor">{currentPrice} {t("EGP")}</p>
-                                                        {selectedPeriod !== 'monthly' && (
-                                                            <p className="text-green-500 font-semibold mt-2">
-                                                                {t("Save")} {priceOptions['monthly'] * (selectedPeriod === 'quarterly' ? 3 : selectedPeriod === 'semiAnnually' ? 6 : 12) - currentPrice} {t("EGP")}
-                                                            </p>
-                                                        )}
-                                                    </>
-                                                )}
-                                            </div> */}
-
                                 {/* {selectedPlanId != data.plan?.id && ( */}
                                     <button
                                     onClick={() => handleAddToCart(data)}
@@ -291,21 +251,6 @@ const UserSelect = () => {
                                     </button>
                                 {/* )} */}
 
-                                {/* Remove from Cart and Go to Cart Buttons
-                                {selectedPlanId == data.plan?.id && (
-                                    <div className="flex space-x-3 mt-3">
-                                    <button
-                                        onClick={() => handleAddToCart(data.plan,event)}
-                                        className="w-full text-xl py-3 font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-md"
-                                    >
-                                        {t("Remove from Cart")}
-                                    </button>
-                                    <Link to="cart"
-                                      className="w-full text-xl py-3 font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-md">
-                                                                                {t("Go to Cart")}
-                                    </Link>
-                                    </div>
-                                )} */}
                                         </div>
                                     </div>
                                 )}

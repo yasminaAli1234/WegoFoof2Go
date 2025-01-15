@@ -226,7 +226,7 @@ const UserSubscriptionsPage = () => {
                     <div
                         key={plan.id}
                         className={`relative flex flex-col justify-between p-6 text-mainColor transition-all duration-300 ease-in-out transform rounded-lg shadow-lg hover:shadow-xl border border-gray-200 hover:scale-105 
-                        ${selectedPlanId === plan.id ? 'border-green-500 bg-green-100' : ''} ${plan.my_plan === true && selectedPlanId !== plan.id? 'bg-mainColor text-white' : ''}  `}
+                        ${selectedPlanId == plan.id ? 'border-green-500 bg-green-100' : ''} ${plan.my_plan === true && selectedPlanId !== plan.id? 'bg-mainColor text-white' : ''}  `}
                     >
                     <div>
                         {/* Header */}
