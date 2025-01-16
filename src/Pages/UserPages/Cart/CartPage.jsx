@@ -205,9 +205,27 @@ if (!data) {
                   <p className="text-base sm:text-lg font-semibold text-gray-800">
                   {t("One time setup fees :")} {(convertNumberToArabic(item.setup_fees ,i18n.language)|| 0)} {t("EGP")}
                   </p>
-                  <p className="text-base sm:text-lg font-semibold text-gray-800">
+                  {
+                    item.welcome_offer_price?
+                    <p className="text-base sm:text-lg font-semibold text-gray-800">
+                    {item.billingPeriod } {t("subscription")} : {(convertNumberToArabic(item.welcome_offer_price) || 0)} {t("EGP")}
+                    </p>
+                    : 
+                    <p className="text-base sm:text-lg font-semibold text-gray-800">
                   {item.billingPeriod } {t("subscription")} : {(convertNumberToArabic(item.finalprice - item.setup_fees,i18n.language) || convertNumberToArabic(item.price,i18n.language) || 0)} {t("EGP")}
-                  </p>
+                  </p> 
+                  }
+
+                  {
+                    item.welcome_offer_price && item.welcome_offer_plan===true && (
+                      <p className="text-base sm:text-lg font-bold text-mainColor">
+                      {t("Price In Welcome Offer")} : {(convertNumberToArabic(item.finalprice) || 0)} {t("EGP")}
+                      </p> 
+                    )
+                  }
+                  {/* <p className="text-base sm:text-lg font-semibold text-gray-800">
+                  {item.billingPeriod } {t("subscription")} : {(convertNumberToArabic(item.finalprice - item.setup_fees,i18n.language) || convertNumberToArabic(item.price,i18n.language) || 0)} {t("EGP")}
+                  </p> */}
                   </div>
                 </div>
                 {item.type === "plan" && (item.welcome_offer_plan !== true)&& (
