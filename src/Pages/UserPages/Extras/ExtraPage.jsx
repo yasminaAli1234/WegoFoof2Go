@@ -122,7 +122,7 @@ const ExtraPage = () => {
               price: product.status === "one_time"?  product.price :  priceOptions[selectedPeriod],
 
               // price: priceOptions[selectedPeriod] || currentPrice,
-              price_discount: discountOptions[selectedPeriod] || product.status === "one_time"?  product.price :  priceOptions[selectedPeriod],
+              price_discount: discountOptions[selectedPeriod] ? discountOptions[selectedPeriod] : product.status === "one_time"?  product.price :  priceOptions[selectedPeriod],
 
               // finalPrice: product.price !== null 
               //        ? product.price + product.setup_fees 

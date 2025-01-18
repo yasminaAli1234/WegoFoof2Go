@@ -98,7 +98,7 @@ const UserSubscriptionsPage = () => {
                     ...plan,
                     billingPeriod: selectedPeriod,
                     price: priceOptions[selectedPeriod],
-                    price_discount: discountOptions[selectedPeriod],
+                    price_discount: discountOptions[selectedPeriod] ?  discountOptions[selectedPeriod] : priceOptions[selectedPeriod],
                 };
     
                 // Update cart based on the selected plan
