@@ -16,6 +16,7 @@ const CheckoutPage = () => {
   const location = useLocation();
   const { cartItems } = location.state || {};
   const { totalPrice } = location.state || {};
+  const { discountPrice } = location.state || {};
   const [isLoading, setIsLoading] = useState(false);
   const [paymentMethods, setPaymentMethods] = useState([]);
   const [selectedMethod, setSelectedMethod] = useState("");
@@ -60,6 +61,7 @@ const CheckoutPage = () => {
     fetchData();
     console.log("cartItems", cartItems);
     console.log("totalPrice", totalPrice);
+    console.log("discountPrice", discountPrice);
   }, [i18n.language]);
 
   const handleInputClick = () => {
@@ -340,14 +342,14 @@ const CheckoutPage = () => {
 
       {/* Display discount */}
       <div className="flex justify-between text-lg text-gray-700 mb-3">
-        <span className="font-medium">{t("Discount:")}</span>
-        <span className="font-semibold text-red-600">{convertNumberToArabic(discount,i18n.language)} {t("EGP")}</span>
+        <span className="font-medium">{t("Discount")}:</span>
+        <span className="font-semibold text-red-600">{convertNumberToArabic(discountPrice,i18n.language)} {t("EGP")}</span>
       </div>
 
       {/* Display total after discount */}
       <div className="flex justify-between text-lg font-bold text-gray-900">
         <span>{t("Total Price After Discount:")}</span>
-        <span className="text-green-600">{convertNumberToArabic(discountedPrice,i18n.language)} {t("EGP")}</span>
+        <span className="text-green-600">{convertNumberToArabic(discountPrice,i18n.language)} {t("EGP")}</span>
       </div>
         </div>
 

@@ -4,6 +4,7 @@ import { initReactI18next } from 'react-i18next';
 const resources = {
   en: {
     translation: {
+      "months":"months",
       "monthly":"monthly",
       'Design Your Perfect Website in One Click!':'Design Your Perfect Website in One Click!',
       "semiAnnually" :"semiAnnually",
@@ -23,7 +24,7 @@ const resources = {
       "tutorial": "Tutorial",
       "log_out": "Log Out",
       "name": "Name",
-      "Product Type :" :"Product Type :",
+      "Product Type" :"Product Type",
       "email": "Email",
       "phone": "Phone",
       "password": "Password",
@@ -95,7 +96,8 @@ const resources = {
       "LE": "LE",
       "My Extra Product": "My Extra Product",
       "No extra product data available": "No extra product data available",
-
+      "subscription for":"Subscription For",
+      "discounted subscription for":"Discounted Subscription For",
       "Billing Period": "Billing Period",
       "Monthly": "Monthly",
       "3 Months": "3 Months",
@@ -128,7 +130,7 @@ const resources = {
       "Learn and Grow": "Learn and Grow",
       "Explore Tutorials": "Explore Tutorials",
       "Product Name :":"Product Name :",
-      "One time setup fees :" :"One time setup fees :",
+      "One-time setup fees" :"One-time Setup Fees",
       "Remove": "Remove",
       "plans" :"plans",
       "Change Language":"Change Language",
@@ -307,14 +309,18 @@ const resources = {
  
   "Online payment card": "Online payment card",
   "Payment card Visa and Master": "Payment card Visa and Master",
-  "Easiest Checkout": "Easiest Checkout"
-   
+  "Easiest Checkout": "Easiest Checkout",
+  "Apply Promo Code":"Apply Promo Code",
+
 
       // Add more translations
     },
   },
   ar: {
     translation: {
+      "subscription for":"اشتراك لمدة",
+      "discounted subscription for":"خصم الاشتراك لمدة",
+
       "hello": "مرحباً",
       "Let's shape the digital future, together":"لنشكل مستقبل الرقمي، معًا",
         "Enjoy a fast and easy process to create a stunning website that reflects your identity, with our flexible packages ensuring you a unique experience in no time. Choose what suits you and start your digital journey with confidence!": "استمتع بعملية سريعة وسهلة لإنشاء موقع ويب رائع يعكس هويتك، مع حزمنا المرنة التي تضمن لك تجربة فريدة في وقت قصير. اختر ما يناسبك وابدأ رحلتك الرقمية بثقة!",
@@ -498,14 +504,14 @@ const resources = {
       "domains": "النطاقات",
       "my_domain": "نطاقي",
       "buy_domain": "شراء نطاق",
-      "Product Type :" :" :نوع المنتج ",
+      "Product Type" :"نوع المنتج ",
       "Product Name :":":اسم المنتج",
       "plans":"خطط",
       "rejected":"مرفوض",
       "Select Language":"اختار اللغة",
       "Change Language":"تغير اللغة",
       "Close":"الغاء",
-      "One time setup fees :":" :رسوم الإعداد لمرة واحدة ",
+      "One-time setup fees":"رسوم الإعداد لمرة واحدة",
       "subscription" :" الاشتراك",
       "extras": "الإضافات",
       "Remove" :"ازالة",
@@ -548,13 +554,13 @@ const resources = {
       "Clear Cart":"إفراغ السلة",
       "Proceed to Checkout":"الانتقال إلى الدفع",
       "Order Summary":"ملخص الطلب",
-      
+      "Apply Promo Code":"تطبيق رمز الخصم",
       "Discount" :"الخصم",
-      "Total After Discount:":"الإجمالي بعد الخصم",
+      "Total After Discount":"الإجمالي بعد الخصم",
       "Have a Promo Code?" :"هل لديك رمز ترويجي؟",
       "Applying...":"...يتم التطبيق",
       "Apply" :"تطبيق",
-      "Total Price:":":إجمالي السعر",
+      "Total Price":":إجمالي السعر",
       "Enter promo code" :"أدخل رمز الترويج",
       "Active" :"نشط",
       "No payment methods data available":"لا توجد بيانات لطرق الدفع",
@@ -601,7 +607,7 @@ const resources = {
       "Invoice": "الفاتورة",
       "Action": "الإجراء",
       "plan": "الخطة",
-      
+      "months":"شهور",
       "View Services": "عرض الخدمات",
       "View Invoice": "عرض الفاتورة",
       "Service Details": "تفاصيل الخدمة",

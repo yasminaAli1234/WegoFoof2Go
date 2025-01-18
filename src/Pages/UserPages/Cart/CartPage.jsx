@@ -45,11 +45,92 @@ const CartPage = () => {
     fetchData();
   }, []);
 
+  // const calculateTotal = () => {
+  //   return cartItems
+  //     .reduce((total, item) => total + (item.finalprice || item.price || 0), 0)
+  //     .toFixed(2);
+  // };
+
+
+  // Calculate total price including setup fees
   const calculateTotal = () => {
-    return cartItems
-      .reduce((total, item) => total + (item.finalprice || item.price || 0), 0)
-      .toFixed(2);
+    return cartItems.reduce((total, item) => {
+      const price = item.price;
+      const setupFees = item.setup_fees || 0;  // Ensure setup fees are considered
+      return total + (price || 0) + setupFees;
+    }, 0).toFixed(2);
   };
+
+  // Calculate discount including setup fees for each product
+  const calculateDiscount = () => {
+    return cartItems.reduce((total, item) => {
+      const price = item.price_discount ?item.price_discount : item.price;
+      const setupFees = item.setup_fees || 0;  // Ensure setup fees are considered
+      return total + (price || 0) + setupFees;
+    }, 0).toFixed(2);
+  };
+
+  // const handleApplyPromo = async () => {
+  //   if (!promoCode) {
+  //     auth.toastError("Please enter a promo code.");
+  //     return;
+  //   }
+  
+  //   setIsLoading(true);
+  
+  //   const formattedData = {
+  //     code: promoCode,
+  //     plan: cartItems
+  //       .filter((item) => item.id && item.billingPeriod)
+  //       .map((item) => ({
+  //         plan_id: item.id,
+  //         duration: item.billingPeriod,
+  //         price: item.price_per_month || item.price_per_year || 0,
+  //       })),
+  //     extra: cartItems
+  //       .filter((item) => item.name && item.price && !item.billingPeriod)
+  //       .map((item) => ({
+  //         extra_id: item.id,
+  //         price: item.price,
+  //       })),
+  //     domain: [],
+  //   };
+  
+  //   try {
+  //     const response = await axios.post(
+  //       "https://login.wegostores.com/user/v1/promocode",
+  //       formattedData,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${auth.user.token}`,
+  //         },
+  //       }
+  //     );
+  
+  //     if (response.status === 200) {
+  //       const { discount } = response.data; // Extract the discount
+  //       setDiscount(discount); // Update the discount state
+  
+  //       const newTotal = calculateTotal() - discount; // Calculate the new total price after discount
+  //       setDiscountedPrice(newTotal); // Update the state with the discounted total
+  
+  //       auth.toastSuccess(`Promo code applied! You saved ${discount} EGP.`);
+  
+  //       // Store the total after discount in local storage
+  //       localStorage.setItem("totalAfterDiscount", newTotal.toFixed(2));
+  
+  //       setPromoCode(""); // Reset the promo code input
+  //     } else {
+  //       auth.toastError("Failed to apply promo code. Please try again.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error applying promo code:", error);
+  //     auth.toastError("Invalid promo code.");
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+  
 
   const handleApplyPromo = async () => {
     if (!promoCode) {
@@ -62,19 +143,28 @@ const CartPage = () => {
     const formattedData = {
       code: promoCode,
       plan: cartItems
-        .filter((item) => item.id && item.billingPeriod)
+        .filter((item) => item.type=== "plan")
         .map((item) => ({
           plan_id: item.id,
           duration: item.billingPeriod,
-          price: item.price_per_month || item.price_per_year || 0,
+          price: item.price|| 0,
+          price_discount: item.price_discount ? item.price_discount: item.price|| 0,
         })),
       extra: cartItems
-        .filter((item) => item.name && item.price && !item.billingPeriod)
+        .filter((item) => item.type=== "extra")
         .map((item) => ({
           extra_id: item.id,
+          duration: item.billingPeriod,
           price: item.price,
+          price_discount: item.price_discount ? item.price_discount: item.price|| 0,
         })),
-      domain: [],
+      domain: cartItems
+      .filter((item) => item.type=== "domain")
+      .map((item) => ({
+        domain_id: item.id,
+        price: item.price,
+        price_discount: item.price_discount ? item.price_discount: item.price|| 0,
+      })),
     };
 
     try {
@@ -89,16 +179,33 @@ const CartPage = () => {
       );
 
       if (response.status === 200) {
-        console.log(response.data)
         const { discount } = response.data; // Extract the discount
         setDiscount(discount); // Update the discount state
-        const newTotal = totalPrice - discount; // Calculate the discounted total
-        setDiscountedPrice(newTotal); // Update state with the new total
+  
+        const newTotal = calculateTotal() - discount; // Calculate the new total price after discount
+        setDiscountedPrice(newTotal); // Update the state with the discounted total
+  
         auth.toastSuccess(`Promo code applied! You saved ${discount} EGP.`);
-        setPromoCode("");
+  
+        // Store the total after discount in local storage
+        localStorage.setItem("totalAfterDiscount", newTotal.toFixed(2));
+  
+        setPromoCode(""); // Reset the promo code input
       } else {
         auth.toastError("Failed to apply promo code. Please try again.");
       }
+
+      // if (response.status === 200) {
+      //   console.log(response.data)
+      //   const { discount } = response.data; // Extract the discount
+      //   setDiscount(discount); // Update the discount state
+      //   const newTotal = totalPrice - discount; // Calculate the discounted total
+      //   setDiscountedPrice(newTotal); // Update state with the new total
+      //   auth.toastSuccess(`Promo code applied! You saved ${discount} EGP.`);
+      //   setPromoCode("");
+      // } else {
+      //   auth.toastError("Failed to apply promo code. Please try again.");
+      // }
     } catch (error) {
       console.error("Error applying promo code:", error);
       auth.toastError("Invalid promo code.");
@@ -127,9 +234,12 @@ const CartPage = () => {
       ...item,
       billingPeriod: newPeriod,
       // finalprice: priceOptions[newPeriod],
-      finalprice: (discountOptions[newPeriod] 
-        ? discountOptions[newPeriod]
-        : priceOptions[newPeriod]) + item.setup_fees,
+
+      // finalprice: (discountOptions[newPeriod] 
+      //   ? discountOptions[newPeriod]
+      //   : priceOptions[newPeriod]) + item.setup_fees,
+      price: priceOptions[newPeriod],
+      price_discount: discountOptions[newPeriod],
     };
 
     dispatch(updateCartItem({ id: itemId, type: item.type, updatedItem }));
@@ -162,7 +272,21 @@ const CartPage = () => {
     dispatch(clearCart());
   };
 
+  const getBillingPeriodLabel = (billing) => {
+    const billingPeriodMap = {
+      monthly: t("Monthly"),
+      quarterly: t('3 Months'),
+      semiAnnually: t('6 Months'),
+      annually: t('Yearly'),
+    };
+  
+    return billingPeriodMap[billing] || '';
+  };
+  
+
   const totalPrice = calculateTotal();
+  const discountPrice = calculateDiscount();
+
 
   if (isLoading) {
     return (
@@ -179,135 +303,133 @@ if (!data) {
 
   return (
 
-  <div className='flex flex-col bg-gray-50 w-full p-4 xl:p-6'>
+  <div className='flex flex-col bg-gray-50 w-full p-4 xl:p-4'>
     <div>
     <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6 sm:mb-8">{t("Shopping Cart")}</h1>
     </div>
-    <div className="xl:container w-full m-0 xl:mx-auto flex flex-wrap gap-6 lg:flex-nowrap">
+    <div className="xl:container w-full m-0 xl:mx-auto flex flex-wrap gap-4 lg:flex-nowrap">
       {/* Left Section */}
       <div className="w-full lg:w-2/3">
-        <div className="bg-white shadow-md rounded-lg p-4 sm:p-6">
-          {cartItems.length > 0 ? (
-            cartItems.map((item, index) => (
-              <div
-                key={index}
-                className="flex flex-col border-b border-gray-200 py-4 last:border-none"
-              >
-                <div className="flex md:flex-row sm:flex-col gap-5 justify-between items-center">
-                  <div className='flex flex-col'>
-                  <h3 className="text-base sm:text-lg font-semibold text-gray-800">{t("Product Type :")} {(item.type)}</h3>
-                  <h3 className="text-base sm:text-lg font-semibold text-gray-800">{t("Product Name :")} {item.name}</h3>
-                  </div>
-                  {/* <p className="text-base sm:text-lg font-semibold text-gray-800">
-                    {(item.finalprice || item.price || 0).toFixed(2)} EGP
-                  </p> */}
-                  <div className='flex flex-col'>
-                  <p className="text-base sm:text-lg font-semibold text-gray-800">
-                  {t("One time setup fees :")} {(convertNumberToArabic(item.setup_fees ,i18n.language)|| 0)} {t("EGP")}
-                  </p>
-                  {
-                    item.welcome_offer_price?
-                    <p className="text-base sm:text-lg font-semibold text-gray-800">
-                    {item.billingPeriod } {t("subscription")} : {(convertNumberToArabic(item.welcome_offer_price) || 0)} {t("EGP")}
-                    </p>
-                    : 
-                    <p className="text-base sm:text-lg font-semibold text-gray-800">
-                  {item.billingPeriod } {t("subscription")} : {(convertNumberToArabic(item.finalprice - item.setup_fees,i18n.language) || convertNumberToArabic(item.price,i18n.language) || 0)} {t("EGP")}
-                  </p> 
-                  }
-
-                  {
-                    item.welcome_offer_price && item.welcome_offer_plan===true && (
-                      <p className="text-base sm:text-lg font-bold text-mainColor">
-                      {t("Price In Welcome Offer")} : {(convertNumberToArabic(item.finalprice) || 0)} {t("EGP")}
-                      </p> 
-                    )
-                  }
-                  {/* <p className="text-base sm:text-lg font-semibold text-gray-800">
-                  {item.billingPeriod } {t("subscription")} : {(convertNumberToArabic(item.finalprice - item.setup_fees,i18n.language) || convertNumberToArabic(item.price,i18n.language) || 0)} {t("EGP")}
-                  </p> */}
-                  </div>
-                </div>
-                {item.type === "plan" && (item.welcome_offer_plan !== true)&& (
-                  <div className="flex flex-wrap items-center mt-3 sm:mt-4">
-                    <label className="text-sm font-semibold text-gray-600 mr-3">
-                      {t("Billing Period:")}
-                    </label>
-                    <select
-                      value={item.billingPeriod || "monthly"}
-                      onChange={(e) =>
-                        handleBillingPeriodChange(item.id, e.target.value, item)
-                      }
-                      className="bg-gray-50 border border-gray-300 text-gray-700 rounded-md p-2 focus:ring-2 focus:ring-blue-400"
-                    >
-                      <option value="monthly">Monthly</option>
-                      <option value="quarterly">{convertNumberToArabic(3,i18n.language)} Months</option>
-                      <option value="semiAnnually">{convertNumberToArabic(6,i18n.language)} Months</option>
-                      <option value="annually">Yearly</option>
-                    </select>
-                  </div>
-
-                  
-                )}
-                 {item.type === "extra" && item.status === "recurring" &&(
-                  <div className="flex flex-wrap items-center mt-3 sm:mt-4">
-                    <label className="text-sm font-semibold text-gray-600 mr-3">
-                      {t("Billing Period:")}
-                    </label>
-                    <select
-                      value={item.billingPeriod || "monthly"}
-                      onChange={(e) =>
-                        handleBillingPeriodChange(item.id, e.target.value, item)
-                      }
-                      className="bg-gray-50 border border-gray-300 text-gray-700 rounded-md p-2 focus:ring-2 focus:ring-blue-400"
-                    >
-                      <option value="monthly">Monthly</option>
-                      <option value="quarterly">{convertNumberToArabic(3,i18n.language)} Months</option>
-                      <option value="semiAnnually">{convertNumberToArabic(6,i18n.language)} Months</option>
-                      <option value="annually">Yearly</option>
-                    </select>
-                  </div>
-                )}
-                <div className="flex justify-between items-center mt-3">
-                  <button
-                    onClick={() => handleRemoveItem(item)}
-                    className="text-red-500 font-semibold hover:underline"
-                  >
-                    {t("Remove")}
-                  </button>
-                </div>
-              </div>
-            ))
-          ) : (
-            <p className="text-center text-gray-500 py-6">{t("Your cart is empty.")}</p>
-          )}
-        </div>
-    
-        {cartItems.length > 0 && (
-          <div className="mt-6 flex flex-wrap gap-4">
-            <button
-              onClick={handleClearCart}
-              className="flex-1 bg-red-500 hover:bg-red-600 text-white py-3 rounded-lg font-semibold text-base sm:text-lg transition"
-            >
-              {t("Clear Cart")}
-            </button>
-            <Link
-              to="../checkout"
-              state={{ cartItems, totalPrice }}
-              className="flex-1"
-            >
-              <button className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg font-semibold text-base sm:text-lg transition">
-                {t("Proceed to Checkout")}
-              </button>
-            </Link>
+  <div className="bg-white shadow-md rounded-lg p-4 sm:p-6">
+    {cartItems.length > 0 ? (
+      cartItems.map((item, index) => (
+        <div
+          key={index}
+          className="flex flex-col border-b border-gray-200 py-4 last:border-none"
+        >
+          <div className="flex md:flex-row sm:flex-col gap-5 justify-between items-center">
+            <div className="flex flex-col">
+              <h3 className="text-lg font-medium text-[#1A237E]">
+                {t("Product Type")} : {item.type}
+              </h3>
+              <h3 className="text-lg font-medium text-[#1A237E]">
+                {t("Product Name")} : {item.name}
+              </h3>
+            </div>
+            <div className="flex flex-col">
+              <p className="text-base text-[#1A237E]">
+                <span className="font-semibold">{t("One-time setup fees")} : </span> {convertNumberToArabic(item.setup_fees, i18n.language) || 0} {t("EGP")}
+              </p>
+              {item.welcome_offer_price ? (
+                <p className="text-base text-[#1A237E] font-semibold">
+                  <span>{t("subscription for")} {getBillingPeriodLabel(item.billingPeriod)}:</span> {convertNumberToArabic(item.welcome_offer_price) || 0} {t("EGP")}
+                </p>
+              ) : (
+                <p className="text-base text-[#1A237E] font-semibold">
+                  <span>{t("subscription for")} {getBillingPeriodLabel(item.billingPeriod)}:</span> {convertNumberToArabic(item.price, i18n.language) || 0} {t("EGP")}
+                </p>
+              )}
+              {!item.welcome_offer_plan && (
+                <p className="text-base text-red-500 font-semibold">
+                  <span>{t("discounted subscription for")} {getBillingPeriodLabel(item.billingPeriod)}:</span> {convertNumberToArabic((item.price) - (item.price_discount || 0), i18n.language) || 0} {t("EGP")}
+                </p>
+              )}
+              {item.welcome_offer_plan && (
+                <p className="text-base text-green-600 font-semibold">
+                  {t("price in welcome offer:")} {convertNumberToArabic(item.price_discount) || 0} {t("EGP")}
+                </p>
+              )}
+            </div>
           </div>
-        )}
-      </div>
+          {item.type === "plan" && !item.welcome_offer_plan && (
+            <div className="flex flex-wrap items-center mt-3 sm:mt-4">
+              <label className="text-sm font-semibold text-gray-600 mr-3">
+                {t("Billing Period:")}
+              </label>
+              <select
+                value={item.billingPeriod || "monthly"}
+                onChange={(e) =>
+                  handleBillingPeriodChange(item.id, e.target.value, item)
+                }
+                className="bg-gray-50 border border-gray-300 text-gray-700 rounded-md p-2 focus:ring-2 focus:ring-blue-400"
+              >
+                <option value="monthly">{t("monthly")}</option>
+                <option value="quarterly">{convertNumberToArabic(3, i18n.language)} {t("months")}</option>
+                <option value="semiAnnually">{convertNumberToArabic(6, i18n.language)} {t("months")}</option>
+                <option value="annually">{t("Yearly")}</option>
+              </select>
+            </div>
+          )}
+          {item.type === "extra" && item.status === "recurring" && (
+            <div className="flex flex-wrap items-center mt-3 sm:mt-4">
+              <label className="text-sm font-semibold text-gray-600 mr-3">
+                {t("Billing Period:")}
+              </label>
+              <select
+                value={item.billingPeriod || "monthly"}
+                onChange={(e) =>
+                  handleBillingPeriodChange(item.id, e.target.value, item)
+                }
+                className="bg-gray-50 border border-gray-300 text-gray-700 rounded-md p-2 focus:ring-2 focus:ring-blue-400"
+              >
+                <option value="monthly">{t("monthly")}</option>
+                <option value="quarterly">{convertNumberToArabic(3, i18n.language)} {t("months")}</option>
+                <option value="semiAnnually">{convertNumberToArabic(6, i18n.language)} {t("months")}</option>
+                <option value="annually">{t("Yearly")}</option>
+              </select>
+            </div>
+          )}
+          <div className="flex justify-between items-center mt-3">
+            <button
+              onClick={() => handleRemoveItem(item)}
+              className="text-red-500 font-semibold hover:underline"
+            >
+              {t("Remove")}
+            </button>
+          </div>
+        </div>
+      ))
+    ) : (
+      <p className="text-center text-gray-500 py-6">{t("Your cart is empty.")}</p>
+    )}
+  </div>
+
+  {cartItems.length > 0 && (
+    <div className="mt-6 flex flex-wrap gap-4">
+      <button
+        onClick={handleClearCart}
+        className="flex-1 bg-red-500 hover:bg-red-600 text-white py-3 rounded-lg font-semibold text-base sm:text-lg transition"
+      >
+        {t("Clear Cart")}
+      </button>
+      <Link
+        to="../checkout"
+        state={{ cartItems, totalPrice, discountPrice }}
+        className="flex-1"
+      >
+        <button className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg font-semibold text-base sm:text-lg transition">
+          {t("Proceed to Checkout")}
+        </button>
+      </Link>
+    </div>
+  )}
+</div>
+
     
       {/* Right Section */}
-      <div className="w-full lg:w-1/3 space-y-6">
+      {/* <div className="w-full lg:w-1/3 space-y-6"> */}
         {/* Order Summary */}
-        <div className="bg-white p-2 xl:p-4 shadow-md rounded-lg">
+        {/* <div className="bg-white p-2 xl:p-4 shadow-md rounded-lg">
           <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-4">{t("Order Summary")}</h3>
           <div className="flex justify-between text-base sm:text-lg mb-3">
             <span>{t("price")}:</span>
@@ -321,10 +443,78 @@ if (!data) {
             <span>{t("Total After Discount:")}</span>
             <span>{convertNumberToArabic(discountedPrice,i18n.language) || convertNumberToArabic(totalPrice,i18n.language)} {t("EGP")}</span>
           </div>
-        </div>
+        </div> */}
+
+
+         {/* Right Section (Summary) */}
+         {/* <div className="w-full lg:w-1/3 bg-white shadow-md rounded-lg p-4 sm:p-6">
+          <h2 className="text-lg font-semibold text-gray-800">{t("Order Summary")}</h2>
+          <div className="mt-4">
+            <p className="text-base sm:text-lg font-semibold text-gray-800">{t("Total Price")} : {convertNumberToArabic(totalPrice, i18n.language)} {t("EGP")}</p>
+            <p className="text-base sm:text-lg font-semibold text-gray-800">{t("Discount")} : {convertNumberToArabic(discountPrice, i18n.language)} {t("EGP")}</p>
+            <p className="text-base sm:text-lg font-semibold text-gray-800">{t("Total After Discount")} : {convertNumberToArabic(discountPrice || totalPrice, i18n.language)} {t("EGP")}</p>
+          </div>
+          <div className="mt-4">
+            <input
+              type="text"
+              value={promoCode}
+              onChange={(e) => setPromoCode(e.target.value)}
+              placeholder={t("Enter Promo Code")}
+              className="border p-2 w-full"
+            />
+            <button
+              onClick={handleApplyPromo}
+              className="mt-2 bg-blue-500 text-white p-2 w-full"
+            >
+              {t("Apply Promo Code")}
+            </button>
+          </div>
+          </div>
+     */}
+
+
+<div className="w-full lg:w-1/3 bg-white shadow-md rounded-lg p-4">
+  <h2 className="text-2xl font-semibold text-[#1A237E]">{t("Order Summary")}</h2>
+  <div className="mt-6">
+    {/* Display total price */}
+    <p className="text-xl font-semibold text-[#1A237E]">
+      {t("Total Price")} : <span className="font-semibold text-[#1A237E]">{convertNumberToArabic(totalPrice, i18n.language)} {t("EGP")}</span>
+    </p>
+
+    {/* Display discount */}
+    <p className="text-xl font-semibold text-red-500">
+      {t("Discount")} : <span className="font-semibold text-red-500">{convertNumberToArabic(totalPrice - discountPrice, i18n.language)} {t("EGP")}</span>
+    </p>
+
+    {/* Display total after discount */}
+    <p className="text-xl font-semibold text-green-600">
+      {t("Total After Discount")} : <span className="font-semibold text-green-600">{convertNumberToArabic(discountPrice || totalPrice, i18n.language)} {t("EGP")}</span>
+    </p>
+  </div>
+
+  {/* Promo code input and apply button */}
+  <div className="mt-6">
+    <input
+      type="text"
+      value={promoCode}
+      onChange={(e) => setPromoCode(e.target.value)}
+      placeholder={t("Enter promo code")}
+      className="border-2 border-[#1A237E] p-3 w-full rounded-md text-base focus:ring-2 focus:ring-[#1A237E] focus:outline-none"
+    />
+    <button
+      onClick={handleApplyPromo}
+      className="mt-4 bg-[#1A237E] text-white py-3 rounded-md w-full hover:bg-[#0D47A1] transition duration-300"
+    >
+      {t("Apply Promo Code")}
+    </button>
+  </div>
+</div>
+
+
+
 
           {/* Promo Code */}
-          <div className="bg-white p-2 xl:p-4 shadow-md rounded-lg">
+          {/* <div className="bg-white p-2 xl:p-4 shadow-md rounded-lg">
           <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-4">{t("")}</h3>
           <div className="flex flex-wrap gap-4">
             <input
@@ -341,9 +531,9 @@ if (!data) {
              {isLoading ? t("Applying...") : t("Apply")}
             </button>
           </div>
-        </div>
+        </div> */}
     
-      </div>
+      {/* </div> */}
     </div>
   </div>
   

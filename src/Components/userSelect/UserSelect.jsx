@@ -132,9 +132,11 @@ const UserSelect = () => {
       const planWithPeriodAndPrice = {
           ...plan.plan,
           billingPeriod: plan.duration,
-          finalprice: plan.price ,
+        //   finalprice: plan.price ,
         // finalprice:priceOptions[plan.duration] ? priceOptions[plan.duration]: discountOptions[plan.duration] ,
-        welcome_offer_price:priceOptions[plan.duration] ? priceOptions[plan.duration]: discountOptions[plan.duration]  ,
+        // welcome_offer_price:priceOptions[plan.duration] ? priceOptions[plan.duration]: discountOptions[plan.duration]  ,
+        price:priceOptions[plan.duration] ? priceOptions[plan.duration]: discountOptions[plan.duration]  ,
+        price_discount: plan.price ,
         welcome_offer_plan:true
       };
       console.log(planWithPeriodAndPrice)

@@ -3,7 +3,7 @@ import { useAuth } from '../../../Context/Auth';
 import Loading from '../../../Components/Loading';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { addToCart, removeFromCart } from '../../../Redux/CartSlice.js';
+import { addToCart, removeFromCart,updateCartItem } from '../../../Redux/CartSlice.js';
 import { PiStorefront } from "react-icons/pi";
 import { CiMoneyCheck1 } from "react-icons/ci";
 import { useNavigate } from 'react-router-dom';  // Import useNavigate
@@ -97,7 +97,8 @@ const UserSubscriptionsPage = () => {
                 const planWithPeriodAndPrice = {
                     ...plan,
                     billingPeriod: selectedPeriod,
-                    finalprice: currentPrice + plan.setup_fees,
+                    price: priceOptions[selectedPeriod],
+                    price_discount: discountOptions[selectedPeriod],
                 };
     
                 // Update cart based on the selected plan
@@ -136,9 +137,42 @@ const UserSubscriptionsPage = () => {
 
     // Handle billing period change
    
-    const handleBillingPeriodChange = (planId, newPeriod) => {
-        setBillingPeriod((prev) => ({ ...prev, [planId]: newPeriod }));
-    };
+    // const handleBillingPeriodChange = (planId, newPeriod) => {
+        // setBillingPeriod((prev) => ({ ...prev, [planId]: newPeriod }));
+    // };
+
+      const handleBillingPeriodChange = (itemId, newPeriod, item) => {
+    
+        setBillingPeriod((prev) => ({ ...prev, [itemId]: newPeriod }));
+
+        const priceOptions = {
+          monthly: item.monthly,
+          quarterly: item.quarterly || item.monthly * 3,
+          semiAnnually: item["semi_annual"] || item.monthly * 6,
+          annually: item.yearly || item.monthly * 12,
+        };
+        const discountOptions = {
+            monthly: item.discount_monthly,
+            quarterly: item.discount_quarterly,
+            semiAnnually: item.discount_semi_annual,
+            annually: item.discount_yearly,
+        };
+    
+        const updatedItem = {
+          ...item,
+          billingPeriod: newPeriod,
+          // finalprice: priceOptions[newPeriod],
+    
+          // finalprice: (discountOptions[newPeriod] 
+          //   ? discountOptions[newPeriod]
+          //   : priceOptions[newPeriod]) + item.setup_fees,
+          price: priceOptions[newPeriod],
+          price_discount: discountOptions[newPeriod],
+        };
+    
+        dispatch(updateCartItem({ id: itemId, type: item.type, updatedItem }));
+      };
+    
 
     // Set selected plan from localStorage
     useEffect(() => {
@@ -148,8 +182,10 @@ const UserSubscriptionsPage = () => {
 
     useEffect(() => {
         const savedPlanId = localStorage.getItem('selectedPlanId');
+        const savedPlan = plans.find((plan) => plan.id == savedPlanId);
         if (savedPlanId && plans.length > 0) {
             setSelectedPlanId(savedPlanId);
+            // billingPeriod[savedPlanId]
         }
     }, [plans]);
 
@@ -265,7 +301,7 @@ const UserSubscriptionsPage = () => {
     <select
         id={`billing-${plan.id}`}
         value={selectedPeriod}
-        onChange={(e) => handleBillingPeriodChange(plan.id, e.target.value)}
+        onChange={(e) => handleBillingPeriodChange(plan.id, e.target.value,plan)}
         className="bg-gray-100 border border-gray-300 text-gray-700 rounded-lg p-2 focus:ring-2 focus:ring-mainColor"
     >
         {plan.my_plan ? (
