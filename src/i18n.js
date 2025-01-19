@@ -565,7 +565,7 @@ const resources = {
       "Enter promo code" :"أدخل رمز الترويج",
       "Active" :"نشط",
       "No payment methods data available":"لا توجد بيانات لطرق الدفع",
-      "Total Price After Discount:" :":إجمالي السعر بعد الخصم",
+      "Total Price After Discount" :"إجمالي السعر بعد الخصم",
       "Select Payment Method:" : ":اختر طريقة الدفع",
       "Submit Order" :"إرسال الطلب",
       "Order Request Successful!" :"!تمت عملية طلب الطلب بنجاح",
