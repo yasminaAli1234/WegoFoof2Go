@@ -9,7 +9,7 @@ import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/re
 import { MdCheck } from "react-icons/md";
 import CheckBox from '../../../Components/CheckBox';
 import { useDispatch } from 'react-redux';
-import { addToCart, removeFromCart } from '../../../Redux/CartSlice.js'; // Added removeFromCart
+import { addToCart, removeFromCart,updateCartItem } from '../../../Redux/CartSlice.js'; // Added removeFromCart
 import { CiMoneyCheck1 } from "react-icons/ci";
 import { MdAttachMoney } from "react-icons/md";
 import { useTranslation } from 'react-i18next';
@@ -103,22 +103,27 @@ const ExtraPage = () => {
               //    ? priceOptions[selectedPeriod]
               //    : product.price ?? 0;
        
-              let currentPrice;
+              // let currentPrice;
        
-              if (product.status === "one_time") {
-              currentPrice = product.price;
-              } else {
-              currentPrice = discountOptions[selectedPeriod]
-              ? discountOptions[selectedPeriod]
-              : priceOptions[selectedPeriod]
-              ? priceOptions[selectedPeriod]
-              : product.price ?? 0;
-              }
+              // if (product.status === "one_time") {
+              // currentPrice = product.price;
+              // } else {
+              // currentPrice = discountOptions[selectedPeriod]
+              // ? discountOptions[selectedPeriod]
+              // : priceOptions[selectedPeriod]
+              // ? priceOptions[selectedPeriod]
+              // : product.price ?? 0;
+              // }
              
               const productWithPeriodAndPrice = { 
                   ...product, 
                   billingPeriod: selectedPeriod, 
-                  finalprice: currentPrice + product.setup_fees
+              //     finalprice: currentPrice + product.setup_fees
+              price: product.status === "one_time"?  product.price :  priceOptions[selectedPeriod],
+
+              // price: priceOptions[selectedPeriod] || currentPrice,
+              price_discount: discountOptions[selectedPeriod] ? discountOptions[selectedPeriod] : product.status === "one_time"?  product.price :  priceOptions[selectedPeriod],
+
               // finalPrice: product.price !== null 
               //        ? product.price + product.setup_fees 
               //        : currentPrice + product.setup_fees
@@ -155,9 +160,42 @@ const ExtraPage = () => {
        }
    };
 
-   const handleBillingPeriodChange = (productId, newPeriod) => {
-       setBillingPeriod((prev) => ({ ...prev, [productId]: newPeriod }));
-   };
+//    const handleBillingPeriodChange = (productId, newPeriod) => {
+       // setBillingPeriod((prev) => ({ ...prev, [productId]: newPeriod }));
+//    };
+
+     const handleBillingPeriodChange = (itemId, newPeriod, item) => {
+   
+       setBillingPeriod((prev) => ({ ...prev, [itemId]: newPeriod }));
+
+       const priceOptions = {
+         monthly: item.monthly,
+         quarterly: item.quarterly || item.monthly * 3,
+         semiAnnually: item["semi_annual"] || item.monthly * 6,
+         annually: item.yearly || item.monthly * 12,
+       };
+       const discountOptions = {
+           monthly: item.discount_monthly,
+           quarterly: item.discount_quarterly,
+           semiAnnually: item.discount_semi_annual,
+           annually: item.discount_yearly,
+       };
+   
+       const updatedItem = {
+         ...item,
+         billingPeriod: newPeriod,
+         // finalprice: priceOptions[newPeriod],
+   
+         // finalprice: (discountOptions[newPeriod] 
+         //   ? discountOptions[newPeriod]
+         //   : priceOptions[newPeriod]) + item.setup_fees,
+         price: priceOptions[newPeriod],
+         price_discount: discountOptions[newPeriod],
+       };
+   
+       dispatch(updateCartItem({ id: itemId, type: item.type, updatedItem }));
+     };
+   
 
    useEffect(() => {
        const savedProductIds = JSON.parse(localStorage.getItem('selectedProductIds')) || [];
@@ -392,7 +430,7 @@ const ExtraPage = () => {
                                           <select
                                                  id={`billing-${product.id}`}
                                                  value={selectedPeriod}
-                                                 onChange={(e) => handleBillingPeriodChange(product.id, e.target.value)}
+                                                 onChange={(e) => handleBillingPeriodChange(product.id, e.target.value,product)}
                                                  className="bg-gray-100 border border-gray-400 text-gray-700 rounded-lg p-2"
                                           >
                                                  <option value="monthly">{t("Monthly")}</option>

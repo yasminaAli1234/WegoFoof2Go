@@ -281,8 +281,8 @@ const BuyDomainPage =()=>{
     if (!alldomainRequest) {
         return (
             <>
-                    {/* <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No domain Request data available</div>; */}
-              <form onSubmit={handleSubmitAdd} className="w-full flex flex-col gap-y-8 bg-gradient-to-b from-white to-gray-50 rounded-2xl shadow-lg">
+            {/* <div className='text-mainColor text-2xl font-bold w-full h-full flex items-center justify-center'>No domain Request data available</div>; */}
+            <form onSubmit={handleSubmitAdd} className="w-full flex flex-col gap-y-8 bg-gradient-to-b from-white to-gray-50 rounded-2xl shadow-lg">
             <div className="w-full flex flex-col gap-6 p-6 bg-white rounded-lg shadow-sm border border-gray-200">
                 <h1 className="text-3xl text-mainColor font-bold tracking-tight mb-4">{t('Request Your Custom Domain')}</h1>
 
