@@ -82,7 +82,7 @@ const CheckoutPage = () => {
   const handleSubmit = async () => {
 
 
-    if (selectedMethod.name.toLowerCase().includes("vodafoneCash")) {
+    if (selectedMethod.name.toLowerCase().includes("vodafonecash")) {
       // Define a duration mapping object
       const durationMap = {
         monthly: 1,
@@ -97,7 +97,7 @@ const CheckoutPage = () => {
         .map((item) => ({
           id: item.id,
           package: durationMap[item.billingPeriod] || 1, // Default to "monthly" (1) if not provided,
-          price_item: item.price || item.finalprice
+          price_item: item.price_discount ? item.price_discount : item.price,
         }));
   
       // Process Extra Items
@@ -106,7 +106,7 @@ const CheckoutPage = () => {
         .map((item) => ({
           id: item.id,
           package: durationMap[item.billingPeriod] || 1,
-          price_item: item.price || item.finalprice
+          price_item: item.price_discount ? item.price_discount : item.price,
         }));
   
       // Process Domain Items
@@ -114,8 +114,8 @@ const CheckoutPage = () => {
         .filter((item) => item.type === "domain")
         .map((item) => ({
           id: item.id,
-          // package: durationMap[item.billingPeriod] || null,
-          price_item: item.price || item.finalprice
+          // price_item: item.price || item.finalprice
+          price_item: item.price_discount ? item.price_discount : item.price,
         }));
   
       // Prepare Request Data
@@ -134,7 +134,7 @@ const CheckoutPage = () => {
 
       // Append basic data (payment method, amount)
       formData.append("payment_method_id", selectedMethod.id);
-      formData.append("amount", discountedPrice || totalPrice);
+      formData.append("amount", discountPrice);
 
       // Append plan items (flatten the object structure into individual parameters)
       if (planItems.length > 0) {
@@ -250,7 +250,7 @@ const CheckoutPage = () => {
           extra: extraItems.length > 0 ? extraItems : null,
           domain: domainItems.length > 0 ? domainItems : null,
         },
-        total_amount: discountedPrice || totalPrice,
+        total_amount: discountPrice ? discountPrice : totalPrice,
       };
   
       console.log("Request Data:", requestData);
@@ -336,19 +336,19 @@ const CheckoutPage = () => {
 
       {/* Display total price */}
       <div className="flex justify-between text-lg text-gray-700 mb-3">
-        <span className="font-medium">{t("Total Price:")}</span>
+        <span className="font-medium">{t("Total Price")}:</span>
         <span className="font-semibold text-mainColor">{convertNumberToArabic(totalPrice,i18n.language)} {t("EGP")}</span>
       </div>
 
       {/* Display discount */}
       <div className="flex justify-between text-lg text-gray-700 mb-3">
         <span className="font-medium">{t("Discount")}:</span>
-        <span className="font-semibold text-red-600">{convertNumberToArabic(discountPrice,i18n.language)} {t("EGP")}</span>
+        <span className="font-semibold text-red-600">{convertNumberToArabic(totalPrice - discountPrice,i18n.language)} {t("EGP")}</span>
       </div>
 
       {/* Display total after discount */}
       <div className="flex justify-between text-lg font-bold text-gray-900">
-        <span>{t("Total Price After Discount:")}</span>
+        <span>{t("Total Price After Discount")}:</span>
         <span className="text-green-600">{convertNumberToArabic(discountPrice,i18n.language)} {t("EGP")}</span>
       </div>
         </div>
