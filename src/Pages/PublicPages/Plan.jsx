@@ -7,7 +7,7 @@ const Plan = ({ id }) => {
   const {t} = useTranslation()
   const navigate = useNavigate();
   const handleNavigate =()=>{
-    navigate('/login')
+    navigate('/signUp')
 
    }
    useEffect(() => {
@@ -72,7 +72,7 @@ const Plan = ({ id }) => {
   
       {/* Professional Plan */}
       <div className="bg-gradient-to-br from-mainColor to-gray-900 text-secoundColor p-6 rounded-lg shadow-2xl w-full sm:w-80 lg:w-96 relative hover:scale-105 transition-transform">
-        <span className="absolute top-[-15px] left-1/2 transform -translate-x-1/2 border text-secoundColor text-sm md:text-lg font-semibold py-2 px-6 rounded-xl shadow-lg">
+        <span className="absolute top-[-15px] left-1/2 transform -translate-x-1/2 border border-blue-500 text-secoundColor text-sm md:text-lg font-semibold py-2 px-6 rounded-xl shadow-lg mb-5">
           {t("Best Seller")}
         </span>
         <h2 className="text-xl md:text-3xl font-bold text-center mb-4">

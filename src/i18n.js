@@ -311,7 +311,7 @@ const resources = {
   "Payment card Visa and Master": "Payment card Visa and Master",
   "Easiest Checkout": "Easiest Checkout",
   "Apply Promo Code":"Apply Promo Code",
-
+  "Explore Demo":"Explore Demo",
 
       // Add more translations
     },
@@ -336,6 +336,7 @@ const resources = {
   "Social Media Login": "تسجيل الدخول عبر وسائل التواصل الاجتماعي",
   "Social Media Sharing": "مشاركة عبر وسائل التواصل الاجتماعي",
   "Featured Product": "المنتج المميز",
+  "Explore Demo" :"استكشاف العرض التوضيحي",
   "Multiple Currency": "العملات المتعددة",
   "Multiple Language": "اللغات المتعددة",
   "Product Video Post": "منشور فيديو للمنتج",
