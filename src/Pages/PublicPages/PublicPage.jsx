@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import logo from "../../../public/Images/logo white.png";
+import home from "../../../src/assets/Images/assets/img/home.png";
+import pc from "../../../src/assets/Images/assets/img/pc2.png";
 import { Button } from "../../Components/Button";
 import 'aos/dist/aos.css'; // AOS styles
 import { Link, useNavigate } from "react-router-dom";
@@ -111,7 +113,7 @@ const PublicPage = () => {
     isScrolled ? 'bg-mainColor' : 'bg-mainColor'
   }`}
 >
-  <div className="w-2/6 lg:w-1/4 mt-4 flex flex-col lg:flex-row text-secoundColor  items-start justify-center py-4 px-4 text-xl font-semibold">
+  <div className="w-2/6 lg:w-1/4 mt-4 flex lg:flex-row text-secoundColor  items-start justify-center py-4 px-4 text-xl font-semibold">
     <img
       src={logo}
       alt="wegoStore"
@@ -256,49 +258,61 @@ const PublicPage = () => {
 
 
 
-{/* Section 1 */}
-<section id="section1" data-aos="zoom-in"  className="h-screen flex items-center bg-secoundColor justify-center text-mainColor px-4">
-  <div className="w-full flex flex-col gap-4 justify-center items-center">
-    {/* Image Section */}
-    <div className="w-full flex justify-center mt-6">
-      <img
-        src={homeImage}
-        alt="Home"
-        className="w-2/3 sm:w-1/2 lg:w-1/6 lg:h-1/6"
-      />
-    </div>
-
+<section id="section1" className="h-screen flex flex-col lg:flex-row items-center justify-center bg-secoundColor text-mainColor px-6 sm:px-10 lg:px-16 py-12 w-fit">
+  <div className="w-full lg:w-1/2 flex flex-col items-center text-center lg:text-left">
     {/* Heading */}
-    <h1 className="font-semibold text-lg sm:text-xl lg:text-3xl text-center">
+    <h1 className="font-semibold text-xl sm:text-2xl lg:text-4xl text-mainColor mb-4">
       {t("Design Your Perfect Website in One Click!")}
     </h1>
 
     {/* Paragraph */}
-    <div className="w-full flex justify-center">
-      <p className="font-normal text-sm sm:text-base lg:text-lg text-center w-full sm:w-5/6">
-        {t(
-          "Enjoy a fast and easy process to create a stunning website that reflects your identity, with our flexible packages ensuring you a unique experience in no time. Choose what suits you and start your digital journey with confidence!"
-        )}
-      </p>
-    </div>
+    <p className="font-normal text-sm sm:text-base lg:text-lg text-mainColor mb-6 lg:mb-8 mt-4 sm:mt-6">
+      {t(
+        "Enjoy a fast and easy process to create a stunning website that reflects your identity, with our flexible packages ensuring you a unique experience in no time. Choose what suits you and start your digital journey with confidence!"
+      )}
+    </p>
 
-    {/* Button */}
-    <button
-      onClick={() => handleNavigate()}
-      className="text-sm sm:text-lg font-medium py-2 px-6 sm:py-3 sm:px-8 lg:py-4 lg:px-6 flex items-center border rounded-xl bg-secoundColor text-mainColor hover:bg-blue-200 transition-colors mt-4"
-    >
-      {t("Start Now")}
-      <span className="flex items-center justify-center w-8 sm:w-10 h-8 sm:h-10 ml-2 sm:ml-3 rounded-full bg-mainColor text-secoundColor">
-        <FiArrowRight size={16} sm={20} />
-      </span>
-    </button>
+    <div className="flex items-center gap-4 flex-wrap">
+      {/* Button 1 */}
+      <button
+        onClick={() => handleNavigate()}
+        className="text-sm sm:text-lg font-medium py-2 sm:py-3 px-4 sm:px-6 lg:px-8 lg:py-4 border border-mainColor flex items-center rounded-xl bg-mainColor text-secoundColor hover:bg-blue-200 hover:text-mainColor transition-colors duration-300 w-full sm:w-auto"
+      >
+        {t("Explore Demo")}
+        <span className="flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 ml-3 rounded-full bg-secoundColor text-mainColor transition-transform transform group-hover:translate-x-2">
+          <FiArrowRight size={18} />
+        </span>
+      </button>
+
+      {/* Button 2 */}
+      <button
+        onClick={() => handleNavigate()}
+        className="text-sm sm:text-lg font-medium py-2 sm:py-3 px-4 sm:px-6 lg:px-8 lg:py-4 flex items-center border-2 rounded-xl border-mainColor bg-secoundColor text-mainColor hover:bg-blue-200 hover:text-mainColor transition-colors duration-300 w-full sm:w-auto"
+      >
+        {t("Start Now")}
+        <span className="flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 ml-3 rounded-full bg-mainColor text-secoundColor transition-transform transform group-hover:translate-x-2">
+          <FiArrowRight size={18} />
+        </span>
+      </button>
+    </div>
+  </div>
+
+  {/* Image Section */}
+  <div className="w-full lg:flex-1 mt-8 lg:mt-0 flex justify-center lg:justify-end">
+    <img
+      src={home}
+      alt="Home"
+      className="w-4/5 sm:w-3/4 lg:w-3/4 xl:w-2/3 lg:h-auto rounded-lg shadow-xl transition-transform duration-500 hover:scale-105"
+    />
   </div>
 </section>
 
 
 
+
+
 {/* Section 2 */}
-<section id="section2" data-aos="fade-left" className="h-auto flex flex-col items-start justify-start w-full text-secoundColor text-3xl px-4">
+<section id="section2"  className="h-auto flex flex-col items-start justify-start w-full text-secoundColor text-3xl px-4">
   <div className="w-full">
     <div className="flex flex-col lg:flex-row justify-around items-center w-full bg-mainColor py-10">
       <div className="flex flex-col gap-3 items-center text-center">
@@ -329,7 +343,7 @@ const PublicPage = () => {
       </div>
 
       <div className="w-full md:w-1/2 h-[350px] lg:h-[400px] flex justify-center md:justify-end relative">
-        <img src={imageLanding} alt="Digital Future" className="w-full h-full object-cover rounded-lg opacity-80" />
+        <img src={pc} alt="Digital Future" className="w-full h-full object-cover rounded-lg opacity-80" />
       </div>
     </div>
   </div>
@@ -337,7 +351,7 @@ const PublicPage = () => {
 
 
       {/* Sections 3 */}
-      <section data-aos="zoom-out" className="bg-mainColor text-secoundColor py-20">
+      <section  className="bg-mainColor text-secoundColor py-20">
       <div className="text-center mb-16">
         <h2 className="text-4xl font-semibold">{t("What Makes Us Different?")}</h2>
         <p className="text-xl mt-4">{t("Technology experts, committed to providing you the best.")}</p>
