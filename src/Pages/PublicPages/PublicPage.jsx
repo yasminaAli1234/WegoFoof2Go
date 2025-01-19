@@ -351,7 +351,7 @@ const PublicPage = () => {
 
 
       {/* Sections 3 */}
-      <section  className="bg-mainColor text-secoundColor py-20">
+      <section  className="bg-mainColor text-secoundColor py-20 border-b">
       <div className="text-center mb-16">
         <h2 className="text-4xl font-semibold">{t("What Makes Us Different?")}</h2>
         <p className="text-xl mt-4">{t("Technology experts, committed to providing you the best.")}</p>
@@ -377,8 +377,208 @@ const PublicPage = () => {
         </div>
       </div>
     </section>
+
+
+    <section className="py-12 bg-gradient-to-r  text-center">
+  <div className="max-w-screen-xl mx-auto px-6">
+    {/* Title */}
+    <h2 className="text-4xl font-extrabold text-white mb-4">
+      {t("Explore Our Demo Site!")}
+    </h2>
+
+    {/* Subtitle */}
+    <p className="text-lg text-white mb-8 max-w-3xl mx-auto">
+      {t(
+        "Take a closer look at how our site can transform your business! See how our innovative programming services can help you achieve your goals. Click the button below to start exploring the demo and experience it firsthand."
+      )}
+    </p>
+
+    {/* Sections as Cards */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+      <div className="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center justify-between hover:bg-blue-200 transform hover:scale-105 transition duration-300 ease-in-out">
+        <h3 className="text-xl font-semibold text-blue-900 mb-2">{t("Web Development")}</h3>
+        <p className="text-gray-600 text-center mb-4">
+          {t("Create stunning, user-friendly websites that elevate your brand and engage your audience.")}
+        </p>
+        <button
+        onClick={handleNavigate}
+        className="bg-blue-900 text-white py-2 px-4 rounded-lg hover:bg-blue-700">
+          {t("Learn More")}
+        </button>
+      </div>
+
+      <div className="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center justify-between hover:bg-blue-200 transform hover:scale-105 transition duration-300 ease-in-out">
+        <h3 className="text-xl font-semibold text-blue-900 mb-2">{t("Mobile App Development")}</h3>
+        <p className="text-gray-600 text-center mb-4">
+          {t("Develop mobile apps that deliver seamless experiences on both iOS and Android devices.")}
+        </p>
+        <button
+        onClick={handleNavigate}
+        className="bg-blue-900 text-white py-2 px-4 rounded-lg hover:bg-blue-700">
+          {t("Learn More")}
+        </button>
+      </div>
+
+      <div className="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center justify-between hover:bg-blue-200 transform hover:scale-105 transition duration-300 ease-in-out">
+        <h3 className="text-xl font-semibold text-blue-900 mb-2">{t("Consulting Services")}</h3>
+        <p className="text-gray-600 text-center mb-4">
+          {t("Let our experts guide you through complex business challenges with innovative solutions.")}
+        </p>
+        <button
+        onClick={handleNavigate}
+        className="bg-blue-900 text-white py-2 px-4 rounded-lg hover:bg-blue-700">
+          {t("Learn More")}
+        </button>
+      </div>
+
+      <div className="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center justify-between hover:bg-blue-200 transform hover:scale-105 transition duration-300 ease-in-out">
+        <h3 className="text-xl font-semibold text-blue-900 mb-2">{t("SEO Optimization")}</h3>
+        <p className="text-gray-600 text-center mb-4">
+          {t("Boost your site's visibility with our professional SEO services and drive more traffic.")}
+        </p>
+        <button
+        onClick={handleNavigate}
+        className="bg-blue-900 text-white py-2 px-4 rounded-lg hover:bg-blue-700">
+          {t("Learn More")}
+        </button>
+      </div>
+
+      <div className="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center justify-between hover:bg-blue-200 transform hover:scale-105 transition duration-300 ease-in-out">
+        <h3 className="text-xl font-semibold text-blue-900 mb-2">{t("Cloud Solutions")}</h3>
+        <p className="text-gray-600 text-center mb-4">
+          {t("Get scalable, secure, and flexible cloud solutions that support your business growth.")}
+        </p>
+        <button
+        onClick={handleNavigate}
+        className="bg-blue-900 text-white py-2 px-4 rounded-lg hover:bg-blue-700">
+          {t("Learn More")}
+        </button>
+      </div>
+
+      <div className="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center justify-between hover:bg-blue-200 transform hover:scale-105 transition duration-300 ease-in-out">
+        <h3 className="text-xl font-semibold text-blue-900 mb-2">{t("E-commerce Solutions")}</h3>
+        <p className="text-gray-600 text-center mb-4">
+          {t("Build your e-commerce platform with seamless transactions and enhanced user experience.")}
+        </p>
+        <button 
+        onClick={handleNavigate}
+        className="bg-blue-900 text-white py-2 px-4 rounded-lg hover:bg-blue-700">
+          {t("Learn More")}
+        </button>
+      </div>
+    </div>
+
+    {/* Call to Action Button */}
+    <button
+    onClick={handleNavigate}
+    className="bg-blue-900 text-white py-3 px-8 rounded-lg shadow-xl hover:bg-blue-700 hover:scale-105 inline-flex items-center transition duration-300 ease-in-out">
+      {t("Start Exploring")}
+      <span className="ml-2 text-lg">🚀</span>
+    </button>
+  </div>
+</section>
+
+
+
+    {/*section  */}
+
+    <section className=" bg-secoundColor mx-auto py-16 px-6">
+  {/* Main Heading */}
+  <h2 className="text-4xl text-mainColor font-bold text-center mb-4">
+    {t("Together, We Build the Future")}
+  </h2>
+  {/* Subheading */}
+  <h3 className="text-2xl font-semibold text-center text-blue-900 mb-12">
+    {t("of Digital Innovation")}
+  </h3>
+
+  {/* Cards Grid */}
+  <div className="grid grid-cols-1 md:grid-cols-2 text-mainColor lg:grid-cols-3 gap-8">
+    {/* Card 1 */}
+    <div className="flex flex-col items-center text-center p-6 border border-mainColor bg-gray-50 rounded-lg shadow-md">
+      <div className="text-4xl text-blue-500 mb-4">📞</div>
+      <h3 className="text-xl font-bold mb-2">{t("Customer-Centric")}</h3>
+      <p className="text-gray-600">
+        {t("We focus on understanding and exceeding client needs.")}
+      </p>
+    </div>
+    {/* Card 2 */}
+    <div className="flex flex-col items-center text-center p-6 border border-mainColor bg-gray-50 rounded-lg shadow-md">
+      <div className="text-4xl text-green-500 mb-4">🎯</div>
+      <h3 className="text-xl font-bold mb-2">{t("Tailored Solutions")}</h3>
+      <p className="text-gray-600">
+        {t("Custom software to align perfectly with your goals.")}
+      </p>
+    </div>
+    {/* Card 3 */}
+    <div className="flex flex-col items-center text-center p-6 border border-mainColor bg-gray-50 rounded-lg shadow-md">
+      <div className="text-4xl text-purple-500 mb-4">💡</div>
+      <h3 className="text-xl font-bold mb-2">{t("Innovative Technologies")}</h3>
+      <p className="text-gray-600">
+        {t(
+          "Empowering businesses with cutting-edge solutions to stay ahead in a digital-first world."
+        )}
+      </p>
+    </div>
+    {/* Card 4 */}
+    <div className="flex flex-col items-center text-center p-6 border border-mainColor bg-gray-50 rounded-lg shadow-md">
+      <div className="text-4xl text-red-500 mb-4">🌟</div>
+      <h3 className="text-xl font-bold mb-2">{t("Comprehensive Approach")}</h3>
+      <p className="text-gray-600">
+        {t("Beyond technology, we drive business growth.")}
+      </p>
+    </div>
+    {/* Card 5 */}
+    <div className="flex flex-col items-center text-center p-6 border border-mainColor bg-gray-50 rounded-lg shadow-md">
+      <div className="text-4xl text-yellow-500 mb-4">🤝</div>
+      <h3 className="text-xl font-bold mb-2">{t("Strong Partnerships")}</h3>
+      <p className="text-gray-600">
+        {t("Working closely to maximize efficiency and impact.")}
+      </p>
+    </div>
+    {/* Card 6 */}
+    <div className="flex flex-col items-center text-center p-6 border border-mainColor bg-gray-50 rounded-lg shadow-md">
+      <div className="text-4xl text-indigo-500 mb-4">🚀</div>
+      <h3 className="text-xl font-bold mb-2">{t("Your Vision, Our Mission")}</h3>
+      <p className="text-gray-600">
+        {t(
+          "Turning your ideas into impactful digital experiences with precision and expertise."
+        )}
+      </p>
+    </div>
+  </div>
+</section>
+
+{/* section video */}
+<section className="max-w-screen-xl mx-auto py-12 px-6 flex flex-col items-center space-y-6">
+  {/* Heading */}
+  <h2 className="text-3xl font-bold text-center">
+    {t("Learn About Our Site in Minutes")}
+  </h2>
+
+  {/* Paragraph */}
+  <p className="text-lg text-center max-w-2xl">
+    {t(
+      "A short video explaining how you can benefit from our programming services. Enjoy a quick tour of our site's features."
+    )}
+  </p>
+
+  {/* Video */}
+  <div className="w-full max-w-4xl aspect-video">
+    <iframe
+      src="https://www.youtube.com/embed/example-video-id" // Replace with your video URL
+      title="Site Tour Video"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowFullScreen
+      className="w-full h-full rounded-lg shadow-md"
+    ></iframe>
+  </div>
+</section>
+
  {/* Plan 4 */}
 <Plan id='plan'/>
+
+
  {/* Features 6 */}
 
 <Features id={'features'}/>

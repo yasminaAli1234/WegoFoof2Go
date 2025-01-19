@@ -59,7 +59,7 @@ const {t} = useTranslation();
   }, []);
 
   return (
-    <section className="features px-2 mt-10">
+    <section className="features px-2 mt-10 ">
    <div className="flex flex-wrap justify-center text-secoundColor gap-10">
   {featuresData.map((feature, index) => (
     <Link

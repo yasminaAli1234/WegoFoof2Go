@@ -1,8 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaStar, FaRegStar } from 'react-icons/fa'; // Import React Icons
+import { useNavigate } from 'react-router-dom';
 
 const CustomerReviewsSlider = () => {
+  const navigate = useNavigate()
   const { t } = useTranslation();
   const reviews = [
     { name: "Ahmed Hassan", review: "Amazing service! I couldn't be happier with the results.", rating: 5 },
@@ -16,6 +18,11 @@ const CustomerReviewsSlider = () => {
     { name: "Khaled Mahmoud", review: "Overall a positive experience. Would recommend.", rating: 5 },
     { name: "Laila Tarek", review: "Great customer support and very helpful team.", rating: 5 }
   ];
+
+  const handleNavigate =()=>{
+    navigate('/signUp')
+
+   }
   return (
     <section className="py-16 mt-10 bg-secoundColor px-10">
       {/* Section Title */}
@@ -44,7 +51,9 @@ const CustomerReviewsSlider = () => {
                 </span>
               ))}
             </div>
-            <button className="bg-secoundColor text-mainColor py-2 px-4 rounded-full w-full text-center">See More</button>
+            <button
+            onClick={handleNavigate}
+            className="bg-secoundColor text-mainColor py-2 px-4 rounded-full w-full text-center">See More</button>
           </div>
         ))}
       </div>
