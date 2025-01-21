@@ -35,35 +35,35 @@ const LearnMoreSection = () => {
   ];
 
   return (
-    <section className="py-16 px-4 text-secoundColor ">
+    <section className="py-16 px-4 text-mainColor bg-secoundColor">
       {/* Section Title */}
-      <h2 className="text-3xl font-bold text-center mb-2">{t("Learn more about starting an online store")}</h2>
-      <p className="text-center text-lg text-gray-200 mb-8">
+      <h2 className="text-3xl font-bold text-center mb-2 ">{t("Learn more about starting an online store")}</h2>
+      <p className="text-center text-lg text-gray-600 mb-8 ">
        {t("Need help creating your online store? We're ready to assist you. We'll answer your common questions in detail.")}
       </p>
 
       {/* Rows */}
-      <div className="max-w-4xl mx-auto w-full space-y-6">
+      <div className="w-full space-y-6 p-7">
         {questionsAndAnswers.map((item, index) => (
           <div
             key={index}
-            className="bg-secoundColor rounded-lg shadow-lg p-6 border-b border-secoundColor transition-transform duration-300 hover:scale-105"
+            className="rounded-lg shadow-lg p-6  border-b border-mainColor transition-transform duration-200 "
           >
             {/* Question and Icon */}
             <div className="flex justify-between items-center w-full cursor-pointer" onClick={() => toggleAnswer(index)}>
               {/* Text on Left */}
               <div className="flex items-center space-x-4 w-10/12">
-                <p className="text-lg font-semibold text-gray-700">{t(`${item.question}`)}</p>
+                <p className="text-xl font-semibold text-mainColor">{t(`${item.question}`)}</p>
               </div>
               {/* Icon on Right with hover effect */}
               <div className="flex items-center space-x-4 w-2/12 justify-end">
-                <span className="text-blue-500 text-2xl transition-colors duration-300 hover:text-blue-700">+</span>
+                <span className="text-mainColor text-2xl transition-colors duration-300 hover:text-blue-200">+</span>
               </div>
             </div>
 
             {/* Answer text */}
             {selectedQuestion === index && (
-              <p className="text-gray-600 mt-4">{t(`${item.answer}`)}</p>
+              <p className="text-mainColor mt-4 text-xl">{t(`${item.answer}`)}</p>
             )}
           </div>
         ))}

@@ -2,7 +2,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaStar, FaRegStar } from 'react-icons/fa'; // Import React Icons
 import { useNavigate } from 'react-router-dom';
-
+import start from '../../assets/Images/Star'
+import Star from '../../assets/Images/Star';
 const CustomerReviewsSlider = () => {
   const navigate = useNavigate()
   const { t } = useTranslation();
@@ -24,36 +25,36 @@ const CustomerReviewsSlider = () => {
 
    }
   return (
-    <section className="py-16 mt-10 bg-secoundColor px-10">
+    <section className="py-16 mt-10 bg-mainColor px-10">
       {/* Section Title */}
-      <h2 className="text-3xl font-bold text-center mb-4 text-mainColor">{t("What Our Customers Say About Us")}</h2>
-      <p className="text-center text-lg text-gray-700 mb-8">{t("Don't take our word, hear from them.")}</p>
+      <h2 className="text-3xl font-bold text-center mb-4 text-secoundColor">{t("What Our Customers Say About Us")}</h2>
+      <p className="text-center text-lg text-gray-300 mb-8">{t("Don't take our word, hear from them.")}</p>
 
       {/* Scrollable Row */}
-      <div className="flex overflow-x-auto pb-6 space-x-6 scrollbar-hide">
+      <div className="flex overflow-x-auto items-start text-start pb-6 space-x-6 scrollbar-hide">
         {/* Loop through the reviews to create 10 cards */}
         {reviews.map((review, index) => (
           <div
             key={index}
-            className="w-72 bg-mainColor rounded-lg shadow-lg p-6  flex-shrink-0"
+            className="w-76 bg-secoundColor rounded-lg shadow-lg p-6 items-start  flex-shrink-0"
           >
-            <h3 className="text-xl font-semibold text-center mb-4 text-secoundColor">{t(`${review.name}`)}</h3>
-            <p className="text-center text-gray-300 mb-4">{t(`${review.review}`)}</p>
+            <h3 className="text-xl font-semibold text-start mb-4 text-mainColor">{t(`${review.name}`)}</h3>
+            <p className="text-start text-gray-700 mb-4">{t(`${review.review}`)}</p>
             {/* Star Rating */}
-            <div className="flex justify-center mb-4">
+            <div className="flex justify-start mb-4">
               {[...Array(5)].map((_, index) => (
                 <span key={index}>
                   {index < review.rating ? (
-                    <FaStar className="w-6 h-6 text-secoundColor" />
+                    <Star className="w-6 h-6 text-mainColor" />
                   ) : (
-                    <FaRegStar className="w-6 h-6 text-secoundColor" />
+                    <FaRegStar className="w-6 h-6 text-mainColor" />
                   )}
                 </span>
               ))}
             </div>
-            <button
+            {/* <button
             onClick={handleNavigate}
-            className="bg-secoundColor text-mainColor py-2 px-4 rounded-full w-full text-center">See More</button>
+            className="bg-mainColor text-secoundColor py-2 px-4 rounded-full w-full text-center">{t("See More")}</button> */}
           </div>
         ))}
       </div>
