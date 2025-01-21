@@ -1,7 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
 import logo from "../../../public/Images/logo white.png";
-import home from "../../../src/assets/Images/assets/img/home.png";
-import pc from "../../../src/assets/Images/assets/img/pc2.png";
+import home from "../../../src/assets/Images/assets/img/home2.png";
+import pc from "../../../src/assets/Images/assets/img/pc.png";
+import m1 from "../../../src/assets/Images/assets/img/1.jpg";
+import m2 from "../../../src/assets/Images/assets/img/2.jpg";
+import m3 from "../../../src/assets/Images/assets/img/3.jpg";
+import m4 from "../../../src/assets/Images/assets/img/4.jpg";
+import m6 from "../../../src/assets/Images/assets/img/6.jpg";
+import m7 from "../../../src/assets/Images/assets/img/7.jpg";
+import m8 from "../../../src/assets/Images/assets/img/8.jpg";
+import m9 from "../../../src/assets/Images/assets/img/9.jpg";
+import m10 from "../../../src/assets/Images/assets/img/10.jpg";
+import m11 from "../../../src/assets/Images/assets/img/11.jpg";
+import { FaPhoneAlt, FaBullseye, FaStar, FaHandshake, FaRocket } from "react-icons/fa";
 import { Button } from "../../Components/Button";
 import 'aos/dist/aos.css'; // AOS styles
 import { Link, useNavigate } from "react-router-dom";
@@ -109,7 +120,7 @@ const PublicPage = () => {
 <div className="bg-mainColor text-secoundColor">
   {/* Navigation Bar */}
   <nav
-  className={`fixed w-full  flex justify-between z-10 transition-all duration-300 ${
+  className={`fixed w-full pl-3 pr-3  flex justify-between z-10 transition-all duration-300 ${
     isScrolled ? 'bg-mainColor' : 'bg-mainColor'
   }`}
 >
@@ -258,15 +269,15 @@ const PublicPage = () => {
 
 
 
-<section id="section1" className="h-screen flex flex-col lg:flex-row items-center justify-center bg-secoundColor text-mainColor px-6 sm:px-10 lg:px-16 py-12 w-fit">
-  <div className="w-full lg:w-1/2 flex flex-col items-center text-center lg:text-left">
+<section id="section1" className="h-screen flex flex-col-reverse lg:flex-row items-center  bg-mainColor text-secoundColor w-fit">
+  <div className="w-full lg:w-1/1 flex flex-col items-start text-center lg:text-left p-4">
     {/* Heading */}
-    <h1 className="font-semibold text-xl sm:text-2xl lg:text-4xl text-mainColor mb-4">
+    <h1 className="font-semibold text-xl sm:text-2xl lg:text-4xl text-secoundColor mb-4">
       {t("Design Your Perfect Website in One Click!")}
     </h1>
 
     {/* Paragraph */}
-    <p className="font-normal text-sm sm:text-base lg:text-lg text-mainColor mb-6 lg:mb-8 mt-4 sm:mt-6">
+    <p className="font-normal text-sm sm:text-base lg:text-lg text-secoundColor mb-6 lg:mb-8 mt-4 sm:mt-6">
       {t(
         "Enjoy a fast and easy process to create a stunning website that reflects your identity, with our flexible packages ensuring you a unique experience in no time. Choose what suits you and start your digital journey with confidence!"
       )}
@@ -276,10 +287,10 @@ const PublicPage = () => {
       {/* Button 1 */}
       <button
         onClick={() => handleNavigate()}
-        className="text-sm sm:text-lg font-medium py-2 sm:py-3 px-4 sm:px-6 lg:px-8 lg:py-4 border border-mainColor flex items-center rounded-xl bg-mainColor text-secoundColor hover:bg-blue-200 hover:text-mainColor transition-colors duration-300 w-full sm:w-auto"
+        className="text-sm sm:text-lg font-medium py-2 sm:py-3 px-4 sm:px-6 lg:px-8 lg:py-4 border border-secoundColor flex items-center rounded-xl bg-secoundColor text-mainColor hover:bg-blue-200 hover:text-mainColor transition-colors duration-300 w-full sm:w-auto"
       >
         {t("Explore Demo")}
-        <span className="flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 ml-3 rounded-full bg-secoundColor text-mainColor transition-transform transform group-hover:translate-x-2">
+        <span className="flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 ml-3 mr-3 rounded-full bg-mainColor text-secoundColor transition-transform transform group-hover:translate-x-2">
           <FiArrowRight size={18} />
         </span>
       </button>
@@ -290,21 +301,23 @@ const PublicPage = () => {
         className="text-sm sm:text-lg font-medium py-2 sm:py-3 px-4 sm:px-6 lg:px-8 lg:py-4 flex items-center border-2 rounded-xl border-mainColor bg-secoundColor text-mainColor hover:bg-blue-200 hover:text-mainColor transition-colors duration-300 w-full sm:w-auto"
       >
         {t("Start Now")}
-        <span className="flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 ml-3 rounded-full bg-mainColor text-secoundColor transition-transform transform group-hover:translate-x-2">
+        <span className="flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 ml-3 mr-3 rounded-full bg-mainColor text-secoundColor transition-transform transform group-hover:translate-x-2">
           <FiArrowRight size={18} />
         </span>
       </button>
     </div>
   </div>
 
-  {/* Image Section */}
-  <div className="w-full lg:flex-1 mt-8 lg:mt-0 flex justify-center lg:justify-end">
-    <img
-      src={home}
-      alt="Home"
-      className="w-4/5 sm:w-3/4 lg:w-3/4 xl:w-2/3 lg:h-auto rounded-lg shadow-xl transition-transform duration-500 hover:scale-105"
-    />
-  </div>
+  <div className="w-full  mt-8 h-full lg:mt-0 items-end flex justify-end lg:justify-end  ">
+  <img
+    src={home}
+    alt="Home"
+    className="w-full rounded-lg"
+  />
+</div>
+
+
+
 </section>
 
 
@@ -312,29 +325,29 @@ const PublicPage = () => {
 
 
 {/* Section 2 */}
-<section id="section2"  className="h-auto flex flex-col items-start justify-start w-full text-secoundColor text-3xl px-4">
+<section id="section2"  className="h-auto flex flex-col items-start justify-start w-full text-mainColor text-3xl px-4">
   <div className="w-full">
-    <div className="flex flex-col lg:flex-row justify-around items-center w-full bg-mainColor py-10">
+    <div className="flex flex-col lg:flex-row justify-around items-center w-full bg-white py-10">
       <div className="flex flex-col gap-3 items-center text-center">
-        <h3 className="text-xl font-semibold text-secoundColor">{t("Active Subscriptions")}</h3>
-        <span className="text-3xl font-bold text-secoundColor">{t("100+")}</span>
+        <h3 className="text-xl font-semibold text-mainColor">{t("Active Subscriptions")}</h3>
+        <span className="text-3xl font-bold text-mainColor">{t("100+")}</span>
       </div>
       <div className="flex flex-col gap-3 items-center text-center">
-        <h3 className="text-xl font-semibold text-secoundColor">{t("New Orders Count")}</h3>
-        <span className="text-3xl font-bold text-secoundColor">{t("200+")}</span>
+        <h3 className="text-xl font-semibold text-mainColor">{t("New Orders Count")}</h3>
+        <span className="text-3xl font-bold text-mainColor">{t("200+")}</span>
       </div>
       <div className="flex flex-col gap-3 items-center text-center">
-        <h3 className="text-xl font-semibold text-secoundColor">{t("Websites Created")}</h3>
-        <span className="text-3xl font-bold text-secoundColor">{t("50+")}</span>
+        <h3 className="text-xl font-semibold text-mainColor">{t("Websites Created")}</h3>
+        <span className="text-3xl font-bold text-mainColor">{t("50+")}</span>
       </div>
     </div>
 
-    <div className="flex bg-secoundColor flex-col lg:flex-row justify-between items-start w-full py-10 mt-10 px-10">
+    <div className="flex bg-mainColor flex-col lg:flex-row justify-between items-start w-full py-10 mt-10 px-10">
       <div className="flex flex-col gap-6 items-start w-full md:w-1/2">
         <h1 className="text-3xl font-bold text-white">
           {t("Let's shape the digital future, together")}
         </h1>
-        <ul className="list-none pl-6 text-lg text-mainColor">
+        <ul className="list-none text-lg text-secoundColor">
           <li className="text-xl">{t("Customer-Centric: We prioritize understanding and meeting our clients' unique needs.")}</li>
           <li className="text-xl">{t("Tailored Solutions: We design custom software solutions to exceed client expectations.")}</li>
           <li className="text-xl">{t("Comprehensive Approach: We offer more than just technology products to help clients grow.")}</li>
@@ -348,199 +361,204 @@ const PublicPage = () => {
     </div>
   </div>
 </section>
+{/* section photo screen */}
 
-
-      {/* Sections 3 */}
-      <section  className="bg-mainColor text-secoundColor py-20 border-b">
-      <div className="text-center mb-16">
-        <h2 className="text-4xl font-semibold">{t("What Makes Us Different?")}</h2>
-        <p className="text-xl mt-4">{t("Technology experts, committed to providing you the best.")}</p>
-      </div>
-
-      <div className="flex flex-wrap justify-center gap-10">
-        {/* Card 1 */}
-        <div className="bg-secoundColor text-mainColor flex justify-center items-center flex-col p-6 rounded-lg shadow-lg w-64 md:w-80">
-          <FaLightbulb className="text-7xl text-mainColor mb-6" />
-          <p className="text-center text-lg font-medium">{t("We bring your digital visions to life.")} </p>
-        </div>
-
-        {/* Card 2 */}
-        <div className="bg-secoundColor text-mainColor flex justify-center items-center flex-col p-6 rounded-lg shadow-lg w-64 md:w-80">
-          <FaCheckCircle className="text-7xl text-mainColor mb-6" />
-          <p className="text-center text-lg font-medium">{t("Our software is built to the highest standards.")}</p>
-        </div>
-
-        {/* Card 3 */}
-        <div className="bg-secoundColor text-mainColor flex justify-center items-center flex-col p-6 rounded-lg shadow-lg w-64 md:w-80">
-          <FaHeadset className="text-7xl text-mainColor mb-6" />
-          <p className="text-center text-lg font-medium">{t("Our support team is available around the clock.")}</p>
-        </div>
-      </div>
-    </section>
-
-
-    <section className="py-12 bg-gradient-to-r  text-center">
-  <div className="max-w-screen-xl mx-auto px-6">
-    {/* Title */}
-    <h2 className="text-4xl font-extrabold text-white mb-4">
-      {t("Explore Our Demo Site!")}
-    </h2>
-
-    {/* Subtitle */}
-    <p className="text-lg text-white mb-8 max-w-3xl mx-auto">
-      {t(
-        "Take a closer look at how our site can transform your business! See how our innovative programming services can help you achieve your goals. Click the button below to start exploring the demo and experience it firsthand."
-      )}
+<section className="p-5 bg-secoundColor">
+  {/* Header Section */}
+  <div className="text-center mb-8 mt-7">
+    <h1 className="text-3xl font-bold text-mainColor">{t("Explore Our Demo Site!")}</h1>
+    <p className="text-mainColor mt-4">
+      {t("Take A Closer Look At Our Site Experience! Explore How Our Programming Services Meet Your Needs.")}
     </p>
+  </div>
 
-    {/* Sections as Cards */}
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
-      <div className="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center justify-between hover:bg-blue-200 transform hover:scale-105 transition duration-300 ease-in-out">
-        <h3 className="text-xl font-semibold text-blue-900 mb-2">{t("Web Development")}</h3>
-        <p className="text-gray-600 text-center mb-4">
-          {t("Create stunning, user-friendly websites that elevate your brand and engage your audience.")}
-        </p>
-        <button
-        onClick={handleNavigate}
-        className="bg-blue-900 text-white py-2 px-4 rounded-lg hover:bg-blue-700">
-          {t("Learn More")}
-        </button>
+  {/* Flexbox Section for Images */}
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+    {/* Column 1 */}
+    <div className="space-y-4">
+    <div className="h-[200px] border-4 border-mainColor rounded-lg">
+        <img
+          src={m1}
+          alt="Column 1 Top Image"
+          className="h-full w-full object-cover  shadow-md"
+        />
       </div>
-
-      <div className="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center justify-between hover:bg-blue-200 transform hover:scale-105 transition duration-300 ease-in-out">
-        <h3 className="text-xl font-semibold text-blue-900 mb-2">{t("Mobile App Development")}</h3>
-        <p className="text-gray-600 text-center mb-4">
-          {t("Develop mobile apps that deliver seamless experiences on both iOS and Android devices.")}
-        </p>
-        <button
-        onClick={handleNavigate}
-        className="bg-blue-900 text-white py-2 px-4 rounded-lg hover:bg-blue-700">
-          {t("Learn More")}
-        </button>
-      </div>
-
-      <div className="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center justify-between hover:bg-blue-200 transform hover:scale-105 transition duration-300 ease-in-out">
-        <h3 className="text-xl font-semibold text-blue-900 mb-2">{t("Consulting Services")}</h3>
-        <p className="text-gray-600 text-center mb-4">
-          {t("Let our experts guide you through complex business challenges with innovative solutions.")}
-        </p>
-        <button
-        onClick={handleNavigate}
-        className="bg-blue-900 text-white py-2 px-4 rounded-lg hover:bg-blue-700">
-          {t("Learn More")}
-        </button>
-      </div>
-
-      <div className="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center justify-between hover:bg-blue-200 transform hover:scale-105 transition duration-300 ease-in-out">
-        <h3 className="text-xl font-semibold text-blue-900 mb-2">{t("SEO Optimization")}</h3>
-        <p className="text-gray-600 text-center mb-4">
-          {t("Boost your site's visibility with our professional SEO services and drive more traffic.")}
-        </p>
-        <button
-        onClick={handleNavigate}
-        className="bg-blue-900 text-white py-2 px-4 rounded-lg hover:bg-blue-700">
-          {t("Learn More")}
-        </button>
-      </div>
-
-      <div className="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center justify-between hover:bg-blue-200 transform hover:scale-105 transition duration-300 ease-in-out">
-        <h3 className="text-xl font-semibold text-blue-900 mb-2">{t("Cloud Solutions")}</h3>
-        <p className="text-gray-600 text-center mb-4">
-          {t("Get scalable, secure, and flexible cloud solutions that support your business growth.")}
-        </p>
-        <button
-        onClick={handleNavigate}
-        className="bg-blue-900 text-white py-2 px-4 rounded-lg hover:bg-blue-700">
-          {t("Learn More")}
-        </button>
-      </div>
-
-      <div className="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center justify-between hover:bg-blue-200 transform hover:scale-105 transition duration-300 ease-in-out">
-        <h3 className="text-xl font-semibold text-blue-900 mb-2">{t("E-commerce Solutions")}</h3>
-        <p className="text-gray-600 text-center mb-4">
-          {t("Build your e-commerce platform with seamless transactions and enhanced user experience.")}
-        </p>
-        <button 
-        onClick={handleNavigate}
-        className="bg-blue-900 text-white py-2 px-4 rounded-lg hover:bg-blue-700">
-          {t("Learn More")}
-        </button>
+      <div className="h-[350px] border-4 border-mainColor rounded-lg">
+        <img
+          src={m2}
+          alt="Column 1 Bottom Image"
+          className="h-full w-full object-cover  shadow-md"
+        />
       </div>
     </div>
 
-    {/* Call to Action Button */}
-    <button
-    onClick={handleNavigate}
-    className="bg-blue-900 text-white py-3 px-8 rounded-lg shadow-xl hover:bg-blue-700 hover:scale-105 inline-flex items-center transition duration-300 ease-in-out">
-      {t("Start Exploring")}
-      <span className="ml-2 text-lg">🚀</span>
-    </button>
+    {/* Column 2 */}
+    <div className="space-y-4">
+      <div className="h-[150px] border-4 border-mainColor rounded-lg">
+        <img
+          src={m3}
+          alt="Column 2 Top Image"
+          className="h-full w-full object-cover  shadow-md"
+        />
+      </div>
+      <div className="h-[400px]  border-4 border-mainColor rounded-lg">
+        <img
+          src={m4}
+          alt="Column 2 Bottom Image"
+          className="h-full w-full object-cover  shadow-md"
+        />
+      </div>
+    </div>
+
+    {/* Column 3 */}
+    <div className="space-y-4">
+      <div className="h-[275px] border-4 border-mainColor rounded-lg">
+        <img
+          src={m6}
+          alt="Column 3 Top Image"
+          className="h-full w-full object-cover  shadow-md"
+        />
+      </div>
+      <div className="h-[275px] border-4 border-mainColor rounded-lg">
+        <img
+          src={m7}
+          alt="Column 3 Bottom Image"
+          className="h-full w-full object-cover shadow-md"
+        />
+      </div>
+    </div>
+
+    {/* Column 4 */}
+    <div className="space-y-4">
+      <div className="h-[200px] border-4 border-mainColor rounded-lg">
+        <img
+          src={m8}
+          alt="Column 4 Top Image"
+          className="h-full w-full object-cover  shadow-md"
+        />
+      </div>
+      <div className="h-[350px] border-4 border-mainColor rounded-lg">
+        <img
+          src={m9}
+          alt="Column 4 Bottom Image"
+          className="h-full w-full object-cover shadow-md"
+        />
+      </div>
+    </div>
+
+    {/* Column 5 */}
+    <div className="space-y-4">
+      <div className="h-[350px] border-4 border-mainColor rounded-lg">
+        <img
+          src={m10}
+          alt="Column 5 Top Image"
+          className="h-full w-full object-cover  shadow-md"
+        />
+      </div>
+      <div className="h-[200px] border-4 border-mainColor rounded-lg">
+        <img
+          src={m11}
+          alt="Column 5 Bottom Image"
+          className="h-full w-full object-cover shadow-md"
+        />
+      </div>
+    </div>
   </div>
+  <button
+        onClick={() => handleNavigate()}
+        className="text-sm sm:text-lg font-medium py-2 sm:py-3 px-4 sm:px-6 lg:px-8 lg:py-4 border border-mainColor mt-7 flex items-center rounded-xl bg-mainColor text-secoundColor hover:bg-blue-200 hover:text-mainColor transition-colors duration-300 w-full sm:w-auto"
+      >
+        {t("Start Explore")}
+        <span className="flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 ml-3 mr-3 rounded-full bg-secoundColor text-mainColor transition-transform transform group-hover:translate-x-2">
+          <FiArrowRight size={18} />
+        </span>
+      </button>
 </section>
 
+   {/*section  */}
 
-
-    {/*section  */}
-
-    <section className=" bg-secoundColor mx-auto py-16 px-6">
+   <section className="bg-mainColor mx-auto py-16 px-6">
   {/* Main Heading */}
-  <h2 className="text-4xl text-mainColor font-bold text-center mb-4">
+  <h2 className="text-4xl text-secoundColor font-bold text-center mb-4">
     {t("Together, We Build the Future")}
   </h2>
   {/* Subheading */}
-  <h3 className="text-2xl font-semibold text-center text-blue-900 mb-12">
+  <h3 className="text-2xl font-semibold text-center text-gray-300 mb-12">
     {t("of Digital Innovation")}
   </h3>
 
   {/* Cards Grid */}
-  <div className="grid grid-cols-1 md:grid-cols-2 text-mainColor lg:grid-cols-3 gap-8">
+  <div className="grid grid-cols-1 md:grid-cols-2 text-secoundColor lg:grid-cols-3 gap-8">
     {/* Card 1 */}
-    <div className="flex flex-col items-center text-center p-6 border border-mainColor bg-gray-50 rounded-lg shadow-md">
-      <div className="text-4xl text-blue-500 mb-4">📞</div>
+    <div className="flex flex-col border-b-2 items-center text-center p-6  rounded-lg shadow-md">
+      <div className="text-4xl text-secoundColor mb-4">
+        <FaPhoneAlt />
+      </div>
+      <div className="w-12 mb-4"></div>
       <h3 className="text-xl font-bold mb-2">{t("Customer-Centric")}</h3>
-      <p className="text-gray-600">
+      <p className="text-gray-200">
         {t("We focus on understanding and exceeding client needs.")}
       </p>
     </div>
+
     {/* Card 2 */}
-    <div className="flex flex-col items-center text-center p-6 border border-mainColor bg-gray-50 rounded-lg shadow-md">
-      <div className="text-4xl text-green-500 mb-4">🎯</div>
+    <div className="flex flex-col border-b-2 items-center text-center p-6  rounded-lg shadow-md">
+      <div className="text-4xl text-secoundColor mb-4">
+        <FaBullseye />
+      </div>
+      <div className="w-12 mb-4"></div>
       <h3 className="text-xl font-bold mb-2">{t("Tailored Solutions")}</h3>
-      <p className="text-gray-600">
+      <p className="text-gray-200">
         {t("Custom software to align perfectly with your goals.")}
       </p>
     </div>
+
     {/* Card 3 */}
-    <div className="flex flex-col items-center text-center p-6 border border-mainColor bg-gray-50 rounded-lg shadow-md">
-      <div className="text-4xl text-purple-500 mb-4">💡</div>
+    <div className="flex flex-col border-b-2 items-center text-center p-6 rounded-lg shadow-md">
+      <div className="text-4xl text-secoundColor mb-4">
+        <FaLightbulb />
+      </div>
+      <div className="w-12  mb-4"></div>
       <h3 className="text-xl font-bold mb-2">{t("Innovative Technologies")}</h3>
-      <p className="text-gray-600">
+      <p className="text-gray-100">
         {t(
           "Empowering businesses with cutting-edge solutions to stay ahead in a digital-first world."
         )}
       </p>
     </div>
+
     {/* Card 4 */}
-    <div className="flex flex-col items-center text-center p-6 border border-mainColor bg-gray-50 rounded-lg shadow-md">
-      <div className="text-4xl text-red-500 mb-4">🌟</div>
+    <div className="flex flex-col border-b-2 items-center text-center p-6  rounded-lg shadow-md">
+      <div className="text-4xl text-secoundColor mb-4">
+        <FaStar />
+      </div>
+      <div className="w-12  mb-4"></div>
       <h3 className="text-xl font-bold mb-2">{t("Comprehensive Approach")}</h3>
-      <p className="text-gray-600">
+      <p className="text-gray-100">
         {t("Beyond technology, we drive business growth.")}
       </p>
     </div>
+
     {/* Card 5 */}
-    <div className="flex flex-col items-center text-center p-6 border border-mainColor bg-gray-50 rounded-lg shadow-md">
-      <div className="text-4xl text-yellow-500 mb-4">🤝</div>
+    <div className="flex flex-col border-b-2 items-center text-center p-6 rounded-lg shadow-md">
+      <div className="text-4xl text-secoundColor mb-4">
+        <FaHandshake />
+      </div>
+      <div className="w-12  mb-4"></div>
       <h3 className="text-xl font-bold mb-2">{t("Strong Partnerships")}</h3>
-      <p className="text-gray-600">
+      <p className="text-gray-100">
         {t("Working closely to maximize efficiency and impact.")}
       </p>
     </div>
+
     {/* Card 6 */}
-    <div className="flex flex-col items-center text-center p-6 border border-mainColor bg-gray-50 rounded-lg shadow-md">
-      <div className="text-4xl text-indigo-500 mb-4">🚀</div>
+    <div className="flex flex-col border-b-2 items-center text-center p-6  rounded-lg shadow-md">
+      <div className="text-4xl text-secoundColor mb-4">
+        <FaRocket />
+      </div>
+      <div className="w-12  mb-4"></div>
       <h3 className="text-xl font-bold mb-2">{t("Your Vision, Our Mission")}</h3>
-      <p className="text-gray-600">
+      <p className="text-gray-100">
         {t(
           "Turning your ideas into impactful digital experiences with precision and expertise."
         )}
@@ -549,15 +567,19 @@ const PublicPage = () => {
   </div>
 </section>
 
+ {/* Plan 4 */}
+ <Plan id='plan'/>
+
 {/* section video */}
+
 <section className="max-w-screen-xl mx-auto py-12 px-6 flex flex-col items-center space-y-6">
   {/* Heading */}
-  <h2 className="text-3xl font-bold text-center">
+  <h2 className="text-3xl font-bold text-center text-primary">
     {t("Learn About Our Site in Minutes")}
   </h2>
 
   {/* Paragraph */}
-  <p className="text-lg text-center max-w-2xl">
+  <p className="text-lg text-center max-w-2xl text-secondary">
     {t(
       "A short video explaining how you can benefit from our programming services. Enjoy a quick tour of our site's features."
     )}
@@ -566,7 +588,7 @@ const PublicPage = () => {
   {/* Video */}
   <div className="w-full max-w-4xl aspect-video">
     <iframe
-      src="https://www.youtube.com/embed/example-video-id" // Replace with your video URL
+      src="https://www.youtube.com/embed/example-video-id?autoplay=1" // Replace with your video URL and enable autoplay
       title="Site Tour Video"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       allowFullScreen
@@ -575,21 +597,65 @@ const PublicPage = () => {
   </div>
 </section>
 
- {/* Plan 4 */}
-<Plan id='plan'/>
 
-
- {/* Features 6 */}
+{/* Features 6 */}
 
 <Features id={'features'}/>
- 
 {/* section CustomerReviewsSlider  */}
 <CustomerReviewsSlider/>
 {/* section LearnMoreSection */}
 <LearnMoreSection/>
+
 {/* section Contact us  */}
 <ContactSection id={'contactUs'}/>
 <Footer/>
+      {/* Sections 3 */}
+
+      
+      {/* <section  className="bg-mainColor text-secoundColor py-20 border-b"> */}
+      {/* <div className="text-center mb-16">
+        <h2 className="text-4xl font-semibold">{t("What Makes Us Different?")}</h2>
+        <p className="text-xl mt-4">{t("Technology experts, committed to providing you the best.")}</p>
+      </div> */}
+
+      {/* <div className="flex flex-wrap justify-center gap-10"> */}
+       
+        {/* <div className="bg-secoundColor text-mainColor flex justify-center items-center flex-col p-6 rounded-lg shadow-lg w-64 md:w-80">
+          <FaLightbulb className="text-7xl text-mainColor mb-6" />
+          <p className="text-center text-lg font-medium">{t("We bring your digital visions to life.")} </p>
+        </div> */}
+
+      
+        {/* <div className="bg-secoundColor text-mainColor flex justify-center items-center flex-col p-6 rounded-lg shadow-lg w-64 md:w-80">
+          <FaCheckCircle className="text-7xl text-mainColor mb-6" />
+          <p className="text-center text-lg font-medium">{t("Our software is built to the highest standards.")}</p>
+        </div> */}
+
+      
+        {/* <div className="bg-secoundColor text-mainColor flex justify-center items-center flex-col p-6 rounded-lg shadow-lg w-64 md:w-80">
+          <FaHeadset className="text-7xl text-mainColor mb-6" />
+          <p className="text-center text-lg font-medium">{t("Our support team is available around the clock.")}</p>
+        </div> */}
+      {/* </div>
+    </section> */}
+
+
+  
+
+
+
+ 
+
+
+
+
+
+
+ 
+ 
+
+
+
 
 
 
