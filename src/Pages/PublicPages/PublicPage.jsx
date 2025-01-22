@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import logo from "../../../public/Images/logo white.png";
-import home from "../../../src/assets/Images/assets/img/home2.png";
+import HomeSec from "../../../src/assets/Images/assets/img/HomeSec.svg";
+import image from "../../../src/assets/Images/assets/img/imgHo.svg";
 import pc from "../../../src/assets/Images/assets/img/pc.png";
 import m1 from "../../../src/assets/Images/assets/img/1.jpg";
 import m2 from "../../../src/assets/Images/assets/img/2.jpg";
@@ -269,15 +270,15 @@ const PublicPage = () => {
 
 
 
-<section id="section1" className="h-screen flex flex-col-reverse lg:flex-row items-center  bg-mainColor text-secoundColor w-fit">
-  <div className="w-full lg:w-1/1 flex flex-col items-start text-center lg:text-left p-4">
+<section id="section1" className="h-screen flex flex-col-reverse pt-10 lg:flex-row items-center  bg-mainColor text-secoundColor w-fit">
+  <div className="w-[90%] lg:w-1/1 flex flex-col items-start text-center lg:text-left  p-4">
     {/* Heading */}
-    <h1 className="font-semibold text-xl sm:text-2xl lg:text-4xl text-secoundColor mb-4">
+    <h1 className="font-semibold text-2xl sm:text-3xl lg:text-6xl text-secoundColor mb-4">
       {t("Design Your Perfect Website in One Click!")}
     </h1>
 
     {/* Paragraph */}
-    <p className="font-normal text-sm sm:text-base lg:text-lg text-secoundColor mb-6 lg:mb-8 mt-4 sm:mt-6">
+    <p className="font-normal text-2sm sm:text-base lg:text-lg text-secoundColor mb-6 lg:mb-8 mt-4 sm:mt-6">
       {t(
         "Enjoy a fast and easy process to create a stunning website that reflects your identity, with our flexible packages ensuring you a unique experience in no time. Choose what suits you and start your digital journey with confidence!"
       )}
@@ -308,13 +309,14 @@ const PublicPage = () => {
     </div>
   </div>
 
-  <div className="w-full  mt-8 h-full lg:mt-0 items-end flex justify-end lg:justify-end  ">
+  <div className="relative w-full h-full lg:mt-5 mt-5 flex justify-center lg:justify-end items-end">
   <img
-    src={home}
+    src={HomeSec}
     alt="Home"
-    className="w-full rounded-lg"
+    className="w-full h-full mt-14 sm:mt-6 rounded-lg absolute bottom-[-50px]  lg:bottom-[-130px] right-0 object-cover"
   />
 </div>
+
 
 
 
@@ -355,8 +357,8 @@ const PublicPage = () => {
         </ul>
       </div>
 
-      <div className="w-full md:w-1/2 h-[350px] lg:h-[400px] flex justify-center md:justify-end relative">
-        <img src={pc} alt="Digital Future" className="w-full h-full object-cover rounded-lg opacity-80" />
+      <div className="w-full md:w-1/2 h-[350px] lg:h-[400px] flex justify-center md:justify-end ">
+        <img src={image} alt="Digital Future" className="w-full h-full object-cover rounded-lg " />
       </div>
     </div>
   </div>
