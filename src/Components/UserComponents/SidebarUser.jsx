@@ -55,7 +55,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import StoreLogo from '../../../public/Images/logo white.png';
 import MenuSideUser from "../../Components/UserComponents/MenuSideUser";
-
+import Logo from '../../assets/Images/WhiteLogo'
 const SidebarUser = ({ isOpen, setIsSidebarOpen }) => {
   const { i18n } = useTranslation();  // Initialize i18n here
 
@@ -75,8 +75,8 @@ const SidebarUser = ({ isOpen, setIsSidebarOpen }) => {
      } lg:translate-x-0`}
    >
       {/* Sidebar content */}
-      <div className="w-full lg:mt-0 sm:mt-6 flex text-white items-center justify-center border-b-2 py-6 px-4 text-xl font-semibold">
-        <img src={StoreLogo} alt="wegoStore" />
+      <div className="w-[60%] lg:mt-0 sm:mt-6 flex text-white items-center justify-center border-b-2 py-6 px-4 text-xl font-semibold">
+        <Logo/>
       </div>
       <MenuSideUser setIsSidebarOpen={setIsSidebarOpen} />
     </aside>

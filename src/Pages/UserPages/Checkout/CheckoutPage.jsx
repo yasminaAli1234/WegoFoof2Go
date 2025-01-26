@@ -335,8 +335,8 @@ const CheckoutPage = () => {
       </h3>
 
       {/* Display total price */}
-      <div className="flex justify-between text-lg text-gray-700 mb-3">
-        <span className="font-medium">{t("Total Price")}:</span>
+      <div className="flex justify-between text-lg text-mainColor mb-3">
+        <span className="font-medium text-mainColor">{t("Total Price")}:</span>
         <span className="font-semibold text-mainColor">{convertNumberToArabic(totalPrice,i18n.language)} {t("EGP")}</span>
       </div>
 

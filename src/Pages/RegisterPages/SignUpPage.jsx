@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useAuth } from '../../Context/Auth';
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { toast } from 'react-toastify';
-
+import Logo from '../../assets/Images/LoginBackground'
 const SignUpPage =()=>{
     // console.log('auth.user', auth.user)
     const [show, setShow] = useState(false);
@@ -229,7 +229,7 @@ const handleSubmit = async (event) => {
             <div className="w-full flex justify-center">
                 <form className="w-full sm:w-10/12 flex flex-col items-start justify-center gap-5" onSubmit={handleSubmit}>
                 <div className='flex w-full flex-col text-secoundColor font-bold gap-8 text-4xl lg:text-5xl'>
-                    <h1>Sign up to WegoStores</h1>
+                    <h1>Sign up to Food2Go</h1>
                     <h1 className='text-3xl lg:text-4xl'>Welcome</h1>
                 </div>
 
@@ -386,11 +386,8 @@ const handleSubmit = async (event) => {
 
                 </form>
             </div>
-            <div className="w-full flex justify-center">
-                <img
-                src={ImageLogo}
-                alt="LoginImage"
-                />              
+            <div className="w-[50%] flex justify-center">
+              <Logo/>            
             </div>
         </div>
         </>

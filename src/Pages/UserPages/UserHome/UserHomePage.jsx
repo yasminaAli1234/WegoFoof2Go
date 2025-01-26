@@ -116,7 +116,7 @@ const UserHomePage = () => {
             }
 </div>
     {/* Header */}
-    <header className="flex flex-col sm:flex-row sm:justify-between sm:items-center bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-6 rounded-xl shadow-lg mb-8">
+    <header className="flex flex-col sm:flex-row sm:justify-between sm:items-center bg-gradient-to-r from-mainColor to-mainColor text-white p-6 rounded-xl shadow-lg mb-8">
       <div>
         <h1 className="text-3xl font-bold mb-2">{t("Welcome !")}</h1>
         <p className="text-gray-200 text-sm">
@@ -125,7 +125,7 @@ const UserHomePage = () => {
       </div>
       <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-2 sm:space-y-0 mt-4 sm:mt-0">
         <Link to="store">
-          <button className="bg-white text-blue-600 px-5 py-3 rounded-lg shadow-md hover:shadow-lg transition hover:bg-gray-200 text-sm font-semibold">
+          <button className="bg-white text-mainColor px-5 py-3 rounded-lg shadow-md hover:shadow-lg transition hover:bg-gray-200 text-sm font-semibold">
             {t("Create Store")}
           </button>
         </Link>
@@ -167,7 +167,7 @@ const UserHomePage = () => {
           {t("Expire Date")}: <strong className="text-gray-800">{userData.expire_date ||'0'}</strong>
         </p>
 
-        <Link to="subscription" className="mt-auto text-center bg-blue-800 text-white px-4 py-3 rounded-lg hover:bg-blue-900 text-xl transition font-semibold">
+        <Link to="subscription" className="mt-auto text-center bg-mainColor text-white px-4 py-3 rounded-lg  text-xl transition font-semibold">
           <button>
             {t("Upgrade Plan")}
           </button>
@@ -192,7 +192,7 @@ const UserHomePage = () => {
             <p className="text-gray-600 text-xl">{t("No Stores Available")}</p>
           )}
         </ul>
-        <Link to="store" className="mt-auto text-center bg-blue-800 text-white px-4 py-3 rounded-lg hover:bg-blue-900 text-xl transition font-semibold">
+        <Link to="store" className="mt-auto text-center bg-mainColor text-white px-4 py-3 rounded-lg  text-xl transition font-semibold">
           <button>
           {t("Create New Store")}
           </button>
@@ -215,7 +215,7 @@ const UserHomePage = () => {
             <p className="text-gray-600 text-sm">{t("No Domains Available")}</p>
           )}
         </div>
-        <Link to="buy_domain" className="mt-auto text-center bg-blue-800 text-white px-4 py-3 rounded-lg hover:bg-blue-900 text-xl transition font-semibold">
+        <Link to="buy_domain" className="mt-auto text-center bg-mainColor text-white px-4 py-3 rounded-lg  text-xl transition font-semibold">
           <button>
           {t("Request New Domain")}
           </button>
@@ -238,7 +238,7 @@ const UserHomePage = () => {
             <p className="text-gray-600 text-xl">{t("No Extra Products Available")}</p>
           )}
         </div>
-        <Link to="extra" className="mt-auto text-center bg-blue-800 text-white px-4 py-3 rounded-lg hover:bg-blue-900 text-xl transition font-semibold">
+        <Link to="extra" className="mt-auto text-center bg-mainColor text-white px-4 py-3 rounded-lg  text-xl transition font-semibold">
           <button>
           {t("Request New Extra Product")}
           </button>
@@ -252,14 +252,14 @@ const UserHomePage = () => {
         </h2>
         <ul className="space-y-3 mb-6">
           {tutorialGroups.map((tutorial, index) => (
-            <Link to="tutorial" className="text-blue-500 text-xl font-medium hover:underline">
+            <Link to="tutorial" className="text-mainColor text-xl font-medium hover:underline">
             <li key={index}>
               {tutorial.name}
             </li>
             </Link>
           ))}
         </ul>
-        <Link to="tutorial" className="mt-auto text-center bg-blue-800 text-white px-4 py-3 rounded-lg hover:bg-blue-900 text-xl transition font-semibold">
+        <Link to="tutorial" className="mt-auto text-center bg-mainColor text-white px-4 py-3 rounded-lg  text-xl transition font-semibold">
           <button>
           {t("Explore Tutorials")}
           </button>

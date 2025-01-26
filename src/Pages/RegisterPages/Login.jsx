@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useAuth } from '../../Context/Auth';
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { toast } from 'react-toastify';
-
+import Logo from '../../assets/Images/LoginBackground'
 const LoginUser =()=>{
     const navigate = useNavigate();
     const auth = useAuth();
@@ -86,7 +86,7 @@ const LoginUser =()=>{
                 <div className="w-full flex justify-center">
                         <form className="w-full sm:w-10/12 flex flex-col items-start justify-center gap-10 mt-10" onSubmit={handleSubmit}>
                                 <div className='flex w-full flex flex-col text-secoundColor font-bold gap-8 text-4xl lg:text-5xl'>
-                                   <h1>Log In To  WegoStores</h1>
+                                   <h1>Log In To  Food2Go</h1>
                                    <h1 className='text-3xl lg:text-4xl'>Welcome Back</h1>
                                 </div>
                                 <div className="relative w-full">
@@ -150,11 +150,8 @@ const LoginUser =()=>{
                             </div>      
                         </form>
                 </div>
-                <div className="w-full flex justify-center">
-                    <img
-                    src={ImageLogo}
-                    alt="LoginImage"
-                    />              
+                <div className="w-[50%] flex justify-center">
+                   <Logo/>             
                 </div>
             </div>
         </>

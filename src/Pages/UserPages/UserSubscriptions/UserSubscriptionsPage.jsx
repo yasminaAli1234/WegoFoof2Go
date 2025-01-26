@@ -394,7 +394,7 @@ const UserSubscriptionsPage = () => {
                                         <button
                                             onClick={() => handleAddToCart(plan, event)}
                                             className={`w-full py-3 font-semibold rounded-lg transition-all duration-300 transform 
-                                            ${selectedPlanId === plan.id ? 'bg-red-600 text-white hover:bg-red-700' : 'bg-mainColor text-white hover:bg-blue-700'} 
+                                            ${selectedPlanId === plan.id ? 'bg-red-600 text-white hover:bg-red-700' : 'bg-mainColor text-white hover:bg-mainColor'} 
                                             hover:scale-105 shadow-md hover:shadow-lg`}
                                         >
                                             {t("Add to Cart")}

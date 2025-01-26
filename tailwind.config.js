@@ -13,9 +13,9 @@ export default {
         'custom': '0 10px 15px rgba(0, 0, 0, 0.8)', // Custom shadow
       },
       colors: {
-        mainColor: "#1A237E",
-        secoundColor: "#FFFFFF",
-        thirdColor: "#727272",
+        mainColor: "#9E090F",
+        secoundColor: "#eee",
+        thirdColor: "#6B6A6A",
         // AddText:"#5E5E5E",
       },
       backgroundColor: {

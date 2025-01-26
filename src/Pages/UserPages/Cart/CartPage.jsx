@@ -288,15 +288,15 @@ if (!data) {
                     </h3>
                   </div>
                   <div className="flex flex-col">
-                    <p className="text-base text-[#1A237E]">
+                    <p className="text-base text-mainColor">
                       <span className="font-semibold">{t("One-time setup fees")} : </span> {convertNumberToArabic(item.setup_fees, i18n.language) || 0} {t("EGP")}
                     </p>
                     {item.welcome_offer_price ? (
-                      <p className="text-base text-[#1A237E] font-semibold">
+                      <p className="text-base text-mainColor font-semibold">
                         <span>{t("subscription for")} {getBillingPeriodLabel(item.billingPeriod)}:</span> {convertNumberToArabic(item.welcome_offer_price) || 0} {t("EGP")}
                       </p>
                     ) : (
-                      <p className="text-base text-[#1A237E] font-semibold">
+                      <p className="text-base text-mainColor font-semibold">
                         <span>{t("subscription for")} {getBillingPeriodLabel(item.billingPeriod)}:</span> {convertNumberToArabic(item.price, i18n.language) || 0} {t("EGP")}
                       </p>
                     )}
@@ -378,7 +378,7 @@ if (!data) {
               state={{ cartItems, totalPrice, discountPrice , promoDiscount }}
               className="flex-1"
             >
-              <button className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg font-semibold text-base sm:text-lg transition">
+              <button className="w-full bg-mainColor  text-white py-3 rounded-lg font-semibold text-base sm:text-lg transition">
                 {t("Proceed to Checkout")}
               </button>
             </Link>
@@ -389,10 +389,10 @@ if (!data) {
     
       {/* Right Section */}
     <div className="w-full lg:w-1/3 bg-white shadow-md rounded-lg p-4">
-      <h2 className="text-2xl font-semibold text-[#1A237E]">{t("Order Summary")}</h2>
+      <h2 className="text-2xl font-semibold text-mainColor">{t("Order Summary")}</h2>
       <div className="mt-6">
-        <p className="text-xl font-semibold text-[#1A237E]">
-          {t("Total Price")} : <span className="font-semibold text-[#1A237E]">{convertNumberToArabic(totalPrice, i18n.language)} {t("EGP")}</span>
+        <p className="text-xl font-semibold text-mainColor">
+          {t("Total Price")} : <span className="font-semibold text-mainColor">{convertNumberToArabic(totalPrice, i18n.language)} {t("EGP")}</span>
         </p>
 
         <p className="text-xl font-semibold text-red-500">
@@ -410,11 +410,11 @@ if (!data) {
           value={promoCode}
           onChange={(e) => setPromoCode(e.target.value)}
           placeholder={t("Enter promo code")}
-          className="border-2 border-[#1A237E] p-3 w-full rounded-md text-base focus:ring-2 focus:ring-[#1A237E] focus:outline-none"
+          className="border-2 border-mainColor p-3 w-full rounded-md text-base focus:ring-2 focus:ring-mainColor focus:outline-none"
         />
         <button
           onClick={handleApplyPromo}
-          className="mt-4 bg-[#1A237E] text-white py-3 rounded-md w-full hover:bg-[#0D47A1] transition duration-300"
+          className="mt-4 bg-mainColor text-white py-3 rounded-md w-full  transition duration-300"
         >
           {t("Apply Promo Code")}
         </button>

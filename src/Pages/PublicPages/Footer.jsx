@@ -5,6 +5,7 @@ import Vodafone from '../../assets/Images/assets/img/Vodafone.png'
 import visa from '../../assets/Images/assets/img/visa.png'
 import instapay from '../../assets/Images/assets/img/instapay.png'
 import mastercard  from '../../assets/Images/assets/img/mastercard.png'
+import Logo from '../../assets/Images/WhiteLogo'
 const Footer = () => {
   const {t} = useTranslation()
     return (
@@ -13,12 +14,8 @@ const Footer = () => {
       <div className="">
       <div className="max-w-screen-xl  flex flex-col md:flex-row justify-between items-start md:items-center space-y-6 md:space-y-0">
         {/* Left Section: Logo */}
-        <div className="flex items-center justify-start gap-6 w-full md:w-2/5">
-          <img
-            src={logo} // Replace with your logo image
-            alt="Logo"
-            className="w-3/4 md:w-auto" // Adjust logo size for smaller screens
-          />
+        <div className="flex items-center justify-start gap-6 w-[20%] ">
+        <Logo/>
         </div>
     
         {/* Middle Section: Contact Info */}

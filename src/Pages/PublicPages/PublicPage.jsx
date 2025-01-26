@@ -13,6 +13,7 @@ import m8 from "../../../src/assets/Images/assets/img/8.jpg";
 import m9 from "../../../src/assets/Images/assets/img/9.jpg";
 import m10 from "../../../src/assets/Images/assets/img/10.jpg";
 import m11 from "../../../src/assets/Images/assets/img/11.jpg";
+import Logo from '../../assets/Images/WhiteLogo'
 import { FaPhoneAlt, FaBullseye, FaStar, FaHandshake, FaRocket } from "react-icons/fa";
 import { Button } from "../../Components/Button";
 import 'aos/dist/aos.css'; // AOS styles
@@ -126,11 +127,9 @@ const PublicPage = () => {
   }`}
 >
   <div className="w-2/6 lg:w-1/4 mt-4 flex lg:flex-row text-secoundColor  items-start justify-center py-4 px-4 text-xl font-semibold">
-    <img
-      src={logo}
-      alt="wegoStore"
-      className="max-w-full sm:max-w-[150px] md:max-w-[150px] h-auto object-contain"
-    />
+   <div className="w-[10%]">
+   <Logo/>
+   </div>
     <div className="lg:flex w-4/12 items-center py-1 gap-5 justify-center text-xl font-medium mr-3 text-secoundColor hover:cursor-pointer transition-all duration-300">
       <div className="relative" ref={dropdownRef}>
         <button
@@ -168,32 +167,32 @@ const PublicPage = () => {
   {/* Navbar Links */}
   <ul className="hidden items-center lg:flex w-2/4 justify-center space-x-8 py-4 gap-3 relative">
     <li className="relative" onClick={() => handleClick('Home')}>
-      <a href="#section1" className="text-2xl hover:text-red-500 transition-colors">{t("Home")}</a>
-      <span className={`absolute bottom-[-10px] left-0 h-[3px] bg-mainColor transition-all duration-300 ${
+      <a href="#section1" className="text-2xl transition-colors">{t("Home")}</a>
+      <span className={`absolute bottom-[-10px] left-0 h-[3px] bg-white transition-all duration-300 ${
         activeLink === 'Home' ? 'w-[70%]' : 'w-0'
       }`}></span>
     </li>
     <li className="relative" onClick={() => handleClick('About Us')}>
       <a href="#section2" className="text-2xl transition-colors">{t("About Us")}</a>
-      <span className={`absolute bottom-[-10px] left-0 h-[3px] bg-mainColor transition-all duration-300 ${
+      <span className={`absolute bottom-[-10px] left-0 h-[3px] bg-white transition-all duration-300 ${
         activeLink === 'About Us' ? 'w-[70%]' : 'w-0'
       }`}></span>
     </li>
     <li className="relative" onClick={() => handleClick('Our features')}>
       <a href="#features" className="text-2xl transition-colors">{t("Our Features")}</a>
-      <span className={`absolute bottom-[-10px] left-0 h-[3px] bg-mainColor transition-all duration-300 ${
+      <span className={`absolute bottom-[-10px] left-0 h-[3px] bg-white transition-all duration-300 ${
         activeLink === 'Our features' ? 'w-[70%]' : 'w-0'
       }`}></span>
     </li>
     <li className="relative" onClick={() => handleClick('Plan')}>
       <a href="#plan" className="text-2xl transition-colors">{t("Plan")}</a>
-      <span className={`absolute bottom-[-10px] left-0 h-[3px] bg-mainColor transition-all duration-300 ${
+      <span className={`absolute bottom-[-10px] left-0 h-[3px] bg-white transition-all duration-300 ${
         activeLink === 'Plan' ? 'w-[70%]' : 'w-0'
       }`}></span>
     </li>
     <li className="relative" onClick={() => handleClick('Contact Us')}>
       <a href="#contactUs" className="text-2xl transition-colors">{t("Contact Us")}</a>
-      <span className={`absolute bottom-[-10px] left-0 h-[3px] bg-mainColor transition-all duration-300 ${
+      <span className={`absolute bottom-[-10px] left-0 h-[3px] bg-white transition-all duration-300 ${
         activeLink === 'Contact Us' ? 'w-[70%]' : 'w-0'
       }`}></span>
     </li>

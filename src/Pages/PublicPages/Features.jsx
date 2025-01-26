@@ -45,7 +45,7 @@ import {
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-const Features = () => {
+const Features = ({id}) => {
   const featuresData = [
     { icon: <I1 />, title: "Log in via social media" },
     { icon: <I2 />, title: "Share on social media" },
@@ -84,7 +84,7 @@ const Features = () => {
   }, []);
 
   return (
-    <section className="features px-2 py-5 mt-4 bg-secoundColor">
+    <section id={id} className="features px-2 py-5 mt-4 bg-secoundColor">
       {/* Section Title */}
       <h2 className="text-3xl font-bold text-center mb-4 mt-6 text-mainColor">{t("Our Features")}</h2>
       <p className="text-center text-xl text-mainColor mb-8">

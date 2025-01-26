@@ -233,6 +233,7 @@ const UserPage = () => {
                                                                 className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-green-500 text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden"
                                                         >
                                                                 <CheckBox 
+                                                                className="text-mainColor" 
                                                                 checked={user?.status === 1} 
                                                                 handleClick={(e) => handleStatusChange(e, user.id)} 
                                                                 />

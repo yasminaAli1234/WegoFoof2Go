@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import logo from "../../../public/Images/LogoImage.png";
+import Logo from '../../assets/Images/WhiteLogo'
 const ContactSection = ({id}) => {
   const {t} = useTranslation()
     return (
@@ -17,7 +18,7 @@ const ContactSection = ({id}) => {
       </div>
     
       {/* Form and Image Container */}
-      <div className="flex flex-col-reverse lg:flex-row justify-between items-center max-w-6xl mx-auto">
+      <div className="flex flex-col-reverse lg:flex-row justify-between items-center max-w-6xl gap-6 mx-auto">
         {/* Left Section: Form */}
         <div className="w-full lg:w-1/2 space-y-4">
           <form className="space-y-6 p-8 rounded-lg shadow-md bg-mainColor">
@@ -77,11 +78,7 @@ const ContactSection = ({id}) => {
     
         {/* Right Section: Image */}
         <div className="w-full lg:w-1/2 flex justify-center">
-          <img
-            src={logo} // Replace with your image source
-            alt="Contact Image"
-            className="w-[400px] h-[400px] rounded-full object-cover"
-          />
+         <Logo/>
         </div>
       </div>
     </section>
