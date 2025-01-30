@@ -161,10 +161,10 @@ const UserHomePage = () => {
           </strong>
         </p>
         <p className="text-gray-600 mb-2 text-xl">
-          {t("Start Date")}: <strong className="text-gray-800">{userData.start_date ||'0'}</strong>
+          {t("start date")}: <strong className="text-gray-800">{userData.start_date ||'0'}</strong>
         </p>
         <p className="text-gray-600 mb-2 text-xl">
-          {t("Expire Date")}: <strong className="text-gray-800">{userData.expire_date ||'0'}</strong>
+          {t("expire date")}: <strong className="text-gray-800">{userData.expire_date ||'0'}</strong>
         </p>
 
         <Link to="subscription" className="mt-auto text-center bg-mainColor text-white px-4 py-3 rounded-lg  text-xl transition font-semibold">

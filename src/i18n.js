@@ -4,6 +4,9 @@ import { initReactI18next } from 'react-i18next';
 const resources = {
   en: {
     translation: {
+      "start date":"Start Date",
+      "expire date":"Expire Date",
+      "Plan Duration":"Plan Duration",
       "months":"months",
       "monthly":"monthly",
       'Design Your Perfect Website in One Click!':'Design Your Perfect Website in One Click!',
@@ -368,6 +371,9 @@ const resources = {
   },
   ar: {
     translation: {
+      "start date":"تاريخ البدء",
+      "expire date":"تاريخ الانتهاء",
+      "Plan Duration":"مدة الخطة",
       "subscription for":"اشتراك لمدة",
       "discounted subscription for":"خصم الاشتراك لمدة",
       "Explore Our Demo Site!": "استكشف موقع العرض الخاص بنا!",
