@@ -280,10 +280,10 @@ if (!data) {
               >
                 <div className="flex md:flex-row sm:flex-col gap-5 justify-between items-center">
                   <div className="flex flex-col">
-                    <h3 className="text-lg font-medium text-[#1A237E]">
+                    <h3 className="text-lg font-medium text-[#9E090F]">
                       {t("Product Type")} : {item.type}
                     </h3>
-                    <h3 className="text-lg font-medium text-[#1A237E]">
+                    <h3 className="text-lg font-medium text-[#9E090F]">
                       {t("Product Name")} : {item.name}
                     </h3>
                   </div>
