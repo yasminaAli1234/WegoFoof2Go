@@ -63,6 +63,7 @@ import SubscriptionLayout from "./Layouts/AdminLayouts/SubscriptionLayout.jsx";
 import { CartPage } from "./Pages/AllPages.js";
 import EmailVerification from "./Pages/RegisterPages/EmailVerification.jsx";
 import FeaturesPage from "./Pages/PublicPages/OurFeatureData.jsx";
+import TermsAndCondition from "./TermsAndCondition.jsx";
 /* User Dashboard */
 const AppLayoutUser = () => (
   <>
@@ -151,7 +152,7 @@ export const router = createBrowserRouter([
 
     //Login user page
     {
-      path: "login",
+      path: "/",
       element: <Login />,
     },
 {
@@ -171,9 +172,10 @@ export const router = createBrowserRouter([
     },
 
     {
-        path: "/",
-        element: <PublicLayout />,
+      path: "terms_condition",
+      element: <TermsAndCondition />,
     },
+   
 
     /* Admin Routes*/
     {

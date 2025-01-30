@@ -200,7 +200,7 @@ const PublicPage = () => {
 
   {/* Login/SignUp buttons on Desktop */}
   <div className="hidden lg:flex items-center gap-4 py-4">
-    <Link to="/login">
+    <Link to="/">
       <button className="text-xl  text-white font-medium w-32 h-12 flex items-center justify-center border rounded-xl hover:bg-secoundColor hover:text-mainColor">
         {t("Login")}
       </button>
@@ -251,7 +251,7 @@ const PublicPage = () => {
 
     {/* Login / Sign Up Buttons inside Mobile Menu */}
     <div className="flex flex-col items-start mx-5 py-2 gap-5 w-4/6 lg:w-1/4">
-      <Link to="/login">
+      <Link to="/">
         <button className="text-xl font-medium w-32 h-12 flex items-center justify-center border rounded-xl hover:bg-secoundColor hover:text-mainColor">
           {t("Login")}
         </button>

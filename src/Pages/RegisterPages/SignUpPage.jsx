@@ -361,7 +361,7 @@ const handleSubmit = async (event) => {
 
                 <div className='flex flex-col lg:flex-row gap-3 text-2xl font-medium'>
                     <p>I have an account?</p>
-                    <Link to="/login" className='underline'>
+                    <Link to="/" className='underline'>
                     Log In
                     </Link>
                 </div>
@@ -373,14 +373,14 @@ const handleSubmit = async (event) => {
                 />
                 <label htmlFor="termsCheckbox" className="text-white">
                     I agree to the{" "}
-                    <a
-                    href="https://example.com/terms-and-conditions"
+                    <Link
+                    to="/terms_condition"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-blue-300 underline hover:text-blue-400"
                     >
                     Terms and Conditions
-                    </a>.
+                    </Link>.
                 </label>
                 </div>
 

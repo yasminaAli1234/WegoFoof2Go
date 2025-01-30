@@ -6,9 +6,9 @@ function App() {
 
   return (
     <>
-      <div>
+      {/* <div>
         <PublicPage/>
-      </div>
+      </div> */}
     </>
   )
 }

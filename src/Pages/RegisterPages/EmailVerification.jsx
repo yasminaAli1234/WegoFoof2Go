@@ -437,7 +437,7 @@ const EmailVerification = () => {
 
           <div className="flex flex-col lg:flex-row gap-3 text-2xl font-medium">
             <p>I have an account?</p>
-            <Link to="/login" className="underline hover:text-gray-300">
+            <Link to="/" className="underline hover:text-gray-300">
               Log In
             </Link>
           </div>
