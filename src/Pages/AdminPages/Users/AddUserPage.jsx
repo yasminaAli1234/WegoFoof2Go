@@ -62,28 +62,6 @@ const AddUserPage = () => {
             return;
         }
     
-        // Translate to Arabic
-        // if (!name_ar) {
-        //     auth.toastError('يرجى إدخال الاسم.');
-        //     return;
-        // }
-        // if (!phone_ar) {
-        //     auth.toastError('يرجى إدخال رقم الهاتف.');
-        //     return;
-        // }
-        // if (!email_ar) {
-        //     auth.toastError('يرجى إدخال البريد الإلكتروني.');
-        //     return;
-        // }
-        // if (!password_ar) {
-        //     auth.toastError('يرجى إدخال كلمة المرور.');
-        //     return;
-        // }
-        // if (!activeUser_ar) {
-        //     auth.toastError('يرجى إدخال الحالة.');
-        //     return;
-        // }
-    
         // Prepare FormData
         const formData = new FormData();
         formData.append('name', name);
@@ -92,22 +70,6 @@ const AddUserPage = () => {
         formData.append('password', password);
         formData.append('status', activeUser);
     
-        // // Create translations array
-        // const translations = [
-        //     { key: 'name', value: name_ar, locale: 'ar' },
-        //     { key: 'phone', value: phone_ar, locale: 'ar' },
-        //     { key: 'email', value: email, locale: 'ar' },
-        //     { key: 'password', value: password, locale: 'ar' },
-        //     // { key: 'status', value: activeUser_ar, locale: 'ar' },
-        // ];
-    
-        // translations.forEach((translation, index) => {
-        //     Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
-        //         formData.append(`translations[${index}][${fieldKey}]`, fieldValue);
-        //     });
-        // });
-    
-        // Set loading state
         setIsLoading(true);
     
         try {
@@ -149,16 +111,11 @@ const AddUserPage = () => {
             setIsLoading(false);
         }
     };
-    
-    // const handleChangeLanguage = () => {
-    //     const newLanguage = language === 'en' ? 'ar' : 'en'; 
-    //     setLanguage(newLanguage); 
-    // };
 
     return (
        <div className="">
 
-<form onSubmit={handleSubmitAdd} className="w-full flex flex-col items-center justify-center gap-y-10 m-5">
+<form onSubmit={handleSubmitAdd} className="w-full flex flex-col items-center justify-center gap-y-10">
              <div className="w-full flex flex-wrap items-center justify-start gap-10">
                       <div className="lg:w-[30%] sm:w-full">
                         <InputCustom

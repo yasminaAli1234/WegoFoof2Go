@@ -86,27 +86,9 @@ const EditUserPage =()=>{
             const formData = new FormData();
             formData.append('name', name);
             formData.append('phone', phone);
-            formData.append('email', email); // Append the file
-            formData.append('password', password); // Append the file
-            formData.append('status', activeUser); // Append the file
-            // append info int array translate
-            // Create translations array
-
-
-        // const translations = [
-        //     { key: 'name', value: name_ar, locale: 'ar' },
-        //     { key: 'phone', value: phone_ar, locale: 'ar' },
-        //     { key: 'email', value: email_ar, locale: 'ar' },
-        //     { key: 'password', value: password_ar, locale: 'ar' },
-        //     { key: 'status', value: activeUser_ar, locale: 'ar' },
-        // ];
-    
-        // translations.forEach((translation, index) => {
-        //     Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
-        //         formData.append(`translations[${index}][${fieldKey}]`, fieldValue);
-        //     });
-        // });
-            
+            formData.append('email', email); 
+            formData.append('password', password);
+            formData.append('status', activeUser);
 
             const response = await axios.post(
                 ` https://login.wegostores.com/admin/v1/users/update/${userId}`,
@@ -130,7 +112,7 @@ const EditUserPage =()=>{
                 const errors = error.response?.data?.error;
                 if (errors) {
                     if (errors.email?.includes('The email has already been taken.')) {
-                        auth.toastError(`${language === 'en' ? 'The email has already been taken.' : 'تم أخذ البريد الإلكتروني بالفعل.'}`);
+                        auth.toastError('The email has already been taken.');
                     } else if (errors.phone?.includes('The phone has already been taken.')) {
                         auth.toastError(`${language === 'en' ? 'The phone has already been taken.' : 'تم أخذ رقم الهاتف بالفعل.'}`);
                     } else {
@@ -147,7 +129,7 @@ const EditUserPage =()=>{
 
     return(
      <div className="">
-           <form onSubmit={(event) => handleSubmitEdit(userContent.id, event)} className="w-full flex flex-col items-center justify-center gap-y-10 m-5">
+           <form onSubmit={(event) => handleSubmitEdit(userContent.id, event)} className="w-full flex flex-col items-center justify-center gap-y-10">
         
         <div className="w-full flex flex-wrap items-center justify-start gap-10">
         <div className="lg:w-[30%] sm:w-full">

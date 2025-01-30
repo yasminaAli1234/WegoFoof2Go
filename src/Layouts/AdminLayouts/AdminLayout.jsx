@@ -32,7 +32,7 @@ const AdminLayout = () => {
       <div className={`contentSection md:w-full sm:w-full lg:w-4/5 min-h-screen transition-opacity ${isSidebarOpen ? 'opacity-50' : 'opacity-100'}`}>
                     {/* <HeaderStudent /> */}
                     <NavbarAmin />
-                    <div className="pl-5">
+                    <div className="pl-2">
                         <Outlet />
                     </div>
                 </div>
