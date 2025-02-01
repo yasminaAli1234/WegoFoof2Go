@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import CheckBox from '../../../Components/CheckBox';
 import { PlanDataContext } from '../../../Layouts/AdminLayouts/EditPlanLayout';
 import i18n from '../../../i18n';
+import DropDownMenu from '../../../Components/DropDownMenu';
 
 const EditPlanPage =()=>{
     
@@ -23,23 +24,25 @@ const EditPlanPage =()=>{
     const [thumbnailFile, setThumbnailFile] = useState(null); // Store the file object
     const [appActive, setAppActive] = useState(0); // Default status to 0
     const [isLoading, setIsLoading] = useState(false);
+    const [price, setPrice] = useState('');
+
+    const dropdownPlanType = useRef();
+    const [planTypeData, setPlanTypeData] = useState([{ name: 'One Time' }, { name: 'Recurring' }]);
+    const [planType, setPlanType] = useState('Select Type');
+    const [planTypeName, setPlanTypeName] = useState();
+    const [openPlanType, setOpenPlanType] = useState(false);     
 
     const [monthlyPrice, setMonthlyPrice] = useState('');
     const [monthlyDiscountPrice, setMonthlyDiscountPrice] = useState('');
-    // eslint-disable-next-line no-unused-vars
-    const [MonthlySetUpFeesPrice, setMonthlySetUpFeesPrice] = useState('');
 
     const [quarterlyPrice, setQuarterlyPrice] = useState('');
     const [quarterlyDiscountPrice, setQuarterlyDiscountPrice] = useState('');
-    const [quarterlySetUpFeesPrice, setQuarterlySetUpFeesPrice] = useState('');
 
     const [semiAnnualPrice, setSemiAnnualPrice] = useState('');
     const [semiAnnualDiscountPrice, setSemiAnnualDiscountPrice] = useState('');
-    const [semiAnnualSetUpFeesPrice, setSemiAnnualSetUpFeesPrice] = useState('');
 
     const [yearlyPrice, setYearlyPrice] = useState(''); 
     const [yearlyDiscountPrice, setYearlyDiscountPrice] = useState(''); 
-    const [yearlySetUpFeesPrice, setYearlySetUpFeesPrice] = useState(''); 
 
     const [showMonthlyPriceInput, setShowMonthlyPriceInput] = useState(false);
     const [showQuarterlyPriceInput, setShowQuarterlyPriceInput] = useState(false);
@@ -50,34 +53,6 @@ const EditPlanPage =()=>{
     const [name_ar, setName_ar] = useState('');
     const [title_ar, setTitle_ar] = useState('');
     const [description_ar, setDescription_ar] = useState('');
-
-    // const [fee_ar, setFee_ar] = useState('');
-    // const [limitPlan_ar, setLimitPlan_ar] = useState('');
-    // const [thumbnails_ar, setThumbnails_ar] = useState('');
-    // const [thumbnailFile_ar, setThumbnailFile_ar] = useState(null); // Store the file object
-    // const [appActive_ar, setAppActive_ar] = useState(0); // Default status to 0
-    // const [isLoading_ar, setIsLoading_ar] = useState(false);
-
-    // const [monthlyPrice_ar, setMonthlyPrice_ar] = useState('');
-    // const [monthlyDiscountPrice_ar, setMonthlyDiscountPrice_ar] = useState('');
-    // const [MonthlySetUpFeesPrice_ar, setMonthlySetUpFeesPrice_ar] = useState('');
-
-    // const [quarterlyPrice_ar, setQuarterlyPrice_ar] = useState('');
-    // const [quarterlyDiscountPrice_ar, setQuarterlyDiscountPrice_ar] = useState('');
-    // const [quarterlySetUpFeesPrice_ar, setQuarterlySetUpFeesPrice_ar] = useState('');
-
-    // const [semiAnnualPrice_ar, setSemiAnnualPrice_ar] = useState('');
-    // const [semiAnnualDiscountPrice_ar, setSemiAnnualDiscountPrice_ar] = useState('');
-    // const [semiAnnualSetUpFeesPrice_ar, setSemiAnnualSetUpFeesPrice_ar] = useState('');
-
-    // const [yearlyPrice_ar, setYearlyPrice_ar] = useState(''); 
-    // const [yearlyDiscountPrice_ar, setYearlyDiscountPrice_ar] = useState(''); 
-    // const [yearlySetUpFeesPrice_ar, setYearlySetUpFeesPrice_ar] = useState(''); 
-    
-    // const [showMonthlyPriceInput_ar, setShowMonthlyPriceInput_ar] = useState(false);
-    // const [showQuarterlyPriceInput_ar, setShowQuarterlyPriceInput_ar] = useState(false);
-    // const [showSemiAnnualPriceInput_ar, setShowSemiAnnualPriceInput_ar] = useState(false);
-    // const [showYearlyPriceInput_ar, setShowYearlyPriceInput_ar] = useState(false);
     const navigate = useNavigate();
     const uploadRef = useRef();
 
@@ -116,38 +91,41 @@ const EditPlanPage =()=>{
             }
 
         }
-
         if (planEdit_ar) {
             setName_ar(planEdit_ar.name || '');
             // setTitle(planContent.title || '');
             setDescription_ar(planEdit_ar.description|| '');
-            // setFee_ar(planEdit_ar.setup_fees|| 0);
-            // setLimitPlan_ar(planEdit_ar.limet_store|| '');
-            // setAppActive_ar(planEdit_ar.app|| '');
-
-            // if(planEdit.monthly){
-            //     setShowMonthlyPriceInput(true)
-            //     setMonthlyPrice(planEdit.monthly)
-            //     setMonthlyDiscountPrice(planEdit.discount_monthly)
-            // }
-            // if(planEdit.quarterly){
-            //     setShowQuarterlyPriceInput(true)
-            //     setQuarterlyPrice(planEdit.quarterly)
-            //     setQuarterlyDiscountPrice(planEdit.discount_quarterly)
-            // }
-            // if(planEdit["semi_annual"]){
-            //     setShowSemiAnnualPriceInput(true)
-            //     setSemiAnnualPrice(planEdit["semi_annual"])
-            //     setSemiAnnualDiscountPrice(planEdit.discount_semi_annual)
-            // }
-            // if(planEdit.yearly){
-            //     setShowYearlyPriceInput(true)
-            //     setYearlyPrice(planEdit.yearly)
-            //     setYearlyDiscountPrice(planEdit.discount_yearly)
-            // }
-
         }
     }, [planEdit,planEdit_ar]);
+
+     const handleOpenPlanType = () => {
+            setOpenPlanType(!openPlanType);
+            setOpenSelectPlan(false)
+        };
+    const handlePlanType = (e) => {
+        const inputElement = e.currentTarget.querySelector('.inputVal');
+        const selectedOptionName = e.currentTarget.textContent.trim();
+        const selectedOptionValue = inputElement ? inputElement.value.toLowerCase() : '';
+        setPlanType(selectedOptionName);
+        setPlanTypeName(selectedOptionValue);
+        setOpenPlanType(false);
+        console.log(selectedOptionName)
+    };
+    
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+    const handleClickOutside = (event) => {
+        if (
+            dropdownPlanType.current && !dropdownPlanType.current.contains(event.target)
+        ) {
+            setOpenPlanType(false); 
+        }
+    };
 
     
     const handleGoBack = () => {
@@ -175,38 +153,12 @@ const EditPlanPage =()=>{
 
     const handleSubmitEdit = async (planId,event) => {
         event.preventDefault();
-
-    // Validation for English fields
-    // if (!title || !description || !fee || !monthlyPrice || !quarterlyPrice || !semiAnnualPrice || !yearlyPrice) {
-    //     auth.toastError('All required fields must be filled out.');
-    //     return;
-    // }
-
-    // // // Validation for Arabic fields
-    // if (!title_ar || !description_ar || !fee_ar || !monthlyPrice_ar || !quarterlyPrice_ar || !semiAnnualPrice_ar || !yearlyPrice_ar) {
-    //     auth.toastError('Please fill out all Arabic fields.');
-    //     return;
-    // }
-
         setIsLoading(true);
         try {
       // Prepare translations data
       const translations = [
         { key: 'name', value: name_ar, locale: 'ar' },
-        // { key: 'plan_id', value: planId, locale: 'ar' },
         { key: 'description', value: description_ar, locale: 'ar' },
-        // { key: 'fee', value: fee_ar, locale: 'ar' },
-        // { key: 'limitPlan', value: limitPlan_ar, locale: 'ar' },
-        // { key: 'thumbnails', value: thumbnails_ar, locale: 'ar' },
-        // { key: 'app', value: appActive_ar, locale: 'ar' },
-        // { key: 'monthly', value: monthlyPrice_ar, locale: 'ar' },
-        // { key: 'quarterly', value: quarterlyPrice_ar, locale: 'ar' },
-        // { key: 'semi_annual', value: semiAnnualPrice_ar, locale: 'ar' },
-        // { key: 'yearly', value: yearlyPrice_ar, locale: 'ar' },
-        // { key: 'discount_monthly', value: monthlyDiscountPrice_ar, locale: 'ar' },
-        // { key: 'discount_quarterly', value: quarterlyDiscountPrice_ar, locale: 'ar' },
-        // { key: 'discount_semi_annual', value: semiAnnualDiscountPrice_ar, locale: 'ar' },
-        // { key: 'discount_yearly', value: yearlyDiscountPrice_ar, locale: 'ar' }
     ];
 
     const formData = new FormData();
@@ -278,23 +230,20 @@ const EditPlanPage =()=>{
     };
     return(
     <div className="">
-   <Button
-    type="submit"
-    Text={`Change to ${language === 'en' ? 'Arabic' : 'English'}`}
-    BgColor="bg-mainColor"
-    Color="text-white"
-    Width="fit"
-    Size="text-2xl"
-    px="px-28"
-    rounded="rounded-2xl"
-     
-    handleClick={() => handleChangeLanguage()}
-/>
+        <Button 
+            type="submit"
+            Text={`Change to ${language === 'en' ? 'Arabic' : 'English'}`}
+            BgColor="bg-mainColor"
+            Color="text-white"
+            Width="fit"
+            Size="text-2xl"
+            rounded="rounded-2xl"
+            className="w-full md:w-1/4"
+            handleClick={() => handleChangeLanguage()}
+        />
 
-
-        <form onSubmit={(event) => handleSubmitEdit(planEdit.id, event)} className="w-full flex flex-col items-center justify-center gap-y-10 m-5">
-            {/* data in english */}
-            
+        <form onSubmit={(event) => handleSubmitEdit(planEdit.id, event)} className="w-full flex flex-col items-center justify-center gap-y-10">
+            {/* data in english */}      
             {language==='en'? <div className="w-full flex flex-wrap items-center justify-start gap-10">
                 <div className="lg:w-[30%] sm:w-full">
                     <InputCustom
@@ -306,16 +255,6 @@ const EditPlanPage =()=>{
                         width="w-full"
                     />
                 </div>
-                {/* <div className="lg:w-[30%] sm:w-full">
-                    <InputCustom
-                        type="text"
-                        borderColor="mainColor"
-                        placeholder="Title"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        width="w-full"
-                    />
-                </div> */}
                 <div className="lg:w-[30%] sm:w-full">
                 <textarea
                     className="w-full px-2 py-4 border-2 font-normal eleValueInput rounded-xl border-mainColor text-2xl focus:outline-none focus:ring-2 focus:ring-mainColor"
@@ -364,16 +303,39 @@ const EditPlanPage =()=>{
                         />
                 </div>
 
+                <div className="lg:w-[30%] sm:w-full">
+                    <DropDownMenu
+                        ref={dropdownPlanType}
+                        handleOpen={handleOpenPlanType}
+                        handleOpenOption={handlePlanType}
+                        stateoption={planType}
+                        openMenu={openPlanType}
+                        options={planTypeData}
+                    />
+                </div>
+                {/* Conditionally render price inputs based on extraType */}
+                {planType === 'One Time' && (
+                    <div className="lg:w-[30%] sm:w-full">
+                        <InputCustom
+                            type="number"
+                            borderColor="mainColor"
+                            placeholder="Price"
+                            value={price}
+                            onChange={(e) => setPrice(e.target.value)}
+                            width="w-full"
+                        />
+                    </div>
+                )}
                 <div className="flex items-center gap-x-4 w-full">
                         <span className="text-2xl text-mainColor font-medium">Application:</span>
                          <div>
                              <CheckBox handleClick={handleClick} checked={appActive}/>
                          </div>
                 </div>
-
-                {/* Price Option Checkboxes */}
-                {/* <div className="lg:w-[30%] sm:w-full flex flex-col gap-2"> */}
-                <div className="flex w-full flex-col gap-5">
+                {planType === 'Recurring' && (
+                    <>
+                     {/* Price Option Checkboxes */}
+                    <div className="flex w-full flex-col gap-5">
                     {/* Monthly Price Checkbox */}
                     <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
                     <div className=" flex items-center gap-3 w-full lg:w-1/3">
@@ -399,26 +361,16 @@ const EditPlanPage =()=>{
                             />
                         </div>
                         <div className="lg:w-1/2 sm:w-full">
-                         <InputCustom
-                             type="number"
-                             borderColor="mainColor"
-                             placeholder="Enter Discount Price"
-                             value={monthlyDiscountPrice}
-                             onChange={(e) => setMonthlyDiscountPrice(e.target.value)}
-                             width="w-full"
-                             required={false}
-                         />
-                        </div>
-                        {/* <div className="lg:w-1/2 sm:w-full">
                         <InputCustom
                             type="number"
                             borderColor="mainColor"
-                            placeholder="Enter SetUp Fees"
-                            value={MonthlySetUpFeesPrice}
-                            onChange={(e) => setMonthlySetUpFeesPrice(e.target.value)}
+                            placeholder="Enter Discount Price"
+                            value={monthlyDiscountPrice}
+                            onChange={(e) => setMonthlyDiscountPrice(e.target.value)}
                             width="w-full"
+                            required={false}
                         />
-                        </div> */}
+                        </div>
                         </>
                         )}
                     </div>
@@ -457,16 +409,6 @@ const EditPlanPage =()=>{
                             required={false}
                         />
                         </div>
-                        {/* <div className="lg:w-1/2 sm:w-full">
-                        <InputCustom
-                            type="number"
-                            borderColor="mainColor"
-                            placeholder="Enter SetUp Fees"
-                            value={quarterlySetUpFeesPrice}
-                            onChange={(e) => setQuarterlySetUpFeesPrice(e.target.value)}
-                            width="w-full"
-                        />
-                        </div> */}
                         </>
                     )}
                     </div>
@@ -505,21 +447,9 @@ const EditPlanPage =()=>{
                             required={false}
                         />
                         </div>
-                        {/* <div className="lg:w-1/2 sm:w-full">
-                        <InputCustom
-                            type="number"
-                            borderColor="mainColor"
-                            placeholder="Enter SetUp Fees"
-                            value={semiAnnualSetUpFeesPrice}
-                            onChange={(e) => setSemiAnnualSetUpFeesPrice(e.target.value)}
-                            width="w-full"
-                        />
-                        </div> */}
                         </>
                     )}
                     </div>
-
-                    {/* yearly Price Checkbox */}
                     <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-5">
                     <div className="flex items-center gap-3 w-full lg:w-1/3 ">
                         <input 
@@ -553,23 +483,15 @@ const EditPlanPage =()=>{
                             required={false}
                         />
                         </div>
-                        {/* <div className="lg:w-1/2 sm:w-full">
-                        <InputCustom
-                            type="number"
-                            borderColor="mainColor"
-                            placeholder="Enter SetUp Fees"
-                            value={yearlySetUpFeesPrice}
-                            onChange={(e) => setYearlySetUpFeesPrice(e.target.value)}
-                            width="w-full"
-                        />
-                        </div> */}
                         </>
                     )}
                     </div>
-                </div>
-
-                   
-            </div>:<div className="w-full flex flex-wrap items-center justify-start gap-10">
+                    </div>
+                    </>
+                )}        
+            </div>
+            :
+            <div className="w-full flex flex-wrap items-center justify-start gap-10">
                 <div className="lg:w-[30%] sm:w-full">
                     <InputCustom
                         type="text"
@@ -580,16 +502,6 @@ const EditPlanPage =()=>{
                         width="w-full"
                     />
                 </div>
-                {/* <div className="lg:w-[30%] sm:w-full">
-                    <InputCustom
-                        type="text"
-                        borderColor="mainColor"
-                        placeholder="Title"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        width="w-full"
-                    />
-                </div> */}
                 <div className="lg:w-[30%] sm:w-full">
                 <textarea
                     className="w-full px-2 py-4 border-2 font-normal eleValueInput rounded-xl border-mainColor text-2xl focus:outline-none focus:ring-2 focus:ring-mainColor"
@@ -599,62 +511,7 @@ const EditPlanPage =()=>{
                     rows={1}
                 ></textarea>
                 </div>
-                {/* <div className="lg:w-[30%] sm:w-full">
-                    <InputCustom
-                        type="number"
-                        borderColor="mainColor"
-                        placeholder="رسوم الإعداد"
-                        value={fee_ar}
-                        onChange={(e) => setFee_ar(e.target.value)}
-                        width="w-full"
-                    />
-                </div> */}
-                {/* <div className="lg:w-[30%] sm:w-full">
-                    <InputCustom
-                        type="number"
-                        borderColor="mainColor"
-                        placeholder="حد المتجر"
-                        value={limitPlan_ar}
-                        onChange={(e) => setLimitPlan_ar(e.target.value)}
-                        width="w-full"
-                    />
-                </div> */}
-                {/* <div className="lg:w-[30%] sm:w-full">
-                    <InputCustom
-                            type="text"
-                            borderColor="mainColor"
-                            placeholder="الملف المصغر"
-                            value={thumbnails}
-                            readOnly={true} 
-                            onClick={handleInputClick}
-                            upload="true"
-                            required={false}
-                        />
-                        <input
-                            type="file"
-                            className="hidden"
-                            onChange={handleFileChange}
-                            ref={uploadRef}
-                        />
-                </div> */}
-
-                {/* <div className="flex items-center gap-x-4 w-full">
-                        <span className="text-2xl text-mainColor font-medium">التطبيق:</span>
-                         <div>
-                             <CheckBox handleClick={handleClick} checked={appActive}/>
-                         </div>
-                </div> */}
-
-                {/* Price Option Checkboxes */}
-                {/* <div className="lg:w-[30%] sm:w-full flex flex-col gap-2"> */}
-             
-
-                   
-            </div>}
-            {/* data in arabic */}
-            
-            {/* </div> */}
-             
+            </div>}             
             <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
                 <div className="flex items-center justify-center w-72">
                     <Button
