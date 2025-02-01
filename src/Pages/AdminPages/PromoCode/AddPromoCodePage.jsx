@@ -42,47 +42,12 @@ const AddPromoCodePage = () => {
 
     const [usageNumber,setUsageNumber]=useState('')
 
-    const [typeData, setTypeData] = useState([{ name: 'Plan' }, { name: 'Extra Product' }, { name: 'Domain' }]);
+    const [typeData, setTypeData] = useState([{ name: 'All' },{ name: 'Plan' }, { name: 'Extra Product' }, { name: 'Domain' },{ name: 'SetupFees' }]);
     const [selectType, setSelectType] = useState('Select Type');
     const [selectTypeName, setSelectTypeName] = useState(null);
     const [openSelectType, setOpenSelectType] = useState(false);
 
     const [amount,setAmount]=useState('')
-
-        // set arabic 
-        // const [code_ar , setCode_ar]=useState('')
-        // const [title_ar , setTitle_ar]=useState('')
-        // const [startDate_ar , setStartDate_ar]=useState('')
-        // const [endDate_ar,setEndDate_ar]=useState('')
-        // const [limit_ar,setLimit_ar]=useState('')
-
-        // const [valueMonthly_ar,setValueMonthly_ar]=useState('')
-        // const [valueQuarterly_ar,setValueQuarterly_ar]=useState('')
-        // const [valueSemiAnnual_ar,setValueSemiAnnual_ar]=useState('')
-        // const [valueYearly_ar,setValueYearly_ar]=useState('')
-    
-        // const [valueType_ar, setValueType_ar] = useState([{ name: 'percentage' }, { name: 'value' }]);
-        // const [selectValueType_ar, setSelectValueType_ar] = useState('اختر نوع القيمة');
-        // const [selectValueTypeName_ar, setSelectValueTypeName_ar] = useState(null);
-        // const [openSelectValueType_ar, setOpenSelectValueType_ar] = useState(false);
-    
-        // const [usageTypeData_ar, setUsageTypeData_ar] = useState([{ name: 'First Usage' }, { name: 'Renew' }]);
-        // const [selectUsageType_ar, setSelectUsageType_ar] = useState('اختيار نوع الاستخدام');
-        // const [selectUsageTypeName_ar, setSelectUsageTypeName_ar] = useState(null);
-        // const [openSelectUsageType_ar, setOpenSelectUsageType_ar] = useState(false);
-    
-        // const [statusData_ar, setStatusData_ar] =  useState([{ name: 'UnLimited' }, { name: 'Fixed' }]);
-        // const [selectStatus_ar, setSelectStatus_ar] = useState('اختيار الحالة');
-        // const [selectStatusName_ar, setSelectStatusName_ar] = useState(null);
-        // const [openSelectStatus_ar, setOpenSelectStatus_ar] = useState(false);
-    
-        // const [usageNumber_ar,setUsageNumber_ar]=useState('')
-    
-        // const [typeData_ar, setTypeData_ar] = useState([{ name: 'Plan' }, { name: 'Extra Product' }, { name: 'Domain' }]);
-        // const [selectType_ar, setSelectType_ar] = useState('اختيار النوع');
-        // const [selectTypeName_ar, setSelectTypeName_ar] = useState(null);
-        // const [openSelectType_ar, setOpenSelectType_ar] = useState(false);
-    
 
     const dropdownValueTypeRef = useRef();
     const dropdownUsageTypeRef = useRef();
@@ -94,44 +59,24 @@ const AddPromoCodePage = () => {
         setOpenSelectUsageType(false)
         setOpenSelectStatus(false)
         setOpenSelectType(false)
-        // --------------------
-        // setOpenSelectValueType_ar(!openSelectValueType_ar);
-        // setOpenSelectUsageType_ar(false)
-        // setOpenSelectStatus_ar(false)
-        // setOpenSelectType_ar(false)
       };
     const handleOpenUsageType = () => {
         setOpenSelectValueType(false);
         setOpenSelectUsageType(!openSelectUsageType);
         setOpenSelectStatus(false)
         setOpenSelectType(false)
-        // -------------------------
-        // setOpenSelectValueType_ar(false);
-        // setOpenSelectUsageType_ar(!openSelectUsageType_ar);
-        // setOpenSelectStatus_ar(false)
-        // setOpenSelectType_ar(false)
     };
     const handleOpenStatus = () => {
         setOpenSelectValueType(false);
         setOpenSelectUsageType(false);
         setOpenSelectStatus(!openSelectStatus)
         setOpenSelectType(false)
-        // --------------------
-        // setOpenSelectValueType_ar(false);
-        // setOpenSelectUsageType_ar(false);
-        // setOpenSelectStatus_ar(!openSelectStatus)
-        // setOpenSelectType_ar(false)
     };
     const handleOpenType = () => {
         setOpenSelectValueType(false);
         setOpenSelectUsageType(false);
         setOpenSelectStatus(false)
         setOpenSelectType(!openSelectType)
-        // ---------------------
-        // setOpenSelectValueType_ar(false);
-        // setOpenSelectUsageType_ar(false);
-        // setOpenSelectStatus_ar(false)
-        // setOpenSelectType_ar(!openSelectType_ar)
     };
 
     const handleSelectValueType = (e) => {
@@ -139,16 +84,8 @@ const AddPromoCodePage = () => {
         const selectedOptionName = e.currentTarget.textContent.trim();
         const selectedOptionValue = inputElement ? inputElement.value : null;
         setSelectValueType(selectedOptionName);
-        setSelectValueTypeName(selectedOptionValue)
-        
+        setSelectValueTypeName(selectedOptionValue)  
         setOpenSelectValueType(false);
-
-        // -----------------------
-
-        // setSelectValueType_ar(selectedOptionName);
-        // setSelectValueTypeName_ar(selectedOptionValue)
-        // setOpenSelectValueType_ar(false);
-        // console.log('Selected ValueType:', selectedOptionName);
       };
       const handleSelectUsageType = (e) => {
         const inputElement = e.currentTarget.querySelector('.inputVal');
@@ -157,11 +94,6 @@ const AddPromoCodePage = () => {
         setSelectUsageType(selectedOptionName);
         setSelectUsageTypeName(selectedOptionValue)
         setOpenSelectUsageType(false);
-        // -------------------
-        // setSelectUsageType_ar(selectedOptionName);
-        // setSelectUsageTypeName_ar(selectedOptionValue)
-        // setOpenSelectUsageType_ar(false);
-        // console.log('Selected UsageType:', selectedOptionName);
       };
       const handleSelectStatus = (e) => {
         const inputElement = e.currentTarget.querySelector('.inputVal');
@@ -170,11 +102,6 @@ const AddPromoCodePage = () => {
         setSelectStatus(selectedOptionName);
         setSelectStatusName(selectedOptionValue)
         setOpenSelectStatus(false);
-        // ---------------
-        // setSelectStatus_ar(selectedOptionName);
-        // setSelectStatusName_ar(selectedOptionValue)
-        // setOpenSelectStatus_ar(false);
-        // console.log('Selected Status:', selectedOptionName);
       };
       const handleSelectType = (e) => {
         const inputElement = e.currentTarget.querySelector('.inputVal');
@@ -185,30 +112,12 @@ const AddPromoCodePage = () => {
             setSelectType(selectedOptionName);
             setSelectTypeName(selectedOptionValue)
             setOpenSelectType(false);
-
-            // setSelectType_ar(selectedOptionName);
-            // setSelectTypeName_ar(selectedOptionValue)
-            // setOpenSelectType_ar(false);
         }
         else{
             setSelectType(selectedOptionName);
             setSelectTypeName(selectedOptionValue)
             setOpenSelectType(false);
-
-            // setSelectType_ar(selectedOptionName);
-            // setSelectTypeName_ar(selectedOptionValue)
-            // setOpenSelectType_ar(false);
         }
-
-
-
-        // setSelectType(selectedOptionName);
-        // setSelectTypeName(selectedOptionValue)
-        // setOpenSelectType(false);
-        // // ---------------------
-        // setSelectType_ar(selectedOptionName);
-        // setSelectTypeName_ar(selectedOptionValue)
-        // setOpenSelectType_ar(false);
         console.log('Selected Type:', selectedOptionName);
       };
 
@@ -230,11 +139,6 @@ const AddPromoCodePage = () => {
             setOpenSelectUsageType(false)
             setOpenSelectStatus(false)
             setOpenSelectType(false);
-            // ----------------
-            // setOpenSelectValueType_ar(false)
-            // setOpenSelectUsageType_ar(false)
-            // setOpenSelectStatus_ar(false)
-            // setOpenSelectType_ar(false);
         }
       };
  
@@ -284,41 +188,6 @@ const AddPromoCodePage = () => {
             auth.toastError('Please Select Type.');
             return;
         }
-        // -----------------------------
-
-
-        // if (!code_ar) {
-        //     auth.toastError('الرجاء إدخال الكود.');
-        //     return;
-        // } 
-        // if (!title_ar) {
-        //     auth.toastError('الرجاء إدخال العنوان.');
-        //     return;
-        // } 
-        // if (!startDate_ar) {
-        //     auth.toastError('الرجاء إدخال تاريخ البداية الصحيح.');
-        //     return;
-        // }
-        // if (!endDate_ar) {
-        //     auth.toastError('الرجاء إدخال تاريخ النهاية الصحيح.');
-        //     return;
-        // }
-        // if (!selectValueTypeName_ar) {
-        //     auth.toastError('الرجاء اختيار نوع القيمة.');
-        // }
-        // if (!selectUsageTypeName_ar) {
-        //     auth.toastError('الرجاء إدخال نوع الاستخدام.');
-        //     return;
-        // }
-        // if (!selectStatusName_ar) {
-        //     auth.toastError('الرجاء اختيار الحالة.');
-        //     return;
-        // }
-        // if (!selectTypeName_ar) {
-        //     auth.toastError('الرجاء اختيار النوع.');
-        //     return;
-        // }
-
     // Prepare FormData
     const formData = new FormData();
     formData.append('code', code);
@@ -329,19 +198,11 @@ const AddPromoCodePage = () => {
 
     // Calculation Method
     const calculationMethod = selectValueType === 'percentage' ? 'percentage' : 'amount';
-    // const calculationMethod_ar = selectValueType_ar === 'percentage' ? 'percentage' : 'amount';
     formData.append('calculation_method', calculationMethod);
 
     // User Type
-    const userType = selectUsageType === 'First Usage' ? 'first_usage' : 'renew';
-    // const userType_ar = selectUsageType_ar === 'First Usage' ? 'First Usage' : 'renew';
+    const userType = selectUsageType === 'First Usage' ? 'first_usage' : 'renueve';
     formData.append('user_type', userType);
-
-    // Values
-    formData.append('monthly', valueMonthly);
-    formData.append('quarterly', valueQuarterly);
-    formData.append('semi_annual', valueSemiAnnual);
-    formData.append('yearly', valueYearly);
 
     // Promo Status
     if (selectStatus === 'UnLimited') {
@@ -354,57 +215,37 @@ const AddPromoCodePage = () => {
     // Promo Type
     if (selectType === 'Plan') {
         formData.append('promo_type', 'plan');
-    } else if (selectType === 'Extra Product') {
+        // Values
+        formData.append('monthly', valueMonthly);
+        formData.append('quarterly', valueQuarterly);
+        formData.append('semi_annual', valueSemiAnnual);
+        formData.append('yearly', valueYearly);
+
+    }else if (selectType === 'Extra Product') {
         formData.append('promo_type', 'extra');
-    } else if (selectType === 'Domain') {
+        // Values
+        formData.append('monthly', valueMonthly);
+        formData.append('quarterly', valueQuarterly);
+        formData.append('semi_annual', valueSemiAnnual);
+        formData.append('yearly', valueYearly);
+
+    }else if (selectType === 'Domain') {
         formData.append('promo_type', 'domain');
         formData.append('amount', amount);
+    }else if (selectType === 'All') {
+        formData.append('promo_type', 'cart');
+        formData.append('amount', amount);
+    }else if (selectType === 'SetupFees') {
+        formData.append('promo_type', 'setup_fees');
+        formData.append('amount', amount);
     }
-
-    // Arabic Translations
-    // const translations = [
-    //     { key: 'code', value: code_ar, locale: 'ar' },
-    //     { key: 'title', value: title_ar, locale: 'ar' },
-    //     { key: 'start_date', value: startDate_ar, locale: 'ar' },
-    //     { key: 'end_date', value: endDate_ar, locale: 'ar' },
-    //     { key: 'user_usage', value: limit_ar, locale: 'ar' },
-    //     { key: 'calculation_method', value: calculationMethod_ar, locale: 'ar' },
-    //     { key: 'user_type', value: userType_ar, locale: 'ar' },
-    //     { key: 'monthly', value: valueMonthly_ar, locale: 'ar' },
-    //     { key: 'quarterly', value: valueQuarterly_ar, locale: 'ar' },
-    //     { key: 'semi_annual', value: valueSemiAnnual_ar, locale: 'ar' },
-    //     { key: 'yearly', value: valueYearly_ar, locale: 'ar' }
-    // ];
-
-    // if (selectStatus_ar === 'UnLimited') {
-    //     translations.push({ key: 'promo_status', value: 'unlimited', locale: 'ar' });
-    // } else if (selectStatus_ar === 'Fixed') {
-    //     translations.push({ key: 'promo_status', value: 'fixed', locale: 'ar' });
-    //     translations.push({ key: 'usage', value: usageNumber_ar, locale: 'ar' });
-    // }
-
-    // if (selectType_ar === 'Plan') {
-    //     translations.push({ key: 'promo_type', value: 'plan', locale: 'ar' });
-    // } else if (selectType_ar === 'Extra Product') {
-    //     translations.push({ key: 'promo_type', value: 'extra', locale: 'ar' });
-    // } else if (selectType_ar === 'Domain') {
-    //     translations.push({ key: 'promo_type', value: 'domain', locale: 'ar' });
-    //     translations.push({ key: 'amount', value: amount, locale: 'ar' });
-    // }
-
-    // translations.forEach((translation, index) => {
-    //     Object.entries(translation).forEach(([fieldKey, fieldValue]) => {
-    //         formData.append(`translations[${index}][${fieldKey}]`, fieldValue);
-    //     });
-    // });
-           
     // Submit the form
     setIsLoading(true)
         try {
             const response = await axios.post(' https://login.wegostores.com/admin/v1/promoCode/create',formData, {
                 headers: {
                     Authorization: `Bearer ${auth.user.token}`,
-                    'Content-Type': 'application/json', // Use JSON since we're sending a JSON object now
+                    'Content-Type': 'application/json',
                 },
             });
  
@@ -430,99 +271,91 @@ const AddPromoCodePage = () => {
                 setIsLoading(false);
             }
     };
-    // const handleChangeLanguage = () => {
-    //     const newLanguage = language === 'en' ? 'ar' : 'en'; 
-    //     setLanguage(newLanguage); 
-    // };
-    
  
-       return (
+    return (
         <>
-               {/* <Button 
-    type="submit"
-    Text={`Change to ${language === 'en' ? 'Arabic' : 'English'}`}
-    BgColor="bg-mainColor"
-    Color="text-white"
-    Width="fit"
-    Size="text-2xl"
-    px="px-28"
-    rounded="rounded-2xl"
-     
-    handleClick={() => handleChangeLanguage()}
-/> */}
-         <form onSubmit={handleSubmitAdd} className="w-full flex flex-col items-center justify-center gap-y-10 m-5">
-                {/* {language==='en' ? */}
+         <form onSubmit={handleSubmitAdd} className="w-full flex flex-col items-center justify-center gap-y-10">
                    <div className="w-full flex flex-wrap items-center justify-start gap-10">
-                      <div className="lg:w-[30%] sm:w-full">
-                          <InputCustom
-                              type="text"
-                              placeholder="Code"
-                              borderColor="mainColor"
-                              value={code}
-                              onChange={(e) => setCode(e.target.value)}
-                          />
-                      </div>
-                      <div className="lg:w-[30%] sm:w-full">
-                          <InputCustom
-                              type="text"
-                              placeholder="Title"
-                              borderColor="mainColor"
-                              value={title}
-                              onChange={(e) => setTitle(e.target.value)}
-                          />
-                      </div>
-                      <div className="lg:w-[30%] sm:w-full">
-                          <InputCustom
-                              type="Date"
-                              placeholder="Vaild From"
-                              borderColor="mainColor"
-                              value={startDate}
-                              onChange={(e) => setStartDate(e.target.value)}
-                          />
-                      </div>
-                      <div className="lg:w-[30%] sm:w-full">
-                          <InputCustom
-                              type="Date"
-                              placeholder="Vaild To"
-                              borderColor="mainColor"
-                              value={endDate}
-                              onChange={(e) => setEndDate(e.target.value)}
-                          />
-                      </div>
-                      <div className="lg:w-[30%] sm:w-full">
-                          <InputCustom
-                              type="number"
-                              placeholder="User Usage"
-                              borderColor="mainColor"
-                              value={limit}
-                              onChange={(e) => setLimit(e.target.value)}
-                          />
-                      </div>
-                      <div className="lg:w-[30%] sm:w-full">
-                        <DropDownMenu
-                        ref={dropdownUsageTypeRef}
-                        handleOpen={handleOpenUsageType}
-                        handleOpenOption={handleSelectUsageType}
-                        stateoption={selectUsageType}
-                        openMenu={openSelectUsageType}
-                        options={usageTypeData}
-                        />
-                    </div> 
-                      <div className="lg:w-[30%] sm:w-full">
+                        <div className="lg:w-[30%] sm:w-full">
+                            <InputCustom
+                                type="text"
+                                placeholder="Code"
+                                borderColor="mainColor"
+                                value={code}
+                                onChange={(e) => setCode(e.target.value)}
+                            />
+                        </div>
+                        <div className="lg:w-[30%] sm:w-full">
+                            <InputCustom
+                                type="text"
+                                placeholder="Title"
+                                borderColor="mainColor"
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
+                            />
+                        </div>
+                        <div className="lg:w-[30%] sm:w-full">
+                            <InputCustom
+                                type="Date"
+                                placeholder="Vaild From"
+                                borderColor="mainColor"
+                                value={startDate}
+                                onChange={(e) => setStartDate(e.target.value)}
+                            />
+                        </div>
+                        <div className="lg:w-[30%] sm:w-full">
+                            <InputCustom
+                                type="Date"
+                                placeholder="Vaild To"
+                                borderColor="mainColor"
+                                value={endDate}
+                                onChange={(e) => setEndDate(e.target.value)}
+                            />
+                        </div>
+                        <div className="lg:w-[30%] sm:w-full">
+                            <InputCustom
+                                type="number"
+                                placeholder="User Usage"
+                                borderColor="mainColor"
+                                value={limit}
+                                onChange={(e) => setLimit(e.target.value)}
+                            />
+                        </div>
+                        <div className="lg:w-[30%] sm:w-full">
                             <DropDownMenu
-                            ref={dropdownValueTypeRef}
-                            handleOpen={handleOpenValueType}
-                            handleOpenOption={handleSelectValueType}
-                            stateoption={selectValueType}
-                            openMenu={openSelectValueType}
-                            options={valueType}
+                            ref={dropdownUsageTypeRef}
+                            handleOpen={handleOpenUsageType}
+                            handleOpenOption={handleSelectUsageType}
+                            stateoption={selectUsageType}
+                            openMenu={openSelectUsageType}
+                            options={usageTypeData}
                             />
                         </div> 
-                        {selectValueType === 'value' && (
+                        <div className="lg:w-[30%] sm:w-full">
+                            <DropDownMenu
+                            ref={dropdownTypeRef}
+                            handleOpen={handleOpenType}
+                            handleOpenOption={handleSelectType}
+                            stateoption={selectType}
+                            openMenu={openSelectType}
+                            options={typeData}
+                            />
+                        </div> 
+                        {(selectType === 'Domain' || selectType === 'All' || selectType === 'SetupFees') && (
+                            <div className="lg:w-[30%] sm:w-full">
+                            <InputCustom
+                                placeholder="Amount"
+                                borderColor="mainColor"
+                                value={amount}
+                                onChange={(e) => setAmount(e.target.value)}
+                            />
+                            </div>
+                        )}
+                        {(selectType === 'Plan' || selectType === 'Extra Product') && (
                             <>
                             <div className="lg:w-[30%] sm:w-full">
                             <InputCustom
-                                placeholder="Value Monthly"
+                                placeholder="Amount Monthly"
                                 borderColor="mainColor"
                                 value={valueMonthly}
                                 onChange={(e) => setValueMonthly(e.target.value)}
@@ -530,7 +363,7 @@ const AddPromoCodePage = () => {
                             </div>
                             <div className="lg:w-[30%] sm:w-full">
                             <InputCustom
-                                placeholder="Value Quarterly"
+                                placeholder="Amount Quarterly"
                                 borderColor="mainColor"
                                 value={valueQuarterly}
                                 onChange={(e) => setValueQuarterly(e.target.value)}
@@ -538,7 +371,7 @@ const AddPromoCodePage = () => {
                             </div>
                             <div className="lg:w-[30%] sm:w-full">
                             <InputCustom
-                                placeholder="Value Semi-annual"
+                                placeholder="Amount Semi-annual"
                                 borderColor="mainColor"
                                 value={valueSemiAnnual}
                                 onChange={(e) => setValueSemiAnnual(e.target.value)}
@@ -546,7 +379,7 @@ const AddPromoCodePage = () => {
                             </div>
                             <div className="lg:w-[30%] sm:w-full">
                             <InputCustom
-                                placeholder="Value Yearly"
+                                placeholder="Amount Yearly"
                                 borderColor="mainColor"
                                 value={valueYearly}
                                 onChange={(e) => setValueYearly(e.target.value)}
@@ -554,43 +387,16 @@ const AddPromoCodePage = () => {
                             </div>
                             </>
                         )}
-                        {selectValueType === 'percentage' && (
-                           <>
-                           <div className="lg:w-[30%] sm:w-full">
-                           <InputCustom
-                               placeholder="Percentage Monthly"
-                               borderColor="mainColor"
-                               value={valueMonthly}
-                               onChange={(e) => setValueMonthly(e.target.value)}
-                           />
-                           </div>
-                           <div className="lg:w-[30%] sm:w-full">
-                           <InputCustom
-                               placeholder="Percentage Quarterly"
-                               borderColor="mainColor"
-                               value={valueQuarterly}
-                               onChange={(e) => setValueQuarterly(e.target.value)}
-                           />
-                           </div>
-                           <div className="lg:w-[30%] sm:w-full">
-                           <InputCustom
-                               placeholder="Percentage Semi-annual"
-                               borderColor="mainColor"
-                               value={valueSemiAnnual}
-                               onChange={(e) => setValueSemiAnnual(e.target.value)}
-                           />
-                           </div>
-                           <div className="lg:w-[30%] sm:w-full">
-                           <InputCustom
-                               placeholder="Percentage Yearly"
-                               borderColor="mainColor"
-                               value={valueYearly}
-                               onChange={(e) => setValueYearly(e.target.value)}
-                           />
-                           </div>
-                           </>
-                        )}
-
+                        <div className="lg:w-[30%] sm:w-full">
+                                <DropDownMenu
+                                ref={dropdownValueTypeRef}
+                                handleOpen={handleOpenValueType}
+                                handleOpenOption={handleSelectValueType}
+                                stateoption={selectValueType}
+                                openMenu={openSelectValueType}
+                                options={valueType}
+                                />
+                        </div> 
                         <div className="lg:w-[30%] sm:w-full">
                             <DropDownMenu
                             ref={dropdownStatusRef}
@@ -611,213 +417,7 @@ const AddPromoCodePage = () => {
                             />
                             </div>
                         )}
-
-                        <div className="lg:w-[30%] sm:w-full">
-                            <DropDownMenu
-                            ref={dropdownTypeRef}
-                            handleOpen={handleOpenType}
-                            handleOpenOption={handleSelectType}
-                            stateoption={selectType}
-                            openMenu={openSelectType}
-                            options={typeData}
-                            />
-                        </div> 
-                        {selectType === 'Domain' && (
-                            <div className="lg:w-[30%] sm:w-full">
-                            <InputCustom
-                                placeholder="Amount"
-                                borderColor="mainColor"
-                                value={amount}
-                                onChange={(e) => setAmount(e.target.value)}
-                            />
-                            </div>
-                        )}
                   </div>
-                  {/* :
-                   <div className="w-full flex flex-wrap items-center justify-start gap-10">
-                   <div className="lg:w-[30%] sm:w-full">
-                       <InputCustom
-                           type="text"
-                           placeholder="الكود"
-                           borderColor="mainColor"
-                           value={code_ar}
-                           onChange={(e) => setCode_ar(e.target.value)}
-                       />
-                   </div>
-                   <div className="lg:w-[30%] sm:w-full">
-                       <InputCustom
-                           type="text"
-                           placeholder="العنوان"
-                           borderColor="mainColor"
-                           value={title_ar}
-                           onChange={(e) => setTitle_ar(e.target.value)}
-                       />
-                   </div>
-                   <div className="lg:w-[30%] sm:w-full">
-                       <InputCustom
-                           type="Date"
-                           placeholder="صالح من"
-                           borderColor="mainColor"
-                           value={startDate_ar}
-                           onChange={(e) => setStartDate_ar(e.target.value)}
-                       />
-                   </div>
-                   <div className="lg:w-[30%] sm:w-full">
-                       <InputCustom
-                           type="Date"
-                           placeholder="صالح إلى"
-                           borderColor="mainColor"
-                           value={endDate_ar}
-                           onChange={(e) => setEndDate_ar(e.target.value)}
-                       />
-                   </div>
-                   <div className="lg:w-[30%] sm:w-full">
-                       <InputCustom
-                           type="number"
-                           placeholder="استخدام المستخدم"
-                           borderColor="mainColor"
-                           value={limit}
-                           onChange={(e) => setLimit_ar(e.target.value)}
-                       />
-                   </div>
-                   <div className="lg:w-[30%] sm:w-full">
-                     <DropDownMenu
-                     ref={dropdownUsageTypeRef}
-                     handleOpen={handleOpenUsageType}
-                     handleOpenOption={handleSelectUsageType}
-                     stateoption={selectUsageType}
-                     openMenu={openSelectUsageType}
-                     options={usageTypeData}
-                     />
-                 </div> 
-                   <div className="lg:w-[30%] sm:w-full">
-                         <DropDownMenu
-                         ref={dropdownValueTypeRef}
-                         handleOpen={handleOpenValueType}
-                         handleOpenOption={handleSelectValueType}
-                         stateoption={selectValueType}
-                         openMenu={openSelectValueType}
-                         options={valueType}
-                         />
-                     </div> 
-                     {selectValueType_ar ===  'value'  && (
-                         <>
-                         <div className="lg:w-[30%] sm:w-full">
-                         <InputCustom
-                             placeholder='القيمة الشهرية'
-                             borderColor="mainColor"
-                             value={valueMonthly}
-                             onChange={(e) => setValueMonthly_ar(e.target.value)}
-                         />
-                         </div>
-                         <div className="lg:w-[30%] sm:w-full">
-                         <InputCustom
-                             placeholder='القيمة ربع السنوية'
-                             borderColor="mainColor"
-                             value={valueQuarterly}
-                             onChange={(e) => setValueQuarterly_ar(e.target.value)}
-                         />
-                         </div>
-                         <div className="lg:w-[30%] sm:w-full">
-                         <InputCustom
-                             placeholder='القيمة نصف السنوية'
-                             borderColor="mainColor"
-                             value={valueSemiAnnual}
-                             onChange={(e) => setValueSemiAnnual_ar(e.target.value)}
-                         />
-                         </div>
-                         <div className="lg:w-[30%] sm:w-full">
-                         <InputCustom
-                             placeholder='القيمة السنوية'
-                             borderColor="mainColor"
-                             value={valueYearly}
-                             onChange={(e) => setValueYearly_ar(e.target.value)}
-                         />
-                         </div>
-                         </>
-                     )}
-                     {selectValueType_ar === 'percentage' && (
-                        <>
-                        <div className="lg:w-[30%] sm:w-full">
-                        <InputCustom
-                            placeholder='النسبة الشهرية'
-                            borderColor="mainColor"
-                            value={valueMonthly}
-                            onChange={(e) => setValueMonthly_ar(e.target.value)}
-                        />
-                        </div>
-                        <div className="lg:w-[30%] sm:w-full">
-                        <InputCustom
-                            placeholder='النسبة ربع السنوية'
-                            borderColor="mainColor"
-                            value={valueQuarterly}
-                            onChange={(e) => setValueQuarterly_ar(e.target.value)}
-                        />
-                        </div>
-                        <div className="lg:w-[30%] sm:w-full">
-                        <InputCustom
-                            placeholder='النسبة نصف السنوية'
-                            borderColor="mainColor"
-                            value={valueSemiAnnual}
-                            onChange={(e) => setValueSemiAnnual_ar(e.target.value)}
-                        />
-                        </div>
-                        <div className="lg:w-[30%] sm:w-full">
-                        <InputCustom
-                            placeholder='النسبة السنوية'
-                            borderColor="mainColor"
-                            value={valueYearly}
-                            onChange={(e) => setValueYearly_ar(e.target.value)}
-                        />
-                        </div>
-                        </>
-                     )}
-
-                     <div className="lg:w-[30%] sm:w-full">
-                         <DropDownMenu
-                         ref={dropdownStatusRef}
-                         handleOpen={handleOpenStatus}
-                         handleOpenOption={handleSelectStatus}
-                         stateoption={selectStatus}
-                         openMenu={openSelectStatus}
-                         options={statusData}
-                         />
-                     </div> 
-                     {selectStatus_ar === 'Fixed' && (
-                         <div className="lg:w-[30%] sm:w-full">
-                         <InputCustom
-                             placeholder="القيمة"
-                             borderColor="mainColor"
-                             value={usageNumber}
-                             onChange={(e) => setUsageNumber_ar(e.target.value)}
-                         />
-                         </div>
-                     )}
-
-                     <div className="lg:w-[30%] sm:w-full">
-                         <DropDownMenu
-                         ref={dropdownTypeRef}
-                         handleOpen={handleOpenType}
-                         handleOpenOption={handleSelectType}
-                         stateoption={selectType}
-                         openMenu={openSelectType}
-                         options={typeData}
-                         />
-                     </div> 
-                     {selectType ==='Domain' && (
-                         <div className="lg:w-[30%] sm:w-full">
-                         <InputCustom
-                             placeholder="الكمية"
-                             borderColor="mainColor"
-                             value={amount}
-                             onChange={(e) => setAmount(e.target.value)}
-                         />
-                         </div>
-                     )}
-               </div>} */}
-
-                 
-      
                   <div className="w-full flex sm:flex-col lg:flex-row items-center justify-start sm:gap-y-5 lg:gap-x-28 sm:my-8 lg:my-0">
                       <div className="flex items-center justify-center w-72">
                           <Button
